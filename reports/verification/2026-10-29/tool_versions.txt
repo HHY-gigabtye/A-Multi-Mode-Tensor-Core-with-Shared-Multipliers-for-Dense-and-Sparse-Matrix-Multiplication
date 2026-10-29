@@ -1,0 +1,5 @@
+Model Technology ModelSim - INTEL FPGA STARTER EDITION vsim 2020.1 Simulator 2020.02 Feb 28 2020
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36260 for x64
+Copyright (C) Microsoft Corporation.  著作權所有，並保留一切權利。
+
+使用方式: cl [ option... ] filename... [ /link linkoption... ]

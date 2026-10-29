@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Tensor Core Outer Product/Tensor Core Outer Product.vcxproj" Id="46219e7a-3c3c-436e-9096-a3ddae8f36e8" />
+</Solution>

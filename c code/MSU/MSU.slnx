@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="MSU/MSU.vcxproj" Id="8426efc0-65cd-46e4-9dbf-9bf5c44af0ef" />
+</Solution>

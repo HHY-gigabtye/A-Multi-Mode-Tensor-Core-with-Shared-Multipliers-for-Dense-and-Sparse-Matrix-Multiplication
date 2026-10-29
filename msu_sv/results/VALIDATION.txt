@@ -1,0 +1,43 @@
+MSU validation completed: 2026-10-24
+
+results/c_original.log
+MSU PASS: 120 results, 960 beats, 1339 cycles; stalls/INT32/reset/simultaneous=1
+
+results/c_vectors.log
+original traffic: results=120 beats=960 cycles=1339 simultaneous=1
+random traffic: results=512 beats=4096 cycles=6892
+C VECTOR PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full=7591 full_last=632 full_bad=8 wraps=335 max_count=2
+
+results/verilator_sim.log
+MSU phase 1 starts at cycle 0
+MSU phase 2 starts at cycle 1341
+MSU phase 3 starts at cycle 1370
+MSU phase 4 starts at cycle 1638
+MSU phase 5 starts at cycle 1719
+MSU phase 6 starts at cycle 1788
+MSU coverage: simultaneous=34 faults=42 resets=8
+MSU SV PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full_last=632 wraps=335 max_count=2
+- tb/tb_msu.sv:159: Verilog $finish
+
+results/iverilog_sim.log
+MSU phase 1 starts at cycle 0
+MSU phase 2 starts at cycle 1341
+MSU phase 3 starts at cycle 1370
+MSU phase 4 starts at cycle 1638
+MSU phase 5 starts at cycle 1719
+MSU phase 6 starts at cycle 1788
+MSU coverage: simultaneous=34 faults=42 resets=8
+MSU SV PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full_last=632 wraps=335 max_count=2
+tb/tb_msu.sv:159: $finish called at 86836000 (1ps)
+
+RTL lint: PASS, Verilator 5.020 --lint-only --top-module msu -Wall -Wno-UNUSEDPARAM
+Icarus emits a non-fatal sensitivity-list limitation notice; it includes all bits. Simulation passes.
+ModelSim: script supplied; not executed here. Synthesis/timing/full-system integration: not performed.
+
+Source and vector SHA-256:
+7b686457a03f3e213c4517bb233f80326d5765d0655766e2341f63573cf1a5eb  rtl/msu_pkg.sv
+a001ad04f19985e54ba009a384690c044222d350492142e8ed14499020675eda  rtl/msu.sv
+8d852d7486133b48bca1d575835220749a0486711199583d4646ddff64197207  tb/tb_msu.sv
+0b0bcde9be6b991290aa7b78e2e4f8cd39df7440b3c63beaff7ac3fe9add90a5  tools/gen_msu_vectors.c
+2282e40c0f3c417e061f6111974e9f8cae723b17d7ec5823cef3d1016c26611b  vectors/msu_vectors.txt
+8d433515d49d6f5646b40cd9901b99ea87f84829fdaa1cf3f2003347df3dea9f  reference/msu_model.c

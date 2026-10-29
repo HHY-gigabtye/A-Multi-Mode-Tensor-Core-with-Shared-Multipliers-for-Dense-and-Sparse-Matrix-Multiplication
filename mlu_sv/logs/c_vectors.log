@@ -1,0 +1,10 @@
+C stream PASS: style=0 tiles=120 packets=960 cycles=1312
+C stream PASS: style=1 tiles=120 packets=960 cycles=1006
+C stream PASS: style=2 tiles=256 packets=2048 cycles=3312
+C stream PASS: style=2 tiles=256 packets=2048 cycles=3337
+C stream PASS: style=2 tiles=256 packets=2048 cycles=3327
+C stream PASS: style=2 tiles=256 packets=2048 cycles=3314
+Golden vectors: mlu_vectors.txt
+records=16708 resets=145 rejected=128 commands=1397 packets=10236 retired=1279
+command+retire=1 read+output=4087 full_stalls=13908 both_ready=4396
+dense=3452 hybrid=3384 dual=3400 random_seed=20261024

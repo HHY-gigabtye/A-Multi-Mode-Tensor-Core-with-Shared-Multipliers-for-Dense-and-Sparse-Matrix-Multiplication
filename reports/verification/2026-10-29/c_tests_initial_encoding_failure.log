@@ -1,0 +1,45 @@
+tensor_core_model.c
+tb_tensor_core.c
+正在產生程式碼...
+Standalone INT8 tensor core (decoded input): dense=systolic; sparse=outer product; seed=20260915
+PASS dense                : 8 directed + 1000 random tiles
+PASS hybrid               : 8 directed + 1000 random tiles
+PASS dual                 : 8 directed + 1000 random tiles
+PASS dense-unstructured   : 8 directed + 1000 random tiles
+PASS sparse streaming: empty/stored-zero/boundary tiles, long output stalls, FIFO pop/push
+PASS 1000 sparse + 1000 mixed-mode random stream tiles, and 30 overlapped reset cases
+BENCH full 8x8 outer-product packets, 100 tiles; all results checked; includes initial fill/final output handshake
+  serial scheduling : 1200 cycles, 51200 MACs, utilization 66.6667%
+  sparse overlap    : 804 cycles, 51200 MACs, utilization 99.5025%; 1.4925x throughput
+PASS input-contract rejection and 48 reset/restart cases
+PASS 16 tiles with dense/sparse switching without reset
+PASS stored zero values in both sparse vectors
+ALL PASS: 6389 tiles (1290 dense, 5099 sparse); 1593020 checked MACs
+mlu_model.c
+tb_mlu.c
+正在產生程式碼...
+MLU PASS: 120 tiles, 960 packets, 1312 cycles; stalls/order/format/reset
+msu_model.c
+tb_msu.c
+正在產生程式碼...
+MSU PASS: 120 results, 960 beats, 1339 cycles; stalls/INT32/reset/simultaneous=1
+du_tc_bridge.c
+tb_bridge.c
+正在產生程式碼...
+BRIDGE PASS guards: empty/format/DU timing/mode/rejected state unchanged
+BRIDGE PASS continuous: packets=768 tiles=96 cycles=774 max_fifo=1 max_inflight=4 max_meta=1 push_pop=767 meta_push_pop=95 wraps=96 credit_blocks=0 meta_blocks=0
+BRIDGE PASS stalls: packets=768 tiles=96 cycles=1161 max_fifo=8 max_inflight=4 max_meta=2 push_pop=586 meta_push_pop=59 wraps=96 credit_blocks=137 meta_blocks=61
+BRIDGE PASS reset after 2 edges: fresh stream 8 tiles, no stale metadata
+BRIDGE PASS reset after 8 edges: fresh stream 8 tiles, no stale metadata
+BRIDGE PASS reset after 24 edges: fresh stream 8 tiles, no stale metadata
+ALL BRIDGE TESTS PASS (standalone, no DU/TC/MLU/MSU model linked)
+DU & TIA.c
+<repo>\tools\..\c code\DU & TIA\DU & TIA\DU & TIA.c(1): warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失
+<repo>\tools\..\c code\DU & TIA\DU & TIA\DU & TIA.c(768): warning C4013: 'tia_decode_half' 未定義; 假設 extern 傳回整數
+<repo>\tools\..\c code\DU & TIA\DU & TIA\DU & TIA.c(812): warning C4013: 'du_decode_2to4_for_k' 未定義; 假設 extern 傳回整數
+<repo>\tools\..\c code\DU & TIA\DU & TIA\DU & TIA.c(875): warning C4013: 'tia_merge_halves' 未定義; 假設 extern 傳回整數
+DU & TIA.obj : error LNK2019: 在函式 tia_decode_halfpredecode_sparse_indexes 中參考了無法解析的外部符號 
+DU & TIA.obj : error LNK2019: 在函式 du_decode_2to4_for_kstage_s1_du_forward_tia_predecode 中參考了無法解析的外部符號 
+DU & TIA.obj : error LNK2019: 在函式 tia_merge_halvesrun_pipeline_stream 中參考了無法解析的外部符號 
+du_tia_test.exe : fatal error LNK1120: 3 個無法解析的外部符號
+C REFERENCE SUITE FAILED

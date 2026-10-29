@@ -1,0 +1,123 @@
+# Visual Studio local settings, caches and compiled output.
+.vs/
+*.vcxproj.user
+*.suo
+*.obj
+*.exe
+*.pdb
+*.idb
+*.ilk
+*.ipch
+*.tlog/
+*.lastbuildstate
+*.exe.recipe
+*.obj.dt.*
+*.FileListAbsolute.txt
+
+# Unit-test build directories and simulator work libraries.
+build/
+obj_dir/
+work/
+du_tia_work/
+bridge_work/
+msu_work/
+*.wlf
+*.vcd
+*.fst
+transcript
+modelsim.ini
+
+# Vivado generated caches, checkpoints and binary report databases.
+.Xil/
+*.cache/
+*.hw/
+*.gen/
+*.sim/
+*.ip_user_files/
+.jobs/
+*.dcp
+*.pb
+*.rpx
+*.wdf
+*.vdi
+*.vds
+*.wpc
+*.lpr
+.vivado.*.rst
+.Vivado_*.rst
+.*_design.*.rst
+
+# Python/OS temporary files.
+__pycache__/
+*.py[cod]
+Thumbs.db
+.DS_Store
+~$*
+*.tmp
+
+# Additional native build output.
+*.o
+*.a
+*.so
+*.dll
+*.lib
+*.out
+*.exp
+*.pch
+Debug/
+Release/
+x64/
+x86/
+
+# Simulator databases and generated libraries.
+*_work/
+*.wdb
+*.vpd
+*.fsdb
+*.ucdb
+*.vstf
+*.qdb
+vsim_stacktrace.vstf
+vsim.wlf
+
+# Vivado run trees are generated. Selected text evidence lives in reports/.
+*.runs/
+*.ioplanning/
+*.sdk/
+*.jou
+vivado*.log
+webtalk*.xml
+webtalk*.html
+*.bit
+*.bin
+*.ltx
+*.str
+
+# Keep reviewed verification logs, not new ad-hoc simulator transcripts.
+/results/
+/msu_sv/results/modelsim.log
+/fifo_sv/test_logs/
+
+# Publication review: retain these locally until ownership/privacy approval.
+# These rules DO NOT remove files already in the index or Git history.
+/*.pdf
+/*.docx
+/*.xlsx
+/meeting簡報/
+/圖片/
+
+# The byte-identical baseline is distributed as c_vectors.txt.gz.
+# Restore with tools/restore_vectors.ps1 before replaying the TC unit test.
+# The original 150 MB blob is still in local history; do not push it as-is.
+/tensor_core_sv/c_vectors.txt
+
+# Credentials/local configuration; no matches are required for these rules.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Source, C headers, vectors (except the raw TC file above), .f/.do/.tcl,
+# .ps1/.sh/.bat, .xdc/.xpr/.vcxproj settings and selected .log/.rpt stay eligible.
+# Ignore rules never delete files or sanitize existing commits.
