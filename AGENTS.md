@@ -64,6 +64,20 @@ Precedence in case of disagreement:
 - Re-run functional regression after every change. Compare area, delay/Fmax, and power only under comparable constraints and flow; mark `unplaced`, `post-place`, and `post-route` separately.
 - Do not promise a clock rate or PE-utilization improvement merely from rewriting RTL. Any inserted pipeline stage must reconcile metadata, valid alignment, output latency, TC mode switching and tile overlap.
 
+## Archived integrated FPGA timing baseline
+
+The archived **2026-10-29 post-route** report for `sparse_tensor_core_top`
+uses Vivado 2022.2 and `xc7z020clg484-1` with out-of-context (OOC) synthesis.
+See [implementation evidence and limitations](reports/implementation/README.md),
+[timing report](reports/implementation/top/timing_summary_routed.rpt), and
+[report provenance](reports/implementation/provenance.csv).
+
+- Clock constraint: **17.000 ns / 58.824 MHz**; WNS **+0.202 ns**, TNS **0.000 ns**, and WHS **+0.096 ns**. All specified timing constraints are met in this archived run.
+- Slack-derived Fmax estimate: `1000 / (17.000 - 0.202)` = **approximately 59.53 MHz**. This is an estimate from the existing routed design, not a frequency-sweep result or hardware-measured Fmax.
+- Worst setup path: `u_bridge/q_reg[fifo][5][packet][is_sparse]/C` to `u_tensor_core/dense_q_reg[pe][7][0][acc][29]/D`. Data-path delay is **16.776 ns**: **5.419 ns logic** and **11.357 ns routing**, with 20 logic levels. Do not assume the isolated PE multiplier is the bottleneck.
+- Scope limits: **424 input** and **592 output** ports lack I/O delay constraints. This OOC result does not establish complete board timing closure. The exact source-to-report commit association and full PPA reproduction flow remain unverified; revalidate before attributing these results to modified RTL.
+- Keep this integrated result separate from historical unplaced estimates and the isolated TC's **2026-10-19 post-route** run: 12.000 ns / 83.333 MHz target, WNS **-0.238 ns**, TNS **-2.894 ns**. That isolated run fails its target, and the two runs are not a controlled optimization comparison.
+
 ## Useful first instruction for a new Codex session
 
 "Read `AGENTS.md` and `docs/architecture.md`, inspect this repository, and report (1) actual modules/files, (2) C/RTL/test status, (3) any mismatches with the handoff, and (4) a safe baseline regression plan. Do not modify any file yet."
