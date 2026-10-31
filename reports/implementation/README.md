@@ -45,7 +45,7 @@ Fmax. No frequency sweep, complete board timing closure, bitstream bring-up,
 activity-calibrated power run, or physical HBM experiment is established.
 
 Original `.xpr` and `.xdc` files are retained at their original relative paths
-in the candidate snapshot. The project files include machine-specific cached
+in this public repository. The project files include machine-specific cached
 settings and reference generated incremental checkpoints that are intentionally
 not published. Regeneration may require disabling/rebuilding those checkpoints
 and adapting the local project settings. The complete PPA reproduction flow

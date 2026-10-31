@@ -1,8 +1,11 @@
 # Public snapshot packaging verification
 
-The public candidate is a file copy with the original module-relative layout.
-No Git repository was initialized in that copy and no push was performed.
-This verification checks packaging/paths; it does not introduce new test cases.
+This report records the October 30, 2026 packaging check performed before
+publication. The candidate used for that check was a separate file copy with
+the original module-relative layout. No Git repository was initialized in that
+copy and no push was performed as part of the check. Those statements describe
+the verification procedure at that time; this repository is now published on
+GitHub. The check covered packaging/paths and introduced no new test cases.
 
 The 150,566,416-byte TC replay file is distributed as a 4,541,458-byte gzip.
 Restoration with the existing PowerShell 7.6.5 runtime succeeded and matched

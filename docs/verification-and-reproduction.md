@@ -85,9 +85,9 @@ Do not label that phase counter as pure compute latency or omit its setup/drain.
 
 ## Golden-vector distribution
 
-The original TC vector file is 150,566,416 bytes. It remains untouched locally.
-The proposed public snapshot stores `tensor_core_sv/c_vectors.txt.gz`, a gzip
-copy of those exact bytes; use `tools/restore_vectors.ps1` to restore it.
+The original TC vector file is 150,566,416 bytes and was left unchanged during
+the audit. This public repository stores `tensor_core_sv/c_vectors.txt.gz`, a
+gzip copy of those exact bytes; use `tools/restore_vectors.ps1` to restore it.
 
 Expected SHA-256 of restored bytes:
 

@@ -70,9 +70,11 @@ with `tb_tensor_core.c`; the `.cpp` template is not the arithmetic reference.
    its TB derives effective handshakes from C outputs, reset and status. MLU's
    local rejected-edge model does not provide transaction rollback at a live
    bus. End-to-end verification covers legal traffic and coordinated resets.
-7. Existing `msu_sv/sim/run_msu.do` has an uncommitted machine-specific root.
-   The root unit runner avoids that entry point. Existing top TB has an
-   uncommitted blank-line change. Both were preserved exactly as found.
+7. At the October 29 audit start, `msu_sv/sim/run_msu.do` contained an
+   uncommitted machine-specific root, and the top TB contained an uncommitted
+   blank-line change. Both were preserved exactly as found. These observations
+   describe that local working tree, not the current GitHub tracking status.
+   Use the root unit runner to avoid the machine-specific MSU entry point.
 8. The new top implementation reports and XPR were untracked at audit start.
    Matching their source paths to this checkout is not proof of exact synthesis
    input provenance; no source-hash manifest accompanied the archived run.
@@ -90,6 +92,17 @@ availability. Memory loading, mode switches, result stalls, and writeback may
 increase end-to-end latency. "64 shared multipliers" is a source-level resource
 organization, not a claim of 64 FPGA DSP primitives or quantified area savings.
 
-Original diagrams exist locally, but their authorship and correspondence to the
-current RTL have not been established. The root README instead includes a new
-text/Mermaid connectivity summary derived from the inspected top module.
+## Documentation update, November 1, 2026
+
+At the October 29 audit, the original diagrams were local material whose
+authorship and correspondence to the RTL had not been established; the README
+used a text/Mermaid connectivity summary derived from the inspected top module.
+
+The public repository now includes the author's updated
+[overall system architecture](Overall%20System%20Architecture.png) and
+[DU/TIA and Tensor Core architecture](DU%26TIA%20and%20Tensor%20Core%20architecture.png)
+images. The [root README](../README.md) presents them in Sections 3 and 5 and
+retains the Mermaid connectivity summary in an expandable section. The captions
+identify the simplified memory boundary, shared multipliers, and conceptual
+scope of the compute diagram. This documentation update does not establish
+new RTL verification results or change the implementation limitations above.

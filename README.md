@@ -213,7 +213,7 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
 
 ## 8. Performance and Implementation Results
 
-The audit reran the existing SV suites on **2026-10-29**, using **ModelSim Intel FPGA Starter Edition 2020.1 / Simulator 2020.02**. Both commands exited successfully; six existing port-kind compilation warnings remain in each suite. See [verification evidence](reports/verification/2026-10-29/README.md). The separate public candidate reproduced these results after vector restoration on [2026-10-30](reports/verification/2026-10-30-packaging/README.md).
+The audit reran the existing SV suites on **2026-10-29**, using **ModelSim Intel FPGA Starter Edition 2020.1 / Simulator 2020.02**. Both commands exited successfully; six existing port-kind compilation warnings remain in each suite. See [verification evidence](reports/verification/2026-10-29/README.md). A separate packaging verification copy reproduced these results after vector restoration on [2026-10-30](reports/verification/2026-10-30-packaging/README.md).
 
 | Simulation | Observed result |
 |---|---|
@@ -263,7 +263,7 @@ Module-local paths are retained so includes, package order, and existing test sc
 `-- project_integration/       # Original top Vivado .xpr / source constraints
 ```
 
-Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and [source audit](docs/source-audit.md) for current entry points. Generated EDA run trees and private literature/meeting materials are excluded from the proposed public snapshot. Project files retain historical machine-specific settings; they are not a self-contained PPA reproduction flow.
+Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and [source audit](docs/source-audit.md) for current entry points. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; they are not a self-contained PPA reproduction flow.
 
 ## 10. How to Run the Tests
 
@@ -307,4 +307,4 @@ This project is informed by published work on systolic arrays and sparse tensor 
 2. Zhi-Gang Liu, Paul N. Whatmough, and Matthew Mattina, **Systolic Tensor Array: An Efficient Structured-Sparse GEMM Accelerator for Mobile CNN Inference**, 2020. [Author preprint](https://arxiv.org/abs/2005.08098).
 3. Jun Liu et al., **TSTC: Two-Level Sparsity Tensor Core Enabling both Algorithm Flexibility and Hardware Efficiency**, ICCAD 2023. [DOI](https://doi.org/10.1109/ICCAD57390.2023.10323775).
 
-Only references are intended for the public snapshot; locally stored publisher PDFs and meeting slides are withheld pending redistribution approval. A project-wide redistribution license has not yet been selected by the author.
+The public repository includes bibliographic references; locally stored publisher PDFs and meeting slides are not included. A project-wide redistribution license has not yet been selected by the author.
