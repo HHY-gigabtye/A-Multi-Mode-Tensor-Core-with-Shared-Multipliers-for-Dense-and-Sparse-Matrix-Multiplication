@@ -148,7 +148,31 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded 
 
 **Memory units.** MLU has two tile buffers and permits one outstanding read burst. MSU has two complete 256-byte result buffers. It writes eight 32-byte rows in little-endian order and asserts `tile_done` only after the final row transfer. There is no AXI write-response channel in this interface.
 
-## 6. Pipeline and Dataflow
+<a id="6-pipeline-and-dataflow"></a>
+
+## 6. End-to-End Execution Flow and Pipeline Control
+
+### 6.1 End-to-End Execution Flow
+
+For a legal tile command without reset, the system follows the path shown in [Section 3](#3-overall-system-architecture): command acceptance → MLU memory reads → DU/TIA decoding → Bridge buffering → TC computation → MSU row writes → completion.
+
+1. **Accept the command.** A `command_valid && command_ready` handshake assigns a free MLU tile buffer. The command contains the compute mode, one `src_addr` for the memory image containing both A and B, and `meta.tile_id` / `meta.dst_addr` for identifying and writing the result.
+
+2. **Load the complete input image.** MLU issues a read burst and accepts 32-byte beats into the assigned buffer. Dense and hybrid images require four beats; dual-sparse images require five. Only one read burst may be outstanding. After the final beat is accepted and the image passes format checks, the tile becomes ready for packet output. Sparse data is already packed in memory.
+
+3. **Issue eight ordered packets.** MLU presents `k=0..7` from the ready head buffer. Each actual issue requires Bridge credit and sends the payload to DU/TIA while sending its mode, k, and tile metadata to the Bridge's parallel metadata pipeline. If credit is unavailable, MLU holds the current packet stable. Accepted k=7 releases the MLU buffer for reuse, even while that tile is still computing or awaiting writeback.
+
+4. **Decode, align, and queue.** DU/TIA forwards dense operands or decodes sparse values and original-coordinate indices through S0–S3. The Bridge pairs the decoded payload with its aligned metadata and inserts it into the packet FIFO. Packets leave in order when TC can accept their mode; accepting k=0 also records the tile ID and destination address in the result-metadata FIFO.
+
+5. **Compute the result.** TC consumes the eight k packets using the dense systolic or sparse outer-product path, accumulating an independent `C = A x B` tile from zero. The completed 8×8 INT32 matrix is published in a TC result slot and remains available until the downstream result handshake.
+
+6. **Transfer the result into MSU.** When the TC result, matching Bridge metadata, and MSU capacity are available, one handshake transfers the full matrix and metadata into an MSU result buffer. That same edge removes the Bridge result-metadata entry and releases the TC result slot. MSU now owns the buffered result and its writeback address.
+
+7. **Write eight rows and report completion.** MSU writes rows 0–7 in order, one 32-byte beat per row at `dst_addr + 32*r`, with each INT32 stored little-endian. A beat commits only on `write_valid && write_ready`; stalled writes hold their payload and address. After row 7 is accepted, the registered `tile_done` pulse and `completed` metadata identify the finished tile. This simplified interface has no separate write-response channel.
+
+These steps describe one tile's progress. Different stages can work on different tiles concurrently: MLU can load one buffer while issuing from the other, and MSU can write an older result while upstream stages process later work, subject to buffer capacity, memory availability, and TC mode-switch rules.
+
+### 6.2 Pipeline and Flow Control
 
 **DU/TIA:** S0 captures the selected input, S1 forwards packed values/decodes 2:4 B and predecodes bitmap halves, S2 merges indices, and S3 registers the output. DU/TIA has no downstream ready input, so capacity must be reserved before issue. The payload passes through DU/TIA, while a separate four-stage metadata pipeline in the Bridge advances in parallel.
 
@@ -160,7 +184,15 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded 
 
 **Sparse overlap:** first/last markers travel through MUL and ROUTE to ACC. The accumulator clears when the next tile's first packet reaches ACC. Before that clear, the previous completed accumulator is published into a reserved result slot. Thus the next tile can begin MUL while the previous tile is still finishing ROUTE/ACC. New tile starts wait when both result credits are occupied; an already accepted tile can finish safely.
 
-With first TC acceptance numbered edge 0 and eight consecutive packets, the reference/test contract publishes sparse results after edge 10 and dense results after edge 22. Sparse tile starts can be eight cycles apart when inputs and result capacity are available. These are **TC-boundary timings**, not command-to-memory completion latencies. Dense/sparse mode changes wait for the prior mode's outstanding work and results to drain.
+**Writeback backpressure:** when memory stalls, MSU retains the current row. If both MSU buffers fill, TC-to-MSU transfers wait; occupied TC result slots then block new tile starts. As packets accumulate in the Bridge, its credit limit eventually stops further MLU issues. Already-issued DU/TIA packets still have reserved FIFO space, so the fixed pipeline can finish safely.
+
+### 6.3 Timing Boundaries
+
+**Packet transit:** an MLU issue at edge t is captured in DU/TIA S0 on that edge, reaches S3 at t+3, and is inserted into the Bridge FIFO at t+4. Its earliest TC acceptance is t+5; input gaps or downstream stalls can delay acceptance.
+
+**TC computation:** with first TC acceptance numbered edge 0 and eight consecutive packets, the reference/test contract publishes sparse results after edge 10 and dense results after edge 22. Sparse tile starts can be eight cycles apart when inputs and result capacity are available. Dense/sparse mode changes wait for the prior mode's outstanding work and results to drain. See [Section 2.4](#24-cycle-timing-and-flow-control-contract) for the detailed timing contract.
+
+**System completion:** result publication, TC-to-MSU acceptance, and memory writeback completion are separate events. End-to-end latency is measured from the accepted command to the final accepted row write, reported by `tile_done`. It includes memory-read latency and gaps, packet issue stalls, computation, result-buffer waits, and all eight accepted row writes. There is no single fixed end-to-end cycle count under arbitrary backpressure; sparse II=8 applies to TC tile starts, not completed memory writebacks.
 
 ## 7. Verification Methodology
 
