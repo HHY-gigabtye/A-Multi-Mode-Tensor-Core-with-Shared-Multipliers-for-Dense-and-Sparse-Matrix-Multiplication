@@ -8,7 +8,7 @@ The project demonstrates cycle-level architecture modeling, RTL implementation, 
 
 **Verified scope:** the five RTL units and their connected system pass the supplied simulation regressions. The memory boundary is a simplified 256-bit interface; a physical HBM controller, complete AXI protocol, board execution, and ASIC implementation are outside the verified scope. Each command computes an independent `C = A x B` tile with zero initial accumulation; there is no accumulation across K tiles or addition of a previous C matrix.
 
-## 2. Key Features
+## 2. Key Features and Specification Summary
 
 - Three input modes: dense x dense, unstructured x 2:4, and unstructured x unstructured.
 - Dense output-stationary systolic dataflow with lane-dependent input skew.
@@ -17,6 +17,73 @@ The project demonstrates cycle-level architecture modeling, RTL implementation, 
 - Four-stage DU/TIA decoding and index alignment, followed by an eight-entry packet FIFO with in-flight credit reservation.
 - Two Tensor Core result slots, a separate two-entry result-metadata FIFO, and two whole-result buffers in the MSU.
 - C reference models, immutable replay vectors, procedural SV scoreboards, and an independent system-level GEMM/writeback check.
+
+### 2.1 System Specification
+
+| Item | Specification |
+|---|---|
+| Operation | One independent `C = A x B` per command; M=N=K=8; accumulation starts at zero |
+| Arithmetic | Signed INT8 operands (−128…127), signed 16-bit products, signed INT32 accumulation/results |
+| Input sequence | Eight accepted k packets per tile, ordered `k=0..7`; consistent tile metadata |
+| Supported modes | `IO_DENSE=0`: dense × dense; `IO_HYBRID=1`: unstructured A × 2:4 B; `IO_DUAL=2`: unstructured × unstructured; mode 3 is illegal |
+| Result | 8×8 INT32 = 64 elements = 256 bytes per tile |
+| Tile metadata | 32-bit tile ID and 64-bit destination byte address; preserved in input order |
+| Memory addressing | 64-bit source/destination byte addresses, aligned to 32 bytes; the entire burst/result must fit the address range |
+| Memory data width | 256 bits = 32 bytes per beat; byte 0 occupies bits [7:0] |
+| Clock/reset | Shared rising-edge clock; asynchronous active-low `rst_n`; reset connected modules and pending memory responses together |
+| Scope | No old-C addition, cross-K-tile accumulation, physical HBM controller, complete AXI protocol, or built-in shared-memory read/write arbitration |
+
+### 2.2 Component Specifications
+
+The following table consolidates the five units and the integration boundary. Detailed interface definitions and examples are available in the linked English READMEs; legacy filenames are retained to preserve existing links.
+
+| Component | Capacity / datapath | Interfaces and behavior | Detailed documentation |
+|---|---|---|---|
+| **MLU — Memory Load Unit** | Two tile buffers, each with a 160-byte image capacity; one outstanding read burst | 256-bit memory input; 236-bit DU/TIA packet output plus tile metadata and k. Loads the complete image, then issues eight ordered packets. Holds output stable under backpressure; releases a tile buffer on accepted k=7. Sparse input is already packed. | [MLU specification](mlu_sv/README_zh_TW.md) |
+| **DU/TIA — Decompression and Index Alignment** | Four registered stages S0–S3; 236-bit input packet → 185-bit output packet | Dense data forwarding and sparse decoding/index alignment. S0 captures input; S1 forwards/decodes values and predecodes bitmap halves; S2 merges indices; S3 registers output. No downstream `out_ready`; capacity must be reserved before issue. | [DU/TIA specification](du_tia_sv/README.md) |
+| **Bridge / Packet FIFO** | Eight packet slots; four sideband tag stages; separate two-entry result-metadata queue | Tracks `fifo_count + inflight_count <= 8`. Issue reserves capacity, DU arrival transfers occupancy into the FIFO, and TC acceptance releases it. Registered FIFO insertion with a combinational head; no arrival bypass or same-edge credit lookahead when full. | [Bridge specification](fifo_sv/README_zh-TW.md) |
+| **Tensor Core** | 8×8 dense systolic path and sparse MUL → ROUTE → ACC path; 64 shared signed multiplication operation positions; two result slots | 185-bit decoded input packet; complete 8×8 INT32 result output. Dense lanes use input skew; sparse tiles can overlap. Reserves result capacity on tile start. Input valid must obey mode-aware readiness; dense/sparse changes require draining prior work/results. | [Tensor Core specification](tensor_core_sv/README_zh_TW.md) |
+| **MSU — Memory Store Unit** | Two complete-result buffers, each 256 bytes | Accepts the full matrix and metadata, then writes eight 256-bit rows. Row r uses `dst_addr + 32*r`; each INT32 is little-endian. Holds write payload under stall. `tile_done` occurs only after the final accepted row write. | [MSU specification](msu_sv/README_zhTW.md) |
+| **Integration Top** | Connects the five existing units without another data pipeline stage | Exposes command, read-request/data, write, completion, and diagnostic interfaces. Maps package fields explicitly, gates TC valid with mode-aware readiness, and pairs ordered results with Bridge metadata. | [Top-level interface](integration_sv/README_zh_TW.md) |
+
+**Decoded sparse packet contract:** each A/B vector has a 4-bit count (legal values 0…8), eight 8-bit value fields, and eight 3-bit original-coordinate indices. Only entries `0..count-1` are valid, and their indices must be strictly increasing. Stored zero values are legal. Both hybrid and dual modes become `is_sparse=1`; TC does not decode the original 2:4 masks again. See the [DU/TIA types](du_tia_sv/rtl/du_tia_pkg.sv) and [TC types](tensor_core_sv/tensor_core_pkg.sv).
+
+### 2.3 Memory Transfer Sizes
+
+| Input mode / output | Meaningful bytes per tile | Transferred bytes | 32-byte beats |
+|---|---:|---:|---:|
+| Dense input | 128 | 128 | 4 reads |
+| Hybrid input | 120 | 128, including padding | 4 reads |
+| Dual-sparse input | 144 | 160, including padding | 5 reads |
+| Result output, all modes | 256 | 256 | 8 writes |
+
+These are fixed-size memory images, not variable-length compressed streams. The MLU buffer capacity is 160 bytes per input image; the MSU buffer capacity is 256 bytes per result. The first read-data beat may arrive no earlier than the cycle after request acceptance. The write interface has no separate response channel: `write_ready` denotes acceptance/commit of that beat.
+
+### 2.4 Cycle Timing and Flow-Control Contract
+
+For **TC-local timing**, number the edge accepting k=0 as edge 0, accept k=0…7 consecutively, keep `result_ready=1`, and remain in the same compute mode:
+
+| TC event | Dense | Sparse |
+|---|---:|---:|
+| Accept k=7 | Edge 7 | Edge 7 |
+| Final accumulation | Edge 21 | Edge 9 |
+| Publish result (`result_valid` becomes 1 after the edge) | Edge 22 | Edge 10 |
+| Earliest result consumption | Edge 23 | Edge 11 |
+| Earliest next-tile start | Edge 24 | Edge 8 |
+
+With input gaps, publication occurs 15 edges after the last accepted dense packet or 3 edges after the last accepted sparse packet. Sparse II=8 describes tile starts at the TC boundary with sufficient input and result capacity. **It is not an end-to-end command-to-writeback latency or a guarantee of one memory-completed tile every eight cycles.**
+
+| Boundary / condition | Required behavior |
+|---|---|
+| MLU issue at edge t | DU/TIA captures S0 at t, then S1/S2/S3 at t+1/t+2/t+3; Bridge inserts the old S3 output at t+4; earliest TC acceptance is t+5 |
+| Full packet credit pool | Compute readiness from old registered occupancy; a same-edge TC acceptance cannot fund another issue while full |
+| Result-metadata queue | Push on TC acceptance of k=0; block another k=0 when full; pop on the actual TC→MSU result handshake |
+| TC input | Present the FIFO head to determine mode-aware `in_ready`; assert `in_valid` only for an eligible, ready transfer. `input_ready` alone is insufficient |
+| TC result capacity | Reserve one of two credits on tile start; full capacity blocks a new sparse tile, while an already-started tile can finish |
+| MSU completion | Result acceptance into MSU is distinct from writeback completion; completion follows the accepted row 7 write |
+| Simulation/driver scheduling | Read pre-edge outputs, determine actual handshakes, then advance every connected module once per edge |
+
+Timing checks are implemented in the [system testbench](integration_sv/tb/tb_sparse_tensor_core_top.sv); archived run evidence is linked in [Section 8](#8-performance-and-implementation-results). Cycle counts do not establish a clock frequency. The archived integrated FPGA run used a 17.000 ns constraint, with the implementation and I/O-constraint limitations stated in that section.
 
 ## 3. Overall System Architecture
 

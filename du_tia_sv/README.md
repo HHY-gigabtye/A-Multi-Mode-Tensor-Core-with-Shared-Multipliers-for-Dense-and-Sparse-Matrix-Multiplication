@@ -1,50 +1,47 @@
 # DU + TIA SystemVerilog RTL — No-Assertion Version
 
-這一版專為不支援 SystemVerilog Assertions 的 ModelSim–Intel FPGA Edition
-準備。RTL、testbench、filelist 與建置流程中都沒有 `assert property`、SVA
-checker、coverage property 或 `--assert` 選項。
+This version targets ModelSim–Intel FPGA Edition environments without SystemVerilog Assertions support. The RTL, testbench, file list, and build flow contain no `assert property`, SVA checkers, coverage properties, or `--assert` option.
 
-## 內容
+## Contents
 
-| 檔案 | 用途 |
+| File | Purpose |
 |---|---|
-| `rtl/du_tia_pkg.sv` | 精簡後的型別、packed union 與 helper functions |
-| `rtl/du_tia.sv` | 不含 assertion 的四級 DU/TIA pipeline |
-| `tb/tb_du_tia.sv` | golden model、scoreboard 與 3292 筆功能測試 |
-| `filelist.f` | package、RTL、TB 的編譯順序 |
-| `modelsim.do` | ModelSim 編譯及執行腳本 |
-| `Makefile` | Verilator lint、simulation 與 VCD |
+| `rtl/du_tia_pkg.sv` | Compact types, packed union, and helper functions |
+| `rtl/du_tia.sv` | Four-stage DU/TIA pipeline without assertions |
+| `tb/tb_du_tia.sv` | Golden model, scoreboard, and 3292 functional test packets |
+| `filelist.f` | Compilation order for the package, RTL, and testbench |
+| `modelsim.do` | ModelSim compilation and simulation script |
+| `Makefile` | Verilator lint, simulation, and VCD generation |
 
-`verification/du_tia_sva.sv` 已從本版本移除。TB 仍會利用逐筆 expected packet
-比較與 `$fatal` 回報錯誤，但這不是 SVA，也不會加入正式硬體。
+`verification/du_tia_sva.sv` was removed from this version. The testbench still compares each output against an expected packet and reports errors with `$fatal`. These checks are not SVA and are not part of the synthesized hardware.
 
-## 精簡後的正式資料路徑
+## Compact Hardware Datapath
 
-- `transaction_id`：不存在於 DUT packet 或 stage registers。
-- `du_action`、`tia_action`：不存在；S1 直接依 `mode` 選擇運算。
-- `b_source_rank`：只在 S1 組合選值時即時計算，不註冊、不輸出。
-- `bitmap`：只用於輸入與 S1 組合解碼，不往後傳。
-- `valid_mask`：刪除，以 `count` 表示有效 packed prefix。
-- `count`：保留，讓下游知道 value/index 的有效筆數。
-- `index`：每筆 3 bits，表示 lane 0–7。
+- `transaction_id`: absent from DUT packets and stage registers.
+- `du_action`, `tia_action`: absent; S1 selects the operation directly from `mode`.
+- `b_source_rank`: calculated only during combinational selection in S1; neither registered nor output.
+- `bitmap`: used only at the input and during S1 combinational decoding; not forwarded to later stages.
+- `valid_mask`: removed; `count` identifies the valid packed prefix.
+- `count`: retained so downstream logic knows how many value/index entries are valid.
+- `index`: 3 bits per entry, identifying lane 0–7.
 
-介面寬度：
+Interface widths:
 
-| 型別 | 寬度 |
+| Type | Width |
 |---|---:|
 | `du_tia_input_t` | 236 bits |
 | `du_tia_output_t` | 185 bits |
-| S0–S3 registers 合計 | 807 bits |
+| Total S0–S3 registers | 807 bits |
 
-## ModelSim 使用方式
+## Running ModelSim
 
-在 Transcript 先切換到包含本 README 的專案根目錄，再執行：
+In the Transcript, change to the module directory containing this README, then run:
 
 ```tcl
 do modelsim.do
 ```
 
-或者手動執行：
+Alternatively, run these commands manually:
 
 ```tcl
 vlib du_tia_work
@@ -56,20 +53,20 @@ vsim du_tia_work.tb_du_tia
 run -all
 ```
 
-預期結尾：
+Expected final message:
 
 ```text
 [PASS] DU/TIA compact RTL: 3292 packets checked
 ```
 
-如果只要編譯 DUT，不需要 TB：
+To compile only the DUT, without the testbench:
 
 ```tcl
 vlog -work work -sv rtl/du_tia_pkg.sv
 vlog -work work -sv rtl/du_tia.sv
 ```
 
-這一版不需要加入 `+define+SYNTHESIS`，因為 assertion 原始碼已實際移除。
+This version does not require `+define+SYNTHESIS`, because the assertion source was physically removed.
 
 ## Verilator
 
@@ -78,11 +75,10 @@ make lint
 make sim
 ```
 
-或：
+Or:
 
 ```bash
 make all
 ```
 
-TB 預設檢查 12 筆 directed、24 筆 Ux2:4 exhaustive、256 筆 UxU bitmap
-exhaustive，以及 3000 筆 randomized packets。
+By default, the testbench checks 12 directed packets, 24 exhaustive Ux2:4 packets, 256 exhaustive UxU bitmap packets, and 3000 randomized packets.

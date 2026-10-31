@@ -1,38 +1,32 @@
-# MLU SystemVerilog：獨立單元驗證版
+# MLU SystemVerilog: Standalone Unit Verification
 
-依據本次上傳的 `mlu_model(2).c`、`mlu_model(3).h`、`io_types(4).h` 產生。
-保留原本兩個 tile buffer、單一 outstanding read burst，以及每個 tile 逐 k 輸出 8 筆的時序。
-`out_packet` 直接使用既有 `du_tia_pkg::du_tia_input_t`。
+> Scope note: tool availability and verification statements below describe the original standalone delivery. See the [repository README](../README.md) and [source audit](../docs/source-audit.md) for later ModelSim and full-system verification.
 
-## 驗證範圍
+Generated from the supplied `mlu_model(2).c`, `mlu_model(3).h`, and `io_types(4).h`. The RTL preserves the original two tile buffers, single outstanding read burst, and ordered output of eight k packets per tile. `out_packet` directly uses the existing `du_tia_pkg::du_tia_input_t`.
 
-`tb_mlu.sv` 只實例化 `mlu dut`，依 C model 產生的 vectors，提供 command、記憶體回傳 beat、read request ready，以及下游 `out_ready`。
-每拍直接比對 MLU 的輸出封包、meta、k、握手事件、status 與完整 buffer 狀態。
-停頓也由 vectors 控制，不需要實際加入 DU/TIA、bridge/FIFO、TC 或 MSU。
+## Verification Scope
 
-`du_tia_pkg.sv` 仍需編譯，因為 MLU 輸出封包使用它的型別；引用 package 不會實例化 DU/TIA 硬體。
-這版已移除 DU/TIA instance、解碼 reference、4-stage scoreboard、解碼計數與對應波形；模擬專案不再包含 `du_tia.sv`。
-MLU RTL、C model 與原有 golden vectors 均維持原樣。
+`tb_mlu.sv` instantiates only `mlu dut`. C-model-generated vectors provide commands, memory response beats, read-request readiness, and downstream `out_ready`. Each cycle directly compares output packets, metadata, k, handshake events, status, and the complete buffer state. Vectors also control stalls; no DU/TIA, Bridge/FIFO, TC, or MSU instance is needed.
 
-先完成各 unit 獨立驗證，再以另一個 top-level testbench 串接 MLU → DU/TIA → bridge/FIFO → TC → MSU。
-本套件不執行局部或完整整合測試；下方接線範例供之後整合時使用。
+`du_tia_pkg.sv` must still be compiled because it defines the MLU output packet type. Referencing the package does not instantiate DU/TIA hardware. This standalone revision removed the DU/TIA instance, decoding reference, four-stage scoreboard, decoding counters, and related waveforms. Its simulation project no longer includes `du_tia.sv`. MLU RTL, the C model, and existing golden vectors were preserved.
 
-## 先在 ModelSim 執行
+Verify each unit independently before connecting MLU → DU/TIA → Bridge/FIFO → TC → MSU in a separate top-level testbench. This package does not run partial or full integration tests; the wiring examples below are for integration.
 
-解壓縮整個資料夾，在 ModelSim 的 Transcript 輸入：
+## Running ModelSim First
+
+Extract the entire directory, then enter this command in the ModelSim Transcript:
 
 ```tcl
 do C:/your_path/mlu_sv/run_mlu.do
 ```
 
-路徑有空白時使用大括號：
+Use braces when the path contains spaces:
 
 ```tcl
 do {C:/your path/mlu_sv/run_mlu.do}
 ```
 
-腳本會切換到專案資料夾、編譯、加入波形並執行測試。已附 `mlu_vectors.txt`，直接跑 SV 不需要先編譯 C。
-通過時應看到：
+The script changes to the project directory, compiles the sources, adds waveforms, and runs the test. `mlu_vectors.txt` is supplied; SV replay does not require compiling C first. A passing run should show:
 
 ```text
 ALL PASS MLU unit C/SV: 16708 records, 145 resets, 128 rejected edges
@@ -40,98 +34,92 @@ ALL PASS MLU unit C/SV: 16708 records, 145 resets, 128 rejected edges
   command+retire=1 read+output=4087 full_stalls=13908 both_ready=4396
 ```
 
-本次實際執行的是 Verilator；未在 ModelSim/Questa 本機實測。測試平台採一般 procedural checks，沒有 SVA、DPI、UVM 或 class。
+The original standalone verification ran Verilator, not a local ModelSim/Questa installation. The testbench uses ordinary procedural checks, without SVA, DPI, UVM, or classes.
 
-## 檔案與編譯順序
+## Files and Compilation Order
 
-| 檔案 | 用途 |
+| File | Purpose |
 |---|---|
-| `du_tia_pkg.sv` | 原始 package，提供封包型別；不包含 DU/TIA module instance |
-| `mlu_pkg.sv` | MLU command、meta、buffer、事件與封包轉換函式 |
-| `mlu.sv` | MLU RTL，top module 為 `mlu` |
-| `tb_mlu.sv` | 只實例化 MLU，讀取 C vectors 並逐拍比對 MLU |
-| `mlu_vectors.txt` | 已產生的完整測試向量 |
-| `run_mlu.do`、`wave_mlu.do` | ModelSim 執行與波形腳本 |
-| `sim.f`、`synth.f` | 模擬／MLU 合成用的來源檔順序 |
-| `c_ref/` | 本次 C 來源的原樣副本，以及新增的 vector generator |
-| `generate_vectors.sh`、`generate_vectors.bat` | Linux／Visual Studio Developer Command Prompt 重新產生 vectors |
-| `run_verilator.sh` | Linux Verilator 編譯與模擬 |
-| `logs/` | 本次 C、RTL 驗證結果 |
-| `SOURCE_SHA256.txt` | 輸入 C 檔案與原始 `du_tia_pkg.sv` 的 SHA-256 |
+| `du_tia_pkg.sv` | Original package defining packet types; no DU/TIA module instance |
+| `mlu_pkg.sv` | MLU commands, metadata, buffers, events, and packet-conversion functions |
+| `mlu.sv` | MLU RTL; top module is `mlu` |
+| `tb_mlu.sv` | Instantiates only MLU and compares it cycle by cycle against C vectors |
+| `mlu_vectors.txt` | Complete pregenerated test vectors |
+| `run_mlu.do`, `wave_mlu.do` | ModelSim execution and waveform scripts |
+| `sim.f`, `synth.f` | Source order for simulation and MLU synthesis |
+| `c_ref/` | Unmodified copies of the supplied C sources, plus the vector generator |
+| `generate_vectors.sh`, `generate_vectors.bat` | Vector regeneration on Linux / Visual Studio Developer Command Prompt |
+| `run_verilator.sh` | Linux Verilator compilation and simulation |
+| `logs/` | Original C and RTL verification results |
+| `SOURCE_SHA256.txt` | SHA-256 hashes of the supplied C files and original `du_tia_pkg.sv` |
 
-模擬依序編譯 `du_tia_pkg.sv → mlu_pkg.sv → mlu.sv → tb_mlu.sv`。
-只合成 MLU 時使用前三個檔案，排除 testbench、vectors 和 C 程式。
-既有專案若已經編譯 `du_tia_pkg.sv`，只保留一份 package 定義。
+Compile for simulation in this order: `du_tia_pkg.sv → mlu_pkg.sv → mlu.sv → tb_mlu.sv`. For MLU synthesis, use only the first three files and exclude the testbench, vectors, and C programs. If an existing project already compiles `du_tia_pkg.sv`, retain only one definition of the package.
 
-## C 與 RTL 的對應
+## C-to-RTL Mapping
 
 | C | SystemVerilog |
 |---|---|
 | `Mlu` | `mlu_state_t state_q` |
-| `Mlu next` | 組合邏輯 `state_d` |
-| `mlu_reset()` | `rst_n=0`，非同步低有效 reset |
-| `mlu_peek()` | `peek` 組合邏輯，輸出由舊暫存器狀態決定 |
-| `mlu_tick()` | `next_state` 計算，於 clock 上升緣寫入 |
-| `MluEvents` | `mlu_tick_info_t tick_info`，記錄剛完成那一拍的事件 |
-| `IoStatus` | `status`，組合邏輯，表示下一個上升緣的檢查結果 |
+| `Mlu next` | Combinational `state_d` |
+| `mlu_reset()` | `rst_n=0`, asynchronous active-low reset |
+| `mlu_peek()` | Combinational `peek`; outputs depend on old registered state |
+| `mlu_tick()` | `next_state` calculation, committed on the rising clock edge |
+| `MluEvents` | `mlu_tick_info_t tick_info`, recording events at the preceding edge |
+| `IoStatus` | Combinational `status`, indicating checks for the next rising edge |
 | `IoFrame.packet` | `out_packet` |
-| `IoFrame.meta` | `out_meta`：`tile_id[31:0]`、`dst_addr[63:0]` |
-| `IoFrame.k` | `out_k[2:0]`，範圍 0～7 |
+| `IoFrame.meta` | `out_meta`: `tile_id[31:0]`, `dst_addr[63:0]` |
+| `IoFrame.k` | `out_k[2:0]`, range 0–7 |
 
-沒有額外加 output register：`out_packet` 是從已登錄的 head buffer 與 `next_k` 組合產生。
-當 `out_valid=1`、`out_ready=0` 時，head 與 k 不前進，整個 packet 和 sideband 保持不變。
+There is no extra output register. `out_packet` is generated combinationally from the registered head buffer and `next_k`. When `out_valid=1` and `out_ready=0`, neither head nor k advances, and the entire packet and sideband remain stable.
 
-`tick_info` 是觀察介面，未使用時可以不接；不要拿其中已登錄的 `packet_issued` 當成同一拍 DU/TIA 的輸入 valid，這會晚一拍。
+`tick_info` is an observation interface and may be left unconnected when unused. Do not use its registered `packet_issued` as DU/TIA input valid for the same edge; it would arrive one cycle late.
 
-## Port 契約
+## Port Contract
 
-| 介面 | 訊號 | 意義 |
+| Interface | Signals | Meaning |
 |---|---|---|
-| Command | `command_valid`、`command_ready`、`command` | 兩者同為 1 才接收新 tile command |
-| Read request | `read_request_valid`、`read_request_ready` | 發出一筆 burst 請求 |
-| Read request | `read_addr[63:0]` | tile 的來源 byte address |
-| Read request | `read_beats[2:0]` | 實際 beat 數 4 或 5；不是 AXI 的 length-minus-one |
-| Read data | `read_data_valid`、`read_data_ready` | 兩者同為 1 才收下該 beat |
-| Read data | `read_data[31:0][7:0]` | 一拍 32 bytes，共 256 bits |
-| Read data | `read_last` | 最後一個 beat 必須為 1，其餘為 0 |
-| DU input | `out_valid`、`out_ready` | MLU 輸出握手；`out_ready` 是 bridge credit |
+| Command | `command_valid`, `command_ready`, `command` | Accept a new tile command only when valid and ready are both 1 |
+| Read request | `read_request_valid`, `read_request_ready` | Issue a burst request |
+| Read request | `read_addr[63:0]` | Tile source byte address |
+| Read request | `read_beats[2:0]` | Actual beat count, 4 or 5; not AXI length-minus-one |
+| Read data | `read_data_valid`, `read_data_ready` | Accept a beat only when both are 1 |
+| Read data | `read_data[31:0][7:0]` | 32 bytes, or 256 bits, per beat |
+| Read data | `read_last` | Must be 1 on the final beat and 0 otherwise |
+| DU input | `out_valid`, `out_ready` | MLU output handshake; `out_ready` represents Bridge credit |
 | DU input | `out_packet` | 236-bit DU/TIA input packed struct |
-| Sideband | `out_meta`、`out_k` | 與輸出握手同步送給 wrapper／bridge |
-| Diagnostic | `status`、`tick_info` | 當拍檢查結果、上一個上升緣的事件 |
+| Sideband | `out_meta`, `out_k` | Sent to the wrapper/Bridge with the output handshake |
+| Diagnostic | `status`, `tick_info` | Current checks and events from the previous rising edge |
 
-這是 C model 的簡化記憶體介面。接實際 HBM／AXI controller 時，要由 adapter 轉換請求與回傳資料；MLU 本身不含 HBM controller、AXI ID／response code／arbitration。
+This is the C model's simplified memory interface. A real HBM/AXI controller needs an adapter to translate requests and responses. MLU itself has no HBM controller, AXI IDs, response codes, or arbitration.
 
-`read_data[0]` 對應 `read_data[7:0]`，是當前 beat 最低位址的 byte；第 b 個 beat 的第 i 個 byte 存進 `image[32*b+i]`。
-請勿將整個 256-bit word 的 byte 順序反過來。
+`read_data[0]` corresponds to the flattened `read_data[7:0]`, the lowest-address byte in the current beat. Byte i of beat b is stored in `image[32*b+i]`. Do not reverse the byte order of the entire 256-bit word.
 
-reset 時及釋放 reset 前，所有相連模組應共同處於 reset，來源端應停止送出 valid；reset 期間不要採計握手。MLU 的組合輸出維持 C `peek` 語意，例如清空後 `command_ready` 為 1。
+During reset and before reset release, keep all connected modules in reset together and suppress valid at the sources. Do not count handshakes during reset. MLU combinational outputs preserve C `peek` semantics; for example, `command_ready` is 1 after clearing the buffers.
 
-## 保留的時序
+## Preserved Timing
 
-1. Command 被接受後，對應 buffer 進入 `MLU_PENDING`。
-2. 下一拍起才可能發出 read request；握手後變成 `MLU_READING`。
-3. 下一拍起才接受 read data，不會在 request 接受的同一個上升緣收第一個 beat。
-4. 收完最後一個 beat 且格式正確後變成 `MLU_READY`。
-5. 下一拍起，若該 buffer 是 head，就輸出 k=0。
-6. 每次 `out_valid && out_ready`，k 前進一次；k=7 被接受後釋放該 buffer。
+1. An accepted command places its buffer in `MLU_PENDING`.
+2. A read request can be issued starting on the next cycle; its handshake changes the buffer to `MLU_READING`.
+3. Read data can be accepted starting on the following cycle. The first beat is not accepted on the request-acceptance edge.
+4. After the final beat is received and the format is valid, the buffer becomes `MLU_READY`.
+5. Starting on the next cycle, a ready head buffer outputs k=0.
+6. Each `out_valid && out_ready` advances k. Acceptance of k=7 releases the buffer.
 
-所有 ready／valid 都依照舊狀態計算。兩個 buffer 都占用時，即使這拍剛好送出 k=7，`command_ready` 仍為 0，要下一拍才能使用釋放的空間。
-當舊 count=1 時，可以同拍收新 command 並送完舊 tile；測試中的 `command+retire` 就是這個情況。
+All ready/valid decisions use old state. If both buffers are occupied, `command_ready` remains 0 even when k=7 transfers on that edge; the released capacity becomes available on the next cycle. With old count=1, a new command and retirement of the old tile may occur on the same edge. This is the test's `command+retire` case.
 
-可同時出現一個 buffer 正在讀取，另一個 buffer 正在輸出；也可以兩個都 READY，但只有 head 會輸出。最多一個 buffer 是 READING。
-兩個連續 tile 都已 READY 時，前一個 k=7 之後下一拍可以直接送下一個 k=0。
+One buffer may be reading while the other is outputting. Both may also be READY, but only the head outputs. At most one buffer is READING. When two consecutive tiles are already READY, the next tile's k=0 may follow the previous tile's k=7 on the next cycle.
 
-## 記憶體排列
+## Memory Layout
 
-位址都是相對於 `command.src_addr` 的 byte offset。輸入已由上游完成 sparse packing，MLU 不執行零值偵測或壓縮。
+All addresses below are byte offsets from `command.src_addr`. Upstream has already packed sparse data; MLU performs no zero detection or compression.
 
-| Mode | 有效 image bytes | 傳輸 bytes／beats | 每個 k 的讀法 |
+| Mode | Meaningful image bytes | Transfer bytes / beats | Per-k addressing |
 |---|---:|---:|---|
-| Dense | 128 | 128／4 | `A[:,k]`：`16*k + i`；`B[k,:]`：`16*k + 8 + i` |
-| Hybrid | 120 | 128／4 | A bitmap：`9*k`；A packed：`9*k + 1 + i`；B 見下方 |
-| Dual sparse | 144 | 160／5 | A bitmap：`18*k`；A packed：`18*k+1+i`；B bitmap：`18*k+9`；B packed：`18*k+10+i` |
+| Dense | 128 | 128 / 4 | `A[:,k]`: `16*k + i`; `B[k,:]`: `16*k + 8 + i` |
+| Hybrid | 120 | 128 / 4 | A bitmap: `9*k`; packed A: `9*k + 1 + i`; B as below |
+| Dual sparse | 144 | 160 / 5 | A bitmap: `18*k`; packed A: `18*k+1+i`; B bitmap: `18*k+9`; packed B: `18*k+10+i` |
 
-Hybrid 的 B 分兩個 K group，每個 group 有 8 個 column，每個 column 存 3 bytes：
+Hybrid B has two K groups. Each group has 8 columns, with 3 bytes per column:
 
 ```text
 b = 72 + (k / 4) * 24 + column * 3
@@ -140,104 +128,83 @@ image[b + 1] = packed value[0]
 image[b + 2] = packed value[1]
 ```
 
-k=0～3 使用第一組 B；k=4～7 使用第二組 B。
-`out_packet.k_position = k[1:0]`，由 DU/TIA 根據該位置從 group 選值。
-mask 在 image 裡占 1 byte，合法值只有 `03、05、06、09、0A、0C`。
-MLU 驗證完整 8 bits，確認高 4 bits 為零後，送給 DU/TIA 的 mask 才縮為 4 bits。
-檢查使用包含最後一個 beat 的新 image，因此最後一拍裡的非法 mask 也會被發現。
+k=0–3 uses the first B group; k=4–7 uses the second. `out_packet.k_position = k[1:0]` lets DU/TIA select values from the group. A mask occupies 1 byte in the image; the only legal hexadecimal values are `03, 05, 06, 09, 0A, 0C`. MLU validates all 8 bits, checks that the upper 4 are zero, and then narrows the DU/TIA mask to 4 bits. Validation uses the updated image including the final beat, so illegal masks in that beat are also detected.
 
-數值維持 INT8 的原始 8-bit pattern，`80` 仍表示 −128、`FF` 仍表示 −1。
-MLU 只搬資料，無須加入 C `io_signed_byte()` 的減 256 電路。沿用你的 DU/TIA 定義，packed lane 本身是 bit vector；真正做乘法時仍應以 signed 解讀。
+Values retain their original INT8 bit patterns: `80` represents −128 and `FF` represents −1. MLU only moves data, so it does not need hardware for the subtract-256 operation in C `io_signed_byte()`. As in the DU/TIA definition, packed lanes are bit vectors; actual multiplication must interpret them as signed.
 
-## 之後完整整合時的 DU/TIA 與 bridge 接線
+## DU/TIA and Bridge Wiring for Full Integration
 
-本節不在目前單元 testbench 中執行。目前 `out_ready` 由 vectors 提供；完整整合後才改由 bridge 提供。
-正常、無格式錯誤的流量，wrapper 的接線關係為：
+This wiring is not executed by the standalone testbench. Vectors provide `out_ready` in the unit test; the Bridge provides it during full integration. For legal traffic without format errors, the wrapper wiring is:
 
 ```systemverilog
 assign mlu_out_ready = bridge_issue_ready;
 assign issue_fire   = mlu_out_valid && mlu_out_ready;
 
-// DU/TIA 沒有 input_ready；只在真正獲得 credit 時送進一次。
+// DU/TIA has no input_ready; issue once only when credit is available.
 assign du_in_valid  = issue_fire;
 assign du_in_packet = mlu_out_packet;
 
-// bridge 也用同一個 issue_fire 計數／接收 sideband。
+// The Bridge uses the same issue_fire for counting and sideband capture.
 // bridge_issue = issue_fire;
 // bridge_meta  = mlu_out_meta;
 // bridge_k     = mlu_out_k;
 ```
 
-以上是接線示意，bridge port 名稱依你之後的 bridge RTL 調整。
-不要直接將 MLU `out_valid` 接到 DU/TIA `in_valid`：MLU 停頓期間會維持 valid，DU/TIA 卻會每拍收一次，造成重複輸入。
-`out_meta`／`out_k` 應由 wrapper 與 DU/TIA 流水線對齊；不必加進 DU/TIA 或 TC 的資料封包。
-`src_addr` 只供 MLU 發出記憶體讀取；輸出的 meta 保留 `tile_id` 與後續 MSU 要用的 `dst_addr`。
+This is illustrative wiring; map the Bridge port names to the actual Bridge RTL. Do not connect MLU `out_valid` directly to DU/TIA `in_valid`: MLU holds valid during a stall, while DU/TIA would accept the same input every cycle. Align `out_meta` / `out_k` with the DU/TIA pipeline in the wrapper/Bridge; they need not be added to DU/TIA or TC data packets. `src_addr` is used only for MLU memory requests; output metadata retains `tile_id` and the `dst_addr` needed by MSU.
 
-## status 與錯誤處理的範圍
+## Status and Error-Handling Scope
 
-`IO_OK=0`、`IO_BAD_FORMAT=2`、`IO_PROTOCOL_ERROR=3` 與 C 相同。
-無效 mode、地址未 32-byte 對齊、讀／寫區間溢位、hybrid 非法 mask 屬格式錯誤；`read_last` 不符合 beat 位置屬 protocol error。
-`IO_BAD_ARGUMENT` 與 `IO_NO_CREDIT` 保留 enum 值，但本 MLU RTL 不產生這兩種狀態。
-RTL mode 是 2 bits，非法模式用 `2'b11` 測試；C 的任意整數 mode（例如 99）不是可直接套用的 RTL port 值。
+`IO_OK=0`, `IO_BAD_FORMAT=2`, and `IO_PROTOCOL_ERROR=3` match C. Illegal modes, addresses not aligned to 32 bytes, read/write range overflow, and illegal hybrid masks are format errors. A `read_last` value inconsistent with the beat position is a protocol error. `IO_BAD_ARGUMENT` and `IO_NO_CREDIT` retain their enum values but are not produced by this MLU RTL. The RTL mode is 2 bits, so use `2'b11` for an illegal mode. Arbitrary C integer modes, such as 99, cannot be applied directly to that port.
 
-MLU buffer 滿、或 `valid=1 && ready=0` 都只是等待，**不會報錯**。
-只有實際符合握手條件時，才檢查對應輸入的格式。
+Full MLU buffers or `valid=1 && ready=0` simply cause waiting; **they do not report an error**. Input format is checked only when the corresponding handshake conditions are met.
 
-為了對齊 C，當 `status != IO_OK`，MLU 的所有本地狀態在該上升緣保持原值，`tick_info` 清零。`status` 不是 sticky error register，必須在該上升緣採樣。
+To match C, when `status != IO_OK`, all local MLU state holds at that rising edge and `tick_info` clears. `status` is not a sticky error register and must be sampled at the edge.
 
-**C 的整個 tick 回滾，無法讓真實總線已發生的握手自動回滾。** 本 RTL 沒有用 status 改寫正常 valid／ready 時序；外部模組仍可能在錯誤那一拍觀察到握手。因此整合後將非零 status 視為系統錯誤，共同 reset MLU、記憶體回應端、DU/TIA、bridge、TC 與 MSU。不要在仍持續運作的整個系統上，直接照負向單元測試的方式修改一個輸入再 retry。
-這套負向測試驗證的是 MLU 的本地拒絕行為，不是完整系統的錯誤復原協定。
+**Rolling back a C tick cannot automatically undo a physical bus handshake.** This RTL does not alter normal valid/ready timing based on status, so external modules may still observe handshakes on an error edge. Integration must treat nonzero status as a system fault and reset MLU, the memory responder, DU/TIA, Bridge, TC, and MSU together. Do not copy the negative unit test's change-one-input-and-retry procedure into a running system. These tests verify local MLU rejection behavior, not a full-system recovery protocol.
 
-## 本次驗證
+## Original Verification
 
-2026-10-24 實際完成：
+The following work was completed on 2026-10-24:
 
-- 原始 C testbench：120 tiles、960 packets、1,312 cycles，PASS。
-- 保留原 C model，不改演算法；由 `gen_mlu_vectors.c` 呼叫它產生 golden vectors。
-- 120-tile 原始流量、120-tile 連續流量，以及四組不同 seed、各 256-tile 的停頓流量。
-- 每拍比對 `mlu_peek` 的所有輸出、當拍 status、更新後 events，以及完整 2,900-bit MLU 狀態；包含兩個 buffer 的 320 bytes，不使用 state hash 取代。
-- Directed tests：同拍 command＋tile retirement、兩槽 READY、滿槽等待、head wrap、停頓時輸出穩定、signed byte 邊界、最高合法地址與越界、錯誤 last、16 個 hybrid mask 位置的多種非法值，以及處理中 reset。
-- 本次修改後，使用只含 MLU 的來源清單重新編譯並執行全部 vectors；保留全部 MLU 比對與原有覆蓋門檻。
+- Original C testbench: PASS, 120 tiles, 960 packets, 1,312 cycles.
+- The original C model and algorithm were preserved; `gen_mlu_vectors.c` calls it to generate golden vectors.
+- Original 120-tile traffic, a consecutive 120-tile stream, and four stalled streams of 256 tiles each with different seeds.
+- Every cycle compares all `mlu_peek` outputs, current status, updated events, and the entire 2,900-bit MLU state, including 320 bytes across the two buffers. No state hash substitutes for this comparison.
+- Directed tests cover simultaneous command/tile retirement, two READY buffers, full-buffer stalls, head wrap, stable stalled outputs, signed-byte limits, highest legal and out-of-range addresses, incorrect last, multiple illegal values at all 16 hybrid-mask positions, and reset during processing.
+- After the standalone revision, all vectors were recompiled and run with an MLU-only source list, retaining every MLU comparison and existing coverage threshold.
 
-| 覆蓋項目 | 實測數量 |
+| Coverage item | Observed count |
 |---|---:|
-| 向量紀錄，包含 reset | 16,708 |
-| Reset 紀錄 | 145 |
-| 預期被拒絕的錯誤拍 | 128 |
-| 接受的 commands | 1,397 |
-| MLU 送出的 packets | 10,236 |
-| 完整送出的 tiles | 1,279 |
-| 同拍新 command 與舊 tile retirement | 1 |
-| 同拍接受 read data 與輸出 packet | 4,087 |
-| command 因滿槽而等待的拍數 | 13,908 |
-| 更新後兩個 buffer 同為 READY 的紀錄 | 4,396 |
+| Vector records, including resets | 16,708 |
+| Reset records | 145 |
+| Expected rejected error edges | 128 |
+| Accepted commands | 1,397 |
+| Packets issued by MLU | 10,236 |
+| Fully retired tiles | 1,279 |
+| Same-edge new command and old tile retirement | 1 |
+| Same-edge read-data acceptance and packet output | 4,087 |
+| Command stall cycles due to full buffers | 13,908 |
+| Records with both buffers READY after update | 4,396 |
 
-部分 directed tests 故意在 MLU tile 尚未讀完或送完時 reset，因此 commands 不一定全數 retirement。這些 reset flush 是預期行為。
-`command+retire=1` 是明確安排的一個邊界情境；其他同拍收送由 `read+output=4087` 覆蓋。這兩個計數定義不同。
+Some directed tests intentionally reset before a tile finishes reading or outputting, so not every command retires. These reset flushes are expected. `command+retire=1` is one explicitly arranged boundary case; `read+output=4087` covers other simultaneous transfers. The counters have different definitions.
 
-未執行 FPGA／ASIC synthesis 或 place-and-route；沒有宣稱 Fmax、面積、功耗或實際 HBM 效能。
-目前 buffer 是有 reset 的暫存器陣列，沒有刻意做 BRAM/SRAM inference。可先用這版當逐拍等價的功能基準。
+The original standalone delivery did not run FPGA/ASIC synthesis or place-and-route and made no claim of Fmax, area, power, or actual HBM performance. The buffers are resettable register arrays, without deliberate BRAM/SRAM inference. This version serves as a cycle-equivalent functional baseline.
 
-## 重新產生與重跑
+## Regeneration and Reruns
 
-Linux：
+Linux:
 
 ```bash
 bash generate_vectors.sh
 bash run_verilator.sh
 ```
 
-可指定不同隨機 seed：`bash generate_vectors.sh 12345`。先等 vectors 產生完再啟動模擬。
-若 Verilator 不在 PATH，設定 `VERILATOR` 為執行檔的完整路徑。
-本次使用 PyPI `verilator` 5.48.0 套件的 executable；其模擬 banner 顯示 Verilator 5.49。
-此套件在本環境需額外指定 GCC PCH 與 C++20 設定，重現用法如下：
+To select a different seed, use `bash generate_vectors.sh 12345`. Wait for vector generation to finish before starting simulation. If Verilator is not on PATH, set `VERILATOR` to the executable's full path. The original run used the PyPI `verilator` 5.48.0 package executable, whose simulation banner displayed Verilator 5.49. That environment required extra GCC PCH and C++20 settings:
 
 ```bash
 MLU_VERILATOR_MAKEFLAGS='CFG_CXXFLAGS_PCH_I=-include CFG_CXXFLAGS_STD=-std=c++20' bash run_verilator.sh
 ```
 
-Windows：開啟支援 C11 的 Visual Studio Developer Command Prompt，執行 `generate_vectors.bat`。
-已附 vectors，所以只想用 ModelSim 驗證時可略過這一步。Windows `.bat` 與 ModelSim `.do` 尚未在其原生環境實測。
+Windows: open a Visual Studio Developer Command Prompt with C11 support and run `generate_vectors.bat`. Supplied vectors make this step unnecessary for ModelSim replay. At the original standalone delivery, the Windows `.bat` and ModelSim `.do` files had not been tested in their native environments.
 
-要輸出 VCD，ModelSim 可手動以 `+VCD` 載入 testbench；Verilator 需另加 `--trace` 編譯後才使用 `+VCD`。
-一般 ModelSim 流程已使用 `log -r /*` 與 WLF 波形，不必額外產生 VCD。
+For VCD output, load the ModelSim testbench with `+VCD`. With Verilator, compile with `--trace` before using `+VCD`. The normal ModelSim flow already uses `log -r /*` and WLF waveforms, so extra VCD generation is unnecessary.

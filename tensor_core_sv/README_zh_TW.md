@@ -1,20 +1,19 @@
-# Tensor Core SystemVerilog — sparse overlap 版本
+# Tensor Core SystemVerilog — Sparse Tile Overlap
 
-本版以這次提供的 `tensor_core_model(1).c/.h` 和 `tb_tensor_core(1).c` 為依據。
-`c_reference/` 內的三份原始 C 檔只有移除檔名的 `(1)`，內容未修改。
-僅包含 Tensor Core；輸入是已完成 DU/TIA 解碼的封包。
+> Scope note: tool availability and verification statements below describe the original standalone delivery. See the [repository README](../README.md) and [source audit](../docs/source-audit.md) for later ModelSim and implementation results. In this repository, restore `c_vectors.txt` from its gzip distribution with `tools/restore_vectors.ps1` at the repository root before replay.
 
-## 在 ModelSim 執行
+This version is based on the supplied `tensor_core_model(1).c/.h` and `tb_tensor_core(1).c`. The three original C files in `c_reference/` only had `(1)` removed from their filenames; their contents were unchanged. This package contains only Tensor Core. Inputs are packets already decoded by DU/TIA.
 
-1. 解壓整個資料夾，保留 `c_vectors.txt` 和 `.sv` 檔的相對位置。
-2. 在 ModelSim 的 Transcript 輸入（換成你的實際路徑）：
+## Running ModelSim
+
+1. Extract the entire directory, preserving the relative locations of `c_vectors.txt` and the `.sv` files.
+2. Enter the following in the ModelSim Transcript, substituting the actual path:
 
    ```tcl
    do C:/your/path/tensor_core_sv/run_modelsim.do
    ```
 
-腳本會編譯、載入波形並執行完整測試。已附產生好的 C 參考向量，**不必先裝 GCC 或編譯 C**。
-如果手動建立 ModelSim project，編譯順序如下，simulation top 選 `tb_tensor_core`：
+The script compiles the sources, loads waveforms, and runs the full test. Pregenerated C reference vectors are supplied; **GCC installation or C compilation is not required first**. When creating a ModelSim project manually, use this compilation order and select `tb_tensor_core` as the simulation top:
 
 ```tcl
 vlog -sv tensor_core_pkg.sv tensor_core.sv tb_tensor_core.sv
@@ -22,84 +21,73 @@ vsim -onfinish stop -voptargs=+acc work.tb_tensor_core +VECTORS=c_vectors.txt
 run -all
 ```
 
-手動執行時，工作目錄必須是這個資料夾，或把 `+VECTORS=` 改為向量檔路徑。
-RTL 和 SV testbench 均未使用 `assert` / SVA、UVM、class 或 DPI。
-失敗時使用一般 `if`、`$display` 和 `$fatal` 回報。
+For manual execution, use this directory as the working directory or set `+VECTORS=` to the vector file path. Neither RTL nor the SV testbench uses `assert` / SVA, UVM, classes, or DPI. Failures are reported with ordinary `if`, `$display`, and `$fatal`.
 
-## 檔案
+## Files
 
-| 檔案 | 用途 |
+| File | Purpose |
 |---|---|
-| `tensor_core_pkg.sv` | 封包、PE、pipeline、控制暫存器與型別 |
-| `tensor_core.sv` | 核心 RTL，只有此檔和 package 需要交給綜合工具 |
-| `tb_tensor_core.sv` | 逐拍讀取 C 參考資料，比對介面、結果及內部狀態 |
-| `run_modelsim.do` / `waves.do` | ModelSim 編譯、模擬與波形設定 |
-| `c_vectors.txt` | 完整預先產生的測試向量，約 144 MiB |
-| `c_reference/` | 原始 C model/testbench，加上向量產生器 |
-| `generate_vectors.bat` / `.sh` | 需要更換 seed 或測試數量時重新產生向量 |
-| `c_reference_results.txt` | 原始 C 測試結果 |
-| `verification_results.txt` | 本次 Verilator C/SV 比對實測結果 |
-| `SOURCE_SHA256.txt` | 三份原始 C 來源的 SHA-256 |
+| `tensor_core_pkg.sv` | Packet, PE, pipeline, control-register, and other types |
+| `tensor_core.sv` | Core RTL; synthesis needs only this file and the package |
+| `tb_tensor_core.sv` | Reads C reference records cycle by cycle and compares interfaces, results, and internal state |
+| `run_modelsim.do` / `waves.do` | ModelSim compilation, simulation, and waveform setup |
+| `c_vectors.txt` | Complete pregenerated test vectors, approximately 144 MiB |
+| `c_reference/` | Original C model/testbench plus the vector generator |
+| `generate_vectors.bat` / `.sh` | Vector regeneration with different seeds or test counts |
+| `c_reference_results.txt` | Original C test results |
+| `verification_results.txt` | Original measured Verilator C/SV comparison results |
+| `SOURCE_SHA256.txt` | SHA-256 hashes of the three original C sources |
 
-## 保留的行為
+## Preserved Behavior
 
-- 固定 M=N=K=8，signed INT8 × INT8，INT32 累加，初值為零。
-- Dense：8×8 output-stationary systolic array，lane i 延遲 i 拍，每拍只跨一個 PE。
-- Sparse：MUL → ROUTE → ACC，三者讀取前一拍暫存器；每個 tile 收 8 筆封包。
-- Sparse 的下一個 tile 可以在第 9 筆輸入直接開始，不必等待前一個結果輸出。
-- 每個 tile 第一筆輸入預留一個 result credit；最多同時 outstanding=2。
-- 兩個實體 result slots，支援同拍 consume/publish 與 consume/start。
-- FIFO 滿載時，只阻擋新 sparse tile 的第一筆；已開始的 tile 仍可接收剩餘資料。
-- `is_sparse` 只能在舊工作及結果全部 drain、busy=0 後切換。
-- Sparse 在 `route.first` 到达 ACC 時才清 accumulator；不會在下一個 tile 輸入時提早清除。
-- 空 outer product 仍傳遞 valid/first/last；有效 prefix 裡存放 0 是合法的。
-- 消費結果後，無效的 result slot 保留舊值，與 C 相同。判斷結果請看 `result_valid`。
+- Fixed M=N=K=8, signed INT8 × INT8, INT32 accumulation initialized to zero.
+- Dense: 8×8 output-stationary systolic array; lane i is delayed by i cycles, and data moves across only one PE per cycle.
+- Sparse: MUL → ROUTE → ACC, each reading previous-cycle registers; eight accepted packets per tile.
+- The next sparse tile can start at the ninth input without waiting for the previous result to be output.
+- The first input of each tile reserves a result credit; at most outstanding=2.
+- Two physical result slots support same-edge consume/publish and consume/start.
+- A full result FIFO blocks only the first packet of a new sparse tile; a started tile can still accept its remaining packets.
+- `is_sparse` can change only after all old work and results drain and busy=0.
+- Sparse accumulation clears only when `route.first` reaches ACC, not prematurely when the next tile enters.
+- Empty outer products still propagate valid/first/last. Stored zero values within the valid prefix are legal.
+- Invalid result slots retain old data after consumption, as in C. Use `result_valid` to determine validity.
 
-Dense 與 sparse 在 RTL 中經 operand mux 共用 64 個乘法運算位置。
-Dense 的 PE accumulator、sparse accumulator 和兩個 result slots 分別保存；
-C 的 state union 沒有直接轉成硬體共用儲存體。實際乘法器、DSP、面積與 Fmax 仍須由目標工具綜合確認。
+Dense and sparse paths share 64 multiplication operation positions through operand muxes in RTL. Dense PE accumulators, the sparse accumulator, and the two result slots have separate storage; the C state union was not directly converted into shared hardware storage. Actual multiplier/DSP mapping, area, and Fmax require synthesis in the target flow.
 
-## 時序
+## Timing
 
-以接受第一筆輸入的 rising edge 為 cycle 0，連續接受 k=0..7：
+Number the rising edge accepting the first input as cycle 0 and accept k=0..7 consecutively:
 
-| 事件 | Dense | Sparse |
+| Event | Dense | Sparse |
 |---|---:|---:|
-| 最後一筆输入 | 7 | 7 |
-| 最後一次累加 | 21 | 9 |
-| result_valid 變 1 | 22 | 10 |
-| result_ready 持續為 1 時，最早 consume | 23 | 11 |
-| 下一個 tile 最早開始 | 24 | 8 |
+| Final input | 7 | 7 |
+| Final accumulation | 21 | 9 |
+| result_valid becomes 1 | 22 | 10 |
+| Earliest consumption with result_ready continuously 1 | 23 | 11 |
+| Earliest start of the next tile | 24 | 8 |
 
-有 gap 時，以最後一筆實際接受的 cycle 為基準：dense 在 +15 拍 publish，sparse 在 +3 拍 publish。
-Publish 當拍不能消費「剛產生」的結果，只能消費該拍以前已有效的 FIFO head。
-`result_ready` 不參與組合 readiness：本拍釋放的 credit 到下一拍才可用。
+With input gaps, measure from the last actually accepted input: dense publishes at +15 cycles and sparse at +3 cycles. A newly published result cannot be consumed on its publication edge; only a previously valid FIFO head can be consumed. `result_ready` does not feed combinational input readiness. A credit released on an edge becomes available in the next cycle.
 
-## 介面
+## Interface
 
-| 訊號 | 意義 |
+| Signal | Meaning |
 |---|---|
-| `clk` / `rst_n` | 上升緣更新；低有效非同步 reset，清掉全部狀態及 debug info |
-| `in_packet` | `tc_input_packet_t`；下一筆要送的封包 |
-| `input_ready` | 對應 `tc_input_ready()`，只看目前模式的資源 |
-| `in_ready` | 對應 `tc_input_ready_for(..., in_packet.is_sparse)`，加上模式檢查 |
-| `in_valid` | 本拍提出有效封包；合法 driver 應只在 in_ready=1 時拉高 |
-| `result_valid` / `result_ready` | FIFO head 有效 / 外部準備消費；在 rising edge 取走舊 head |
-| `result` | `result[i][j]` 是 32-bit 二補數結果；顯示為十進位時用 `$signed(...)` |
-| `busy` | 有尚未被消費的 tile，包括只輸入部分封包、pipeline 中、已完成的結果 |
-| `status` | 目前輸入對下一個 rising edge 的組合檢查結果，非註冊脈衝 |
-| `tick_info` | 最近一次 rising edge 的操作觀察值，對應 `TcTickInfo` |
+| `clk` / `rst_n` | Rising-edge updates; asynchronous active-low reset clears all state and debug information |
+| `in_packet` | `tc_input_packet_t`, the next packet to issue |
+| `input_ready` | Corresponds to `tc_input_ready()`; checks resources for the current mode only |
+| `in_ready` | Corresponds to `tc_input_ready_for(..., in_packet.is_sparse)`; includes mode compatibility |
+| `in_valid` | Valid input for this edge; a legal driver asserts it only when in_ready=1 |
+| `result_valid` / `result_ready` | Valid FIFO head / downstream readiness; the old head is consumed at the rising edge |
+| `result` | `result[i][j]` is a 32-bit two's-complement result; use `$signed(...)` for decimal display |
+| `busy` | An unconsumed tile exists, including partially received input, pipeline work, or completed results |
+| `status` | Combinational check of current inputs for the next rising edge, not a registered pulse |
+| `tick_info` | Observation of the most recent rising edge, corresponding to `TcTickInfo` |
 
-`status` 的數值與 C enum 相同：OK=0、BAD_SPARSE_VECTOR=2、MODE_CHANGE=3、NOT_READY=4。
-C 的 BAD_ARGUMENT=1 只適用 NULL pointer，硬體不會產生。
-`tick_info` 用於驗證與看波形；整合成較大 top 時可不接，讓綜合工具移除未使用的 debug 邏輯。
+`status` matches the C enum: OK=0, BAD_SPARSE_VECTOR=2, MODE_CHANGE=3, NOT_READY=4. C BAD_ARGUMENT=1 applies only to NULL pointers and is not produced in hardware. `tick_info` supports verification and waveform inspection; it may be left unconnected in a larger top so synthesis can remove unused debug logic.
 
-**本版忠實保留 C 的 strict API，並非直接採用可持續拉高 valid 的一般串流協定。**
-`in_valid=1` 且資源不 ready、模式不符或 sparse metadata 不合法時，**整個核心該拍保持狀態**，
-連舊結果都不會 consume，`tick_info` 為零。要等待時請送 `in_valid=0`，讓 pipeline/output 繼續前進。
-`in_ready` 不檢查 sparse count/index 合法性；上游須提供合法 metadata。
+**This version preserves the strict C API rather than adopting a general streaming protocol that permits valid to remain asserted while waiting.** If `in_valid=1` while resources are unavailable, the mode is incompatible, or sparse metadata is illegal, **the entire core holds state for that edge**. Even an old result is not consumed, and `tick_info` is zero. Drive `in_valid=0` while waiting so the pipeline and output can advance. `in_ready` does not validate sparse count/index values; upstream must supply legal metadata.
 
-若上游已有 FIFO，且 FIFO head 可以保持，正常送法是：
+With an upstream FIFO that can hold its head, normal wiring is:
 
 ```systemverilog
 assign tc_in_packet = tensor_core_pkg::tc_input_packet_t'(fifo_head);
@@ -107,60 +95,45 @@ assign tc_in_valid  = fifo_valid && tc_in_ready;
 assign fifo_pop     = fifo_valid && tc_in_ready;
 ```
 
-上述假設 FIFO 提供合法封包。不能把一拍後就消失的 DU/TIA `out_valid` 單純與 ready 相 AND；
-那會丟掉被阻擋的封包。現有 DU/TIA 沒有 ready port，接成整體系統時須由外部緩衝及上游發送控制
-容納已在 DU/TIA pipeline 內的封包。本交付沒有修改 DU/TIA 或增加 MLU/MSU。
+This assumes legal FIFO packets. Do not simply AND a one-cycle DU/TIA `out_valid` with ready; blocked packets would be lost. DU/TIA has no ready port, so full integration needs external buffering and upstream issue control to accommodate packets already in its pipeline. The original TC delivery did not modify DU/TIA or add MLU/MSU.
 
-## 封包與 DU/TIA
+## Packets and DU/TIA
 
-本 package 的 `tc_input_packet_t` 是 185 bits，與提供的 `du_tia_pkg::du_tia_output_t`
-欄位順序、寬度一致，可使用上面的型別轉換；Tensor Core 單獨編譯不依賴 du_tia_pkg。
+This package's `tc_input_packet_t` is 185 bits and matches the field order and widths of the supplied `du_tia_pkg::du_tia_output_t`, allowing the cast shown above. Standalone TC compilation does not depend on du_tia_pkg.
 
-- Dense：`payload.dense.dense_a[i] = A[i][k]`，`dense_b[j] = B[k][j]`。
-- Sparse：`a/b.count` 是 0..8；有效位置是 value/index 的 0..count-1。
-- Index 為 3 bits，原座標 0..7，prefix 內必須嚴格遞增。Padding 的值和 index 被忽略。
-- Packed array 的 lane 0 是該 array 的最低位元組／欄位；請透過欄位索引填值。
-- 不需要額外 k、tile_start、first、last 或原始 compiler mode 輸入。
-- Hybrid、dual sparse、dense×unstructured 都以 is_sparse=1 走相同路徑。
+- Dense: `payload.dense.dense_a[i] = A[i][k]`, `dense_b[j] = B[k][j]`.
+- Sparse: `a/b.count` is 0..8; valid value/index entries are 0..count-1.
+- Indices are 3-bit original coordinates 0..7 and must be strictly increasing within the prefix. Padding values and indices are ignored.
+- Lane 0 is the least-significant byte/field of each packed array. Populate values through field indices.
+- No additional k, tile_start, first, last, or original compiler-mode input is required.
+- Hybrid, dual sparse, and decoded dense×unstructured packets use the same is_sparse=1 path.
 
-## 本次驗證
+## Original Verification
 
-1. 原始 C 測試通過：6,389 tiles，1,593,020 次 MAC。
-2. 使用同一份原始 C testbench 攔截 public reset/tick 呼叫，產生 136,136 筆逐拍資料。
-3. Verilator 實跑全部通過：169 筆 reset、13 筆可表示的 RTL 輸入拒絕情境；
-   FIFO 滿載 3,480 拍，同拍 pop/push 1 次、consume/start 151 次。
-4. 每筆核對 pre-edge readiness/status、post-edge 全部 TickInfo、busy/result_valid、
-   **兩個 result slots 的所有 64 個 INT32 元素**，以及依欄位計算的內部狀態 32-bit hash。
-   Hash 涵蓋控制暫存器及當前模式的所有 pipeline/accumulator 狀態，不使用 C struct padding。
-5. 原始 C 另以獨立 i/j/k GEMM 核對數學結果、dense 波前時序、sparse pipeline、FIFO 次序與延遲。
+1. Original C tests passed: 6,389 tiles and 1,593,020 MACs.
+2. Intercepting public reset/tick calls from the same original C testbench generated 136,136 cycle records.
+3. All records passed in Verilator: 169 resets and 13 representable RTL input-rejection cases; 3,480 full-FIFO cycles, 1 same-edge pop/push, and 151 consume/start cases.
+4. Each record checks pre-edge readiness/status, all post-edge TickInfo, busy/result_valid, **all 64 INT32 elements in each of both result slots**, and a field-based 32-bit internal-state hash. The hash covers control registers and all pipeline/accumulator state in the current mode, excluding C struct padding.
+5. The original C tests independently use i/j/k GEMM to check numerical results, dense wavefront timing, sparse pipeline behavior, FIFO ordering, and latency.
 
-測試涵蓋零值、極值、stored zero、gap、長時間 output hold、跨 tile overlap、模式切換、reset/restart。
-NULL pointer 和 active index≥8 共 4 筆 C-only 拒絕呼叫由原始 C 測試檢查；SV 的 3-bit index
-無法表示 ≥8。Padding index=255 在向量轉換時截為 7，但仍是不使用的 padding。
-紀錄包含測試中途 reset 丟棄的工作，以及未納入 tiles 統計的 contract tests，
-因此 publish/consume 計數不會與最後的 6,389 tiles 完全相同。
+Coverage includes zeros, extremes, stored zeros, gaps, long output holds, cross-tile overlap, mode changes, and reset/restart. Four C-only rejection calls involving NULL pointers and active index≥8 are checked by the original C tests; an SV 3-bit index cannot represent ≥8. Padding index=255 is truncated to 7 during vector conversion but remains unused padding. Records include work discarded by mid-test resets and contract tests excluded from the tile total, so publish/consume counts do not exactly match 6,389 tiles.
 
-RTL 的 Verilator `--Wall` lint 已通過。SV 語法和腳本以 ModelSim 為目標，
-但此環境未安裝 ModelSim，**這次實際模擬工具是 Verilator，不是 ModelSim**。
-尚未執行 FPGA/ASIC 綜合、STA 或形式等價驗證；狀態 hash 比對也不等於形式證明。
+Verilator `--Wall` RTL lint passed. SV syntax and scripts targeted ModelSim, but ModelSim was not installed in the original standalone environment; **that verification used Verilator**. That delivery did not run FPGA/ASIC synthesis, STA, or formal equivalence. State-hash comparison is not a formal proof.
 
-## 重新產生測試資料（可選）
+## Regenerating Test Data (Optional)
 
-Windows：在支援 C11 的 Visual Studio「x64 Native Tools Command Prompt」執行：
+Windows: use a Visual Studio "x64 Native Tools Command Prompt" with C11 support:
 
 ```bat
 generate_vectors.bat
 generate_vectors.bat --tests 100 --stream-tiles 100 --bench-tiles 20 --seed 12345
 ```
 
-Linux/GCC：
+Linux/GCC:
 
 ```bash
 bash generate_vectors.sh
 bash generate_vectors.sh --tests 100 --stream-tiles 100 --bench-tiles 20 --seed 12345
 ```
 
-這會覆寫本地 `c_vectors.txt` 和 C 測試 log，再重新執行 `run_modelsim.do` 即可。
-`generate_c_vectors.c` 引入原始 testbench 並重新命名其 main；編譯產生器時
-**不要再把 tb_tensor_core.c 當成另一個 compilation unit 加入**。
-內附 `run_verilator.sh` 可在已有 Verilator 的 Linux 環境執行同樣的 SV testbench。
+These commands overwrite local `c_vectors.txt` and C test logs. Then rerun `run_modelsim.do`. `generate_c_vectors.c` includes the original testbench and renames its main; **do not add tb_tensor_core.c as another compilation unit when building the generator**. The supplied `run_verilator.sh` runs the same SV testbench on Linux with Verilator installed.

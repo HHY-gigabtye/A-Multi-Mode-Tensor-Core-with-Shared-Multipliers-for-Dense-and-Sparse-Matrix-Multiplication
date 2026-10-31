@@ -1,20 +1,19 @@
-# Sparse Tensor Core 整合（SystemVerilog / ModelSim）
+# Sparse Tensor Core Integration (SystemVerilog / ModelSim)
 
-本目錄新增可綜合的 `sparse_tensor_core_top` 與純 SV 整合 testbench，直接使用現有五個元件。
-未修改既有 RTL、package、testbench、向量或 C reference，也沒有新增／編譯 C 程式。
+This directory adds the synthesizable `sparse_tensor_core_top` and a pure-SV integration testbench using the five existing units directly. The integration delivery did not modify existing RTL, packages, testbenches, vectors, or C references, and did not add or compile C programs.
 
-## 檔案與連接
+## Files and Connections
 
-| 新增檔案 | 用途 |
+| Added file | Purpose |
 |---|---|
-| `rtl/sparse_tensor_core_top.sv` | 整合 top，正式設計來源 |
-| `tb/tb_sparse_tensor_core_top.sv` | SV 記憶體模型、矩陣產生器、GEMM scoreboard、逐拍與 reset 檢查 |
-| `sim/run_top.do` | 編譯、模擬 top；GUI 下同時加入波形 |
-| `sim/wave_top.do` | 波形分組 |
-| `sim/run_units.do` | 在隔離 library 中執行五個原有 SV 單元測試 |
-| `sim/run_regression.ps1` | 可選的批次啟動器，檢查 exit code、錯誤與所有 PASS 標記 |
-| `results/units.log`、`results/top.log` | 本機 ModelSim 實際執行紀錄 |
-| `results/VALIDATION.md` | 驗證摘要、命令與限制 |
+| `rtl/sparse_tensor_core_top.sv` | Integration top; production design source |
+| `tb/tb_sparse_tensor_core_top.sv` | SV memory model, matrix generator, GEMM scoreboard, cycle checks, and reset checks |
+| `sim/run_top.do` | Compiles and simulates the top; also adds waveforms in the GUI |
+| `sim/wave_top.do` | Waveform grouping |
+| `sim/run_units.do` | Runs the five existing SV unit tests in isolated libraries |
+| `sim/run_regression.ps1` | Optional batch launcher checking exit codes, errors, and all PASS markers |
+| `results/units.log`, `results/top.log` | Recorded local ModelSim runs |
+| `results/VALIDATION.md` | Verification summary, commands, and limitations |
 
 ```text
 command / read memory
@@ -37,96 +36,82 @@ command / read memory
                          write memory / tile_done
 ```
 
-top 不再建立第二份 sideband；現有 `du_tc_bridge` 已包含四級 tags。
-不同 package 的 payload 和 metadata 逐欄位對接，避免依賴跨 package struct 的隱含布局。
-DU/TIA 輸出兩種 sparse 模式都用 `is_sparse=1`。
+The top does not create another sideband pipeline; `du_tc_bridge` already contains four tag stages. Payload and metadata are connected field by field across packages, avoiding assumptions about implicit struct layout. Both sparse DU/TIA modes output `is_sparse=1`.
 
-Bridge 使用舊狀態的 `fifo_count + inflight_count < 8` 放行 MLU。
-FIFO head 始終呈現給 TC，使用 **mode-aware `in_ready`** 才產生 TC 的 `in_valid`。
-metadata 在 TC 接受 k=0 時入列，在 TC→MSU 真正交握時出列。
-沒有新增資料暫存級、旁路、跨 tile 累加或全域控制狀態機。
+The Bridge permits MLU issue using old-state `fifo_count + inflight_count < 8`. The FIFO head is always presented to TC, and **mode-aware `in_ready`** determines TC `in_valid`. Metadata is enqueued when TC accepts k=0 and dequeued on the actual TC→MSU handshake. No new data register stage, bypass, cross-tile accumulation, or global control state machine is added.
 
-## Top 外部介面
+## Top-Level External Interface
 
-| 介面 | 契約 |
+| Interface | Contract |
 |---|---|
-| `clk`, `rst_n` | 共用 clock、低有效非同步 reset；reset 時須一起取消外部 pending memory response |
-| `command_valid/ready`, `command` | `mlu_pkg::io_command_t`，mode、64-bit source、32-bit tile ID、64-bit destination；valid 等待期間命令保持穩定 |
-| `read_request_valid/ready`, `read_addr`, `read_beats` | 一次最多一筆 outstanding burst；`read_beats` 是實際 4 或 5 beats，非 AXI ARLEN |
-| `read_data_valid/ready`, `read_data`, `read_last` | 每 beat 256 bits，byte 0 在 `[7:0]`；第一 beat 最早在 request 接受後下一拍 |
-| `write_valid/ready`, `write_addr/data/last/meta` | 每 tile 八個 256-bit row beats；row-major、INT32 little endian；stall 時保持穩定 |
-| `tile_done`, `completed` | row 7 實際寫入接受後的 registered pulse 與 metadata；非 TC 計算完成通知 |
-| `mlu_status`, `bridge_status`, `tc_status`, `msu_status` | 各元件原有診斷碼；合法流量皆為 0 |
+| `clk`, `rst_n` | Shared clock and asynchronous active-low reset; cancel pending external memory responses during reset |
+| `command_valid/ready`, `command` | `mlu_pkg::io_command_t`: mode, 64-bit source, 32-bit tile ID, and 64-bit destination; hold the command stable while valid waits |
+| `read_request_valid/ready`, `read_addr`, `read_beats` | At most one outstanding burst; `read_beats` is the actual 4 or 5 beats, not AXI ARLEN |
+| `read_data_valid/ready`, `read_data`, `read_last` | 256 bits per beat, byte 0 in `[7:0]`; first beat no earlier than the cycle after request acceptance |
+| `write_valid/ready`, `write_addr/data/last/meta` | Eight 256-bit row beats per tile; row-major, little-endian INT32; stable while stalled |
+| `tile_done`, `completed` | Registered pulse and metadata after actual acceptance of the row 7 write; not a TC computation-complete notification |
+| `mlu_status`, `bridge_status`, `tc_status`, `msu_status` | Original unit diagnostic codes; all 0 for legal traffic |
 
-每個 command 為獨立 8×8×8 signed INT8→INT32 GEMM。mode 0/1/2 分別為 dense、hybrid、dual；mode 3 非法。
-Source/destination 均須 32-byte 對齊，並符合既有模組的完整 burst／結果地址範圍檢查。
-Source image 沿用 `docs/architecture.md` 的 128B dense、128B padded hybrid、160B padded dual 格式。
-這是原有的簡化讀寫介面，沒有 AXI/HBM response、跨 K tile accumulation 或讀寫仲裁。
-非零 status 是介面錯誤；top 沒有加入交易回復機制，須修正來源並一起 reset。
+Each command performs an independent 8×8×8 signed INT8→INT32 GEMM. Modes 0/1/2 are dense/hybrid/dual; mode 3 is illegal. Source and destination must be 32-byte aligned and satisfy the existing modules' complete-burst/result address-range checks.
 
-## ModelSim 使用
+Source images use the formats in `docs/architecture.md`: 128B dense, 128B padded hybrid, and 160B padded dual. This is the original simplified read/write interface, without AXI/HBM responses, cross-K-tile accumulation, or read/write arbitration. Nonzero status indicates an interface fault. The top adds no transaction rollback; correct the source and reset the system together.
 
-從 repository 根目錄啟動，直接驗證 top（不需要 C compiler 或外部 golden 檔案）：
+## Running ModelSim
+
+From the repository root, verify the top directly without a C compiler or external golden files:
 
 ```powershell
 Set-Location C:\Users\Jason\Desktop\TC
 vsim -c -l integration_sv/results/top.log -do integration_sv/sim/run_top.do
 ```
 
-GUI 的 Transcript 執行：
+In the GUI Transcript:
 
 ```tcl
 cd C:/Users/Jason/Desktop/TC
 do integration_sv/sim/run_top.do
 ```
 
-腳本會加入波形並停在測試結束處。`integration_sv/build/top/vsim.wlf` 是執行產生的波形檔。
-若從其他位置呼叫絕對路徑的 `.do`，先設定：
+The script adds waveforms and stops at test completion. `integration_sv/build/top/vsim.wlf` is the generated waveform file. When invoking an absolute `.do` path from elsewhere, first set:
 
 ```tcl
 set env(STC_ROOT) C:/Users/Jason/Desktop/TC
 do C:/Users/Jason/Desktop/TC/integration_sv/sim/run_top.do
 ```
 
-ModelSim 2020.1 的 `do` 巨集中 `[info script]` 並不可靠；本腳本由目前目錄向上尋找 repository，或使用 `STC_ROOT`。
-所有 build/library 都放在 `integration_sv/build/`，不覆寫各單元原來的 library。
+In ModelSim 2020.1 `do` macros, `[info script]` is unreliable. The script searches upward from the current directory for the repository or uses `STC_ROOT`. All builds/libraries go into `integration_sv/build/`, preserving the original unit libraries.
 
-重跑既有 SV 單元測試：
+To rerun the existing SV unit tests:
 
 ```powershell
 vsim -c -l integration_sv/results/units.log -do integration_sv/sim/run_units.do
 ```
 
-可選的完整回歸入口：
+Optional full regression entry point:
 
 ```powershell
 & .\integration_sv\sim\run_regression.ps1
-# 僅整合：
+# Integration only:
 & .\integration_sv\sim\run_regression.ps1 -TopOnly
 ```
 
-所有 stimulus、記憶體模擬、矩陣比對都在 SV。
-既有 MLU／Bridge／TC／MSU 單元 TB 仍讀取它們原本的 C 產生向量；不修改、不重新產生。
-`run_units.do` 在 `$finish` 後繼續下一個測試；自動化建議用 PowerShell 入口確認五個 PASS 標記和無 Fatal/Error。
-`run_top.do` 自行檢查 TB 的 `passed`，未到 PASS 的 batch 執行會回傳非零 exit code。
+For the published repository, first restore TC vectors using the command in the [root README](../README.md#10-how-to-run-the-tests).
 
-編譯順序見 `sim/run_top.do`：各 package 在 module 之前，top 在五個 module 之後。
-整合只編譯 `du_tia_sv/rtl/du_tia_pkg.sv` 與 `tensor_core_sv/tensor_core_pkg.sv` 各一份，
-不重複編譯 MLU、FIFO 目錄下的同名 package。
+All stimulus, memory simulation, and matrix comparisons are implemented in SV. Existing MLU/Bridge/TC/MSU unit testbenches still read their original C-generated vectors; these are neither modified nor regenerated. `run_units.do` continues to the next test after `$finish`. For automation, use the PowerShell launcher to check all five PASS markers and the absence of Fatal/Error. `run_top.do` checks the testbench's `passed` flag and returns a nonzero batch exit code if PASS is not reached.
 
-## 驗證內容
+Compilation order is in `sim/run_top.do`: packages precede modules, and the top follows the five modules. Integration compiles exactly one `du_tia_sv/rtl/du_tia_pkg.sv` and one `tensor_core_sv/tensor_core_pkg.sv`; it does not also compile the same-named package copies in the MLU and FIFO directories.
 
-TB 從原始數學 A/B 矩陣計算 GEMM，再獨立編碼記憶體 image；不用 DUT 的 packetize／decode helper 產生預期值。
-除了每個 INT32 結果，還比對每個寫出 byte、地址、tile ID、k 順序和完成通知。
+## Verification Coverage
 
-- 64-tile 無 stall sparse 串流，逐個相鄰 tile 驗證 II=8；96-tile 混合模式與 48-tile sparse 壓力流。
-- 全部九種 mode→mode 切換、六種合法 2:4 mask、-128／127／0／±1、zero/full count、合法 stored zero。
-- command/request gaps、response latency 與 gaps、長時間 write backpressure、last-beat stall。
-- issue→DU 到達恰四拍；issue→TC 最早五拍；禁止 FIFO empty bypass 和 full credit lookahead。
-- 每拍檢查 FIFO、inflight、metadata 計數更新；同拍 push/pop、wrap、metadata full、MSU full、TC result full。
-- TC k=7 接受後 sparse 第 3 個後續 edge、dense 第 15 個後續 edge 發布結果（目前 SV 實測契約）；stall 時結果／metadata 保持穩定。
-- reset 前逐一達到 FIFO 0…8、inflight 0…4、metadata／MSU／TC result／MLU buffer 0…2，及寫回 row 0…7；另測 outstanding read 與 stalled last beat。
-- 每次受測 reset 會清除模擬記憶體的未完成 response，再用新 tile ID 執行三個 recovery tiles，確認沒有舊封包／結果漏出。
+The testbench computes GEMM from the original mathematical A/B matrices and independently encodes the memory images. It does not use DUT packetization/decoding helpers to generate expected values. In addition to every INT32 result, it checks every output byte, address, tile ID, k sequence, and completion notification.
 
-這些是固定 seed 的動態模擬與 directed coverage，不是 formal proof。10 ns TB clock 僅供模擬排程，不代表 100 MHz timing closure。
-此次未執行 synthesis、placement、routing 或 PPA 量測。
+- A 64-tile sparse stream without stalls, checking II=8 for every adjacent tile pair; a 96-tile mixed-mode stream and a 48-tile sparse stress stream.
+- All nine mode→mode transitions, all six legal 2:4 masks, -128/127/0/±1, zero/full counts, and legal stored zeros.
+- Command/request gaps, response latency and gaps, long write backpressure, and final-beat stalls.
+- Exactly four edges from issue to DU arrival; at least five from issue to TC acceptance; no empty-FIFO bypass or full-credit lookahead.
+- Per-cycle FIFO, in-flight, and metadata counter updates; same-edge push/pop, wrap, full metadata, full MSU, and full TC result storage.
+- Result publication 3 edges after sparse k=7 acceptance and 15 edges after dense k=7 acceptance, matching the measured SV contract; stable results/metadata under stall.
+- Reset after reaching each FIFO occupancy 0…8, in-flight occupancy 0…4, metadata/MSU/TC-result/MLU-buffer occupancy 0…2, and writeback row 0…7; also outstanding reads and stalled final beats.
+- Each tested reset clears pending simulated memory responses, then runs three recovery tiles with new IDs to detect stale packets/results.
+
+These are fixed-seed dynamic simulations and directed coverage, not a formal proof. The 10 ns testbench clock schedules simulation and does not establish 100 MHz timing closure. The original integration verification did not run synthesis, placement, routing, or PPA measurements; later archived implementation results are documented in the [repository README](../README.md).
