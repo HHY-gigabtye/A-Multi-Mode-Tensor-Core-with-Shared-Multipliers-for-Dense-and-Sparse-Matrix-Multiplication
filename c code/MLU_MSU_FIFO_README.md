@@ -35,7 +35,7 @@ Header Files is an IDE grouping, not a separate compilation step. The supplied p
 | Directory and this header retained | `reference/tensor_core_model.h` |
 | Added | `tb_bridge.c`, `MLU_MSU_BRIDGE.sln`, and three projects/filters under `vs/` |
 | Unused by these standalone tests; may remain in the original package backup | `tb_pipeline.c`, `du_reference.inc`, `reference/du_tia_reference.c`, `reference/tensor_core_model.c` |
-| Replaced by this package's versions | `Makefile`, `build_msvc.bat`, `README_zh_TW.md`, `verification.txt` |
+| Replaced by this package's versions | `Makefile`, `build_msvc.bat`, the package README, `verification.txt` |
 
 The old Makefile and build_msvc.bat also compiled the C integration test. If integration-related files are removed, the standalone package's scripts must be used instead. Previously completed DU/TIA and TC projects and SV files remain available for later integration.
 

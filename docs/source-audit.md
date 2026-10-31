@@ -57,7 +57,7 @@ with `tb_tensor_core.c`; the `.cpp` template is not the arithmetic reference.
    ASIC report in this checkout. Actual available reports are Vivado FPGA
    out-of-context reports. TC-alone 12 ns fails setup; top-level 17 ns meets
    its specified internal constraints with incomplete I/O constraints.
-3. Legacy `c code/MLU_MSU_FIFO_README_zh_TW.md` describes packaging files such as
+3. Legacy `c code/MLU_MSU_FIFO_README.md` describes packaging files such as
    `MLU_MSU_BRIDGE.sln`, `make test`, and `build_msvc.bat` that do not exist at
    those locations in this checkout. Use the root README's inspected commands.
 4. DU/TIA C has diagnostic tags/bitmap/valid-mask fields removed from the
