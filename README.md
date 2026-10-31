@@ -41,7 +41,7 @@ The following table consolidates the five units and the integration boundary. De
 |---|---|---|---|
 | **MLU — Memory Load Unit** | Two tile buffers, each with a 160-byte image capacity; one outstanding read burst | 256-bit memory input; 236-bit DU/TIA packet output plus tile metadata and k. Loads the complete image, then issues eight ordered packets. Holds output stable under backpressure; releases a tile buffer on accepted k=7. Sparse input is already packed. | [MLU specification](mlu_sv/README_zh_TW.md) |
 | **DU/TIA — Decompression and Index Alignment** | Four registered stages S0–S3; 236-bit input packet → 185-bit output packet | Dense data forwarding and sparse decoding/index alignment. S0 captures input; S1 forwards/decodes values and predecodes bitmap halves; S2 merges indices; S3 registers output. No downstream `out_ready`; capacity must be reserved before issue. | [DU/TIA specification](du_tia_sv/README.md) |
-| **Bridge / Packet FIFO** | Eight packet slots; four sideband tag stages; separate two-entry result-metadata queue | Tracks `fifo_count + inflight_count <= 8`. Issue reserves capacity, DU arrival transfers occupancy into the FIFO, and TC acceptance releases it. Registered FIFO insertion with a combinational head; no arrival bypass or same-edge credit lookahead when full. | [Bridge specification](fifo_sv/README_zh-TW.md) |
+| **Bridge / Packet FIFO** | Eight packet slots; four-stage metadata pipeline aligned with in-flight DU/TIA packets; separate two-entry result-metadata queue | Tracks `fifo_count + inflight_count <= 8`. Issue reserves capacity, DU arrival transfers occupancy into the FIFO, and TC acceptance releases it. Registered FIFO insertion with a combinational head; no arrival bypass or same-edge credit lookahead when full. | [Bridge specification](fifo_sv/README_zh-TW.md) |
 | **Tensor Core** | 8×8 dense systolic path and sparse MUL → ROUTE → ACC path; 64 shared signed multiplication operation positions; two result slots | 185-bit decoded input packet; complete 8×8 INT32 result output. Dense lanes use input skew; sparse tiles can overlap. Reserves result capacity on tile start. Input valid must obey mode-aware readiness; dense/sparse changes require draining prior work/results. | [Tensor Core specification](tensor_core_sv/README_zh_TW.md) |
 | **MSU — Memory Store Unit** | Two complete-result buffers, each 256 bytes | Accepts the full matrix and metadata, then writes eight 256-bit rows. Row r uses `dst_addr + 32*r`; each INT32 is little-endian. Holds write payload under stall. `tile_done` occurs only after the final accepted row write. | [MSU specification](msu_sv/README_zhTW.md) |
 | **Integration Top** | Connects the five existing units without another data pipeline stage | Exposes command, read-request/data, write, completion, and diagnostic interfaces. Maps package fields explicitly, gates TC valid with mode-aware readiness, and pairs ordered results with Bridge metadata. | [Top-level interface](integration_sv/README_zh_TW.md) |
@@ -97,8 +97,8 @@ flowchart LR
     FIFO --> TC["Tensor Core: dense / sparse dataflow; shared multipliers"]
     TC --> MSU["MSU: two result buffers"]
     MSU --> OUT["Memory: eight row writes per tile"]
-    MLU -. "tile ID, destination, k" .-> TAG["Bridge: four tag stages"]
-    TAG -.-> FIFO
+    MLU -. "packet metadata, mode, k" .-> TAG["Bridge: 4-stage metadata alignment with DU/TIA"]
+    TAG -. "aligned with decoded payload" .-> FIFO
     FIFO -. "metadata on accepted k=0" .-> META["Two-entry result-metadata FIFO"]
     META -. "pop on TC-to-MSU transfer" .-> MSU
 ```
@@ -137,7 +137,9 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded 
 
 ## 6. Pipeline and Dataflow
 
-**DU/TIA:** S0 captures the selected input, S1 forwards packed values/decodes 2:4 B and predecodes bitmap halves, S2 merges indices, and S3 registers the output. DU/TIA has no downstream ready input, so capacity must be reserved before issue. Its aligned metadata stages reside in the Bridge.
+**DU/TIA:** S0 captures the selected input, S1 forwards packed values/decodes 2:4 B and predecodes bitmap halves, S2 merges indices, and S3 registers the output. DU/TIA has no downstream ready input, so capacity must be reserved before issue. The payload passes through DU/TIA, while a separate four-stage metadata pipeline in the Bridge advances in parallel.
+
+**DU/TIA packet metadata alignment:** each Bridge sideband stage tracks `valid`, `is_sparse`, `meta.tile_id`, `meta.dst_addr`, and `k` for the corresponding packet in flight through DU/TIA. These stages carry tags, not the arithmetic payload. When the decoded payload arrives from DU/TIA, the Bridge pairs it with the aligned tile metadata and k and inserts the packet into the FIFO. This per-packet alignment pipeline is distinct from the two-entry result-metadata queue below, which tracks tile results until TC-to-MSU acceptance.
 
 **Packet credits:** `used = fifo_count + inflight_count <= 8`. Issuing into DU/TIA reserves one slot; arrival moves the reservation into the packet FIFO; TC acceptance frees it. Readiness uses the old registered occupancy. A full FIFO cannot borrow a credit from a same-edge dequeue, and newly arriving DU data cannot bypass the FIFO. For an issue at edge t, the earliest TC acceptance is t+5.
 
