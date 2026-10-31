@@ -87,7 +87,14 @@ Timing checks are implemented in the [system testbench](integration_sv/tb/tb_spa
 
 ## 3. Overall System Architecture
 
-The diagram below summarizes the inspected RTL connections. "HBM" describes the intended system context; simulation supplies a behavioral memory endpoint.
+The system overview follows the data path from memory loading through decoding, buffered computation, and result writeback. "HBM" describes the intended system context; the implemented boundary is a simplified memory interface without an HBM controller.
+
+![Overall system architecture: memory, MLU, DU/TIA, Bridge / Packet FIFO, Tensor Core, and MSU](docs/Overall%20System%20Architecture.png)
+
+*System-level overview. Control arrows group related signals; the diagram below separates the Bridge's packet-credit, in-flight metadata, and result-metadata paths.*
+
+<details>
+<summary>Implementation dataflow and metadata alignment</summary>
 
 ```mermaid
 flowchart LR
@@ -102,6 +109,8 @@ flowchart LR
     FIFO -. "metadata on accepted k=0" .-> META["Two-entry result-metadata FIFO"]
     META -. "pop on TC-to-MSU transfer" .-> MSU
 ```
+
+</details>
 
 The top-level module is [`sparse_tensor_core_top`](integration_sv/rtl/sparse_tensor_core_top.sv). It maps fields explicitly between packages and uses mode-aware readiness to turn the FIFO head into an actual Tensor Core acceptance pulse.
 
@@ -126,6 +135,10 @@ The MLU reads fixed-size images rather than variable-length compressed streams:
 Sparse packing occurs upstream. The MLU loads and packetizes an already encoded image; it does not discover or compress nonzeros.
 
 ## 5. Hardware Microarchitecture
+
+![DU/TIA and Tensor Core architecture showing dense, hybrid, and dual modes](docs/DU%26TIA%20and%20Tensor%20Core%20architecture.png)
+
+*Conceptual compute view. Dense and sparse execution share 64 signed INT8 multiplication operation positions and retain separate accumulation state. The two branches illustrate logical dataflows, not separate multiplier banks. Sparse products pass through index-based routing before accumulation; the Bridge/FIFO between DU/TIA and TC is shown in the system overview above.*
 
 **Dense path.** Regular dense matrices benefit from local operand reuse and predictable nearest-neighbor movement. Lane i is skewed by i cycles, operands propagate across the 8 x 8 PE array, and each PE holds its INT32 accumulator. This implementation drains and consumes a dense result before starting another dense tile.
 
