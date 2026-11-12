@@ -1,0 +1,6 @@
+Run: impl_10ns
+Status: route_design Complete!
+Period ns: 10.000
+Setup ns: 0.002
+Hold ns: 0.096
+Fresh project synthesis/implementation; no historical checkpoint imported.

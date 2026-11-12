@@ -35,6 +35,9 @@ module du_tc_bridge (
   fifo_ptr_t fifo_tail;
   meta_ptr_t meta_tail;
   logic [FIFO_COUNT_W:0] used_credits;
+  // Redundant decode, advanced on the same accepted edge as q. The payload
+  // remains a combinational FIFO read; neither bypass nor latency is added.
+  (* max_fanout = 128 *) logic [IO_PACKET_FIFO-1:0] head_select_q;
 
   // Widen BEFORE adding so a carry cannot disappear.
   assign used_credits = {1'b0, q.count} +
@@ -46,8 +49,13 @@ module du_tc_bridge (
 
   // Even when metadata blocks k=0, the stored head stays visible for mode
   // selection. It may be consumed ONLY when head_valid is high.
-  assign head_entry = (q.count != 0) ? q.fifo[q.head] : '0;
-  assign head_valid = (q.count != 0) &&
+  always_comb begin : read_head
+    head_entry = '0;
+    for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+      head_entry = head_entry |
+          (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
+  end
+  assign head_valid = (|head_select_q) &&
       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
   assign result_meta_valid = (q.meta_count != 0);
   assign result_meta = result_meta_valid ? q.result_meta[q.meta_head] : '0;
@@ -109,9 +117,14 @@ module du_tc_bridge (
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n)
+    if (!rst_n) begin
       q <= '0;
-    else if (status == IO_OK)
+      head_select_q <= '0;
+    end else if (status == IO_OK) begin
       q <= d;
+      for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+        head_select_q[slot] <= (d.count != 0) &&
+                               (d.head == fifo_ptr_t'(slot));
+    end
   end
 endmodule

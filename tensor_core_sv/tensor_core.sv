@@ -25,7 +25,78 @@ module tensor_core (
   tc_control_t ctrl_q, ctrl_d;
   tc_dense_state_t dense_q, dense_d;
   tc_sparse_state_t sparse_q, sparse_d;
+  tc_sparse_state_t sparse_storage_q;
   tc_tick_info_t info_q, info_d;
+
+  // The existing MUL-stage product registers can live inside the DSPs when
+  // their data bits do not need asynchronous reset. The asynchronously reset
+  // MUL metadata masks every unused product to zero, preserving the complete
+  // visible sparse_q state on reset, bubbles, epochs, and rejected edges.
+  wire sparse_mul_capture = rst_n && (status == TC_OK) && in_valid &&
+                            in_packet.is_sparse;
+  wire [7:0][7:0][15:0] sparse_product_q;
+  always_comb begin : sparse_state_view
+    sparse_q = sparse_storage_q;
+    for (int i = 0; i < TC_DIM; i = i + 1)
+      for (int j = 0; j < TC_DIM; j = j + 1)
+        sparse_q.mul.product[i][j] =
+            (sparse_storage_q.mul.valid &&
+             (i < int'(sparse_storage_q.mul.a_count)) &&
+             (j < int'(sparse_storage_q.mul.b_count))) ?
+            sparse_product_q[i][j] : 16'd0;
+  end
+
+  // Compute arithmetic from raw data, independently of acceptance/validation.
+  // The existing next_state guards still decide whether to commit each value.
+  // FPGA timing trial: independent dense MAC and sparse multiplier inputs.
+  // The baseline already maps to 128 DSP48E1s, but mode muxes precede them.
+  // Keep mode/valid selection at the existing state-update guards instead;
+  // actual DSP count and timing must be checked after implementation.
+  wire [7:0][7:0][15:0] dense_product, sparse_product;
+  wire [7:0][7:0][31:0] dense_sum, sparse_sum;
+  generate
+    for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+      for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+        wire [7:0] dense_a_value, dense_b_value;
+        // FPGA mapping hint; both products retain their original cycle boundaries.
+        (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+        if (j != 0) begin : g_a_neighbor
+          assign dense_a_value = dense_q.pe[i][j-1].a.value;
+        end else if (i != 0) begin : g_a_skew
+          assign dense_a_value = dense_q.a_delay[i][i-1].value;
+        end else begin : g_a_input
+          assign dense_a_value = in_packet.payload.dense.dense_a[i];
+        end
+        if (i != 0) begin : g_b_neighbor
+          assign dense_b_value = dense_q.pe[i-1][j].b.value;
+        end else if (j != 0) begin : g_b_skew
+          assign dense_b_value = dense_q.b_delay[j][j-1].value;
+        end else begin : g_b_input
+          assign dense_b_value = in_packet.payload.dense.dense_b[j];
+        end
+        assign dense_mul = mul_int8(dense_a_value, dense_b_value);
+        assign sparse_mul = mul_int8(in_packet.payload.sparse.a.value[i],
+                                     in_packet.payload.sparse.b.value[j]);
+        assign dense_product[i][j] = dense_mul;
+        assign sparse_product[i][j] = sparse_mul;
+        // Same MUL edge as before: this register replaces the corresponding
+        // product data storage, and adds no cycle. Invalid data is masked by
+        // the registered metadata, outside the multiplier-to-register path.
+        logic signed [15:0] product_q;
+        always_ff @(posedge clk) begin
+          if (sparse_mul_capture)
+            product_q <= sparse_mul;
+        end
+        assign sparse_product_q[i][j] = product_q;
+        assign dense_sum[i][j] = $signed(dense_q.pe[i][j].acc) +
+                                extend_product(dense_product[i][j]);
+        // OLD ROUTE and ACC feed the adder directly. First-packet clearing
+        // and epoch/valid guards select the committed result after arithmetic.
+        assign sparse_sum[i][j] = $signed(sparse_q.acc[i][j]) +
+                                 extend_product(sparse_q.route.delta[i][j]);
+      end
+    end
+  endgenerate
 
   // ROUTE is computed from OLD MUL registers. Epoch/busy/valid controls are
   // applied when committing the mapped result in next_state, rather than
@@ -58,18 +129,11 @@ module tensor_core (
             (rank < int'(sparse_q.mul.b_count)) &&
             (sparse_q.mul.b_index[rank] == TC_INDEX_W'(coord));
 
-        // Legal vectors already have unique indices. Keep the last matching
-        // rank even for duplicate indices, preserving the old loop's exact
-        // overwrite priority without a 64-entry data priority chain.
-        if (rank == TC_DIM-1) begin : g_last
-          assign route_a_select[coord][rank] = route_a_match[coord][rank];
-          assign route_b_select[coord][rank] = route_b_match[coord][rank];
-        end else begin : g_lower
-          assign route_a_select[coord][rank] = route_a_match[coord][rank] &&
-              !(|route_a_match[coord][TC_DIM-1:rank+1]);
-          assign route_b_select[coord][rank] = route_b_match[coord][rank] &&
-              !(|route_b_match[coord][TC_DIM-1:rank+1]);
-        end
+        // valid_vector rejects duplicate/non-increasing indices before the
+        // entire edge can commit. Thus each coordinate matches at most one
+        // stored rank; no last-match priority is needed in this ROUTE stage.
+        assign route_a_select[coord][rank] = route_a_match[coord][rank];
+        assign route_b_select[coord][rank] = route_b_match[coord][rank];
       end
       assign route_a_present[coord] = |route_a_match[coord];
       assign route_b_present[coord] = |route_b_match[coord];
@@ -133,12 +197,55 @@ module tensor_core (
     end
   end
 
+  // Result storage depends only on OLD control/accumulator state. Keep its
+  // selection independent of the sequential-looking ctrl_d bookkeeping below.
+  // Pop precedes publish; a new idle epoch clears both physical slots. Invalid
+  // input still freezes the entire edge, including a pending result transfer.
+  wire result_pop = ctrl_q.result_valid && result_ready;
+  wire result_epoch_clear = !ctrl_q.busy && in_valid;
+  wire result_publish = ctrl_q.busy && ctrl_q.finish_pending &&
+                        (ctrl_q.is_sparse || !ctrl_q.result_valid);
+  wire result_empty_after_pop =
+      (ctrl_q.result_count == {1'b0, result_pop});
+  wire result_head_publish = result_publish && result_empty_after_pop;
+  wire result_tail_publish = result_publish && !result_empty_after_pop;
+  wire result_shift = result_pop && (ctrl_q.result_count == 2'd2);
+  // Mapping hints allow separate local drivers for the wide result enables.
+  // They add no pipeline register and do not change the acceptance contract.
+  (* max_fanout = 128 *) wire result_head_write = (status == TC_OK) &&
+      (result_epoch_clear || result_head_publish || result_shift);
+  (* max_fanout = 128 *) wire result_tail_write = (status == TC_OK) &&
+      (result_epoch_clear || result_tail_publish);
+  tc_matrix_t result_head_d, result_tail_d;
+  always_comb begin : result_storage
+    result_head_d = ctrl_q.result;
+    result_tail_d = ctrl_q.result_next;
+    for (int i = 0; i < TC_DIM; i = i + 1)
+      for (int j = 0; j < TC_DIM; j = j + 1) begin
+        if (result_head_write) begin
+          if (result_epoch_clear)
+            result_head_d[i][j] = '0;
+          else if (result_head_publish)
+            result_head_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
+                                                     dense_q.pe[i][j].acc;
+          else
+            result_head_d[i][j] = ctrl_q.result_next[i][j];
+        end
+        if (result_tail_write) begin
+          if (result_epoch_clear)
+            result_tail_d[i][j] = '0;
+          else
+            result_tail_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
+                                                     dense_q.pe[i][j].acc;
+        end
+      end
+  end
+
   always_comb begin : next_state
     tc_dense_state_t dense_base;
     tc_sparse_state_t sparse_base;
     tc_token_t [7:0] left, top;
     tc_token_t a, b;
-    logic signed [15:0] product;
     logic old_result_valid, run_pipeline, first, last;
 
     ctrl_d = ctrl_q;
@@ -151,7 +258,6 @@ module tensor_core (
     top = '0;
     a = '0;
     b = '0;
-    product = '0;
     first = 1'b0;
     last = 1'b0;
     old_result_valid = ctrl_q.result_valid;
@@ -160,8 +266,6 @@ module tensor_core (
     if (status == TC_OK) begin
       // FIFO pop first. Newly published data cannot be consumed on this edge.
       if (old_result_valid && result_ready) begin
-        if (ctrl_q.result_count == 2)
-          ctrl_d.result = ctrl_q.result_next;
         ctrl_d.result_count = ctrl_d.result_count - 2'd1;
         ctrl_d.outstanding = ctrl_d.outstanding - 2'd1;
         ctrl_d.result_valid = (ctrl_d.result_count != 0);
@@ -192,21 +296,7 @@ module tensor_core (
           run_pipeline = 1'b0;
         end else if (ctrl_d.finish_pending) begin
           // Publish OLD accumulator before sparse ACC first can clear it.
-          if (ctrl_d.result_count == 0) begin
-            if (ctrl_d.is_sparse)
-              ctrl_d.result = sparse_base.acc;
-            else
-              for (int i = 0; i < TC_DIM; i = i + 1)
-                for (int j = 0; j < TC_DIM; j = j + 1)
-                  ctrl_d.result[i][j] = dense_base.pe[i][j].acc;
-          end else begin
-            if (ctrl_d.is_sparse)
-              ctrl_d.result_next = sparse_base.acc;
-            else
-              for (int i = 0; i < TC_DIM; i = i + 1)
-                for (int j = 0; j < TC_DIM; j = j + 1)
-                  ctrl_d.result_next[i][j] = dense_base.pe[i][j].acc;
-          end
+          // Wide data selection is factored into result_storage above.
           ctrl_d.result_count = ctrl_d.result_count + 2'd1;
           ctrl_d.result_valid = 1'b1;
           ctrl_d.finish_pending = 1'b0;
@@ -243,8 +333,9 @@ module tensor_core (
             for (int i = 0; i < TC_DIM; i = i + 1)
               for (int j = 0; j < TC_DIM; j = j + 1)
                 if (sparse_base.route.enable[i][j]) begin
-                  sparse_d.acc[i][j] = $signed(sparse_d.acc[i][j]) +
-                                      extend_product(sparse_base.route.delta[i][j]);
+                  sparse_d.acc[i][j] = sparse_q.route.first ?
+                                      extend_product(sparse_q.route.delta[i][j]) :
+                                      sparse_sum[i][j];
                   info_d.macs = info_d.macs + 7'd1;
                 end
             ctrl_d.finish_pending = sparse_base.route.last;
@@ -304,8 +395,8 @@ module tensor_core (
           end
         end
 
-        // One 8x8 multiplier bank is shared between the two modes. Dense
-        // selects aligned PE operands; sparse selects packed-rank operands.
+        // Commit only the active mode's arithmetic. Dense uses aligned PE
+        // operands; sparse uses packed-rank operands. Pipeline timing is intact.
         for (int i = 0; i < TC_DIM; i = i + 1)
           for (int j = 0; j < TC_DIM; j = j + 1) begin
             a = '0;
@@ -324,15 +415,18 @@ module tensor_core (
               if (i == 0) b = top[j];
               else b = dense_base.pe[i-1][j].b;
             end
-            product = mul_int8(a.value, b.value);
             if (ctrl_d.is_sparse) begin
-              if (a.valid && b.valid) sparse_d.mul.product[i][j] = product;
+              if (a.valid && b.valid)
+                sparse_d.mul.product[i][j] = sparse_product[i][j];
             end else begin
               dense_d.pe[i][j].a = a;
               dense_d.pe[i][j].b = b;
               if (a.valid && b.valid) begin
-                dense_d.pe[i][j].acc = dense_base.pe[i][j].acc +
-                                      extend_product(product);
+                // A new epoch has a zero accumulator. Select after arithmetic
+                // so epoch clearing does not feed the multiplier/adder chain.
+                // Other new-epoch PEs have invalid tokens and keep their reset.
+                dense_d.pe[i][j].acc = ctrl_q.busy ? dense_sum[i][j] :
+                                      extend_product(dense_product[i][j]);
                 info_d.macs = info_d.macs + 7'd1;
                 if ((i == TC_DIM-1) && (j == TC_DIM-1) && a.last)
                   ctrl_d.finish_pending = 1'b1;
@@ -342,18 +436,22 @@ module tensor_core (
         ctrl_d.busy = (ctrl_d.outstanding != 0);
       end
     end
+    ctrl_d.result = result_head_d;
+    ctrl_d.result_next = result_tail_d;
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       ctrl_q <= '0;
       dense_q <= '0;
-      sparse_q <= '0;
+      sparse_storage_q <= '0;
       info_q <= '0;
     end else begin
       ctrl_q <= ctrl_d;
       dense_q <= dense_d;
-      sparse_q <= sparse_d;
+      sparse_storage_q <= sparse_d;
+      // Product data is stored by g_arithmetic_column.product_q instead.
+      sparse_storage_q.mul.product <= '0;
       info_q <= info_d;
     end
   end

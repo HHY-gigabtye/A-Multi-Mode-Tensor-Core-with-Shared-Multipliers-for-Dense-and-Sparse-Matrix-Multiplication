@@ -41,6 +41,33 @@ module mlu (
   logic reading_valid, pending_valid;
   logic reading_slot, pending_slot;
 
+  // Hybrid masks occupy bytes 72+3*j (beat 2) and 96+3*j (beat 3).
+  // The image is validated only on its final accepted beat, which is beat 3
+  // for hybrid mode. Validate each OLD slot and the incoming last beat in
+  // parallel, then select one validity bit instead of muxing an entire image
+  // through state_d before validating it. No additional state or cycle.
+  function automatic logic legal_hybrid_mask(input logic [7:0] mask);
+    case (mask)
+      8'h03, 8'h05, 8'h06, 8'h09, 8'h0a, 8'h0c: return 1'b1;
+      default: return 1'b0;
+    endcase
+  endfunction
+  wire [IO_TILE_BUFFERS-1:0] hybrid_stored_good;
+  wire [7:0] hybrid_incoming_masks_good;
+  generate
+    for (genvar s = 0; s < IO_TILE_BUFFERS; s = s + 1) begin : g_hybrid_slot
+      wire [7:0] masks_good;
+      for (genvar j = 0; j < 8; j = j + 1) begin : g_mask
+        assign masks_good[j] =
+            legal_hybrid_mask(state_q.buffer[s].image[72+3*j]);
+      end
+      assign hybrid_stored_good[s] = &masks_good;
+    end
+    for (genvar j = 0; j < 8; j = j + 1) begin : g_hybrid_incoming
+      assign hybrid_incoming_masks_good[j] = legal_hybrid_mask(read_data[3*j]);
+    end
+  endgenerate
+
   assign tick_info = info_q;
   assign out_packet = frame.packet;
   assign out_meta = frame.meta;
@@ -123,8 +150,10 @@ module mlu (
         state_d.buffer[reading_slot].beats_received =
             state_q.buffer[reading_slot].beats_received + 1'b1;
         if (last) begin
-          // Include the just-arrived final beat in validation (not OLD image).
-          if (!valid_image(state_d.buffer[reading_slot]))
+          // Group 0 is in the OLD image; group 1 is in this final beat.
+          if ((state_q.buffer[reading_slot].command.mode == IO_HYBRID) &&
+              (!hybrid_stored_good[reading_slot] ||
+               !(&hybrid_incoming_masks_good)))
             status = IO_BAD_FORMAT;
           else
             state_d.buffer[reading_slot].phase = MLU_READY;

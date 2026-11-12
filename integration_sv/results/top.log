@@ -1,14 +1,14 @@
 # do integration_sv/sim/run_top.do
-# <repo>
-# <repo>
-# <repo>/integration_sv/build/top
+# C:/Users/Jason/Desktop/TC
+# C:/Users/Jason/Desktop/TC
+# C:/Users/Jason/Desktop/TC/integration_sv/build/top
 # reading modelsim.ini
 # Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
 # vmap work work 
 # Modifying modelsim.ini
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/du_tia_sv/rtl/du_tia_pkg.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia_pkg.sv 
 # -- Compiling package du_tia_pkg
 # 
 # Top level modules:
@@ -17,7 +17,7 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/mlu_sv/mlu_pkg.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/mlu_sv/mlu_pkg.sv 
 # -- Compiling package mlu_pkg
 # -- Importing package du_tia_pkg
 # 
@@ -27,7 +27,7 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/tensor_core_sv/tensor_core_pkg.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core_pkg.sv 
 # -- Compiling package tensor_core_pkg
 # 
 # Top level modules:
@@ -36,7 +36,7 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/fifo_sv/du_tc_bridge_pkg.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge_pkg.sv 
 # -- Compiling package du_tc_bridge_pkg
 # -- Importing package tensor_core_pkg
 # 
@@ -46,7 +46,7 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/msu_sv/rtl/msu_pkg.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu_pkg.sv 
 # -- Compiling package msu_pkg
 # 
 # Top level modules:
@@ -55,12 +55,12 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/mlu_sv/mlu.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv 
 # -- Compiling module mlu
 # -- Importing package mlu_pkg
 # -- Importing package du_tia_pkg
-# ** Warning: <repo>/mlu_sv/mlu.sv(14): (vlog-13314) Defaulting port 'command' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: <repo>/mlu_sv/mlu.sv(24): (vlog-13314) Defaulting port 'read_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv(14): (vlog-13314) Defaulting port 'command' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv(24): (vlog-13314) Defaulting port 'read_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
 # Top level modules:
 # 	mlu
@@ -68,7 +68,7 @@
 # Errors: 0, Warnings: 2
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/du_tia_sv/rtl/du_tia.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia.sv 
 # -- Compiling module du_tia
 # -- Importing package du_tia_pkg
 # 
@@ -78,12 +78,12 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/fifo_sv/du_tc_bridge.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv 
 # -- Compiling module du_tc_bridge
 # -- Importing package du_tc_bridge_pkg
 # -- Importing package tensor_core_pkg
-# ** Warning: <repo>/fifo_sv/du_tc_bridge.sv(13): (vlog-13314) Defaulting port 'issued_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: <repo>/fifo_sv/du_tc_bridge.sv(17): (vlog-13314) Defaulting port 'du_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv(13): (vlog-13314) Defaulting port 'issued_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv(17): (vlog-13314) Defaulting port 'du_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
 # Top level modules:
 # 	du_tc_bridge
@@ -91,7 +91,7 @@
 # Errors: 0, Warnings: 2
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:41 on Oct 27,2026
-# vlog -sv -work work <repo>/tensor_core_sv/tensor_core.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv 
 # -- Compiling module tensor_core
 # -- Importing package tensor_core_pkg
 # 
@@ -101,11 +101,11 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:42 on Oct 27,2026
-# vlog -sv -work work <repo>/msu_sv/rtl/msu.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv 
 # -- Compiling module msu
 # -- Importing package msu_pkg
-# ** Warning: <repo>/msu_sv/rtl/msu.sv(16): (vlog-13314) Defaulting port 'result_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: <repo>/msu_sv/rtl/msu.sv(17): (vlog-13314) Defaulting port 'result' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv(16): (vlog-13314) Defaulting port 'result_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv(17): (vlog-13314) Defaulting port 'result' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # 
 # Top level modules:
 # 	msu
@@ -113,7 +113,7 @@
 # Errors: 0, Warnings: 2
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:42 on Oct 27,2026
-# vlog -sv -work work <repo>/integration_sv/rtl/sparse_tensor_core_top.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/integration_sv/rtl/sparse_tensor_core_top.sv 
 # -- Compiling module sparse_tensor_core_top
 # -- Importing package mlu_pkg
 # -- Importing package du_tia_pkg
@@ -127,7 +127,7 @@
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 # Start time: 17:51:42 on Oct 27,2026
-# vlog -sv -work work <repo>/integration_sv/tb/tb_sparse_tensor_core_top.sv 
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/integration_sv/tb/tb_sparse_tensor_core_top.sv 
 # -- Compiling module tb_sparse_tensor_core_top
 # -- Importing package mlu_pkg
 # -- Importing package du_tia_pkg
@@ -236,9 +236,9 @@
 # TOP MODE TRANSITIONS 0->0/1/2=47/47/10 1->0/1/2=10/11/96 2->0/1/2=10/77/11
 # TOP RESET COVERAGE fifo=1ff inflight=1f meta=7 msu=7 tc=7 mlu=7 rows=ff read=1 last=1
 # TOP INTEGRATION PASS: completed_tiles=316 issued_packets=3124 write_beats=2563 resets=75 seed=91e10da5
-# ** Note: $finish    : <repo>/integration_sv/tb/tb_sparse_tensor_core_top.sv(554)
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/integration_sv/tb/tb_sparse_tensor_core_top.sv(554)
 #    Time: 73606 ns  Iteration: 0  Instance: /tb_sparse_tensor_core_top
-# Break in Module tb_sparse_tensor_core_top at <repo>/integration_sv/tb/tb_sparse_tensor_core_top.sv line 554
-# Stopped at <repo>/integration_sv/tb/tb_sparse_tensor_core_top.sv line 554
+# Break in Module tb_sparse_tensor_core_top at C:/Users/Jason/Desktop/TC/integration_sv/tb/tb_sparse_tensor_core_top.sv line 554
+# Stopped at C:/Users/Jason/Desktop/TC/integration_sv/tb/tb_sparse_tensor_core_top.sv line 554
 # End time: 17:51:45 on Oct 27,2026, Elapsed time: 0:00:03
 # Errors: 0, Warnings: 0

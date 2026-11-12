@@ -1,0 +1,435 @@
+diff --git a/README.md b/README.md
+index 0e32ce2..c7dae8a 100644
+--- a/README.md
++++ b/README.md
+@@ -1,28 +1,23 @@
+ # A Multi-Mode Tensor Core for Dense and Sparse Matrix Multiplication
+ 
+-**Current main checkout: the selected 10.250 ns / 97.561 MHz RTL and constraint.**
+-The requested 10.000 ns target remains unmet: its best measured setup WNS is
+--0.207 ns. The same preserved physical route passes at 10.250 ns with setup
+-WNS +0.043 ns and hold WHS +0.096 ns, independently verified after reopening
+-the checkpoint. These are FPGA OOC post-route STA results.
+-See the [experiment, checkpoints and reproduction commands](experiments/msu_fmax/target_10ns_20261110/README.md).
+-
+-The pre-optimization 11 ns version is preserved in commit `c3c9661`. Work was
+-performed directly on main without a new branch or worktree. The selected
+-version is preserved by the requested 2026-11-12 baseline snapshot; see the
+-[10 ns continuation record](experiments/msu_fmax/target_10ns_20261112/README.md).
+-Use [tools/build_10p25ns.tcl](tools/build_10p25ns.tcl)
+-to reproduce the selected physical recipe: implement at 10 ns, apply measured
+-driver replication, then validate the unchanged route at 10.25 ns. The native
+-GUI flow now runs the same recipe through
+-[tools/run_10p25_project.tcl](tools/run_10p25_project.tcl), with a separate 10 ns
+-implementation constraint and unchanged final setup/hold gate. The fresh
+-`impl_10p25_retry` run completed on 2026-11-12; reopening it reproduces WNS
+-+0.043 ns and WHS +0.096 ns at 10.25 ns. It is the project's active run.
+-Open `project_integration/project_integration.xpr` and use that run; the failed
+-`impl_1` results remain preserved as history. See the
+-[GUI repair report and diff](reports/implementation/gui_10p25_20261112/README.md).
+-The `tools/*12ns*` scripts remain historical.
++**Current main checkout: 10.000 ns / 100 MHz.** The selected physical
++implementation passes setup WNS +0.002 ns, TNS 0, hold WHS +0.096 ns and
++THS 0, with zero routing errors. An independent checkpoint reopen reproduced
++the result using the unchanged final setup/hold gate. These are FPGA OOC
++post-route STA results; the exact GUI setup margin is only 1.660 ps.
++See the [experiment, evidence and reproduction commands](experiments/msu_fmax/target_10ns_20261112/README.md).
++
++The earlier 11 ns version is preserved in `c3c9661`; the verified 10.25 ns
++version and native GUI flow were committed as `9b99f65` before this work.
++Work stays on main without a new worktree. The selected RTL is unchanged from
++that baseline. One additional AggressiveExplore / Explore post-route pass
++closes the remaining violations at 10 ns, with no added pipeline cycle.
++Use [tools/build_10ns.tcl](tools/build_10ns.tcl) for the standalone recipe or
++[tools/run_10ns_project.tcl](tools/run_10ns_project.tcl) for fresh native runs.
++The new `synth_10ns` / `impl_10ns` native reproduction completed on 2026-11-12
++and reproduced the same timing. Open `project_integration/project_integration.xpr`
++and use the active `impl_10ns` run / **Open Implemented Design**.
++Historical 10.25 ns and failed runs remain preserved.
+ 
+ ## 1. Project Overview
+ 
+@@ -124,9 +119,9 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
+ ## 8. Performance and Implementation Results
+ 
+ The current main RTL passed the original five unit regressions followed by
+-integration on **2026-11-11**. All counts below and original coverage counters
++integration on **2026-11-12**. All counts below and original coverage counters
+ match the baseline; protected C/reference/vector/test hashes are unchanged.
+-See the [current validation record](experiments/msu_fmax/target_10ns_20261110/main_dsp_route/functional_validation.txt).
++See the [current validation record](experiments/msu_fmax/target_10ns_20261112/README.md).
+ 
+ The audit reran the existing SV suites on **2026-10-29**, using **ModelSim Intel FPGA Starter Edition 2020.1 / Simulator 2020.02**. Both commands exited successfully; six existing port-kind compilation warnings remain in each suite. See [verification evidence](reports/verification/2026-10-29/README.md). The separate public candidate reproduced these results after vector restoration on [2026-10-30](reports/verification/2026-10-30-packaging/README.md).
+ 
+@@ -143,12 +138,11 @@ System totals include partial work deliberately discarded by reset, so packet/be
+ 
+ The standalone C TC benchmark uses **100 tiles of full 8 x 8 outer-product packets**, no input gaps or output stalls, and includes initial fill and final result handshaking. It reports 51,200 MACs: serial scheduling takes 1,200 cycles (66.6667% utilization); overlap takes 804 cycles (99.5025%), a 1.4925x cycle-throughput ratio. Utilization is `MACs / (64 x elapsed cycles)`. This is a controlled full-count sparse-path scheduling experiment, not measured utilization for a pruned network, an HBM workload, or the entire integrated system. Stored zeros count as active work when included in the valid prefix. See [benchmark provenance](docs/verification-and-reproduction.md).
+ 
+-The selected implementation uses **29,400 LUTs, 21,503 fabric registers and
+-128 DSP48E1s**, with WNS **+0.043 ns at 10.250 ns** after the physical recipe
+-described above. The requested 10 ns period fails by 0.207 ns on that same
+-route. Source hashes, both clock reports, final checkpoint and functional logs
+-are preserved in the [10 ns experiment](experiments/msu_fmax/target_10ns_20261110/README.md).
+-The 43 ps setup margin, 424 inputs and 592 outputs without delay constraints,
++The selected implementation uses **29,405 LUTs, 21,503 fabric registers and
++128 DSP48E1s**, with WNS **+0.002 ns at 10.000 ns** after the physical recipe
++described above. Source hashes, clock reports, checkpoint and functional logs
++are preserved in the [10 ns continuation](experiments/msu_fmax/target_10ns_20261112/README.md).
++The 1.660 ps setup margin, 424 inputs and 592 outputs without delay constraints,
+ and unspecified OOC clock source limit this to internal routed STA. Board-level
+ timing, hardware maximum frequency and power remain unmeasured.
+ 
+diff --git a/experiments/msu_fmax/target_10ns_20261112/audit_project.tcl b/experiments/msu_fmax/target_10ns_20261112/audit_project.tcl
+new file mode 100644
+index 0000000..e3dbde7
+--- /dev/null
++++ b/experiments/msu_fmax/target_10ns_20261112/audit_project.tcl
+@@ -0,0 +1,30 @@
++# Independent verification of the native run and its final routed checkpoint.
++# Arguments: NEW_AUDIT_DIRECTORY
++if {$argc != 1} {error "Expected NEW_AUDIT_DIRECTORY"}
++set task_audit_repo [file normalize [file join [file dirname [info script]] ../../..]]
++set task_audit_output [file normalize [lindex $argv 0]]
++if {[file exists $task_audit_output]} {error "Use a new audit directory"}
++file mkdir $task_audit_output
++set_param general.maxThreads 4
++open_project [file join $task_audit_repo project_integration project_integration.xpr]
++set task_audit_run [get_runs impl_10ns]
++set task_audit_fd [open [file join $task_audit_output run_properties.txt] w]
++foreach task_audit_property [list_property $task_audit_run] {
++    puts $task_audit_fd "$task_audit_property: [get_property $task_audit_property $task_audit_run]"
++}
++close $task_audit_fd
++if {[get_property STATUS $task_audit_run] ne "route_design Complete!"} {error "Native implementation is not complete"}
++foreach task_audit_stat {STATS.WNS STATS.WHS STATS.TNS STATS.THS} {
++    if {[lsearch -exact [list_property $task_audit_run] $task_audit_stat] < 0} {error "Missing GUI statistic: $task_audit_stat"}
++    set task_audit_value [get_property $task_audit_stat $task_audit_run]
++    if {![string is double -strict $task_audit_value] || $task_audit_value < 0} {error "GUI run timing failed: $task_audit_stat=$task_audit_value"}
++    puts "GUI_STAT_PASS $task_audit_stat=$task_audit_value"
++}
++open_run impl_10ns
++if {abs([get_property PERIOD [get_clocks clk]] - 10.000) > 0.000001} {error "Wrong clock in reopened implementation"}
++report_timing_summary -max_paths 20 -file [file join $task_audit_output open_run_timing.rpt]
++close_project
++set argv [list [file join $task_audit_repo project_integration project_integration.runs impl_10ns sparse_tensor_core_top_routed.dcp] [file join $task_audit_output checkpoint]]
++set argc 2
++source [file join $task_audit_repo experiments msu_fmax target_10ns_20261110 audit.tcl]
++puts "GUI_10NS_INDEPENDENT_AUDIT_COMPLETE"
+diff --git a/experiments/msu_fmax/target_10ns_20261112/validate_10ns.tcl b/experiments/msu_fmax/target_10ns_20261112/validate_10ns.tcl
+new file mode 100644
+index 0000000..14b6651
+--- /dev/null
++++ b/experiments/msu_fmax/target_10ns_20261112/validate_10ns.tcl
+@@ -0,0 +1,23 @@
++# Validate an already routed 10 ns checkpoint, without changing its clock.
++# Arguments: ROUTED_DCP NEW_OUTPUT_DIR
++if {$argc != 2} {error "Expected ROUTED_DCP NEW_OUTPUT_DIR"}
++set task_validate_root [file normalize [file join [file dirname [info script]] ../../..]]
++set task_validate_input [file normalize [lindex $argv 0]]
++set task_validate_output [file normalize [lindex $argv 1]]
++if {[file exists $task_validate_output]} {error "Use a new output directory"}
++file mkdir $task_validate_output
++cd $task_validate_output
++set_param general.maxThreads 4
++open_checkpoint $task_validate_input
++set task_validate_clocks [get_clocks]
++if {[llength $task_validate_clocks] != 1 ||
++    [get_property NAME $task_validate_clocks] ne "clk" ||
++    abs([get_property PERIOD $task_validate_clocks] - 10.0) > 0.000001} {
++    error "Expected exactly one original 10.000 ns clock"
++}
++report_clocks -file clocks.rpt
++# Apply the existing final setup/hold gate unchanged; do not reroute.
++set task_post_route_refined 1
++source [file join $task_validate_root project_integration scripts post_route_opt.tcl.txt]
++report_timing -max_paths 50 -input_pins -file critical_paths.rpt
++puts "VALIDATE_10NS_COMPLETE period=10.000 setup=$task_setup hold=$task_hold"
+diff --git a/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc b/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
+index 69b2497..a3c93e6 100644
+--- a/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
++++ b/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
+@@ -1 +1 @@
+-create_clock -period 10.250 -name clk -waveform {0.000 5.125} [get_ports clk]
++create_clock -period 10.000 -name clk -waveform {0.000 5.000} [get_ports clk]
+diff --git a/project_integration/project_integration.xpr b/project_integration/project_integration.xpr
+index 8babf84..005d2a9 100644
+--- a/project_integration/project_integration.xpr
++++ b/project_integration/project_integration.xpr
+@@ -210,7 +210,9 @@
+           <Attr Name="UsedIn" Val="synthesis"/>
+           <Attr Name="UsedIn" Val="implementation"/>
+           <Attr Name="UsedIn" Val="simulation"/>
++          <Attr Name="UsedInSteps" Val="impl_10ns;INIT_DESIGN;TCL.PRE"/>
+           <Attr Name="UsedInSteps" Val="impl_10p25_retry;INIT_DESIGN;TCL.PRE"/>
++          <Attr Name="UsedInSteps" Val="synth_10ns;SYNTH_DESIGN;TCL.PRE"/>
+           <Attr Name="UsedInSteps" Val="synth_10p25_retry;SYNTH_DESIGN;TCL.PRE"/>
+         </FileInfo>
+       </File>
+@@ -223,6 +225,14 @@
+           <Attr Name="UsedInSteps" Val="impl_10p25_retry;ROUTE_DESIGN;TCL.POST"/>
+         </FileInfo>
+       </File>
++      <File Path="$PPRDIR/scripts/post_route_10ns.tcl">
++        <FileInfo>
++          <Attr Name="UsedIn" Val="synthesis"/>
++          <Attr Name="UsedIn" Val="implementation"/>
++          <Attr Name="UsedIn" Val="simulation"/>
++          <Attr Name="UsedInSteps" Val="impl_10ns;ROUTE_DESIGN;TCL.POST"/>
++        </FileInfo>
++      </File>
+       <Config>
+         <Option Name="TopAutoSet" Val="TRUE"/>
+       </Config>
+@@ -238,6 +248,17 @@
+         <Option Name="ConstrsType" Val="XDC"/>
+       </Config>
+     </FileSet>
++    <FileSet Name="constrs_10ns_impl" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_10ns_impl" RelGenDir="$PGENDIR/constrs_10ns_impl">
++      <File Path="$PSRCDIR/constrs_1/new/constraint.xdc">
++        <FileInfo>
++          <Attr Name="UsedIn" Val="synthesis"/>
++          <Attr Name="UsedIn" Val="implementation"/>
++        </FileInfo>
++      </File>
++      <Config>
++        <Option Name="ConstrsType" Val="XDC"/>
++      </Config>
++    </FileSet>
+   </FileSets>
+   <Simulators>
+     <Simulator Name="XSim">
+@@ -258,7 +279,7 @@
+     </Simulator>
+   </Simulators>
+   <Runs Version="1" Minor="19">
+-    <Run Id="synth_10p25_retry" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z020clg484-1" ConstrsSet="constrs_10p25_impl" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_10p25_retry" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/synth_10p25_retry" AutoRQSDir="$PSRCDIR/utils_1/imports/synth_10p25_retry">
++    <Run Id="synth_10p25_retry" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z020clg484-1" ConstrsSet="constrs_10p25_impl" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/synth_10p25_retry" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/synth_10p25_retry" AutoRQSDir="$PSRCDIR/utils_1/imports/synth_10p25_retry">
+       <Strategy Version="1" Minor="2">
+         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
+         <Step Id="synth_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl">
+@@ -270,7 +291,19 @@
+       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+       <RQSFiles/>
+     </Run>
+-    <Run Id="impl_10p25_retry" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_10p25_impl" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_10p25_retry" SynthRun="synth_10p25_retry" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_10p25_retry" AutoRQSDir="$PSRCDIR/utils_1/imports/impl_10p25_retry">
++    <Run Id="synth_10ns" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_10ns" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/synth_10ns" AutoRQSDir="$PSRCDIR/utils_1/imports/synth_10ns">
++      <Strategy Version="1" Minor="2">
++        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
++        <Step Id="synth_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl">
++          <Option Id="MoreOptsStr"><![CDATA[-mode out_of_context]]></Option>
++        </Step>
++      </Strategy>
++      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
++      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2022"/>
++      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
++      <RQSFiles/>
++    </Run>
++    <Run Id="impl_10p25_retry" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_10p25_impl" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/impl_10p25_retry" SynthRun="synth_10p25_retry" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_10p25_retry" AutoRQSDir="$PSRCDIR/utils_1/imports/impl_10p25_retry">
+       <Strategy Version="1" Minor="2">
+         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
+         <Step Id="init_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl"/>
+@@ -288,6 +321,24 @@
+       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+       <RQSFiles/>
+     </Run>
++    <Run Id="impl_10ns" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_10ns" SynthRun="synth_10ns" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_10ns" AutoRQSDir="$PSRCDIR/utils_1/imports/impl_10ns">
++      <Strategy Version="1" Minor="2">
++        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
++        <Step Id="init_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl"/>
++        <Step Id="opt_design"/>
++        <Step Id="power_opt_design"/>
++        <Step Id="place_design"/>
++        <Step Id="post_place_power_opt_design"/>
++        <Step Id="phys_opt_design"/>
++        <Step Id="route_design" PostStepTclHook="$PPRDIR/scripts/post_route_10ns.tcl"/>
++        <Step Id="post_route_phys_opt_design"/>
++        <Step Id="write_bitstream"/>
++      </Strategy>
++      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
++      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2022"/>
++      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
++      <RQSFiles/>
++    </Run>
+   </Runs>
+   <MsgRule>
+     <MsgAttr Name="RuleType" Val="1"/>
+diff --git a/project_integration/scripts/post_route_10ns.tcl b/project_integration/scripts/post_route_10ns.tcl
+new file mode 100644
+index 0000000..f4288e3
+--- /dev/null
++++ b/project_integration/scripts/post_route_10ns.tcl
+@@ -0,0 +1,46 @@
++# Native 100 MHz recipe after a fresh 10 ns default route. Every checkpoint
++# belongs to this run; no archived implementation is imported.
++set task_gui_repo [file normalize [file join [file dirname [info script]] ../..]]
++set task_gui_run_dir [pwd]
++set task_gui_recipe [file join $task_gui_run_dir recipe_10ns_[clock format [clock seconds] -format %Y%m%d_%H%M%S]]
++if {[file exists $task_gui_recipe]} {error "Recipe output already exists: $task_gui_recipe"}
++set task_gui_clock [get_clocks clk]
++if {[llength $task_gui_clock] != 1 || abs([get_property PERIOD $task_gui_clock] - 10.0) > 0.000001} {
++    error "The 100 MHz recipe requires a 10.000 ns implementation"
++}
++set_param general.maxThreads 4
++file mkdir $task_gui_recipe
++write_checkpoint [file join $task_gui_recipe default_10ns.dcp]
++report_timing_summary -max_paths 20 -file [file join $task_gui_recipe default_10ns.rpt]
++
++close_design
++set argv [list [file join $task_gui_recipe default_10ns.dcp] [file join $task_gui_recipe refined] 10.000]
++set argc 3
++source [file join $task_gui_repo experiments clock_control refine_route.tcl]
++close_design
++set argv [list [file join $task_gui_recipe refined routed.dcp] \
++               [file join $task_gui_recipe replicated] \
++               [file join $task_gui_repo experiments msu_fmax target_10ns_20261110 dsp_route replicate_controls_cep.txt]]
++set argc 3
++source [file join $task_gui_repo experiments msu_fmax target_11ns_20261109 replicate_drivers.tcl]
++close_design
++# An additional post-route pass closes the remaining metadata/result-enable
++# and head-select/DSP-input paths without changing RTL or pipeline boundaries.
++set argv [list [file join $task_gui_recipe replicated routed.dcp] [file join $task_gui_recipe closure] 10.000]
++set argc 3
++source [file join $task_gui_repo experiments clock_control refine_route.tcl]
++close_design
++set argv [list [file join $task_gui_recipe closure routed.dcp] [file join $task_gui_recipe final_10ns]]
++set argc 2
++source [file join $task_gui_repo experiments msu_fmax target_10ns_20261112 validate_10ns.tcl]
++
++# Keep the validated design open for normal native checkpoint/stat generation.
++cd $task_gui_run_dir
++foreach task_gui_file {
++    timing_closed.dcp timing_closed.rpt timing_closed_route_status.rpt
++    timing_closed_utilization.rpt timing_closed_drc.rpt clocks.rpt critical_paths.rpt
++} {
++    file copy -force [file join $task_gui_recipe final_10ns $task_gui_file] [file join $task_gui_run_dir $task_gui_file]
++}
++if {abs([get_property PERIOD [get_clocks clk]] - 10.0) > 0.000001} {error "Final clock changed unexpectedly"}
++puts "GUI_10NS_RECIPE_PASS recipe=$task_gui_recipe"
+diff --git a/tools/build_10ns.tcl b/tools/build_10ns.tcl
+new file mode 100644
+index 0000000..5d08bc6
+--- /dev/null
++++ b/tools/build_10ns.tcl
+@@ -0,0 +1,28 @@
++# Reproduce 100 MHz from current RTL with the verified physical recipe.
++# Optional argument: a new output directory. Preserve all earlier results.
++if {$argc > 1} {error "Usage: build_10ns.tcl ?NEW_OUTPUT_DIR?"}
++set task_main_root [file normalize [file join [file dirname [info script]] ..]]
++if {$argc == 1} {
++    set task_main_output [file normalize [lindex $argv 0]]
++} else {
++    set task_main_output [file join $task_main_root build main_10ns]
++}
++if {[file exists $task_main_output]} {error "Use a new output directory: $task_main_output"}
++set argv [list $task_main_root [file join $task_main_output target_10ns] 10.000]
++set argc 3
++source [file join $task_main_root experiments msu_fmax flow.tcl]
++close_project
++set argv [list [file join $task_main_output target_10ns refined routed.dcp] \
++               [file join $task_main_output replicated] \
++               [file join $task_main_root experiments msu_fmax target_10ns_20261110 dsp_route replicate_controls_cep.txt]]
++set argc 3
++source [file join $task_main_root experiments msu_fmax target_11ns_20261109 replicate_drivers.tcl]
++close_project
++set argv [list [file join $task_main_output replicated routed.dcp] [file join $task_main_output closure] 10.000]
++set argc 3
++source [file join $task_main_root experiments clock_control refine_route.tcl]
++close_project
++set argv [list [file join $task_main_output closure routed.dcp] [file join $task_main_output final_10ns]]
++set argc 2
++source [file join $task_main_root experiments msu_fmax target_10ns_20261112 validate_10ns.tcl]
++puts "MAIN_10NS_BUILD_COMPLETE output=$task_main_output"
+diff --git a/tools/run_10ns_project.tcl b/tools/run_10ns_project.tcl
+new file mode 100644
+index 0000000..da23c73
+--- /dev/null
++++ b/tools/run_10ns_project.tcl
+@@ -0,0 +1,88 @@
++# Configure and verify fresh native Vivado project runs; preserve old runs.
++# Arguments: NEW_REPORT_DIR ?UNUSED_RUN_SUFFIX?
++if {$argc < 1 || $argc > 2} {error "Expected NEW_REPORT_DIR ?UNUSED_RUN_SUFFIX?"}
++set task_gui_root [file normalize [file join [file dirname [info script]] ..]]
++set task_gui_reports [file normalize [lindex $argv 0]]
++set task_gui_suffix 10ns
++if {$argc == 2} {set task_gui_suffix [lindex $argv 1]}
++if {![regexp {^[A-Za-z0-9_]+$} $task_gui_suffix]} {error "Invalid run suffix"}
++if {[file exists $task_gui_reports]} {error "Use a new report directory"}
++file mkdir $task_gui_reports
++set task_gui_synth synth_$task_gui_suffix
++set task_gui_impl impl_$task_gui_suffix
++set task_gui_scripts [file join $task_gui_root project_integration scripts]
++set_param general.maxThreads 4
++open_project [file join $task_gui_root project_integration project_integration.xpr]
++if {[get_property PART [current_project]] ne "xc7z020clg484-1"} {error "Unexpected part"}
++if {[get_property TOP [get_filesets sources_1]] ne "sparse_tensor_core_top"} {error "Unexpected top"}
++foreach task_run [list $task_gui_synth $task_gui_impl] {
++    if {[llength [get_runs -quiet $task_run]]} {error "Run already exists; choose another suffix: $task_run"}
++}
++set task_gui_constrs constrs_10ns_impl
++set task_gui_xdc [file join $task_gui_root project_integration project_integration.srcs constrs_1 new constraint.xdc]
++if {![llength [get_filesets -quiet $task_gui_constrs]]} {create_fileset -constrset $task_gui_constrs}
++if {![llength [get_files -quiet -of_objects [get_filesets $task_gui_constrs] $task_gui_xdc]]} {
++    add_files -fileset $task_gui_constrs -norecurse $task_gui_xdc
++}
++set task_gui_constraint_files [get_files -of_objects [get_filesets $task_gui_constrs]]
++if {[llength $task_gui_constraint_files] != 1} {error "Unexpected implementation constraint files"}
++foreach task_hook {init_12ns.tcl post_route_10ns.tcl} {
++    set task_hook_path [file join $task_gui_scripts $task_hook]
++    if {![llength [get_files -quiet $task_hook_path]]} {add_files -fileset utils_1 -norecurse $task_hook_path}
++}
++create_run $task_gui_synth -part xc7z020clg484-1 -flow {Vivado Synthesis 2022} -strategy {Vivado Synthesis Defaults} -constrset $task_gui_constrs
++create_run $task_gui_impl -part xc7z020clg484-1 -flow {Vivado Implementation 2022} -strategy {Vivado Implementation Defaults} -constrset $task_gui_constrs -parent_run $task_gui_synth
++foreach {task_run task_property task_value} [list \
++    $task_gui_synth AUTO_INCREMENTAL_CHECKPOINT 0 \
++    $task_gui_synth INCREMENTAL_CHECKPOINT {} \
++    $task_gui_synth {STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS} {-mode out_of_context} \
++    $task_gui_synth STEPS.SYNTH_DESIGN.ARGS.DIRECTIVE Default \
++    $task_gui_synth STEPS.SYNTH_DESIGN.TCL.PRE [file join $task_gui_scripts init_12ns.tcl] \
++    $task_gui_impl AUTO_INCREMENTAL_CHECKPOINT 0 \
++    $task_gui_impl INCREMENTAL_CHECKPOINT {} \
++    $task_gui_impl STEPS.INIT_DESIGN.TCL.PRE [file join $task_gui_scripts init_12ns.tcl] \
++    $task_gui_impl STEPS.PHYS_OPT_DESIGN.IS_ENABLED 1 \
++    $task_gui_impl STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE Default \
++    $task_gui_impl STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE Default \
++    $task_gui_impl STEPS.ROUTE_DESIGN.TCL.POST [file join $task_gui_scripts post_route_10ns.tcl] \
++    $task_gui_impl STEPS.POST_ROUTE_PHYS_OPT_DESIGN.IS_ENABLED 0] {
++    if {[lsearch -exact [list_property [get_runs $task_run]] $task_property] < 0} {error "Missing run property $task_property"}
++    set_property -dict [list $task_property $task_value] [get_runs $task_run]
++}
++current_run -synthesis [get_runs $task_gui_synth]
++current_run -implementation [get_runs $task_gui_impl]
++close_project
++open_project [file join $task_gui_root project_integration project_integration.xpr]
++set task_gui_fd [open [file join $task_gui_reports project_settings.txt] w]
++foreach task_run [list $task_gui_synth $task_gui_impl] {
++    foreach task_property [list_property [get_runs $task_run]] {
++        if {[regexp {CONSTRSET|SRCSET|PARENT|MORE OPTIONS|TCL\.(PRE|POST)$|IS_ENABLED$|ARGS.DIRECTIVE$|STATUS$} $task_property]} {
++            puts $task_gui_fd "$task_run $task_property: [get_property $task_property [get_runs $task_run]]"
++        }
++    }
++}
++close $task_gui_fd
++launch_runs $task_gui_synth -jobs 1
++wait_on_run $task_gui_synth
++if {[get_property STATUS [get_runs $task_gui_synth]] ne "synth_design Complete!"} {error "Synthesis failed: [get_property STATUS [get_runs $task_gui_synth]]"}
++launch_runs $task_gui_impl -to_step route_design -jobs 1
++wait_on_run $task_gui_impl
++if {[get_property STATUS [get_runs $task_gui_impl]] ne "route_design Complete!"} {error "Implementation failed: [get_property STATUS [get_runs $task_gui_impl]]"}
++open_run $task_gui_impl
++if {abs([get_property PERIOD [get_clocks clk]] - 10.000) > 0.000001} {error "Open Implemented Design did not preserve 10.000 ns"}
++report_clocks -file [file join $task_gui_reports clocks.rpt]
++report_timing_summary -max_paths 20 -report_unconstrained -file [file join $task_gui_reports timing_summary.rpt]
++report_route_status -file [file join $task_gui_reports route_status.rpt]
++set task_gui_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
++set task_gui_hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
++if {$task_gui_setup eq "" || $task_gui_hold eq "" || $task_gui_setup < 0 || $task_gui_hold < 0} {error "Reopened GUI run fails timing"}
++set task_gui_fd [open [file join $task_gui_reports result.txt] w]
++puts $task_gui_fd "Run: $task_gui_impl"
++puts $task_gui_fd "Status: [get_property STATUS [get_runs $task_gui_impl]]"
++puts $task_gui_fd "Period ns: [get_property PERIOD [get_clocks clk]]"
++puts $task_gui_fd "Setup ns: $task_gui_setup"
++puts $task_gui_fd "Hold ns: $task_gui_hold"
++puts $task_gui_fd "Fresh project synthesis/implementation; no historical checkpoint imported."
++close $task_gui_fd
++close_project
++puts "GUI_10NS_PROJECT_PASS implementation=$task_gui_impl setup=$task_gui_setup hold=$task_gui_hold"

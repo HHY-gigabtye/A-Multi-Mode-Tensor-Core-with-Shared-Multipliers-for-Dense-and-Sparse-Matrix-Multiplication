@@ -1,0 +1,124 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 11 22:41:22 2026
+# Process ID: 23860
+# Current directory: C:/Users/Jason/Desktop/TC
+# Command line: vivado.exe -mode batch -nojournal -log experiments/msu_fmax/target_10ns_20261110/main_dsp_route/validate_10p25.log -source experiments/msu_fmax/target_10ns_20261110/validate_10p25.tcl -tclargs experiments/msu_fmax/target_10ns_20261110/dsp_route/replicated_controls_cep/routed.dcp experiments/msu_fmax/target_10ns_20261110/main_dsp_route/operating_10p25
+# Log file: C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/main_dsp_route/validate_10p25.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source experiments/msu_fmax/target_10ns_20261110/validate_10p25.tcl
+# if {$argc != 2} {error "Expected ROUTED_10NS_DCP NEW_OUTPUT_DIR"}
+# set task_validate_root [file normalize [file join [file dirname [info script]] ../../..]]
+# set task_validate_input [file normalize [lindex $argv 0]]
+# set task_validate_output [file normalize [lindex $argv 1]]
+# if {[file exists $task_validate_output]} {error "Use a new output directory"}
+# file mkdir $task_validate_output
+# cd $task_validate_output
+# set_param general.maxThreads 4
+# open_checkpoint $task_validate_input
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/replicated_controls_cep/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 332.504 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.233 . Memory (MB): peak = 881.125 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1716 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1750.285 ; gain = 68.410
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1750.285 ; gain = 68.410
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1750.285 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 13e852d75
+----- Checksum: PlaceDB: 24d0c317 ShapeSum: 63f4f856 RouteDB: b5bf7208 
+open_checkpoint: Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 1750.285 ; gain = 1417.781
+# set task_original_period [get_property PERIOD [get_clocks clk]]
+# if {abs($task_original_period - 10.0) > 0.000001} {error "Expected the original 10 ns clock"}
+# report_clocks -file clocks_original_10ns.rpt
+# report_timing_summary -max_paths 20 -report_unconstrained -file timing_original_10ns.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:16 ; elapsed = 00:00:07 . Memory (MB): peak = 1862.520 ; gain = 112.234
+# create_clock -period 10.250 -name clk -waveform {0.000 5.125} [get_ports clk]
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+# report_clocks -file clocks.rpt
+# set task_post_route_refined 1
+# source [file join $task_validate_root project_integration scripts post_route_opt.tcl.txt]
+## set_param general.maxThreads 4
+## set task_clock [get_clocks clk]
+## if {[llength $task_clock] != 1} {
+##     error "The main implementation requires exactly one clock named clk"
+## }
+## set task_period [get_property PERIOD $task_clock]
+## if {![string is double -strict $task_period] || $task_period <= 0} {
+##     error "Invalid clk period: $task_period"
+## }
+## puts "MAIN_TIMING_TARGET period=$task_period ns"
+MAIN_TIMING_TARGET period=10.250 ns
+## if {![info exists task_post_route_refined] || !$task_post_route_refined} {
+##     phys_opt_design -directive AggressiveExplore
+##     route_design -directive Explore
+## }
+## unset -nocomplain task_post_route_refined
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:14 ; elapsed = 00:00:05 . Memory (MB): peak = 1870.895 ; gain = 8.375
+## set task_refined_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+## if {abs($task_period - 11.0) < 0.000001 && $task_refined_setup ne "" && $task_refined_setup < 0} {
+##     write_checkpoint -force timing_refined.dcp
+##     report_timing_summary -max_paths 20 -file timing_refined.rpt
+##     source [file join [file dirname [info script]] replicate_11ns_controls.tcl]
+## }
+## write_checkpoint -force timing_closed.dcp
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:09 ; elapsed = 00:00:04 . Memory (MB): peak = 1913.492 ; gain = 33.090
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/main_dsp_route/operating_10p25/timing_closed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:19 ; elapsed = 00:00:12 . Memory (MB): peak = 1915.352 ; gain = 44.457
+## report_timing_summary -max_paths 20 -report_unconstrained -file timing_closed.rpt
+## report_route_status -file timing_closed_route_status.rpt
+## report_utilization -file timing_closed_utilization.rpt
+## report_drc -file timing_closed_drc.rpt
+Command: report_drc -file timing_closed_drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/main_dsp_route/operating_10p25/timing_closed_drc.rpt.
+report_drc completed successfully
+## set task_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+## set task_hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+## if {$task_setup eq "" || $task_hold eq ""} {
+##     send_msg_id {TC 1-2} ERROR "Missing final setup/hold timing paths; inspect timing_closed.rpt"
+## }
+## if {$task_setup < 0 || $task_hold < 0} {
+##     send_msg_id {TC 1-1} ERROR "$task_period ns FINAL timing failed: setup=$task_setup ns, hold=$task_hold ns; inspect timing_closed.rpt"
+## }
+## puts "MAIN_TIMING_PASS period=$task_period ns setup=$task_setup hold=$task_hold"
+MAIN_TIMING_PASS period=10.250 ns setup=0.043 hold=0.096
+# report_timing -max_paths 50 -input_pins -file critical_paths.rpt
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 50 -nworst 1 -delay_type max -sort_by slack.
+# puts "VALIDATE_10P25_COMPLETE original_period=$task_original_period operating_period=10.250"
+VALIDATE_10P25_COMPLETE original_period=10.000 operating_period=10.250
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 11 22:42:23 2026...

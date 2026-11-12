@@ -121,3 +121,7 @@ webtalk*.html
 # Source, C headers, vectors (except the raw TC file above), .f/.do/.tcl,
 # .ps1/.sh/.bat, .xdc/.xpr/.vcxproj settings and selected .log/.rpt stay eligible.
 # Ignore rules never delete files or sanitize existing commits.
+
+# Vivado crash dumps and local scratch files.
+/project_integration/vivado_pid*.zip
+/project_integration/*.txt

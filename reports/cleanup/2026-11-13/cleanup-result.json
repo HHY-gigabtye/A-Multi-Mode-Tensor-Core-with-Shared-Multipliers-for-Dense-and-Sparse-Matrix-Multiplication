@@ -1,0 +1,24 @@
+{
+  "Status": "PASS",
+  "DeletedFiles": 2569,
+  "DeletedTargets": 54,
+  "DeletedBytes": 3908758304.0,
+  "DeletedGiB": 3.64,
+  "RetainedFilesHashVerified": 1189,
+  "XprReferencesVerified": 18,
+  "RequiredDependenciesVerified": 31,
+  "CurrentRtlManifestVerified": true,
+  "OriginalThreePendingFilesPreserved": true,
+  "Both10nsExperimentDirectoriesPreserved": true,
+  "Native10nsRunsPreserved": true,
+  "TrackedDeletions": 1014,
+  "IndexUnchanged": true,
+  "FunctionalRegression": "Not run: source, scripts, tests and vectors are byte-identical; no Vivado or simulation results regenerated.",
+  "Notes": [
+    "The existing 10 ns checkpoint/manifest hash difference predates cleanup; all existing evidence was retained unchanged.",
+    "Old 11/12 ns experiment workflows are retired; old documents may still refer to removed archives.",
+    "The two target_10ns experiment trees were retained in full to preserve old and new 10 ns evidence.",
+    "This report records cleanup verification before amending the single 10 ns snapshot commit. The three original pending files are excluded from that amendment."
+  ],
+  "BaselineCommit": "b5078fe65dc4dd59468bb5641be50d423b965ea4"
+}

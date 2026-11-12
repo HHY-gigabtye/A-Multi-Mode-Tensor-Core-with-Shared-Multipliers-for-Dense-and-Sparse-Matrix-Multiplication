@@ -1,0 +1,96 @@
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index 111d73b..9b8ebe6 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -172,6 +172,50 @@ module tensor_core (
+     end
+   end
+ 
++  // Result storage depends only on OLD control/accumulator state. Keep its
++  // selection independent of the sequential-looking ctrl_d bookkeeping below.
++  // Pop precedes publish; a new idle epoch clears both physical slots. Invalid
++  // input still freezes the entire edge, including a pending result transfer.
++  wire result_pop = ctrl_q.result_valid && result_ready;
++  wire result_epoch_clear = !ctrl_q.busy && in_valid;
++  wire result_publish = ctrl_q.busy && ctrl_q.finish_pending &&
++                        (ctrl_q.is_sparse || !ctrl_q.result_valid);
++  wire result_empty_after_pop =
++      (ctrl_q.result_count == {1'b0, result_pop});
++  wire result_head_publish = result_publish && result_empty_after_pop;
++  wire result_tail_publish = result_publish && !result_empty_after_pop;
++  wire result_shift = result_pop && (ctrl_q.result_count == 2'd2);
++  // Mapping hints allow separate local drivers for the wide result enables.
++  // They add no pipeline register and do not change the acceptance contract.
++  (* max_fanout = 128 *) wire result_head_write = (status == TC_OK) &&
++      (result_epoch_clear || result_head_publish || result_shift);
++  (* max_fanout = 128 *) wire result_tail_write = (status == TC_OK) &&
++      (result_epoch_clear || result_tail_publish);
++  tc_matrix_t result_head_d, result_tail_d;
++  always_comb begin : result_storage
++    result_head_d = ctrl_q.result;
++    result_tail_d = ctrl_q.result_next;
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1) begin
++        if (result_head_write) begin
++          if (result_epoch_clear)
++            result_head_d[i][j] = '0;
++          else if (result_head_publish)
++            result_head_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
++                                                     dense_q.pe[i][j].acc;
++          else
++            result_head_d[i][j] = ctrl_q.result_next[i][j];
++        end
++        if (result_tail_write) begin
++          if (result_epoch_clear)
++            result_tail_d[i][j] = '0;
++          else
++            result_tail_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
++                                                     dense_q.pe[i][j].acc;
++        end
++      end
++  end
++
+   always_comb begin : next_state
+     tc_dense_state_t dense_base;
+     tc_sparse_state_t sparse_base;
+@@ -197,8 +241,6 @@ module tensor_core (
+     if (status == TC_OK) begin
+       // FIFO pop first. Newly published data cannot be consumed on this edge.
+       if (old_result_valid && result_ready) begin
+-        if (ctrl_q.result_count == 2)
+-          ctrl_d.result = ctrl_q.result_next;
+         ctrl_d.result_count = ctrl_d.result_count - 2'd1;
+         ctrl_d.outstanding = ctrl_d.outstanding - 2'd1;
+         ctrl_d.result_valid = (ctrl_d.result_count != 0);
+@@ -229,21 +271,7 @@ module tensor_core (
+           run_pipeline = 1'b0;
+         end else if (ctrl_d.finish_pending) begin
+           // Publish OLD accumulator before sparse ACC first can clear it.
+-          if (ctrl_d.result_count == 0) begin
+-            if (ctrl_d.is_sparse)
+-              ctrl_d.result = sparse_base.acc;
+-            else
+-              for (int i = 0; i < TC_DIM; i = i + 1)
+-                for (int j = 0; j < TC_DIM; j = j + 1)
+-                  ctrl_d.result[i][j] = dense_base.pe[i][j].acc;
+-          end else begin
+-            if (ctrl_d.is_sparse)
+-              ctrl_d.result_next = sparse_base.acc;
+-            else
+-              for (int i = 0; i < TC_DIM; i = i + 1)
+-                for (int j = 0; j < TC_DIM; j = j + 1)
+-                  ctrl_d.result_next[i][j] = dense_base.pe[i][j].acc;
+-          end
++          // Wide data selection is factored into result_storage above.
+           ctrl_d.result_count = ctrl_d.result_count + 2'd1;
+           ctrl_d.result_valid = 1'b1;
+           ctrl_d.finish_pending = 1'b0;
+@@ -382,6 +410,8 @@ module tensor_core (
+         ctrl_d.busy = (ctrl_d.outstanding != 0);
+       end
+     end
++    ctrl_d.result = result_head_d;
++    ctrl_d.result_next = result_tail_d;
+   end
+ 
+   always_ff @(posedge clk or negedge rst_n) begin

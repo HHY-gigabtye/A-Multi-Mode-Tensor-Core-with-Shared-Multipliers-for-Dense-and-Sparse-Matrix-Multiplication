@@ -1,0 +1,273 @@
+diff --git a/README.md b/README.md
+index 5a563d2..41a13cb 100644
+--- a/README.md
++++ b/README.md
+@@ -1,15 +1,20 @@
+ # A Multi-Mode Tensor Core for Dense and Sparse Matrix Multiplication
+ 
+-**Current main checkout: the selected 11.000 ns / 90.909 MHz RTL.** Use this
+-repository root. The former `codex/target-11ns` files have been consolidated
+-here; see the [migration record](reports/worktree-migration/2026-11-10-target-11ns/README.md).
+-The preserved out-of-context post-route result has setup WNS +0.005 ns and
+-hold WHS +0.098 ns. It includes targeted physical replication; a fresh RTL
+-implementation alone did not meet 11 ns. Use the
+-[11 ns evidence and reproduction commands](experiments/msu_fmax/target_11ns_20261109/README.md).
+-The existing Vivado GUI project and `tools/*12ns*` scripts retain their 12 ns
+-settings and do not reproduce the selected 11 ns physical flow. Older reports
+-remain historical evidence. This migration does not create a Git commit.
++**Current main checkout: the selected 10.250 ns / 97.561 MHz RTL and constraint.**
++The requested 10.000 ns target remains unmet: its best measured setup WNS is
++-0.207 ns. The same preserved physical route passes at 10.250 ns with setup
++WNS +0.043 ns and hold WHS +0.096 ns, independently verified after reopening
++the checkpoint. These are FPGA OOC post-route STA results.
++See the [experiment, checkpoints and reproduction commands](experiments/msu_fmax/target_10ns_20261110/README.md).
++
++The pre-optimization 11 ns version is preserved in commit `c3c9661`. Work was
++performed directly on main without a new branch or worktree; the optimized
++changes are uncommitted. Use [tools/build_10p25ns.tcl](tools/build_10p25ns.tcl)
++to reproduce the selected physical recipe: implement at 10 ns, apply measured
++driver replication, then validate the unchanged route at 10.25 ns. The GUI
++project targets 10.25 ns and still enforces final setup/hold checks, but its
++default implementation flow does not reproduce that recipe. Existing GUI run
++artifacts were not overwritten. The `tools/*12ns*` scripts remain historical.
+ 
+ ## 1. Project Overview
+ 
+@@ -75,7 +80,7 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded
+ 
+ **Sparse path.** Packed operand ranks do not directly identify output coordinates. Up to `A.count x B.count` products are formed, then routed using the stored row/column indices into the 8 x 8 accumulator matrix. The ROUTE stage uses two combinational selector banks inside the existing pipeline stage. No extra pipeline register is implied by this factorization.
+ 
+-**Arithmetic.** Separate dense and sparse multipliers use aligned dense PE operands and sparse packed operands, respectively. Existing mode and valid guards select the committed state updates. Products are signed 16-bit values and are sign-extended for INT32 accumulation. Sparse sums use the old accumulator and route data, with first-packet clearing selected after arithmetic. These changes preserve pipeline timing. The selected FPGA result uses 128 DSP48E1s with AREG/BREG/MREG/PREG all zero; older zero-DSP reports describe historical implementations.
++**Arithmetic.** Separate dense and sparse multipliers use aligned dense PE operands and sparse packed operands, respectively. Existing mode and valid guards select the committed state updates. Products are signed 16-bit values and are sign-extended for INT32 accumulation. Sparse sums use the old accumulator and route data, with first-packet clearing selected after arithmetic. The existing sparse MUL product registers map into 64 DSP PREGs; asynchronously reset metadata masks unused raw products in the logical state. There is no additional pipeline cycle. The selected FPGA result uses 128 DSP48E1s: 64 with PREG=1 and 64 with PREG=0, with AREG/BREG/MREG=0 throughout.
+ 
+ **Memory units.** MLU has two tile buffers and permits one outstanding read burst. MSU has two complete 256-byte result buffers. It writes eight 32-byte rows in little-endian order and asserts `tile_done` only after the final row transfer. There is no AXI write-response channel in this interface.
+ 
+@@ -110,6 +115,11 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
+ 
+ ## 8. Performance and Implementation Results
+ 
++The current main RTL passed the original five unit regressions followed by
++integration on **2026-11-11**. All counts below and original coverage counters
++match the baseline; protected C/reference/vector/test hashes are unchanged.
++See the [current validation record](experiments/msu_fmax/target_10ns_20261110/main_dsp_route/functional_validation.txt).
++
+ The audit reran the existing SV suites on **2026-10-29**, using **ModelSim Intel FPGA Starter Edition 2020.1 / Simulator 2020.02**. Both commands exited successfully; six existing port-kind compilation warnings remain in each suite. See [verification evidence](reports/verification/2026-10-29/README.md). The separate public candidate reproduced these results after vector restoration on [2026-10-30](reports/verification/2026-10-30-packaging/README.md).
+ 
+ | Simulation | Observed result |
+@@ -125,13 +135,14 @@ System totals include partial work deliberately discarded by reset, so packet/be
+ 
+ The standalone C TC benchmark uses **100 tiles of full 8 x 8 outer-product packets**, no input gaps or output stalls, and includes initial fill and final result handshaking. It reports 51,200 MACs: serial scheduling takes 1,200 cycles (66.6667% utilization); overlap takes 804 cycles (99.5025%), a 1.4925x cycle-throughput ratio. Utilization is `MACs / (64 x elapsed cycles)`. This is a controlled full-count sparse-path scheduling experiment, not measured utilization for a pruned network, an HBM workload, or the entire integrated system. Stored zeros count as active work when included in the valid prefix. See [benchmark provenance](docs/verification-and-reproduction.md).
+ 
+-The current selected implementation is documented in
+-[the 11 ns experiment](experiments/msu_fmax/target_11ns_20261109/README.md):
+-30,545 LUTs, 22,473 registers and 128 DSP48E1s, with WNS +0.005 ns at 11.000 ns
+-after targeted physical replication. Its source hashes, checkpoint and
+-functional regression logs are preserved. The 5 ps setup
+-margin and unconstrained external I/O make this an OOC internal-timing result,
+-not board-level sign-off or a measured maximum frequency.
++The selected implementation uses **29,400 LUTs, 21,503 fabric registers and
++128 DSP48E1s**, with WNS **+0.043 ns at 10.250 ns** after the physical recipe
++described above. The requested 10 ns period fails by 0.207 ns on that same
++route. Source hashes, both clock reports, final checkpoint and functional logs
++are preserved in the [10 ns experiment](experiments/msu_fmax/target_10ns_20261110/README.md).
++The 43 ps setup margin, 424 inputs and 592 outputs without delay constraints,
++and unspecified OOC clock source limit this to internal routed STA. Board-level
++timing, hardware maximum frequency and power remain unmeasured.
+ 
+ The following older Vivado reports were inspected, **not regenerated**:
+ 
+diff --git a/fifo_sv/README_zh-TW.md b/fifo_sv/README_zh-TW.md
+index 58e27a9..909bb6b 100644
+--- a/fifo_sv/README_zh-TW.md
++++ b/fifo_sv/README_zh-TW.md
+@@ -99,6 +99,15 @@ DU output is written into the FIFO before TC can consume it on the following
+ edge. There is no payload bypass. The FIFO head is combinational, without an
+ additional output register.
+ 
++The current main implementation also registers a redundant one-hot decode of
++the nonempty head. It advances from `d.head`/`d.count` on the same accepted
++edge as the original Bridge state, resets to zero, and holds on rejected edges.
++The combinational payload read ORs the selected FIFO slot. This preserves the
++old head visibility, empty value, metadata blocking, credit accounting and
++non-bypass latency. The original 19,147-record regression checks the resulting
++head data as well as every logical state bit. Physical results are recorded in
++the [10 ns experiment](../experiments/msu_fmax/target_10ns_20261110/README.md).
++
+ When the head has `k=0` and result metadata is full, `head_valid=0`. Metadata is
+ pushed when TC accepts the tile's first packet and popped on the **actual
+ TC→MSU handshake**, without waiting for HBM writeback completion.
+diff --git a/fifo_sv/du_tc_bridge.sv b/fifo_sv/du_tc_bridge.sv
+index 5bdc938..80554c1 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/fifo_sv/du_tc_bridge.sv
+@@ -35,6 +35,9 @@ module du_tc_bridge (
+   fifo_ptr_t fifo_tail;
+   meta_ptr_t meta_tail;
+   logic [FIFO_COUNT_W:0] used_credits;
++  // Redundant decode, advanced on the same accepted edge as q. The payload
++  // remains a combinational FIFO read; neither bypass nor latency is added.
++  (* max_fanout = 128 *) logic [IO_PACKET_FIFO-1:0] head_select_q;
+ 
+   // Widen BEFORE adding so a carry cannot disappear.
+   assign used_credits = {1'b0, q.count} +
+@@ -46,8 +49,13 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  assign head_entry = (q.count != 0) ? q.fifo[q.head] : '0;
+-  assign head_valid = (q.count != 0) &&
++  always_comb begin : read_head
++    head_entry = '0;
++    for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
++      head_entry = head_entry |
++          (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
++  end
++  assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);
+   assign result_meta = result_meta_valid ? q.result_meta[q.meta_head] : '0;
+@@ -109,9 +117,14 @@ module du_tc_bridge (
+   end
+ 
+   always_ff @(posedge clk or negedge rst_n) begin
+-    if (!rst_n)
++    if (!rst_n) begin
+       q <= '0;
+-    else if (status == IO_OK)
++      head_select_q <= '0;
++    end else if (status == IO_OK) begin
+       q <= d;
++      for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
++        head_select_q[slot] <= (d.count != 0) &&
++                               (d.head == fifo_ptr_t'(slot));
++    end
+   end
+ endmodule
+diff --git a/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc b/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
+index 5b0f139..69b2497 100644
+--- a/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
++++ b/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc
+@@ -1,2 +1 @@
+-create_clock -period 11.000 -name clk -waveform {0.000 5.500} [get_ports clk]
+-
++create_clock -period 10.250 -name clk -waveform {0.000 5.125} [get_ports clk]
+diff --git a/tensor_core_sv/README_zh_TW.md b/tensor_core_sv/README_zh_TW.md
+index e3e5208..c3d6c31 100644
+--- a/tensor_core_sv/README_zh_TW.md
++++ b/tensor_core_sv/README_zh_TW.md
+@@ -64,6 +64,17 @@ was not translated into shared hardware storage. Actual multiplier/DSP count,
+ area, and Fmax require synthesis for the target device. Later experimental RTL
+ and its measured mapping are documented in the corresponding experiment reports.
+ 
++The current main RTL uses separate dense and sparse multiplier inputs. Sparse
++MUL product data has synchronous, non-reset storage at the original MUL edge;
++the asynchronously reset valid/count metadata masks unused products to zero in
++the logical `sparse_q` view. Rejected edges hold raw products. This enables DSP
++PREG mapping without an extra pipeline cycle or a change to reset-visible state.
++ROUTE uses direct one-hot matches because input validation rejects duplicate or
++non-increasing indices before the entire edge commits. The original cycle,
++state-hash and result-slot regressions remain unchanged. Mapping, timing and
++candidate comparisons are recorded in the
++[10 ns experiment](../experiments/msu_fmax/target_10ns_20261110/README.md).
++
+ ## Timing
+ 
+ Let cycle 0 be the rising edge accepting the first packet, with k=0..7 accepted
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index bf3c77e..2629fd5 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -25,8 +25,27 @@ module tensor_core (
+   tc_control_t ctrl_q, ctrl_d;
+   tc_dense_state_t dense_q, dense_d;
+   tc_sparse_state_t sparse_q, sparse_d;
++  tc_sparse_state_t sparse_storage_q;
+   tc_tick_info_t info_q, info_d;
+ 
++  // The existing MUL-stage product registers can live inside the DSPs when
++  // their data bits do not need asynchronous reset. The asynchronously reset
++  // MUL metadata masks every unused product to zero, preserving the complete
++  // visible sparse_q state on reset, bubbles, epochs, and rejected edges.
++  wire sparse_mul_capture = rst_n && (status == TC_OK) && in_valid &&
++                            in_packet.is_sparse;
++  wire [7:0][7:0][15:0] sparse_product_q;
++  always_comb begin : sparse_state_view
++    sparse_q = sparse_storage_q;
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1)
++        sparse_q.mul.product[i][j] =
++            (sparse_storage_q.mul.valid &&
++             (i < int'(sparse_storage_q.mul.a_count)) &&
++             (j < int'(sparse_storage_q.mul.b_count))) ?
++            sparse_product_q[i][j] : 16'd0;
++  end
++
+   // Compute arithmetic from raw data, independently of acceptance/validation.
+   // The existing next_state guards still decide whether to commit each value.
+   // FPGA timing trial: independent dense MAC and sparse multiplier inputs.
+@@ -39,7 +58,7 @@ module tensor_core (
+     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+         wire [7:0] dense_a_value, dense_b_value;
+-        // FPGA mapping hint only: no DSP pipeline registers are introduced.
++        // FPGA mapping hint; both products retain their original cycle boundaries.
+         (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+         if (j != 0) begin : g_a_neighbor
+           assign dense_a_value = dense_q.pe[i][j-1].a.value;
+@@ -60,6 +79,15 @@ module tensor_core (
+                                      in_packet.payload.sparse.b.value[j]);
+         assign dense_product[i][j] = dense_mul;
+         assign sparse_product[i][j] = sparse_mul;
++        // Same MUL edge as before: this register replaces the corresponding
++        // product data storage, and adds no cycle. Invalid data is masked by
++        // the registered metadata, outside the multiplier-to-register path.
++        logic signed [15:0] product_q;
++        always_ff @(posedge clk) begin
++          if (sparse_mul_capture)
++            product_q <= sparse_mul;
++        end
++        assign sparse_product_q[i][j] = product_q;
+         assign dense_sum[i][j] = $signed(dense_q.pe[i][j].acc) +
+                                 extend_product(dense_product[i][j]);
+         // OLD ROUTE and ACC feed the adder directly. First-packet clearing
+@@ -101,18 +129,11 @@ module tensor_core (
+             (rank < int'(sparse_q.mul.b_count)) &&
+             (sparse_q.mul.b_index[rank] == TC_INDEX_W'(coord));
+ 
+-        // Legal vectors already have unique indices. Keep the last matching
+-        // rank even for duplicate indices, preserving the old loop's exact
+-        // overwrite priority without a 64-entry data priority chain.
+-        if (rank == TC_DIM-1) begin : g_last
+-          assign route_a_select[coord][rank] = route_a_match[coord][rank];
+-          assign route_b_select[coord][rank] = route_b_match[coord][rank];
+-        end else begin : g_lower
+-          assign route_a_select[coord][rank] = route_a_match[coord][rank] &&
+-              !(|route_a_match[coord][TC_DIM-1:rank+1]);
+-          assign route_b_select[coord][rank] = route_b_match[coord][rank] &&
+-              !(|route_b_match[coord][TC_DIM-1:rank+1]);
+-        end
++        // valid_vector rejects duplicate/non-increasing indices before the
++        // entire edge can commit. Thus each coordinate matches at most one
++        // stored rank; no last-match priority is needed in this ROUTE stage.
++        assign route_a_select[coord][rank] = route_a_match[coord][rank];
++        assign route_b_select[coord][rank] = route_b_match[coord][rank];
+       end
+       assign route_a_present[coord] = |route_a_match[coord];
+       assign route_b_present[coord] = |route_b_match[coord];
+@@ -423,12 +444,14 @@ module tensor_core (
+     if (!rst_n) begin
+       ctrl_q <= '0;
+       dense_q <= '0;
+-      sparse_q <= '0;
++      sparse_storage_q <= '0;
+       info_q <= '0;
+     end else begin
+       ctrl_q <= ctrl_d;
+       dense_q <= dense_d;
+-      sparse_q <= sparse_d;
++      sparse_storage_q <= sparse_d;
++      // Product data is stored by g_arithmetic_column.product_q instead.
++      sparse_storage_q.mul.product <= '0;
+       info_q <= info_d;
+     end
+   end

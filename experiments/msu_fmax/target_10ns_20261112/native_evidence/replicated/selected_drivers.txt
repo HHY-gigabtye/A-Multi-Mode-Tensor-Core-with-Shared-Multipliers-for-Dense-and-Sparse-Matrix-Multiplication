@@ -1,0 +1,6 @@
+u_bridge/dense_q[b_delay][7][6][value][7]_i_1	LUT6	u_bridge/q_reg[fifo][1][packet][is_sparse]_0
+u_bridge/ctrl_q[result][6][2][31]_i_1	LUT6	u_bridge/ctrl_q_reg[result_count][0]_5[0]
+u_tensor_core/ctrl_q[result][3][4][31]_i_4	LUT4	u_tensor_core/ctrl_q_reg[result_count][0]_0
+u_bridge/g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg_i_1	LUT4	u_bridge/rst_n_15
+u_bridge/g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg_i_1	LUT4	u_bridge/rst_n_11
+u_bridge/g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg_i_1_comp	LUT6	u_bridge/rst_n_12

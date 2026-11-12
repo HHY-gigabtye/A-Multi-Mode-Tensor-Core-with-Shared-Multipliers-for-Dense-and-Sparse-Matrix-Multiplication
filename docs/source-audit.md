@@ -1,5 +1,7 @@
 # Source audit and architecture reconciliation
 
+> Historical audit: the October 29 shared-multiplier architecture below predates the selected November 12 RTL, which uses separate dense and sparse arithmetic banks and maps to 128 DSP48E1s. See the [current README](../README.md) and [10 ns evidence](../experiments/msu_fmax/target_10ns_20261112/README.md). Obsolete native project/run artifacts were removed during the November cleanup; archived test and timing evidence is retained.
+
 Audit date: 2026-10-29. Baseline Git HEAD: `7dba760`, preceded by `e41a44e`.
 Statements below distinguish inspected implementation from measured behavior.
 The audit adds documentation, packaging helpers and evidence; it does not alter
@@ -70,11 +72,9 @@ with `tb_tensor_core.c`; the `.cpp` template is not the arithmetic reference.
    its TB derives effective handshakes from C outputs, reset and status. MLU's
    local rejected-edge model does not provide transaction rollback at a live
    bus. End-to-end verification covers legal traffic and coordinated resets.
-7. At the October 29 audit start, `msu_sv/sim/run_msu.do` contained an
-   uncommitted machine-specific root, and the top TB contained an uncommitted
-   blank-line change. Both were preserved exactly as found. These observations
-   describe that local working tree, not the current GitHub tracking status.
-   Use the root unit runner to avoid the machine-specific MSU entry point.
+7. Existing `msu_sv/sim/run_msu.do` has an uncommitted machine-specific root.
+   The root unit runner avoids that entry point. Existing top TB has an
+   uncommitted blank-line change. Both were preserved exactly as found.
 8. The new top implementation reports and XPR were untracked at audit start.
    Matching their source paths to this checkout is not proof of exact synthesis
    input provenance; no source-hash manifest accompanied the archived run.
@@ -92,17 +92,6 @@ availability. Memory loading, mode switches, result stalls, and writeback may
 increase end-to-end latency. "64 shared multipliers" is a source-level resource
 organization, not a claim of 64 FPGA DSP primitives or quantified area savings.
 
-## Documentation update, November 1, 2026
-
-At the October 29 audit, the original diagrams were local material whose
-authorship and correspondence to the RTL had not been established; the README
-used a text/Mermaid connectivity summary derived from the inspected top module.
-
-The public repository now includes the author's updated
-[overall system architecture](Overall%20System%20Architecture.png) and
-[DU/TIA and Tensor Core architecture](DU%26TIA%20and%20Tensor%20Core%20architecture.png)
-images. The [root README](../README.md) presents them in Sections 3 and 5 and
-retains the Mermaid connectivity summary in an expandable section. The captions
-identify the simplified memory boundary, shared multipliers, and conceptual
-scope of the compute diagram. This documentation update does not establish
-new RTL verification results or change the implementation limitations above.
+Original diagrams exist locally, but their authorship and correspondence to the
+current RTL have not been established. The root README instead includes a new
+text/Mermaid connectivity summary derived from the inspected top module.

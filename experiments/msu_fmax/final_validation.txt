@@ -1,0 +1,11 @@
+Selected trial: baseline
+Selected run: baseline/fresh_12/refined
+PASS: baseline and selected functional regressions; protected reference/test hashes.
+PASS: selected live RTL equals immutable implementation source snapshot.
+PASS: promoted 12 ns project/configuration hashes match current_project.csv.
+PASS: pre-promotion XPR/XDC backup hashes match original_project.csv.
+PASS: integration coverage counters equal baseline.
+PASS: post-route setup 0.005 ns; hold 0.098 ns; zero routing errors.
+PASS: independent checkpoint re-open confirms 12 ns and reproduces setup/hold; 128 DSPs with AREG/BREG/MREG/PREG=0.
+PASS: routed DRC has no Error or Critical Warning entries; existing warnings retained.
+The active RTL is unchanged; project settings and implementation evidence are promoted to main.
