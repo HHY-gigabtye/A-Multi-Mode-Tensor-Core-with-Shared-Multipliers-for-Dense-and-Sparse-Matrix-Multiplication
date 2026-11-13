@@ -1,0 +1,19 @@
+diff --git a/msu_sv/rtl/msu.sv b/msu_sv/rtl/msu.sv
+index 02b8138..0ca83c2 100644
+--- a/msu_sv/rtl/msu.sv
++++ b/msu_sv/rtl/msu.sv
+@@ -50,9 +50,12 @@ module msu (
+   assign events = events_q;
+ 
+   assign capacity_ready = (count_q < 2'd2);
+-  // 32-byte alignment and a complete 256-byte address span.
++  // 32-byte alignment and a complete 256-byte address span. For binary
++  // addresses, exceeding ...ff00 requires all upper bits and any low byte bit.
++  // This avoids a wide magnitude comparator without changing fault priority.
+   assign addr_bad = (result_meta.dst_addr[4:0] != 5'd0) ||
+-                   (result_meta.dst_addr > 64'hffff_ffff_ffff_ff00);
++                   ((&result_meta.dst_addr[63:8]) &&
++                    (|result_meta.dst_addr[7:0]));
+   // Like C, metadata is checked only when the input has capacity to accept.
+   always_comb begin : check_format
+     status = IO_OK;

@@ -1,0 +1,897 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 11 15:31:37 2026
+# Process ID: 19472
+# Current directory: C:/Users/Jason/Desktop/TC
+# Command line: vivado.exe -mode batch -nojournal -log experiments/msu_fmax/target_10ns_20261110/dsp_route/replicate_controls_cep.log -source experiments/msu_fmax/target_11ns_20261109/replicate_drivers.tcl -tclargs experiments/msu_fmax/target_10ns_20261110/dsp_route/fresh_10/refined/routed.dcp experiments/msu_fmax/target_10ns_20261110/dsp_route/replicated_controls_cep experiments/msu_fmax/target_10ns_20261110/dsp_route/replicate_controls_cep.txt
+# Log file: C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/replicate_controls_cep.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source experiments/msu_fmax/target_11ns_20261109/replicate_drivers.tcl
+# if {$argc != 3} {error "Expected ROUTED_DCP NEW_OUTPUT_DIR LUT_DRIVER_NAMES_FILE"}
+# set routed_input [file normalize [lindex $argv 0]]
+# set output_dir [file normalize [lindex $argv 1]]
+# set names_file [file normalize [lindex $argv 2]]
+# if {[file exists $output_dir]} {error "Use a new output directory"}
+# set names_handle [open $names_file r]
+# set names_text [read $names_handle]
+# close $names_handle
+# file mkdir $output_dir
+# cd $output_dir
+# set_param general.maxThreads 4
+# open_checkpoint $routed_input
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/fresh_10/refined/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 319.137 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.263 . Memory (MB): peak = 881.504 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1716 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1750.617 ; gain = 69.391
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1750.617 ; gain = 69.391
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1750.617 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 2820810b8
+----- Checksum: PlaceDB: e1aeb543 ShapeSum: c228d049 RouteDB: de308b2c 
+open_checkpoint: Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1750.617 ; gain = 1431.480
+# report_timing_summary -max_paths 10 -file timing_before.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:17 ; elapsed = 00:00:07 . Memory (MB): peak = 1858.680 ; gain = 108.062
+# report_utilization -file utilization_placed.rpt
+# report_high_fanout_nets -max_nets 40 -timing -load_types -file high_fanout_before.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+report_high_fanout_nets: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1863.434 ; gain = 4.754
+# set selected_nets {}
+# set resolved_handle [open selected_drivers.txt w]
+# foreach line [split $names_text \n] {
+#     set name [string trim $line]
+#     if {$name eq "" || [string index $name 0] eq "#"} {continue}
+#     set driver [get_cells -hierarchical -filter [format {NAME == "%s"} $name]]
+#     if {[llength $driver] != 1} {error "Expected exactly one measured driver: $name"}
+#     set driver_type [get_property REF_NAME $driver]
+#     if {![string match LUT* $driver_type]} {
+#         error "Expected a LUT control driver for $name, got $driver_type"
+#     }
+#     set driver_pin [get_pins -of_objects $driver -filter {DIRECTION == OUT && REF_PIN_NAME == O}]
+#     if {[llength $driver_pin] != 1} {error "Expected one LUT output for $name"}
+#     set matches [get_nets -of_objects $driver_pin]
+#     if {[llength $matches] != 1} {error "Expected one output net for $name"}
+#     puts $resolved_handle "$name\t$driver_type\t[get_property NAME $matches]"
+#     lappend selected_nets [lindex $matches 0]
+# }
+# close $resolved_handle
+# if {[llength $selected_nets] == 0} {error "No measured nets selected"}
+# set route_help [help route_design]
+# if {[string first {-unroute} $route_help] < 0} {error {This Vivado has no route_design -unroute}}
+# route_design -unroute
+Command: route_design -unroute
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Route 35-163] All nets in the design were unrouted.
+INFO: [Common 17-83] Releasing license: Implementation
+3 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+# phys_opt_design -force_replication_on_nets $selected_nets
+Command: phys_opt_design -force_replication_on_nets {{u_bridge/q_reg[fifo][1][packet][is_sparse]_0} {u_bridge/ctrl_q_reg[result_count][0]_5[0]} {u_tensor_core/ctrl_q_reg[result_count][0]_0} u_bridge/rst_n_15 u_bridge/rst_n_11 u_bridge/rst_n_12}
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+
+Starting Initial Update Timing Task
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:05 . Memory (MB): peak = 1884.152 ; gain = 0.000
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 12.00s |  WALL: 5.26s
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1884.152 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 4 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.012 | TNS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 21b8a1a94
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:03 . Memory (MB): peak = 1895.445 ; gain = 11.293
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.000 | TNS=0.000 |
+
+Phase 2 Fanout Optimization
+INFO: [Physopt 32-76] Pass 1. Identified 3 candidate nets for fanout optimization.
+INFO: [Physopt 32-81] Processed net u_bridge/q_reg[fifo][1][packet][is_sparse]_0. Replicated 10 times.
+INFO: [Physopt 32-81] Processed net u_bridge/ctrl_q_reg[result_count][0]_5[0]. Replicated 7 times.
+INFO: [Physopt 32-81] Processed net u_tensor_core/ctrl_q_reg[result_count][0]_0. Replicated 9 times.
+INFO: [Physopt 32-232] Optimized 3 nets. Created 26 new instances.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 3 nets or cells. Created 26 new cells, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.000 | TNS=0.000 |
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.260 . Memory (MB): peak = 1895.445 ; gain = 0.000
+Phase 2 Fanout Optimization | Checksum: 1cf33019e
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:08 . Memory (MB): peak = 1895.445 ; gain = 11.293
+
+Phase 3 Critical Cell Optimization
+INFO: [Physopt 32-46] Identified 3 candidate nets for critical-cell optimization.
+INFO: [Physopt 32-81] Processed net u_bridge/rst_n_15. Replicated 6 times.
+INFO: [Physopt 32-81] Processed net u_bridge/rst_n_11. Replicated 8 times.
+INFO: [Physopt 32-81] Processed net u_bridge/rst_n_12. Replicated 7 times.
+INFO: [Physopt 32-232] Optimized 3 nets. Created 21 new instances.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 3 nets or cells. Created 21 new cells, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.000 | TNS=0.000 |
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.216 . Memory (MB): peak = 1895.445 ; gain = 0.000
+Phase 3 Critical Cell Optimization | Checksum: 1afc82f0f
+
+Time (s): cpu = 00:00:24 ; elapsed = 00:00:11 . Memory (MB): peak = 1895.445 ; gain = 11.293
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1895.445 ; gain = 0.000
+INFO: [Physopt 32-603] Post Physical Optimization Timing Summary | WNS=-1.093 | TNS=-475.210 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization    |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Fanout          |          0.000  |          0.000  |           26  |              0  |                     3  |           0  |           1  |  00:00:04  |
+|  Critical Cell   |          0.000  |          0.000  |           21  |              0  |                     3  |           0  |           1  |  00:00:03  |
+|  Total           |          0.000  |          0.000  |           47  |              0  |                     6  |           0  |           2  |  00:00:07  |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1895.445 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 18b882336
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:11 . Memory (MB): peak = 1895.445 ; gain = 11.293
+INFO: [Common 17-83] Releasing license: Implementation
+21 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:16 . Memory (MB): peak = 1895.445 ; gain = 11.293
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+# route_design -directive Explore
+Command: route_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-270] Using Router directive 'Explore'.
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 4 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: 7bbaae33 ConstDB: 0 ShapeSum: 92329518 RouteDB: 0
+WARNING: [Route 35-197] Clock port "clk" does not have an associated HD.CLK_SRC. Without this constraint, timing analysis may not be accurate and upstream checks cannot be done to ensure correct clock placement.
+WARNING: [Route 35-198] Port "read_data[5][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[5][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[6][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[6][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[24][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[24][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[24][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[24][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[21][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[21][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[28][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[28][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[10][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[10][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[10][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[10][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[3][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[3][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[3][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[3][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[9][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[9][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[22][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[22][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[22][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[22][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[5][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[5][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[2][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[2][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[2][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[2][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[0][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[0][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[28][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[28][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[1][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[1][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[25][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[25][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[25][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[25][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[4][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[4][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[27][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[27][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[28][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[28][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[18][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[18][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[9][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[9][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[18][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[18][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][42]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][42]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][43]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][43]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][47]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][47]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][15]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][15]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][23]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][23]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][26]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][26]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][27]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][27]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][14]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][14]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "rst_n" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "rst_n". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[1][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[1][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[2][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[2][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[4][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[4][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[6][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[6][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[7][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[7][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[9][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[9][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[24][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[24][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[25][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[25][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[24][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[24][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[7][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[7][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[7][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[7][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[9][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[9][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[9][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[9][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[6][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[6][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[31][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[31][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[4][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[4][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[6][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[6][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[5][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[5][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[16][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[16][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[27][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[27][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[27][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[27][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[10][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[10][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[19][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[19][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[22][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[22][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][20]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][20]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][21]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][21]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[7][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[7][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[0][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[0][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[4][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[4][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[5][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[5][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[25][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[25][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[0][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[0][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[22][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[22][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+INFO: [Common 17-14] Message 'Route 35-198' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+Post Restoration Checksum: NetGraph: cf378ef4 NumContArr: e1f4614b Constraints: 0 Timing: 0
+Phase 1 Build RT Design | Checksum: 1b12bf03f
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 2063.570 ; gain = 81.012
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 1b12bf03f
+
+Time (s): cpu = 00:00:36 ; elapsed = 00:00:26 . Memory (MB): peak = 2063.570 ; gain = 81.012
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 1b12bf03f
+
+Time (s): cpu = 00:00:36 ; elapsed = 00:00:26 . Memory (MB): peak = 2063.570 ; gain = 81.012
+ Number of Nodes with overlaps = 0
+
+Phase 2.3 Update Timing
+Phase 2.3 Update Timing | Checksum: 20ee3090e
+
+Time (s): cpu = 00:00:48 ; elapsed = 00:00:32 . Memory (MB): peak = 2086.508 ; gain = 103.949
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.832 | TNS=-102.894| WHS=0.103  | THS=0.000  |
+
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0 %
+  Global Horizontal Routing Utilization  = 0 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 41604
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 41604
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 2a33800ea
+
+Time (s): cpu = 00:01:02 ; elapsed = 00:00:38 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 3 Initial Routing
+
+Phase 3.1 Global Routing
+Phase 3.1 Global Routing | Checksum: 2a33800ea
+
+Time (s): cpu = 00:01:02 ; elapsed = 00:00:38 . Memory (MB): peak = 2404.156 ; gain = 421.598
+Phase 3 Initial Routing | Checksum: 172bcb685
+
+Time (s): cpu = 00:01:26 ; elapsed = 00:00:46 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 21640
+ Number of Nodes with overlaps = 4372
+ Number of Nodes with overlaps = 1418
+ Number of Nodes with overlaps = 343
+ Number of Nodes with overlaps = 112
+ Number of Nodes with overlaps = 46
+ Number of Nodes with overlaps = 23
+ Number of Nodes with overlaps = 5
+ Number of Nodes with overlaps = 10
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.850 | TNS=-2028.491| WHS=N/A    | THS=N/A    |
+
+Phase 4.1 Global Iteration 0 | Checksum: 1bcbc6cc0
+
+Time (s): cpu = 00:06:26 ; elapsed = 00:03:25 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 4.2 Global Iteration 1
+ Number of Nodes with overlaps = 499
+ Number of Nodes with overlaps = 153
+ Number of Nodes with overlaps = 86
+ Number of Nodes with overlaps = 82
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.770 | TNS=-1816.983| WHS=N/A    | THS=N/A    |
+
+Phase 4.2 Global Iteration 1 | Checksum: 196cb0851
+
+Time (s): cpu = 00:06:55 ; elapsed = 00:03:47 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 4.3 Global Iteration 2
+ Number of Nodes with overlaps = 249
+ Number of Nodes with overlaps = 122
+ Number of Nodes with overlaps = 57
+ Number of Nodes with overlaps = 33
+ Number of Nodes with overlaps = 12
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.366 | TNS=-676.655| WHS=N/A    | THS=N/A    |
+
+Phase 4.3 Global Iteration 2 | Checksum: 1a96b2f41
+
+Time (s): cpu = 00:07:25 ; elapsed = 00:04:12 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 4.4 Global Iteration 3
+ Number of Nodes with overlaps = 346
+ Number of Nodes with overlaps = 149
+ Number of Nodes with overlaps = 99
+ Number of Nodes with overlaps = 14
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 3
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.923 | TNS=-2455.577| WHS=N/A    | THS=N/A    |
+
+Phase 4.4 Global Iteration 3 | Checksum: 197a48d69
+
+Time (s): cpu = 00:07:43 ; elapsed = 00:04:25 . Memory (MB): peak = 2404.156 ; gain = 421.598
+Phase 4 Rip-up And Reroute | Checksum: 197a48d69
+
+Time (s): cpu = 00:07:44 ; elapsed = 00:04:25 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 5 Delay and Skew Optimization
+
+Phase 5.1 Delay CleanUp
+
+Phase 5.1.1 Update Timing
+Phase 5.1.1 Update Timing | Checksum: 11bae1378
+
+Time (s): cpu = 00:07:48 ; elapsed = 00:04:27 . Memory (MB): peak = 2404.156 ; gain = 421.598
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.366 | TNS=-676.655| WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 5.1 Delay CleanUp | Checksum: bbf8ec89
+
+Time (s): cpu = 00:07:48 ; elapsed = 00:04:28 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 5.2 Clock Skew Optimization
+Phase 5.2 Clock Skew Optimization | Checksum: bbf8ec89
+
+Time (s): cpu = 00:07:49 ; elapsed = 00:04:28 . Memory (MB): peak = 2404.156 ; gain = 421.598
+Phase 5 Delay and Skew Optimization | Checksum: bbf8ec89
+
+Time (s): cpu = 00:07:49 ; elapsed = 00:04:28 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Hold Fix Iter
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: d8662e5a
+
+Time (s): cpu = 00:07:53 ; elapsed = 00:04:30 . Memory (MB): peak = 2404.156 ; gain = 421.598
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.350 | TNS=-675.794| WHS=0.095  | THS=0.000  |
+
+Phase 6.1 Hold Fix Iter | Checksum: d8662e5a
+
+Time (s): cpu = 00:07:53 ; elapsed = 00:04:30 . Memory (MB): peak = 2404.156 ; gain = 421.598
+Phase 6 Post Hold Fix | Checksum: d8662e5a
+
+Time (s): cpu = 00:07:54 ; elapsed = 00:04:30 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 7 Timing Verification
+
+Phase 7.1 Update Timing
+Phase 7.1 Update Timing | Checksum: b1150c56
+
+Time (s): cpu = 00:08:03 ; elapsed = 00:04:33 . Memory (MB): peak = 2404.156 ; gain = 421.598
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.350 | TNS=-675.794| WHS=N/A    | THS=N/A    |
+
+Phase 7 Timing Verification | Checksum: b1150c56
+
+Time (s): cpu = 00:08:03 ; elapsed = 00:04:34 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 28.7775 %
+  Global Horizontal Routing Utilization  = 33.0756 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Congestion Report
+North Dir 2x2 Area, Max Cong = 86.036%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X40Y26 -> INT_R_X41Y27
+South Dir 2x2 Area, Max Cong = 87.1622%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X38Y72 -> INT_R_X39Y73
+   INT_L_X40Y72 -> INT_R_X41Y73
+   INT_L_X28Y70 -> INT_R_X29Y71
+   INT_L_X40Y70 -> INT_R_X41Y71
+   INT_L_X54Y70 -> INT_R_X55Y71
+East Dir 2x2 Area, Max Cong = 89.7059%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X52Y68 -> INT_R_X53Y69
+   INT_L_X50Y66 -> INT_R_X51Y67
+   INT_L_X52Y66 -> INT_R_X53Y67
+   INT_L_X40Y26 -> INT_R_X41Y27
+West Dir 4x4 Area, Max Cong = 86.8566%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X28Y46 -> INT_R_X31Y49
+   INT_L_X20Y30 -> INT_R_X23Y33
+   INT_L_X16Y26 -> INT_R_X19Y29
+   INT_L_X16Y22 -> INT_R_X19Y25
+   INT_L_X16Y18 -> INT_R_X19Y21
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.666667 Sparse Ratio: 1
+Direction: South
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 2 Aspect Ratio: 0.666667 Sparse Ratio: 1
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 2 Aspect Ratio: 0.333333 Sparse Ratio: 0.9375
+Direction: West
+----------------
+Congested clusters found at Level 2
+Effective congestion level: 4 Aspect Ratio: 0.555556 Sparse Ratio: 1.0625
+
+Phase 8 Route finalize | Checksum: b1150c56
+
+Time (s): cpu = 00:08:03 ; elapsed = 00:04:34 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: b1150c56
+
+Time (s): cpu = 00:08:03 ; elapsed = 00:04:34 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 1525e1bd5
+
+Time (s): cpu = 00:08:07 ; elapsed = 00:04:38 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 11 Incr Placement Change
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 2404.156 ; gain = 0.000
+INFO: [Place 30-746] Post Placement Timing Summary WNS=-0.213. For the most accurate timing information please run report_timing.
+Ending IncrPlace Task | Checksum: c81d1523
+
+Time (s): cpu = 00:01:05 ; elapsed = 00:00:59 . Memory (MB): peak = 2404.156 ; gain = 0.000
+Phase 11 Incr Placement Change | Checksum: 1525e1bd5
+
+Time (s): cpu = 00:09:14 ; elapsed = 00:05:37 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 12 Build RT Design
+Checksum: PlaceDB: 64281ccd ConstDB: 0 ShapeSum: 63f4f856 RouteDB: 80ae7ea1
+WARNING: [Route 35-197] Clock port "clk" does not have an associated HD.CLK_SRC. Without this constraint, timing analysis may not be accurate and upstream checks cannot be done to ensure correct clock placement.
+Post Restoration Checksum: NetGraph: a7fd10cc NumContArr: 2fa00977 Constraints: 0 Timing: 0
+Phase 12 Build RT Design | Checksum: d79d1a43
+
+Time (s): cpu = 00:09:29 ; elapsed = 00:05:46 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 13 Router Initialization
+
+Phase 13.1 Fix Topology Constraints
+Phase 13.1 Fix Topology Constraints | Checksum: d79d1a43
+
+Time (s): cpu = 00:09:30 ; elapsed = 00:05:47 . Memory (MB): peak = 2404.156 ; gain = 421.598
+
+Phase 13.2 Pre Route Cleanup
+Phase 13.2 Pre Route Cleanup | Checksum: 4e700967
+
+Time (s): cpu = 00:09:30 ; elapsed = 00:05:47 . Memory (MB): peak = 2404.156 ; gain = 421.598
+ Number of Nodes with overlaps = 0
+
+Phase 13.3 Update Timing
+Phase 13.3 Update Timing | Checksum: 1bf11e524
+
+Time (s): cpu = 00:09:51 ; elapsed = 00:05:56 . Memory (MB): peak = 2404.156 ; gain = 421.598
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.101 | TNS=-1.817 | WHS=0.103  | THS=0.000  |
+
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 28.5482 %
+  Global Horizontal Routing Utilization  = 32.8251 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 983
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 313
+  Number of Partially Routed Nets     = 670
+  Number of Node Overlaps             = 0
+
+Phase 13 Router Initialization | Checksum: 15f742573
+
+Time (s): cpu = 00:10:05 ; elapsed = 00:06:03 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 14 Initial Routing
+
+Phase 14.1 Global Routing
+Phase 14.1 Global Routing | Checksum: 15f742573
+
+Time (s): cpu = 00:10:05 ; elapsed = 00:06:03 . Memory (MB): peak = 2627.320 ; gain = 644.762
+Phase 14 Initial Routing | Checksum: 18dc2c519
+
+Time (s): cpu = 00:10:10 ; elapsed = 00:06:05 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 15 Rip-up And Reroute
+
+Phase 15.1 Global Iteration 0
+ Number of Nodes with overlaps = 7327
+ Number of Nodes with overlaps = 2695
+ Number of Nodes with overlaps = 1419
+ Number of Nodes with overlaps = 821
+ Number of Nodes with overlaps = 360
+ Number of Nodes with overlaps = 193
+ Number of Nodes with overlaps = 18
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.722 | TNS=-195.005| WHS=N/A    | THS=N/A    |
+
+Phase 15.1 Global Iteration 0 | Checksum: c3be0389
+
+Time (s): cpu = 00:17:09 ; elapsed = 00:10:03 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 15.2 Global Iteration 1
+ Number of Nodes with overlaps = 1554
+ Number of Nodes with overlaps = 931
+ Number of Nodes with overlaps = 578
+ Number of Nodes with overlaps = 469
+ Number of Nodes with overlaps = 127
+ Number of Nodes with overlaps = 103
+ Number of Nodes with overlaps = 49
+ Number of Nodes with overlaps = 23
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.445 | TNS=-108.006| WHS=N/A    | THS=N/A    |
+
+Phase 15.2 Global Iteration 1 | Checksum: 21ee68112
+
+Time (s): cpu = 00:21:15 ; elapsed = 00:12:43 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 15.3 Global Iteration 2
+ Number of Nodes with overlaps = 1797
+ Number of Nodes with overlaps = 844
+ Number of Nodes with overlaps = 634
+ Number of Nodes with overlaps = 411
+ Number of Nodes with overlaps = 102
+ Number of Nodes with overlaps = 81
+ Number of Nodes with overlaps = 37
+ Number of Nodes with overlaps = 27
+ Number of Nodes with overlaps = 28
+ Number of Nodes with overlaps = 21
+ Number of Nodes with overlaps = 15
+ Number of Nodes with overlaps = 5
+ Number of Nodes with overlaps = 6
+ Number of Nodes with overlaps = 6
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.209 | TNS=-24.063| WHS=N/A    | THS=N/A    |
+
+Phase 15.3 Global Iteration 2 | Checksum: 1e4094073
+
+Time (s): cpu = 00:25:20 ; elapsed = 00:15:21 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 15.4 Global Iteration 3
+ Number of Nodes with overlaps = 1433
+ Number of Nodes with overlaps = 1032
+ Number of Nodes with overlaps = 747
+ Number of Nodes with overlaps = 514
+ Number of Nodes with overlaps = 232
+ Number of Nodes with overlaps = 172
+ Number of Nodes with overlaps = 116
+ Number of Nodes with overlaps = 89
+ Number of Nodes with overlaps = 100
+ Number of Nodes with overlaps = 57
+ Number of Nodes with overlaps = 54
+ Number of Nodes with overlaps = 16
+ Number of Nodes with overlaps = 7
+ Number of Nodes with overlaps = 15
+ Number of Nodes with overlaps = 10
+ Number of Nodes with overlaps = 8
+ Number of Nodes with overlaps = 7
+ Number of Nodes with overlaps = 8
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.207 | TNS=-14.084| WHS=N/A    | THS=N/A    |
+
+Phase 15.4 Global Iteration 3 | Checksum: 1b28784e4
+
+Time (s): cpu = 00:33:02 ; elapsed = 00:20:43 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 15.5 Global Iteration 4
+ Number of Nodes with overlaps = 2639
+ Number of Nodes with overlaps = 1443
+ Number of Nodes with overlaps = 873
+ Number of Nodes with overlaps = 313
+ Number of Nodes with overlaps = 180
+ Number of Nodes with overlaps = 106
+ Number of Nodes with overlaps = 59
+ Number of Nodes with overlaps = 32
+ Number of Nodes with overlaps = 16
+ Number of Nodes with overlaps = 5
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.280 | TNS=-18.207| WHS=N/A    | THS=N/A    |
+
+Phase 15.5 Global Iteration 4 | Checksum: 15be864df
+
+Time (s): cpu = 00:37:48 ; elapsed = 00:23:29 . Memory (MB): peak = 2627.320 ; gain = 644.762
+Phase 15 Rip-up And Reroute | Checksum: 15be864df
+
+Time (s): cpu = 00:37:49 ; elapsed = 00:23:30 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 16 Delay and Skew Optimization
+
+Phase 16.1 Delay CleanUp
+
+Phase 16.1.1 Update Timing
+Phase 16.1.1 Update Timing | Checksum: e07a2a95
+
+Time (s): cpu = 00:37:53 ; elapsed = 00:23:32 . Memory (MB): peak = 2627.320 ; gain = 644.762
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.207 | TNS=-14.084| WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 16.1 Delay CleanUp | Checksum: 19680aa80
+
+Time (s): cpu = 00:37:54 ; elapsed = 00:23:32 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 16.2 Clock Skew Optimization
+Phase 16.2 Clock Skew Optimization | Checksum: 19680aa80
+
+Time (s): cpu = 00:37:54 ; elapsed = 00:23:32 . Memory (MB): peak = 2627.320 ; gain = 644.762
+Phase 16 Delay and Skew Optimization | Checksum: 19680aa80
+
+Time (s): cpu = 00:37:54 ; elapsed = 00:23:32 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 17 Post Hold Fix
+
+Phase 17.1 Hold Fix Iter
+
+Phase 17.1.1 Update Timing
+Phase 17.1.1 Update Timing | Checksum: 2666cc5b0
+
+Time (s): cpu = 00:37:58 ; elapsed = 00:23:34 . Memory (MB): peak = 2627.320 ; gain = 644.762
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.207 | TNS=-13.703| WHS=0.095  | THS=0.000  |
+
+Phase 17.1 Hold Fix Iter | Checksum: 2666cc5b0
+
+Time (s): cpu = 00:37:58 ; elapsed = 00:23:34 . Memory (MB): peak = 2627.320 ; gain = 644.762
+Phase 17 Post Hold Fix | Checksum: 2666cc5b0
+
+Time (s): cpu = 00:37:58 ; elapsed = 00:23:35 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 18 Timing Verification
+
+Phase 18.1 Update Timing
+Phase 18.1 Update Timing | Checksum: 2544d4983
+
+Time (s): cpu = 00:38:06 ; elapsed = 00:23:38 . Memory (MB): peak = 2627.320 ; gain = 644.762
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.207 | TNS=-13.703| WHS=N/A    | THS=N/A    |
+
+Phase 18 Timing Verification | Checksum: 2544d4983
+
+Time (s): cpu = 00:38:06 ; elapsed = 00:23:38 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 19 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 30.3724 %
+  Global Horizontal Routing Utilization  = 34.5137 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Congestion Report
+North Dir 1x1 Area, Max Cong = 95.4955%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_R_X55Y77 -> INT_R_X55Y77
+   INT_L_X44Y40 -> INT_L_X44Y40
+   INT_R_X11Y38 -> INT_R_X11Y38
+   INT_R_X23Y38 -> INT_R_X23Y38
+   INT_L_X40Y38 -> INT_L_X40Y38
+South Dir 2x2 Area, Max Cong = 93.018%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X28Y78 -> INT_R_X29Y79
+   INT_L_X32Y74 -> INT_R_X33Y75
+   INT_L_X38Y72 -> INT_R_X39Y73
+   INT_L_X28Y70 -> INT_R_X29Y71
+   INT_L_X38Y70 -> INT_R_X39Y71
+East Dir 2x2 Area, Max Cong = 90.0735%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X52Y78 -> INT_R_X53Y79
+   INT_L_X52Y66 -> INT_R_X53Y67
+   INT_L_X56Y66 -> INT_R_X57Y67
+   INT_L_X50Y56 -> INT_R_X51Y57
+   INT_L_X24Y34 -> INT_R_X25Y35
+West Dir 8x8 Area, Max Cong = 90.2803%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X16Y30 -> INT_R_X23Y37
+   INT_L_X16Y22 -> INT_R_X23Y29
+   INT_L_X16Y14 -> INT_R_X23Y21
+   INT_L_X40Y6 -> INT_R_X47Y13
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 2 Aspect Ratio: 1 Sparse Ratio: 0.5625
+Direction: South
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 2 Aspect Ratio: 0.5 Sparse Ratio: 1.25
+Direction: East
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.5 Sparse Ratio: 0.6875
+Direction: West
+----------------
+Congested clusters found at Level 3
+Effective congestion level: 4 Aspect Ratio: 0.5 Sparse Ratio: 1.25
+
+Phase 19 Route finalize | Checksum: 2544d4983
+
+Time (s): cpu = 00:38:06 ; elapsed = 00:23:38 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 20 Verifying routed nets
+
+ Verification completed successfully
+Phase 20 Verifying routed nets | Checksum: 2544d4983
+
+Time (s): cpu = 00:38:07 ; elapsed = 00:23:38 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 21 Depositing Routes
+Phase 21 Depositing Routes | Checksum: 1af70aa7b
+
+Time (s): cpu = 00:38:11 ; elapsed = 00:23:42 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Phase 22 Post Router Timing
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+INFO: [Route 35-20] Post Routing Timing Summary | WNS=-0.207 | TNS=-13.765| WHS=0.096  | THS=0.000  |
+
+Phase 22 Post Router Timing | Checksum: 16f61691b
+
+Time (s): cpu = 00:38:27 ; elapsed = 00:23:49 . Memory (MB): peak = 2627.320 ; gain = 644.762
+CRITICAL WARNING: [Route 35-39] The design did not meet timing requirements. Please run report_timing_summary for detailed reports.
+Resolution: Verify that the timing was met or had small violations at all previous steps (synthesis, placement, power_opt, and phys_opt). Run report_timing_summary and analyze individual timing paths.
+INFO: [Route 35-253] TNS is the sum of the worst slack violation on every endpoint in the design. Review the paths with the biggest WNS violations in the timing reports and modify your constraints or your design to improve both WNS and TNS.
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:38:27 ; elapsed = 00:23:49 . Memory (MB): peak = 2627.320 ; gain = 644.762
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+32 Infos, 103 Warnings, 1 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:38:31 ; elapsed = 00:23:52 . Memory (MB): peak = 2627.320 ; gain = 731.875
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+# write_checkpoint routed.dcp
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:11 ; elapsed = 00:00:04 . Memory (MB): peak = 2627.320 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/replicated_controls_cep/routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:22 ; elapsed = 00:00:16 . Memory (MB): peak = 2627.320 ; gain = 0.000
+# report_timing_summary -max_paths 20 -report_unconstrained -file timing_summary_routed.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:21 ; elapsed = 00:00:08 . Memory (MB): peak = 2627.320 ; gain = 0.000
+# report_timing -max_paths 50 -input_pins -file critical_paths.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 50 -nworst 1 -delay_type max -sort_by slack.
+# report_high_fanout_nets -max_nets 40 -timing -load_types -file high_fanout.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+report_high_fanout_nets: Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 2627.320 ; gain = 0.000
+# report_utilization -file utilization_routed.rpt
+# report_route_status -file route_status.rpt
+# report_drc -file drc_routed.rpt
+Command: report_drc -file drc_routed.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/replicated_controls_cep/drc_routed.rpt.
+report_drc completed successfully
+# puts "TARGETED_REPLICATION_COMPLETE input=$routed_input nets=$selected_nets"
+TARGETED_REPLICATION_COMPLETE input=C:/Users/Jason/Desktop/TC/experiments/msu_fmax/target_10ns_20261110/dsp_route/fresh_10/refined/routed.dcp nets={u_bridge/q_reg[fifo][1][packet][is_sparse]_0} {u_bridge/ctrl_q_reg[result_count][0]_5[0]} {u_tensor_core/ctrl_q_reg[result_count][0]_0} u_bridge/rst_n_15 u_bridge/rst_n_11 u_bridge/rst_n_12
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 11 15:57:02 2026...

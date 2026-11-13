@@ -1,0 +1,9 @@
+MSU phase 1 starts at cycle 0
+MSU phase 2 starts at cycle 1341
+MSU phase 3 starts at cycle 1370
+MSU phase 4 starts at cycle 1638
+MSU phase 5 starts at cycle 1719
+MSU phase 6 starts at cycle 1788
+MSU coverage: simultaneous=34 faults=42 resets=8
+MSU SV PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full_last=632 wraps=335 max_count=2
+tb/tb_msu.sv:159: $finish called at 86836000 (1ps)

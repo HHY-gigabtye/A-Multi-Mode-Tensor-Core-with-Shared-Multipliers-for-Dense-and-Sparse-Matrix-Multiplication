@@ -1,0 +1,61 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Tue Nov 10 23:05:49 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_high_fanout_nets -max_nets 40 -timing -load_types -file high_fanout.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+------------------------------------------------------------------------------------------------
+
+High Fan-out Nets Information
+
+1. Fanout Summary
+-----------------
+
++------------------------------------------------------------+--------+-------------+-----------------+-----------------+--------------+-----------+--------------+-------+
+| Net Name                                                   | Fanout | Driver Type | Worst Slack(ns) | Worst Delay(ns) | Clock Enable | Set/Reset | Data & Other | Clock |
++------------------------------------------------------------+--------+-------------+-----------------+-----------------+--------------+-----------+--------------+-------+
+| u_tensor_core/rst_n_0                                      |  21359 | LUT1        |             inf |           0.776 |            0 |     21359 |            0 |     0 |
+| u_tensor_core/ctrl_q_reg[busy]_0                           |   4318 | FDCE        |           4.589 |           0.806 |            0 |         0 |         4318 |     0 |
+| u_msu/meta_q[0][95]_i_1_n_0                                |   2144 | LUT6        |           3.469 |           0.473 |         2144 |         0 |            0 |     0 |
+| u_msu/meta_q[1][95]_i_1_n_0                                |   2144 | LUT6        |           3.469 |           0.473 |         2144 |         0 |            0 |     0 |
+| u_mlu/state_q_reg[head_n_0_]                               |   2058 | FDCE        |           1.351 |           0.666 |            0 |         0 |         2058 |     0 |
+| u_bridge/q_reg[fifo][1][packet][is_sparse]_0               |   1634 | LUT6        |           0.986 |           0.902 |         1541 |         0 |           93 |     0 |
+| u_msu/head_q_reg_n_0                                       |   1279 | FDCE        |           7.375 |           0.806 |            0 |         0 |         1279 |     0 |
+| u_bridge/ctrl_q_reg[busy]_0[0]                             |   1077 | LUT4        |           1.536 |           0.473 |         1077 |         0 |            0 |     0 |
+| u_tensor_core/ctrl_q[result][3][3][31]_i_2_n_0             |   1032 | LUT4        |           3.043 |           0.449 |            0 |         0 |         1032 |     0 |
+| u_tensor_core/ctrl_q_reg[result_count][0]_0                |   1032 | LUT4        |           2.218 |           0.449 |            0 |         0 |         1032 |     0 |
+| u_bridge/rst_n_2                                           |   1027 | LUT3        |           2.336 |           1.111 |            0 |         0 |         1027 |     0 |
+| u_bridge/rst_n_7                                           |   1027 | LUT3        |           2.445 |           0.902 |            0 |         0 |         1027 |     0 |
+| u_bridge/rst_n_8                                           |   1027 | LUT3        |           2.054 |           0.449 |            0 |         0 |         1027 |     0 |
+| u_bridge/rst_n_9                                           |   1027 | LUT3        |           2.016 |           1.111 |            0 |         0 |         1027 |     0 |
+| u_bridge/rst_n_1                                           |   1023 | LUT3        |           2.918 |           0.902 |            0 |         0 |         1023 |     0 |
+| u_mlu/state_q[buffer][0][beats_received][2]_i_4_n_0        |    897 | LUT2        |           1.656 |           0.449 |            0 |         0 |          897 |     0 |
+| u_tensor_core/sparse_storage_q[mul][b_index][7][2]_i_4_n_0 |    813 | LUT2        |           3.446 |           0.449 |            0 |         0 |          813 |     0 |
+| u_tensor_core/p_605_in                                     |    507 | FDCE        |           4.067 |           0.741 |            0 |         0 |          507 |     0 |
+| u_tensor_core/sparse_storage_q_reg[mul][a_count][2]        |    380 | FDCE        |           3.915 |           0.806 |            0 |         0 |          380 |     0 |
+| u_tensor_core/tc_accept                                    |    357 | LUT6        |           1.831 |           0.449 |            0 |         0 |          357 |     0 |
+| u_bridge/q[count][3]_i_1_n_0                               |    339 | LUT1        |           1.552 |           0.473 |          339 |         0 |            0 |     0 |
+| u_bridge/q[fifo][0][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][1][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][2][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][3][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][4][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][5][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][6][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_bridge/q[fifo][7][k][2]_i_1_n_0                          |    281 | LUT6        |           1.759 |           0.473 |          281 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][1][beats_received][0]_i_2_n_0        |    277 | LUT5        |           1.112 |           0.449 |            0 |         0 |          277 |     0 |
+| u_mlu/state_q[buffer][0][image][28][7]_i_1_n_0             |    256 | LUT5        |           1.656 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][0][image][55][7]_i_1_n_0             |    256 | LUT5        |           1.656 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][0][image][72][7]_i_1_n_0             |    256 | LUT5        |           1.656 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][0][image][97][7]_i_1_n_0             |    256 | LUT5        |           1.656 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][1][image][28][7]_i_1_n_0             |    256 | LUT6        |           1.968 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][1][image][55][7]_i_1_n_0             |    256 | LUT3        |           1.112 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][1][image][72][7]_i_1_n_0             |    256 | LUT3        |           1.112 |           0.473 |          256 |         0 |            0 |     0 |
+| u_mlu/state_q[buffer][1][image][97][7]_i_1_n_0             |    256 | LUT3        |           1.112 |           0.473 |          256 |         0 |            0 |     0 |
+| u_tensor_core/sparse_storage_q_reg[mul][a_count][1]        |    254 | FDCE        |           3.654 |           0.965 |            0 |         0 |          254 |     0 |
+| u_msu/p_7_in                                               |    189 | LUT3        |           8.005 |           0.419 |            0 |         0 |          189 |     0 |
++------------------------------------------------------------+--------+-------------+-----------------+-----------------+--------------+-----------+--------------+-------+
+
+

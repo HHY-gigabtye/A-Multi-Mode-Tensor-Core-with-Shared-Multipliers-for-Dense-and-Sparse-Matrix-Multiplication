@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="MLU/MLU.vcxproj" Id="dcc13a66-d032-4906-a819-f3d5ba4301d0" />
+</Solution>

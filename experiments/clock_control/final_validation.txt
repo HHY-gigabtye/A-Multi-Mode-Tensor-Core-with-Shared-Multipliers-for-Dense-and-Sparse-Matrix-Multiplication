@@ -1,0 +1,7 @@
+PASS: baseline and candidate original five-unit and integration regressions.
+PASS: immutable source snapshots and protected models/vectors/tests retain hashes.
+PASS: refinement input and selected routed checkpoint hashes unchanged.
+PASS: live RTL matches selected source; original Vivado user project edits unchanged.
+PASS: selected result_local/refined_12p5 is post-route, period=12.5 ns, setup=0.004 ns, hold=0.096 ns, zero routing errors.
+PASS: independent checkpoint STA reproduces results; all 128 DSPs have AREG/BREG/MREG/PREG=0.
+LIMIT: OOC internal timing only; no board timing, hardware frequency, power, or formal-equivalence claim.

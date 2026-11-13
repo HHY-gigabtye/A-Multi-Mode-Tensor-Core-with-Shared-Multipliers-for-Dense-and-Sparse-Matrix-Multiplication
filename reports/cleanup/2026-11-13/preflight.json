@@ -1,0 +1,14 @@
+{
+  "Status": "Prepared; no deletions yet",
+  "Commit": "b5078fe65dc4dd59468bb5641be50d423b965ea4",
+  "Targets": 54,
+  "DeleteFiles": 2569,
+  "DeleteBytes": 3908758304.0,
+  "RetainFiles": 1189,
+  "XprReferences": 18,
+  "OriginalStatus": [
+    " M project_integration/project_integration.xpr",
+    "?? project_integration/vivado_pid24624.zip",
+    "?? \"project_integration/新增 文字文件.txt\""
+  ]
+}

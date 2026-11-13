@@ -1,0 +1,58 @@
+# do reports/verification/tc_cycles_github_fe14c132/run_compare.do
+# C:/Users/Jason/Desktop/TC
+# C:/Users/Jason/Desktop/TC/reports/verification/tc_cycles_github_fe14c132
+# C:/Users/Jason/Desktop/TC/reports/verification/tc_cycles_github_fe14c132/build
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:31:21 on Nov 12,2026
+# vlog -sv -work cycle_github C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core_pkg.sv C:/Users/Jason/Desktop/TC/reports/verification/tc_cycles_github_fe14c132/github_tensor_core.sv C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv 
+# -- Compiling package tensor_core_pkg
+# -- Compiling module tensor_core
+# -- Importing package tensor_core_pkg
+# -- Compiling module tb_tensor_core
+# 
+# Top level modules:
+# 	tb_tensor_core
+# End time: 16:31:21 on Nov 12,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop cycle_github.tb_tensor_core "+VECTORS=C:/Users/Jason/Desktop/TC/tensor_core_sv/c_vectors.txt" 
+# Start time: 16:31:21 on Nov 12,2026
+# Loading sv_std.std
+# Loading cycle_github.tensor_core_pkg
+# Loading cycle_github.tb_tensor_core
+# Loading cycle_github.tensor_core
+# ALL PASS C/SV: 136136 records, 169 resets, 13 RTL rejection cases
+#   published=6440 consumed=6392 overlap_starts=1609
+#   pop_and_push=1 consume_and_start=151 full_fifo_cycles=3480
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv(157)
+#    Time: 1361360 ns  Iteration: 0  Instance: /tb_tensor_core
+# Break in Module tb_tensor_core at C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv line 157
+# Stopped at C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv line 157
+# End time: 16:32:42 on Nov 12,2026, Elapsed time: 0:01:21
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:32:42 on Nov 12,2026
+# vlog -sv -work cycle_current C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core_pkg.sv C:/Users/Jason/Desktop/TC/reports/verification/tc_cycles_github_fe14c132/current_tensor_core.sv C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv 
+# -- Compiling package tensor_core_pkg
+# -- Compiling module tensor_core
+# -- Importing package tensor_core_pkg
+# -- Compiling module tb_tensor_core
+# 
+# Top level modules:
+# 	tb_tensor_core
+# End time: 16:32:42 on Nov 12,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop cycle_current.tb_tensor_core "+VECTORS=C:/Users/Jason/Desktop/TC/tensor_core_sv/c_vectors.txt" 
+# Start time: 16:32:42 on Nov 12,2026
+# Loading sv_std.std
+# Loading cycle_current.tensor_core_pkg
+# Loading cycle_current.tb_tensor_core
+# Loading cycle_current.tensor_core
+# ALL PASS C/SV: 136136 records, 169 resets, 13 RTL rejection cases
+#   published=6440 consumed=6392 overlap_starts=1609
+#   pop_and_push=1 consume_and_start=151 full_fifo_cycles=3480
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv(157)
+#    Time: 1361360 ns  Iteration: 0  Instance: /tb_tensor_core
+# Break in Module tb_tensor_core at C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv line 157
+# Stopped at C:/Users/Jason/Desktop/TC/tensor_core_sv/tb_tensor_core.sv line 157
+# End time: 16:34:22 on Nov 12,2026, Elapsed time: 0:01:40
+# Errors: 0, Warnings: 0

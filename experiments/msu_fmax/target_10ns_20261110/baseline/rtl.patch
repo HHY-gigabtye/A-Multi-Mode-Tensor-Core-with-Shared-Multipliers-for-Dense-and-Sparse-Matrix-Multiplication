@@ -1,0 +1,95 @@
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index 9b8ebe6..bf3c77e 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -29,19 +29,18 @@ module tensor_core (
+ 
+   // Compute arithmetic from raw data, independently of acceptance/validation.
+   // The existing next_state guards still decide whether to commit each value.
+-  // In an active epoch the registered mode selects the shared multiplier bank;
+-  // only an idle epoch needs the offered packet's mode. Do not use ctrl_d here:
+-  // it would put ready/status/start gating ahead of every multiplier.
+-  wire arithmetic_sparse = ctrl_q.busy ? ctrl_q.is_sparse : in_packet.is_sparse;
+-  wire [7:0][7:0][15:0] arithmetic_product;
+-  wire [7:0][7:0][31:0] dense_sum;
++  // FPGA timing trial: independent dense MAC and sparse multiplier inputs.
++  // The baseline already maps to 128 DSP48E1s, but mode muxes precede them.
++  // Keep mode/valid selection at the existing state-update guards instead;
++  // actual DSP count and timing must be checked after implementation.
++  wire [7:0][7:0][15:0] dense_product, sparse_product;
++  wire [7:0][7:0][31:0] dense_sum, sparse_sum;
+   generate
+     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+         wire [7:0] dense_a_value, dense_b_value;
+-        wire [7:0] a_value, b_value;
+         // FPGA mapping hint only: no DSP pipeline registers are introduced.
+-        (* use_dsp = "yes" *) wire signed [15:0] product;
++        (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+         if (j != 0) begin : g_a_neighbor
+           assign dense_a_value = dense_q.pe[i][j-1].a.value;
+         end else if (i != 0) begin : g_a_skew
+@@ -56,12 +55,17 @@ module tensor_core (
+         end else begin : g_b_input
+           assign dense_b_value = in_packet.payload.dense.dense_b[j];
+         end
+-        assign a_value = arithmetic_sparse ? in_packet.payload.sparse.a.value[i] : dense_a_value;
+-        assign b_value = arithmetic_sparse ? in_packet.payload.sparse.b.value[j] : dense_b_value;
+-        assign product = mul_int8(a_value, b_value);
+-        assign arithmetic_product[i][j] = product;
++        assign dense_mul = mul_int8(dense_a_value, dense_b_value);
++        assign sparse_mul = mul_int8(in_packet.payload.sparse.a.value[i],
++                                     in_packet.payload.sparse.b.value[j]);
++        assign dense_product[i][j] = dense_mul;
++        assign sparse_product[i][j] = sparse_mul;
+         assign dense_sum[i][j] = $signed(dense_q.pe[i][j].acc) +
+-                                extend_product(arithmetic_product[i][j]);
++                                extend_product(dense_product[i][j]);
++        // OLD ROUTE and ACC feed the adder directly. First-packet clearing
++        // and epoch/valid guards select the committed result after arithmetic.
++        assign sparse_sum[i][j] = $signed(sparse_q.acc[i][j]) +
++                                 extend_product(sparse_q.route.delta[i][j]);
+       end
+     end
+   endgenerate
+@@ -308,8 +312,9 @@ module tensor_core (
+             for (int i = 0; i < TC_DIM; i = i + 1)
+               for (int j = 0; j < TC_DIM; j = j + 1)
+                 if (sparse_base.route.enable[i][j]) begin
+-                  sparse_d.acc[i][j] = $signed(sparse_d.acc[i][j]) +
+-                                      extend_product(sparse_base.route.delta[i][j]);
++                  sparse_d.acc[i][j] = sparse_q.route.first ?
++                                      extend_product(sparse_q.route.delta[i][j]) :
++                                      sparse_sum[i][j];
+                   info_d.macs = info_d.macs + 7'd1;
+                 end
+             ctrl_d.finish_pending = sparse_base.route.last;
+@@ -369,8 +374,8 @@ module tensor_core (
+           end
+         end
+ 
+-        // One 8x8 multiplier bank is shared between the two modes. Dense
+-        // selects aligned PE operands; sparse selects packed-rank operands.
++        // Commit only the active mode's arithmetic. Dense uses aligned PE
++        // operands; sparse uses packed-rank operands. Pipeline timing is intact.
+         for (int i = 0; i < TC_DIM; i = i + 1)
+           for (int j = 0; j < TC_DIM; j = j + 1) begin
+             a = '0;
+@@ -391,7 +396,7 @@ module tensor_core (
+             end
+             if (ctrl_d.is_sparse) begin
+               if (a.valid && b.valid)
+-                sparse_d.mul.product[i][j] = arithmetic_product[i][j];
++                sparse_d.mul.product[i][j] = sparse_product[i][j];
+             end else begin
+               dense_d.pe[i][j].a = a;
+               dense_d.pe[i][j].b = b;
+@@ -400,7 +405,7 @@ module tensor_core (
+                 // so epoch clearing does not feed the multiplier/adder chain.
+                 // Other new-epoch PEs have invalid tokens and keep their reset.
+                 dense_d.pe[i][j].acc = ctrl_q.busy ? dense_sum[i][j] :
+-                                      extend_product(arithmetic_product[i][j]);
++                                      extend_product(dense_product[i][j]);
+                 info_d.macs = info_d.macs + 7'd1;
+                 if ((i == TC_DIM-1) && (j == TC_DIM-1) && a.last)
+                   ctrl_d.finish_pending = 1'b1;

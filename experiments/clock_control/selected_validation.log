@@ -1,0 +1,103 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Nov  6 18:49:44 2026
+# Process ID: 30276
+# Current directory: C:/Users/Jason/Desktop/TC/.worktrees/clock-control
+# Command line: vivado.exe -mode batch -nojournal -log experiments/clock_control/selected_validation.log -source experiments/clock_control/inspect.tcl -tclargs experiments/clock_control/result_local/refined_12p5/routed.dcp experiments/clock_control/selected_validation 12.500
+# Log file: C:/Users/Jason/Desktop/TC/.worktrees/clock-control/experiments/clock_control/selected_validation.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source experiments/clock_control/inspect.tcl
+# set repo_root [file normalize [file join [file dirname [info script]] ../..]]
+# source [file join $repo_root experiments fmax check_clock.tcl]
+## set routed_dcp [file normalize [lindex $argv 0]]
+## set output_dir [file normalize [lindex $argv 1]]
+## set period [lindex $argv 2]
+## file mkdir $output_dir
+## cd $output_dir
+## set_param general.maxThreads 4
+## open_checkpoint $routed_dcp
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/.worktrees/clock-control/experiments/clock_control/result_local/refined_12p5/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.049 . Memory (MB): peak = 319.570 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.244 . Memory (MB): peak = 882.145 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1615 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1751.156 ; gain = 68.949
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1751.156 ; gain = 68.949
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1751.156 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 1df9d4259
+----- Checksum: PlaceDB: 2cd22e76 ShapeSum: df0519f4 RouteDB: d3c5f9ef 
+open_checkpoint: Time (s): cpu = 00:00:24 ; elapsed = 00:00:34 . Memory (MB): peak = 1751.156 ; gain = 1431.586
+## set dsp_cells [get_cells -hierarchical -filter {REF_NAME == DSP48E1}]
+## set dsp_file [open dsp_registers.csv w]
+## puts $dsp_file "Cell,AREG,BREG,MREG,PREG"
+## foreach dsp $dsp_cells {
+##   puts $dsp_file "$dsp,[get_property AREG $dsp],[get_property BREG $dsp],[get_property MREG $dsp],[get_property PREG $dsp]"
+## }
+## close $dsp_file
+## set clock_file [open clock.xdc w]
+## puts $clock_file "create_clock -period $period -name clk \[get_ports clk\]"
+## close $clock_file
+## read_xdc clock.xdc
+Parsing XDC File [C:/Users/Jason/Desktop/TC/.worktrees/clock-control/experiments/clock_control/selected_validation/clock.xdc]
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name. [C:/Users/Jason/Desktop/TC/.worktrees/clock-control/experiments/clock_control/selected_validation/clock.xdc:1]
+Finished Parsing XDC File [C:/Users/Jason/Desktop/TC/.worktrees/clock-control/experiments/clock_control/selected_validation/clock.xdc]
+## report_timing_summary -max_paths 20 -report_unconstrained -file timing_summary_routed.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:18 ; elapsed = 00:00:07 . Memory (MB): peak = 1873.898 ; gain = 122.742
+## report_route_status -file route_status.rpt
+## report_utilization -file utilization_routed.rpt
+## set setup_slack [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+## set hold_slack [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+## set summary [open clock_check.txt w]
+## puts $summary "Checkpoint: $routed_dcp"
+## puts $summary "Clock period: $period ns"
+## puts $summary "Setup slack: $setup_slack ns"
+## puts $summary "Hold slack: $hold_slack ns"
+## puts $summary "Existing placement/routing reanalyzed; no frequency sweep or board measurement."
+## close $summary
+## if {$setup_slack < 0 || $hold_slack < 0} {error "Requested clock fails setup or hold"}
+## puts "CLOCK_CHECK_PASS period=$period setup=$setup_slack hold=$hold_slack"
+CLOCK_CHECK_PASS period=12.500 setup=0.004 hold=0.096
+# report_timing -max_paths 50 -input_pins -file critical_paths.rpt
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 50 -nworst 1 -delay_type max -sort_by slack.
+# report_utilization -hierarchical -file utilization_hierarchical.rpt
+# report_high_fanout_nets -max_nets 30 -timing -load_types -file high_fanout.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+report_high_fanout_nets: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1912.289 ; gain = 0.000
+# set fifo_sources [get_cells -hierarchical -filter {NAME =~ *u_bridge/q_reg*count*}]
+# set result_destinations [get_cells -hierarchical -filter {NAME =~ *u_tensor_core/ctrl_q_reg*result*}]
+# if {[llength $fifo_sources] == 0 || [llength $result_destinations] == 0} {
+#     error "Bridge/result path endpoints not found"
+# }
+# report_timing -from $fifo_sources -to $result_destinations -max_paths 5 -input_pins -file bridge_to_result.rpt
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 5 -nworst 1 -delay_type max -sort_by slack.
+# puts "CLOCK_CONTROL_INSPECTION_COMPLETE"
+CLOCK_CONTROL_INSPECTION_COMPLETE
+INFO: [Common 17-206] Exiting Vivado at Fri Nov  6 18:50:42 2026...

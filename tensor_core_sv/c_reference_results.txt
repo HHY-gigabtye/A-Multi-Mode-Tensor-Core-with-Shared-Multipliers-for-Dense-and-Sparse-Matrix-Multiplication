@@ -1,0 +1,15 @@
+Standalone INT8 tensor core (decoded input): dense=systolic; sparse=outer product; seed=20260915
+PASS dense                : 8 directed + 1000 random tiles
+PASS hybrid               : 8 directed + 1000 random tiles
+PASS dual                 : 8 directed + 1000 random tiles
+PASS dense-unstructured   : 8 directed + 1000 random tiles
+PASS sparse streaming: empty/stored-zero/boundary tiles, long output stalls, FIFO pop/push
+PASS 1000 sparse + 1000 mixed-mode random stream tiles, and 30 overlapped reset cases
+BENCH full 8x8 outer-product packets, 100 tiles; all results checked; includes initial fill/final output handshake
+  serial scheduling : 1200 cycles, 51200 MACs, utilization 66.6667%
+  sparse overlap    : 804 cycles, 51200 MACs, utilization 99.5025%; 1.4925x throughput
+PASS input-contract rejection and 48 reset/restart cases
+PASS 16 tiles with dense/sparse switching without reset
+PASS stored zero values in both sparse vectors
+ALL PASS: 6389 tiles (1290 dense, 5099 sparse); 1593020 checked MACs
+C VECTORS: 136136 records, 169 reset records, 4 C-only rejection calls

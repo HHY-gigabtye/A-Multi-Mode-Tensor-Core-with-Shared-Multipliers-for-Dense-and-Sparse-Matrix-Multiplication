@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "dense",
+    "first_input_record": 2,
+    "last_input_record": 9,
+    "first_route_record": null,
+    "first_acc_record": null,
+    "last_acc_record": null,
+    "result_produced_record": 24,
+    "result_accepted_record": 25,
+    "produced_offset": 22,
+    "accepted_offset": 23
+  },
+  {
+    "mode": "sparse",
+    "first_input_record": 94334,
+    "last_input_record": 94341,
+    "first_route_record": 94335,
+    "first_acc_record": 94336,
+    "last_acc_record": 94343,
+    "result_produced_record": 94344,
+    "result_accepted_record": 94345,
+    "produced_offset": 10,
+    "accepted_offset": 11
+  }
+]
