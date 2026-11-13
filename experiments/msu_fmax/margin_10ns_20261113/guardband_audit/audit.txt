@@ -1,0 +1,7 @@
+Checkpoint: C:/Users/Jason/Desktop/TC/experiments/msu_fmax/margin_10ns_20261113/guardband_9p75/timing_closed.dcp
+Original clocks and constraints preserved.
+Setup slack ns: 0.016
+Hold slack ns: 0.096
+DSP48E1 count: 128
+DSP configuration AREG=0,BREG=0,MREG=0,PREG=0 count=64
+DSP configuration AREG=0,BREG=0,MREG=0,PREG=1 count=64

@@ -210,8 +210,8 @@
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
-          <Attr Name="UsedInSteps" Val="impl_10ns;INIT_DESIGN;TCL.PRE"/>
-          <Attr Name="UsedInSteps" Val="synth_10ns;SYNTH_DESIGN;TCL.PRE"/>
+          <Attr Name="UsedInSteps" Val="impl_10ns_margin_20261113;INIT_DESIGN;TCL.PRE"/>
+          <Attr Name="UsedInSteps" Val="synth_10ns_margin_20261113;SYNTH_DESIGN;TCL.PRE"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/scripts/post_route_opt.tcl.txt"/>
@@ -227,7 +227,7 @@
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
-          <Attr Name="UsedInSteps" Val="impl_10ns;ROUTE_DESIGN;TCL.POST"/>
+          <Attr Name="UsedInSteps" Val="impl_10ns_margin_20261113;ROUTE_DESIGN;TCL.POST"/>
         </FileInfo>
       </File>
       <Config>
@@ -276,7 +276,7 @@
     </Simulator>
   </Simulators>
   <Runs Version="1" Minor="19">
-    <Run Id="synth_10ns" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_10ns" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/synth_10ns" AutoRQSDir="$PSRCDIR/utils_1/imports/synth_10ns">
+    <Run Id="synth_10ns_margin_20261113" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_10ns_margin_20261113" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/synth_10ns_margin_20261113" AutoRQSDir="$PSRCDIR/utils_1/imports/synth_10ns_margin_20261113">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl">
@@ -288,7 +288,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_10ns" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_10ns" SynthRun="synth_10ns" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_10ns" AutoRQSDir="$PSRCDIR/utils_1/imports/impl_10ns">
+    <Run Id="impl_10ns_margin_20261113" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_10ns_impl" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_10ns_margin_20261113" SynthRun="synth_10ns_margin_20261113" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_10ns_margin_20261113" AutoRQSDir="$PSRCDIR/utils_1/imports/impl_10ns_margin_20261113">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design" PreStepTclHook="$PPRDIR/scripts/init_12ns.tcl"/>

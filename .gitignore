@@ -125,3 +125,6 @@ webtalk*.html
 # Vivado crash dumps and local scratch files.
 /project_integration/vivado_pid*.zip
 /project_integration/*.txt
+
+# Live Vivado GUI transcript; selected audit records are retained separately.
+/experiments/msu_fmax/native_margin_10ns_20261113/gui.log

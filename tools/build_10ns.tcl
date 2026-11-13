@@ -22,7 +22,12 @@ set argv [list [file join $task_main_output replicated routed.dcp] [file join $t
 set argc 3
 source [file join $task_main_root experiments clock_control refine_route.tcl]
 close_project
-set argv [list [file join $task_main_output closure routed.dcp] [file join $task_main_output final_10ns]]
+set argv [list [file join $task_main_output closure routed.dcp] \
+               [file join $task_main_output margin_9p75] 9.750]
+set argc 3
+source [file join $task_main_root experiments msu_fmax margin_10ns_20261113 guardband_refine.tcl]
+close_project
+set argv [list [file join $task_main_output margin_9p75 timing_closed.dcp] [file join $task_main_output final_10ns]]
 set argc 2
 source [file join $task_main_root experiments msu_fmax target_10ns_20261112 validate_10ns.tcl]
 puts "MAIN_10NS_BUILD_COMPLETE output=$task_main_output"

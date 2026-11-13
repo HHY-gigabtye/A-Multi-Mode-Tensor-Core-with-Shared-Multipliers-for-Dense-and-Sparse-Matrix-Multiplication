@@ -1,0 +1,1 @@
+PASS: 11 source files, 10 flow inputs, 76 protected files, prior native DCP, and pre-existing user README/crash/scratch files unchanged after full native rebuild.

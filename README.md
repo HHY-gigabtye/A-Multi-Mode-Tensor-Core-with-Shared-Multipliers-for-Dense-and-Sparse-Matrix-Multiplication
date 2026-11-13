@@ -17,6 +17,7 @@ The project demonstrates cycle-level architecture modeling, RTL implementation, 
 - Four-stage DU/TIA decoding and index alignment, followed by an eight-entry packet FIFO with in-flight credit reservation.
 - Two Tensor Core result slots, a separate two-entry result-metadata FIFO, and two whole-result buffers in the MSU.
 - C reference models, immutable replay vectors, procedural SV scoreboards, and an independent system-level GEMM/writeback check.
+- Achieved **100 MHz internal post-route timing closure** for the integrated design on Zynq-7020 (Vivado 2022.2, out-of-context implementation). See [Section 8](#8-performance-and-implementation-results) for detailed results and limitations.
 
 ### 2.1 System Specification
 
@@ -213,15 +214,14 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
 
 ## 8. Performance and Implementation Results
 
-The publication snapshot passed all five unit suites and integration again on
-**2026-11-13**. See the [publication validation and cleanup manifest](reports/verification/2026-11-13-publication/README.md).
-
 The current main RTL passed the original five unit regressions followed by
-integration on **2026-11-12**. All counts below and original coverage counters
+integration on **2026-11-13**. All counts below and original coverage counters
 match the baseline; protected C/reference/vector/test hashes are unchanged.
-See the [current validation record](experiments/msu_fmax/target_10ns_20261112/README.md).
-
-The audit reran the existing SV suites on **2026-10-29**, using **ModelSim Intel FPGA Starter Edition 2020.1 / Simulator 2020.02**. Both commands exited successfully; six existing port-kind compilation warnings remain in each suite. See [verification evidence](reports/verification/2026-10-29/README.md). The separate public candidate reproduced these results after vector restoration on [2026-10-30](reports/verification/2026-10-30-packaging/README.md).
+See the [unit log](experiments/msu_fmax/margin_10ns_20261113/final_live/units.log),
+[integration log](experiments/msu_fmax/margin_10ns_20261113/final_live/top.log), and
+[functional validation record](experiments/msu_fmax/margin_10ns_20261113/final_live/functional_validation.txt).
+The subsequent physical-only native rebuild used the same 11 RTL/package files,
+verified by hash; it did not rerun simulation or change RTL behavior.
 
 | Simulation | Observed result |
 |---|---|
@@ -236,26 +236,32 @@ System totals include partial work deliberately discarded by reset, so packet/be
 
 The standalone C TC benchmark uses **100 tiles of full 8 x 8 outer-product packets**, no input gaps or output stalls, and includes initial fill and final result handshaking. It reports 51,200 MACs: serial scheduling takes 1,200 cycles (66.6667% utilization); overlap takes 804 cycles (99.5025%), a 1.4925x cycle-throughput ratio. Utilization is `MACs / (64 x elapsed cycles)`. This is a controlled full-count sparse-path scheduling experiment, not measured utilization for a pruned network, an HBM workload, or the entire integrated system. Stored zeros count as active work when included in the valid prefix. See [benchmark provenance](docs/verification-and-reproduction.md).
 
-The selected implementation uses **29,405 LUTs, 21,503 fabric registers and
-128 DSP48E1s**, with WNS **+0.002 ns at 10.000 ns** after the verified post-route optimization recipe. Source hashes, clock reports, checkpoint and functional logs
-are preserved in the [10 ns continuation](experiments/msu_fmax/target_10ns_20261112/README.md).
-The 1.660 ps setup margin, 424 inputs and 592 outputs without delay constraints,
-and unspecified OOC clock source limit this to internal routed STA. Board-level
-timing, hardware maximum frequency and power remain unmeasured.
+The integrated design achieved **100 MHz internal post-route timing closure**
+on `xc7z020clg484-1` using Vivado 2022.2 in out-of-context (OOC) mode.
+A fresh native build from RTL and an independent reopen of the native run and
+routed checkpoint passed on **2026-11-13**.
 
-The fresh native `synth_10ns` / `impl_10ns` run reproduced this result on November 12. Use [tools/build_10ns.tcl](tools/build_10ns.tcl) for the standalone recipe or [tools/run_10ns_project.tcl](tools/run_10ns_project.tcl) for fresh native runs. The active project is `project_integration/project_integration.xpr`. Generated run directories and binary checkpoints must be rebuilt locally. Historical local commit IDs in experiment reports may not exist in this public history.
+| Implementation metric | Verified result |
+|---|---|
+| Clock | **10.000 ns / 100 MHz** |
+| Setup | WNS **+0.016 ns**; TNS 0 |
+| Hold | WHS **+0.096 ns**; THS 0 |
+| Resources | **29,406 LUTs; 21,503 fabric registers; 128 DSP48E1s** |
+| Routing | 41,612 routable nets fully routed; zero routing errors |
 
-The following older Vivado reports were inspected, **not regenerated**:
+See the [native rebuild and reproduction record](experiments/msu_fmax/native_margin_10ns_20261113/README.md),
+[independent timing report](experiments/msu_fmax/native_margin_10ns_20261113/independent_audit/checkpoint/timing_summary.rpt),
+and [result summary](experiments/msu_fmax/native_margin_10ns_20261113/result.json).
+Rebuild with [the standalone recipe](tools/build_10ns.tcl) or
+[fresh native project runs](tools/run_10ns_project.tcl), using a new output
+directory and unused run suffix as documented in the reproduction record.
+Generated run directories and binary checkpoints are rebuilt locally.
 
-| Archived implementation | Phase and constraints | Reported result |
-|---|---|---|
-| TC alone, 2026-10-19 | FPGA post-route; 12 ns target | WNS -0.238 ns; TNS -2.894 ns; target not met |
-| Integrated top, 2026-10-29 | FPGA post-route; 17 ns target | WNS +0.202 ns; TNS 0; specified constraints met |
-| Integrated top utilization | Post-place, same archived project | 36,222 LUTs; 22,467 registers; 0 DSPs; 0 block RAM tiles |
-
-Both historical projects target `xc7z020clg484-1` with Vivado 2022.2 and out-of-context synthesis. The archived integrated clock target was 58.824 MHz. Its report also records **424 inputs and 592 outputs without delay constraints**, zero BUFGCTRL usage, and a PS7-related DRC warning. Therefore it is not complete board-level timing sign-off or a measured Fmax. Report-to-source commit provenance is not established for these older archived reports. See [implementation evidence and limitations](reports/implementation/README.md).
-
-**Not Yet Verified:** maximum operating frequency of the current source, FPGA board/HBM operation, ASIC library/corner PPA, measured power, application-level speedup, and a controlled area comparison quantifying multiplier-sharing savings. The earlier architecture note's approximately 80-83 MHz unplaced ASIC estimate has no supporting ASIC report in the inspected files.
+**Scope:** FPGA OOC post-route STA, with approximately **16 ps** setup margin.
+The 424 inputs and 592 outputs have no delay constraints, and the OOC clock
+source is unspecified. Board-level timing/HBM operation, maximum operating
+frequency, ASIC PPA, measured power, and application-level speedup remain
+unverified.
 
 ## 9. Repository Structure
 
@@ -274,13 +280,16 @@ Module-local paths are retained so includes, package order, and existing test sc
 |-- docs/                      # Architecture notes and source/reproduction audit
 |-- reports/
 |   |-- verification/          # Reviewed run logs, source hashes and results
-|   `-- implementation/        # Selected archived FPGA reports and provenance
 |-- experiments/               # RTL snapshots, physical recipes and measured evidence
 |-- tools/                     # Vector restoration, C regression and 10 ns build flows
 `-- project_integration/       # Original top Vivado .xpr / source constraints
 ```
 
 Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and [source audit](docs/source-audit.md) for current entry points. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; use the 10 ns scripts linked in Section 8 to rebuild the implementation. The obsolete standalone `project_1` project and older native retry runs have been removed; dated text evidence is retained.
+
+The [latest publication validation](reports/verification/2026-11-13-native-publication/README.md)
+records the final source snapshot, regression rerun, and removed superseded reports.
+Historical local commit IDs in experiment records may not exist in the public Git history.
 
 ## 10. How to Run the Tests
 

@@ -30,7 +30,12 @@ set argv [list [file join $task_gui_recipe replicated routed.dcp] [file join $ta
 set argc 3
 source [file join $task_gui_repo experiments clock_control refine_route.tcl]
 close_design
-set argv [list [file join $task_gui_recipe closure routed.dcp] [file join $task_gui_recipe final_10ns]]
+# Tighten only the physical search target; the helper restores and validates
+# the original 10 ns operating clock before producing its final checkpoint.
+set argv [list [file join $task_gui_recipe closure routed.dcp] [file join $task_gui_recipe margin_9p75] 9.750]
+set argc 3
+source [file join $task_gui_repo experiments msu_fmax margin_10ns_20261113 guardband_refine.tcl]
+set argv [list [file join $task_gui_recipe margin_9p75 timing_closed.dcp] [file join $task_gui_recipe final_10ns]]
 set argc 2
 source [file join $task_gui_repo experiments msu_fmax target_10ns_20261112 validate_10ns.tcl]
 
