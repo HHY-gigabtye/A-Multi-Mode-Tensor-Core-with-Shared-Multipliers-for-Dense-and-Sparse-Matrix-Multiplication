@@ -1,0 +1,634 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 15 19:01:47 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_cells -hierarchical -filter {IS_SEQUENTIAL == 1 && NAME =~ u_tensor_core/dense_q_reg*}] -max_paths 10 -input_pins -file tc_dense.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.016ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][12]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.981ns  (logic 4.608ns (46.166%)  route 5.373ns (53.834%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[12])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[12]
+                         net (fo=1, routed)           0.862    10.830    u_tensor_core/dense_sum[0][0]__0[12]
+    SLICE_X94Y36                                                      r  u_tensor_core/dense_q[pe][0][0][acc][12]_i_1/I0
+    SLICE_X94Y36         LUT6 (Prop_lut6_I0_O)        0.124    10.954 r  u_tensor_core/dense_q[pe][0][0][acc][12]_i_1/O
+                         net (fo=1, routed)           0.000    10.954    u_tensor_core/dense_q[pe][0][0][acc][12]_i_1_n_0
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][12]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y36         FDCE (Setup_fdce_C_D)        0.081    10.970    u_tensor_core/dense_q_reg[pe][0][0][acc][12]
+  -------------------------------------------------------------------
+                         required time                         10.970    
+                         arrival time                         -10.954    
+  -------------------------------------------------------------------
+                         slack                                  0.016    
+
+Slack (MET) :             0.016ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][9]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.981ns  (logic 4.608ns (46.168%)  route 5.373ns (53.832%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[9])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[9]
+                         net (fo=1, routed)           0.861    10.830    u_tensor_core/dense_sum[0][0]__0[9]
+    SLICE_X96Y36                                                      r  u_tensor_core/dense_q[pe][0][0][acc][9]_i_1/I0
+    SLICE_X96Y36         LUT6 (Prop_lut6_I0_O)        0.124    10.954 r  u_tensor_core/dense_q[pe][0][0][acc][9]_i_1/O
+                         net (fo=1, routed)           0.000    10.954    u_tensor_core/dense_q[pe][0][0][acc][9]_i_1_n_0
+    SLICE_X96Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X96Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][9]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X96Y36         FDCE (Setup_fdce_C_D)        0.081    10.970    u_tensor_core/dense_q_reg[pe][0][0][acc][9]
+  -------------------------------------------------------------------
+                         required time                         10.970    
+                         arrival time                         -10.954    
+  -------------------------------------------------------------------
+                         slack                                  0.016    
+
+Slack (MET) :             0.021ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][13]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.974ns  (logic 4.608ns (46.200%)  route 5.366ns (53.800%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[13])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[13]
+                         net (fo=1, routed)           0.854    10.823    u_tensor_core/dense_sum[0][0]__0[13]
+    SLICE_X94Y35                                                      r  u_tensor_core/dense_q[pe][0][0][acc][13]_i_1/I0
+    SLICE_X94Y35         LUT6 (Prop_lut6_I0_O)        0.124    10.947 r  u_tensor_core/dense_q[pe][0][0][acc][13]_i_1/O
+                         net (fo=1, routed)           0.000    10.947    u_tensor_core/dense_q[pe][0][0][acc][13]_i_1_n_0
+    SLICE_X94Y35         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y35         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y35         FDCE (Setup_fdce_C_D)        0.079    10.968    u_tensor_core/dense_q_reg[pe][0][0][acc][13]
+  -------------------------------------------------------------------
+                         required time                         10.968    
+                         arrival time                         -10.947    
+  -------------------------------------------------------------------
+                         slack                                  0.021    
+
+Slack (MET) :             0.057ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][30]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.936ns  (logic 4.608ns (46.377%)  route 5.328ns (53.623%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[30])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[30]
+                         net (fo=1, routed)           0.816    10.785    u_tensor_core/dense_sum[0][0]__0[30]
+    SLICE_X94Y36                                                      r  u_tensor_core/dense_q[pe][0][0][acc][30]_i_1/I0
+    SLICE_X94Y36         LUT6 (Prop_lut6_I0_O)        0.124    10.909 r  u_tensor_core/dense_q[pe][0][0][acc][30]_i_1/O
+                         net (fo=1, routed)           0.000    10.909    u_tensor_core/dense_q[pe][0][0][acc][30]_i_1_n_0
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][30]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][30]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y36         FDCE (Setup_fdce_C_D)        0.077    10.966    u_tensor_core/dense_q_reg[pe][0][0][acc][30]
+  -------------------------------------------------------------------
+                         required time                         10.966    
+                         arrival time                         -10.909    
+  -------------------------------------------------------------------
+                         slack                                  0.057    
+
+Slack (MET) :             0.064ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][2]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.933ns  (logic 4.608ns (46.391%)  route 5.325ns (53.609%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[2])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[2]
+                         net (fo=1, routed)           0.813    10.782    u_tensor_core/dense_sum[0][0]__0[2]
+    SLICE_X94Y34                                                      r  u_tensor_core/dense_q[pe][0][0][acc][2]_i_1/I0
+    SLICE_X94Y34         LUT6 (Prop_lut6_I0_O)        0.124    10.906 r  u_tensor_core/dense_q[pe][0][0][acc][2]_i_1/O
+                         net (fo=1, routed)           0.000    10.906    u_tensor_core/dense_q[pe][0][0][acc][2]_i_1_n_0
+    SLICE_X94Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][2]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y34         FDCE (Setup_fdce_C_D)        0.081    10.970    u_tensor_core/dense_q_reg[pe][0][0][acc][2]
+  -------------------------------------------------------------------
+                         required time                         10.970    
+                         arrival time                         -10.906    
+  -------------------------------------------------------------------
+                         slack                                  0.064    
+
+Slack (MET) :             0.080ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][17]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.915ns  (logic 4.608ns (46.474%)  route 5.307ns (53.526%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[17])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[17]
+                         net (fo=1, routed)           0.795    10.764    u_tensor_core/dense_sum[0][0]__0[17]
+    SLICE_X94Y36                                                      r  u_tensor_core/dense_q[pe][0][0][acc][17]_i_1/I0
+    SLICE_X94Y36         LUT6 (Prop_lut6_I0_O)        0.124    10.888 r  u_tensor_core/dense_q[pe][0][0][acc][17]_i_1/O
+                         net (fo=1, routed)           0.000    10.888    u_tensor_core/dense_q[pe][0][0][acc][17]_i_1_n_0
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][17]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y36         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][17]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y36         FDCE (Setup_fdce_C_D)        0.079    10.968    u_tensor_core/dense_q_reg[pe][0][0][acc][17]
+  -------------------------------------------------------------------
+                         required time                         10.968    
+                         arrival time                         -10.888    
+  -------------------------------------------------------------------
+                         slack                                  0.080    
+
+Slack (MET) :             0.080ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][7]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.865ns  (logic 4.608ns (46.712%)  route 5.257ns (53.288%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[7])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[7]
+                         net (fo=1, routed)           0.745    10.714    u_tensor_core/dense_sum[0][0]__0[7]
+    SLICE_X93Y34                                                      r  u_tensor_core/dense_q[pe][0][0][acc][7]_i_1/I0
+    SLICE_X93Y34         LUT6 (Prop_lut6_I0_O)        0.124    10.838 r  u_tensor_core/dense_q[pe][0][0][acc][7]_i_1/O
+                         net (fo=1, routed)           0.000    10.838    u_tensor_core/dense_q[pe][0][0][acc][7]_i_1_n_0
+    SLICE_X93Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X93Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][7]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X93Y34         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/dense_q_reg[pe][0][0][acc][7]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.838    
+  -------------------------------------------------------------------
+                         slack                                  0.080    
+
+Slack (MET) :             0.089ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][26]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.908ns  (logic 4.608ns (46.507%)  route 5.300ns (53.493%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[26])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[26]
+                         net (fo=1, routed)           0.788    10.757    u_tensor_core/dense_sum[0][0]__0[26]
+    SLICE_X94Y31                                                      r  u_tensor_core/dense_q[pe][0][0][acc][26]_i_1/I0
+    SLICE_X94Y31         LUT6 (Prop_lut6_I0_O)        0.124    10.881 r  u_tensor_core/dense_q[pe][0][0][acc][26]_i_1/O
+                         net (fo=1, routed)           0.000    10.881    u_tensor_core/dense_q[pe][0][0][acc][26]_i_1_n_0
+    SLICE_X94Y31         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][26]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y31         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][26]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y31         FDCE (Setup_fdce_C_D)        0.081    10.970    u_tensor_core/dense_q_reg[pe][0][0][acc][26]
+  -------------------------------------------------------------------
+                         required time                         10.970    
+                         arrival time                         -10.881    
+  -------------------------------------------------------------------
+                         slack                                  0.089    
+
+Slack (MET) :             0.089ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[1]_rep/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][0][0][acc][31]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.906ns  (logic 4.608ns (46.517%)  route 5.298ns (53.483%))
+  Logic Levels:           5  (DSP48E1=1 LUT4=1 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X51Y37         FDCE                                         r  u_bridge/head_select_q_reg[1]_rep/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X51Y37         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[1]_rep/Q
+                         net (fo=101, routed)         1.011     2.440    u_bridge/head_select_q_reg[1]_rep_n_0
+    SLICE_X42Y36                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/I3
+    SLICE_X42Y36         LUT4 (Prop_lut4_I3_O)        0.124     2.564 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31/O
+                         net (fo=1, routed)           0.785     3.349    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_31_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/I4
+    SLICE_X30Y32         LUT5 (Prop_lut5_I4_O)        0.124     3.473 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18/O
+                         net (fo=1, routed)           0.162     3.635    u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_18_n_0
+    SLICE_X30Y32                                                      r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/I5
+    SLICE_X30Y32         LUT6 (Prop_lut6_I5_O)        0.124     3.759 r  u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_4/O
+                         net (fo=10, routed)          2.554     6.313    u_tensor_core/g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg_0[5]
+    DSP48_X3Y12                                                       r  u_tensor_core/dense_sum[0][0]/B[5]
+    DSP48_X3Y12          DSP48E1 (Prop_dsp48e1_B[5]_P[31])
+                                                      3.656     9.969 r  u_tensor_core/dense_sum[0][0]/P[31]
+                         net (fo=1, routed)           0.786    10.755    u_tensor_core/dense_sum[0][0]__0[31]
+    SLICE_X94Y34                                                      r  u_tensor_core/dense_q[pe][0][0][acc][31]_i_2/I0
+    SLICE_X94Y34         LUT6 (Prop_lut6_I0_O)        0.124    10.879 r  u_tensor_core/dense_q[pe][0][0][acc][31]_i_2/O
+                         net (fo=1, routed)           0.000    10.879    u_tensor_core/dense_q[pe][0][0][acc][31]_i_2_n_0
+    SLICE_X94Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][31]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y34         FDCE                                         r  u_tensor_core/dense_q_reg[pe][0][0][acc][31]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y34         FDCE (Setup_fdce_C_D)        0.079    10.968    u_tensor_core/dense_q_reg[pe][0][0][acc][31]
+  -------------------------------------------------------------------
+                         required time                         10.968    
+                         arrival time                         -10.879    
+  -------------------------------------------------------------------
+                         slack                                  0.089    
+
+Slack (MET) :             0.100ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[6]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/dense_q_reg[pe][4][6][acc][10]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.647ns  (logic 1.448ns (15.009%)  route 8.199ns (84.991%))
+  Logic Levels:           8  (LUT2=2 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y33         FDCE                                         r  u_bridge/head_select_q_reg[6]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y33         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  u_bridge/head_select_q_reg[6]/Q
+                         net (fo=112, routed)         1.056     2.485    u_bridge/head_select_q[6]
+    SLICE_X60Y39                                                      r  u_bridge/tc_status[0]_INST_0_i_3/I3
+    SLICE_X60Y39         LUT4 (Prop_lut4_I3_O)        0.124     2.609 r  u_bridge/tc_status[0]_INST_0_i_3/O
+                         net (fo=2, routed)           0.792     3.401    u_bridge/tc_status[0]_INST_0_i_3_n_0
+    SLICE_X61Y41                                                      r  u_bridge/tc_status[2]_INST_0_i_6/I1
+    SLICE_X61Y41         LUT6 (Prop_lut6_I1_O)        0.124     3.525 r  u_bridge/tc_status[2]_INST_0_i_6/O
+                         net (fo=9, routed)           1.029     4.554    u_bridge/tc_status[2]_INST_0_i_6_n_0
+    SLICE_X70Y41                                                      r  u_bridge/dense_q[pe][6][5][a][value][7]_i_2/I5
+    SLICE_X70Y41         LUT6 (Prop_lut6_I5_O)        0.124     4.678 f  u_bridge/dense_q[pe][6][5][a][value][7]_i_2/O
+                         net (fo=119, routed)         0.732     5.410    u_bridge/rst_n_2
+    SLICE_X67Y44                                                      f  u_bridge/dense_q[pe][1][6][acc][31]_i_5/I0
+    SLICE_X67Y44         LUT2 (Prop_lut2_I0_O)        0.124     5.534 f  u_bridge/dense_q[pe][1][6][acc][31]_i_5/O
+                         net (fo=119, routed)         0.529     6.063    u_bridge/ctrl_storage_q_reg[busy]_25
+    SLICE_X71Y44                                                      f  u_bridge/dense_q[pe][6][3][acc][31]_i_3/I3
+    SLICE_X71Y44         LUT5 (Prop_lut5_I3_O)        0.124     6.187 f  u_bridge/dense_q[pe][6][3][acc][31]_i_3/O
+                         net (fo=126, routed)         0.531     6.718    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_12
+    SLICE_X75Y46                                                      f  u_bridge/dense_q[pe][0][6][b][value][3]_i_3/I0
+    SLICE_X75Y46         LUT6 (Prop_lut6_I0_O)        0.124     6.842 r  u_bridge/dense_q[pe][0][6][b][value][3]_i_3/O
+                         net (fo=126, routed)         1.591     8.433    u_bridge/ctrl_storage_q_reg[finish_pending]_13
+    SLICE_X89Y74                                                      r  u_bridge/dense_q[pe][3][5][acc][31]_i_5/I1
+    SLICE_X89Y74         LUT2 (Prop_lut2_I1_O)        0.124     8.557 r  u_bridge/dense_q[pe][3][5][acc][31]_i_5/O
+                         net (fo=98, routed)          1.090     9.647    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_2
+    SLICE_X93Y74                                                      r  u_bridge/dense_q[pe][4][6][acc][31]_i_1/I5
+    SLICE_X93Y74         LUT6 (Prop_lut6_I5_O)        0.124     9.771 r  u_bridge/dense_q[pe][4][6][acc][31]_i_1/O
+                         net (fo=32, routed)          0.849    10.620    u_tensor_core/dense_q_reg[pe][4][6][acc][31]_1[0]
+    SLICE_X94Y77         FDCE                                         r  u_tensor_core/dense_q_reg[pe][4][6][acc][10]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X94Y77         FDCE                                         r  u_tensor_core/dense_q_reg[pe][4][6][acc][10]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X94Y77         FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_tensor_core/dense_q_reg[pe][4][6][acc][10]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.620    
+  -------------------------------------------------------------------
+                         slack                                  0.100    
+
+
+
+

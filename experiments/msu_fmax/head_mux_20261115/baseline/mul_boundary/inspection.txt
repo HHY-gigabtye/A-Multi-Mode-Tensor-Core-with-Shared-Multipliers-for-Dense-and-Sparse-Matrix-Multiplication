@@ -1,0 +1,6 @@
+Checkpoint: C:/Users/Jason/Desktop/TC/project_integration/project_integration.runs/impl_10ns_margin_20261113/sparse_tensor_core_top_routed.dcp
+Unchanged clock period ns: 10.000
+Sparse product DSP cells: 64
+ROUTE delta endpoint cells: 1024
+Worst MUL-to-ROUTE slack ns: 0.627
+Read-only inspection; no implementation or constraint changes.

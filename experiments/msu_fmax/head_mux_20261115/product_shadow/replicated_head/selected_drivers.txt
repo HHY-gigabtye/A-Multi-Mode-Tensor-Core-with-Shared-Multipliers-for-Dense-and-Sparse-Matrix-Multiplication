@@ -1,0 +1,7 @@
+u_bridge/head_select_q_reg[0]_rep	FDCE	u_bridge/head_select_q_reg[0]_rep_n_0
+u_bridge/head_select_q_reg[2]	FDCE	u_bridge/head_select_q[2]
+u_bridge/head_select_q_reg[5]	FDCE	u_bridge/head_select_q[5]
+u_bridge/head_select_q_reg[7]	FDCE	u_bridge/head_select_q[7]
+u_bridge/head_select_q_reg[5]_rep	FDCE	u_bridge/head_select_q_reg[5]_rep_n_0
+u_bridge/head_select_q_reg[1]	FDCE	u_bridge/head_select_q[1]
+u_bridge/head_select_q_reg[3]_rep	FDCE	u_bridge/head_select_q_reg[3]_rep_n_0

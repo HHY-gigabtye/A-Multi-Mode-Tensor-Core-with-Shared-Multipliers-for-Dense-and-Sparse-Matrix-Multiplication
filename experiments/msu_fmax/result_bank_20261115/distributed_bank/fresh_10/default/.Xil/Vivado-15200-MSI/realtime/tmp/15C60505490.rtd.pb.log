@@ -1,0 +1,136 @@
+xilinx rtfpga
+rt::do_reinfer_area_combined 1
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][6]' (FDCE) to 'u_bridge/q_reg[side][0][k][7]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][7]' (FDCE) to 'u_bridge/q_reg[side][0][k][5]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][5]' (FDCE) to 'u_bridge/q_reg[side][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][4]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][6]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][7]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][5]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][4]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][17]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][20]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][23]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][24]' (FDC) to 'u_du_tia/s1_q_reg[payload][25]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][25]' (FDC) to 'u_du_tia/s1_q_reg[payload][29]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][26]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][7]' (FDC) to 'u_du_tia/s1_q_reg[payload][8]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][9]' (FDC) to 'u_du_tia/s1_q_reg[payload][10]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][10]' (FDC) to 'u_du_tia/s1_q_reg[payload][11]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][11]' (FDC) to 'u_du_tia/s1_q_reg[payload][14]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][47]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][50]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][53]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][54]' (FDC) to 'u_du_tia/s1_q_reg[payload][55]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][55]' (FDC) to 'u_du_tia/s1_q_reg[payload][59]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_du_tia/s1_q_reg[payload][56] )
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][37]' (FDC) to 'u_du_tia/s1_q_reg[payload][38]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][39]' (FDC) to 'u_du_tia/s1_q_reg[payload][40]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][40]' (FDC) to 'u_du_tia/s1_q_reg[payload][41]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][41]' (FDC) to 'u_du_tia/s1_q_reg[payload][44]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][6]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][7]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][5]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][4]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][6]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][7]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][5]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][4]' (FDCE) to 'u_bridge/q_reg[side][3][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][19]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][21]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][22]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][23]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][19]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][21]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][22]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][23]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][23]'
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][0][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][1][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][2][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][3][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][4][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][5][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][6][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][7][k][3] )

@@ -1,0 +1,33 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/fifo_sv/du_tc_bridge.sv
+index 80554c1..70e0adb 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/fifo_sv/du_tc_bridge.sv
+@@ -49,12 +49,22 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  always_comb begin : read_head
+-    head_entry = '0;
+-    for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+-      head_entry = head_entry |
+-          (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
+-  end
++  // Expose four independent two-slot terms, then one four-input reduction.
++  // Keeping the term boundaries lets a LUT4 implement each masked pair and
++  // another LUT4 combine the four terms, instead of a reassociated chain.
++  // This is still a combinational read from the same FIFO state and decode.
++  wire [$bits(bridge_entry_t)-1:0] head_pair [0:IO_PACKET_FIFO/2-1];
++  generate
++    for (genvar pair = 0; pair < IO_PACKET_FIFO/2; pair = pair + 1) begin : g_head_pair
++      (* keep = "true" *) wire [$bits(bridge_entry_t)-1:0] pair_data;
++      assign pair_data =
++          (q.fifo[2*pair] & {$bits(bridge_entry_t){head_select_q[2*pair]}}) |
++          (q.fifo[2*pair+1] & {$bits(bridge_entry_t){head_select_q[2*pair+1]}});
++      assign head_pair[pair] = pair_data;
++    end
++  endgenerate
++  assign head_entry = (head_pair[0] | head_pair[1]) |
++                      (head_pair[2] | head_pair[3]);
+   assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);

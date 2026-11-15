@@ -1,0 +1,9 @@
+group	endpoint_cells	worst_slack_ns
+msu	4406	0.331
+mlu	2665	0.024
+bridge	2781	0.025
+du_tia	781	0.273
+tc_all	9744	-0.092
+tc_dense	3574	0.016
+tc_sparse	3232	0.005
+tc_results	2744	0.076

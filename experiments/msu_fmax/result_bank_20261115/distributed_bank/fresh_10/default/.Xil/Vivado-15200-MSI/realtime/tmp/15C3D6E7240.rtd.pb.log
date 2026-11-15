@@ -1,0 +1,4 @@
+xilinx rtfpga
+rt::do_reinfer_area_combined 1
+WARNING: [Synth 8-3917] design mlu has port read_beats[1] driven by constant 0
+WARNING: [Synth 8-3917] design mlu has port status[2] driven by constant 0

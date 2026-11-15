@@ -1,0 +1,7 @@
+tensor_core__GB0
+tensor_core__GB1
+tensor_core__GB2
+tensor_core__GB3
+mlu
+msu
+sparse_tensor_core_top__GCB2

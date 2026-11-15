@@ -1,0 +1,41 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/fifo_sv/du_tc_bridge.sv
+index 80554c1..622be44 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/fifo_sv/du_tc_bridge.sv
+@@ -49,11 +49,36 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
++  // Preserve a two-level selection tree only for the raw multiplier operands.
++  // Other fields keep the original read expression so input-validation and
++  // metadata logic can still be optimized together with their consumers.
++  localparam int HEAD_VALUE_W = $bits(tensor_core_pkg::tc_lane_data_t);
++  wire [HEAD_VALUE_W-1:0] head_a_pair [0:IO_PACKET_FIFO/2-1];
++  wire [HEAD_VALUE_W-1:0] head_b_pair [0:IO_PACKET_FIFO/2-1];
++  generate
++    for (genvar pair = 0; pair < IO_PACKET_FIFO/2; pair = pair + 1) begin : g_head_pair
++      (* keep = "true" *) wire [HEAD_VALUE_W-1:0] pair_a_data, pair_b_data;
++      assign pair_a_data =
++          (q.fifo[2*pair].packet.payload.sparse.a.value & {HEAD_VALUE_W{head_select_q[2*pair]}}) |
++          (q.fifo[2*pair+1].packet.payload.sparse.a.value & {HEAD_VALUE_W{head_select_q[2*pair+1]}});
++      assign pair_b_data =
++          (q.fifo[2*pair].packet.payload.sparse.b.value & {HEAD_VALUE_W{head_select_q[2*pair]}}) |
++          (q.fifo[2*pair+1].packet.payload.sparse.b.value & {HEAD_VALUE_W{head_select_q[2*pair+1]}});
++      assign head_a_pair[pair] = pair_a_data;
++      assign head_b_pair[pair] = pair_b_data;
++    end
++  endgenerate
+   always_comb begin : read_head
+     head_entry = '0;
+     for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+       head_entry = head_entry |
+           (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
++    // The packed union gives these bits the same physical positions in both
++    // modes. Replacing their OR expression does not change the packet layout.
++    head_entry.packet.payload.sparse.a.value =
++        (head_a_pair[0] | head_a_pair[1]) | (head_a_pair[2] | head_a_pair[3]);
++    head_entry.packet.payload.sparse.b.value =
++        (head_b_pair[0] | head_b_pair[1]) | (head_b_pair[2] | head_b_pair[3]);
+   end
+   assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
