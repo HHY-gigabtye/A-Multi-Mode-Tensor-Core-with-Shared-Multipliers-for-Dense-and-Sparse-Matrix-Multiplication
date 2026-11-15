@@ -1,0 +1,11 @@
+# Exact LUT drivers from paired/refined_audit, for paired/fresh_10/refined/routed.dcp.
+# Validation fanout 1635; worst observed setup slack -0.336 ns.
+u_bridge/ctrl_q[is_sparse]_i_1
+# DSP CEP branches on the two worst setup paths.
+u_bridge/g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg_i_1
+u_bridge/g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg_i_1
+# Result-register control paths, worst observed slack -0.237 ns.
+u_tensor_core/ctrl_q[result][4][7][31]_i_1_comp
+u_tensor_core/ctrl_q[result][2][7][31]_i_3_comp
+# Worst head-to-DSP operand path: fanout 10, route 2.551 ns, slack -0.090 ns.
+u_bridge/g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg_i_1

@@ -1,0 +1,676 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 15 19:01:46 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_cells -hierarchical -filter {IS_SEQUENTIAL == 1 && NAME =~ u_bridge/*}] -max_paths 10 -input_pins -file bridge.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.025ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][82]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.686ns  (logic 1.324ns (13.669%)  route 8.362ns (86.331%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.493    10.659    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X28Y35         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][82]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X28Y35         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][82]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X28Y35         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][6][packet][payload][82]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.659    
+  -------------------------------------------------------------------
+                         slack                                  0.025    
+
+Slack (MET) :             0.028ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][5][packet][payload][176]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.683ns  (logic 1.324ns (13.673%)  route 8.359ns (86.327%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.438     7.940    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][5][k][2]_i_1/I0
+    SLICE_X63Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.064 r  u_bridge/q[fifo][5][k][2]_i_1/O
+                         net (fo=281, routed)         2.592    10.656    u_bridge/q[fifo][5][k][2]_i_1_n_0
+    SLICE_X23Y37         FDCE                                         r  u_bridge/q_reg[fifo][5][packet][payload][176]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X23Y37         FDCE                                         r  u_bridge/q_reg[fifo][5][packet][payload][176]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X23Y37         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][5][packet][payload][176]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.656    
+  -------------------------------------------------------------------
+                         slack                                  0.028    
+
+Slack (MET) :             0.075ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][5][packet][payload][82]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.636ns  (logic 1.324ns (13.741%)  route 8.312ns (86.259%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.438     7.940    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][5][k][2]_i_1/I0
+    SLICE_X63Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.064 r  u_bridge/q[fifo][5][k][2]_i_1/O
+                         net (fo=281, routed)         2.544    10.609    u_bridge/q[fifo][5][k][2]_i_1_n_0
+    SLICE_X23Y35         FDCE                                         r  u_bridge/q_reg[fifo][5][packet][payload][82]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X23Y35         FDCE                                         r  u_bridge/q_reg[fifo][5][packet][payload][82]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X23Y35         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][5][packet][payload][82]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.609    
+  -------------------------------------------------------------------
+                         slack                                  0.075    
+
+Slack (MET) :             0.123ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][83]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.588ns  (logic 1.324ns (13.809%)  route 8.264ns (86.191%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.395    10.561    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X24Y31         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][83]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X24Y31         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][83]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X24Y31         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][6][packet][payload][83]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.561    
+  -------------------------------------------------------------------
+                         slack                                  0.123    
+
+Slack (MET) :             0.147ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][64]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.564ns  (logic 1.324ns (13.843%)  route 8.240ns (86.157%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.371    10.537    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X25Y34         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][64]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X25Y34         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][64]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X25Y34         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][6][packet][payload][64]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.537    
+  -------------------------------------------------------------------
+                         slack                                  0.147    
+
+Slack (MET) :             0.147ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][76]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.564ns  (logic 1.324ns (13.843%)  route 8.240ns (86.157%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.371    10.537    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X25Y34         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][76]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X25Y34         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][76]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X25Y34         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_bridge/q_reg[fifo][6][packet][payload][76]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.537    
+  -------------------------------------------------------------------
+                         slack                                  0.147    
+
+Slack (MET) :             0.166ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][59]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.581ns  (logic 1.324ns (13.819%)  route 8.257ns (86.181%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.388    10.554    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][59]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][59]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X26Y32         FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_bridge/q_reg[fifo][6][packet][payload][59]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.554    
+  -------------------------------------------------------------------
+                         slack                                  0.166    
+
+Slack (MET) :             0.166ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][61]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.581ns  (logic 1.324ns (13.819%)  route 8.257ns (86.181%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.388    10.554    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][61]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][61]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X26Y32         FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_bridge/q_reg[fifo][6][packet][payload][61]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.554    
+  -------------------------------------------------------------------
+                         slack                                  0.166    
+
+Slack (MET) :             0.166ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][65]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.581ns  (logic 1.324ns (13.819%)  route 8.257ns (86.181%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.388    10.554    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][65]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][65]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X26Y32         FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_bridge/q_reg[fifo][6][packet][payload][65]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.554    
+  -------------------------------------------------------------------
+                         slack                                  0.166    
+
+Slack (MET) :             0.166ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[7]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_bridge/q_reg[fifo][6][packet][payload][77]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.581ns  (logic 1.324ns (13.819%)  route 8.257ns (86.181%))
+  Logic Levels:           7  (LUT5=1 LUT6=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X57Y35         FDCE                                         r  u_bridge/head_select_q_reg[7]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y35         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[7]/Q
+                         net (fo=114, routed)         1.254     2.683    u_bridge/head_select_q[7]
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_13/I5
+    SLICE_X65Y36         LUT6 (Prop_lut6_I5_O)        0.124     2.807 f  u_bridge/tc_status[2]_INST_0_i_13/O
+                         net (fo=1, routed)           0.665     3.473    u_bridge/tc_status[2]_INST_0_i_13_n_0
+    SLICE_X65Y36                                                      f  u_bridge/tc_status[2]_INST_0_i_4/I4
+    SLICE_X65Y36         LUT6 (Prop_lut6_I4_O)        0.124     3.597 f  u_bridge/tc_status[2]_INST_0_i_4/O
+                         net (fo=10, routed)          0.998     4.595    u_bridge/tc_status[2]_INST_0_i_4_n_0
+    SLICE_X66Y38                                                      f  u_bridge/bridge_status[1]_INST_0_i_7/I1
+    SLICE_X66Y38         LUT6 (Prop_lut6_I1_O)        0.124     4.719 f  u_bridge/bridge_status[1]_INST_0_i_7/O
+                         net (fo=130, routed)         1.130     5.849    u_bridge/rst_n_8
+    SLICE_X74Y24                                                      f  u_bridge/bridge_status[1]_INST_0_i_4/I1
+    SLICE_X74Y24         LUT5 (Prop_lut5_I1_O)        0.124     5.973 f  u_bridge/bridge_status[1]_INST_0_i_4/O
+                         net (fo=3, routed)           0.320     6.292    u_mlu/bridge_status_0_sn_1
+    SLICE_X76Y24                                                      f  u_mlu/q[count][3]_i_3/I5
+    SLICE_X76Y24         LUT6 (Prop_lut6_I5_O)        0.124     6.416 r  u_mlu/q[count][3]_i_3/O
+                         net (fo=345, routed)         0.962     7.379    u_bridge/q_reg[meta_head][0]_0
+    SLICE_X63Y25                                                      r  u_bridge/q[fifo][7][k][2]_i_2/I5
+    SLICE_X63Y25         LUT6 (Prop_lut6_I5_O)        0.124     7.503 r  u_bridge/q[fifo][7][k][2]_i_2/O
+                         net (fo=4, routed)           0.540     8.042    u_bridge/q[fifo][7][k][2]_i_2_n_0
+    SLICE_X62Y25                                                      r  u_bridge/q[fifo][6][k][2]_i_1/I0
+    SLICE_X62Y25         LUT6 (Prop_lut6_I0_O)        0.124     8.166 r  u_bridge/q[fifo][6][k][2]_i_1/O
+                         net (fo=281, routed)         2.388    10.554    u_bridge/q[fifo][6][k][2]_i_1_n_0
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][77]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_bridge/clk
+    SLICE_X26Y32         FDCE                                         r  u_bridge/q_reg[fifo][6][packet][payload][77]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X26Y32         FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_bridge/q_reg[fifo][6][packet][payload][77]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.554    
+  -------------------------------------------------------------------
+                         slack                                  0.166    
+
+
+
+

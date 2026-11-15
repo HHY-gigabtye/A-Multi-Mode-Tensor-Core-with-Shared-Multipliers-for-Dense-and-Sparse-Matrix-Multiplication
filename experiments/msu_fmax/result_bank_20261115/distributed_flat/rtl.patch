@@ -1,0 +1,155 @@
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index 2629fd5..4a66371 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -22,7 +22,7 @@ module tensor_core (
+ );
+   import tensor_core_pkg::*;
+ 
+-  tc_control_t ctrl_q, ctrl_d;
++  tc_control_t ctrl_q, ctrl_d, ctrl_storage_q;
+   tc_dense_state_t dense_q, dense_d;
+   tc_sparse_state_t sparse_q, sparse_d;
+   tc_sparse_state_t sparse_storage_q;
+@@ -197,10 +197,11 @@ module tensor_core (
+     end
+   end
+ 
+-  // Result storage depends only on OLD control/accumulator state. Keep its
+-  // selection independent of the sequential-looking ctrl_d bookkeeping below.
+-  // Pop precedes publish; a new idle epoch clears both physical slots. Invalid
+-  // input still freezes the entire edge, including a pending result transfer.
++  // Two logical result slots retain the exact C-visible contents, including
++  // the stale second slot after a pop. Three physical banks let publication
++  // write a bank not referenced by either slot, independently of result_ready.
++  // A pop changes only the head selector instead of shifting 2048 data bits.
++  // Queue capacity and publication/consumption edges remain unchanged.
+   wire result_pop = ctrl_q.result_valid && result_ready;
+   wire result_epoch_clear = !ctrl_q.busy && in_valid;
+   wire result_publish = ctrl_q.busy && ctrl_q.finish_pending &&
+@@ -210,35 +211,65 @@ module tensor_core (
+   wire result_head_publish = result_publish && result_empty_after_pop;
+   wire result_tail_publish = result_publish && !result_empty_after_pop;
+   wire result_shift = result_pop && (ctrl_q.result_count == 2'd2);
+-  // Mapping hints allow separate local drivers for the wide result enables.
+-  // They add no pipeline register and do not change the acceptance contract.
+-  (* max_fanout = 128 *) wire result_head_write = (status == TC_OK) &&
+-      (result_epoch_clear || result_head_publish || result_shift);
+-  (* max_fanout = 128 *) wire result_tail_write = (status == TC_OK) &&
+-      (result_epoch_clear || result_tail_publish);
+-  tc_matrix_t result_head_d, result_tail_d;
+-  always_comb begin : result_storage
+-    result_head_d = ctrl_q.result;
+-    result_tail_d = ctrl_q.result_next;
++  // An unpacked memory with one write port permits FPGA LUTRAM inference.
++  // Logical slot selection remains asynchronous, so no read cycle is added.
++  (* ram_style = "distributed" *) logic [$bits(tc_matrix_t)-1:0] result_bank_q [0:2];
++  tc_matrix_t result_publish_data;
++  logic [2:0] result_head_select_q, result_tail_select_q;
++  logic [2:0] result_bank_valid_q;
++  wire [2:0] result_unused = ~(result_head_select_q | result_tail_select_q);
++  wire [2:0] result_allocate = {result_unused[2] && !(|result_unused[1:0]),
++                               result_unused[1] && !result_unused[0],
++                               result_unused[0]};
++  function automatic logic [1:0] result_bank_index(input logic [2:0] select);
++    case (select)
++      3'b010: return 2'd1;
++      3'b100: return 2'd2;
++      default: return 2'd0;
++    endcase
++  endfunction
++  wire result_head_initialized = |(result_head_select_q & result_bank_valid_q);
++  wire result_tail_initialized = |(result_tail_select_q & result_bank_valid_q);
++
++  always_comb begin : result_state_view
++    ctrl_q = ctrl_storage_q;
++    ctrl_q.result = result_bank_q[result_bank_index(result_head_select_q)] &
++        {$bits(tc_matrix_t){result_head_initialized}};
++    ctrl_q.result_next = result_bank_q[result_bank_index(result_tail_select_q)] &
++        {$bits(tc_matrix_t){result_tail_initialized}};
+     for (int i = 0; i < TC_DIM; i = i + 1)
+-      for (int j = 0; j < TC_DIM; j = j + 1) begin
+-        if (result_head_write) begin
+-          if (result_epoch_clear)
+-            result_head_d[i][j] = '0;
+-          else if (result_head_publish)
+-            result_head_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
+-                                                     dense_q.pe[i][j].acc;
+-          else
+-            result_head_d[i][j] = ctrl_q.result_next[i][j];
+-        end
+-        if (result_tail_write) begin
+-          if (result_epoch_clear)
+-            result_tail_d[i][j] = '0;
+-          else
+-            result_tail_d[i][j] = ctrl_q.is_sparse ? sparse_q.acc[i][j] :
+-                                                     dense_q.pe[i][j].acc;
+-        end
++      for (int j = 0; j < TC_DIM; j = j + 1)
++        result_publish_data[i][j] = ctrl_storage_q.is_sparse ?
++            sparse_q.acc[i][j] : dense_q.pe[i][j].acc;
++  end
++
++  (* max_fanout = 128 *) wire result_bank_write = rst_n &&
++      (status == TC_OK) && result_publish;
++  // Valid bits mask uninitialized data after reset and at a new epoch.
++  // No data reset or ready-dependent data movement is needed.
++  always_ff @(posedge clk) begin
++    if (result_bank_write)
++      result_bank_q[result_bank_index(result_allocate)] <= result_publish_data;
++  end
++
++  always_ff @(posedge clk or negedge rst_n) begin : result_selectors
++    if (!rst_n) begin
++      result_head_select_q <= 3'b001;
++      result_tail_select_q <= 3'b010;
++      result_bank_valid_q <= '0;
++    end else if (status == TC_OK) begin
++      if (result_epoch_clear) begin
++        result_head_select_q <= 3'b001;
++        result_tail_select_q <= 3'b010;
++        result_bank_valid_q <= '0;
++      end else begin
++        if (result_shift) result_head_select_q <= result_tail_select_q;
++        if (result_head_publish) result_head_select_q <= result_allocate;
++        if (result_tail_publish) result_tail_select_q <= result_allocate;
++        if (result_publish)
++          result_bank_valid_q <= result_bank_valid_q | result_allocate;
+       end
++    end
+   end
+ 
+   always_comb begin : next_state
+@@ -296,7 +327,7 @@ module tensor_core (
+           run_pipeline = 1'b0;
+         end else if (ctrl_d.finish_pending) begin
+           // Publish OLD accumulator before sparse ACC first can clear it.
+-          // Wide data selection is factored into result_storage above.
++          // Wide data storage is independent of result consumption above.
+           ctrl_d.result_count = ctrl_d.result_count + 2'd1;
+           ctrl_d.result_valid = 1'b1;
+           ctrl_d.finish_pending = 1'b0;
+@@ -436,18 +467,19 @@ module tensor_core (
+         ctrl_d.busy = (ctrl_d.outstanding != 0);
+       end
+     end
+-    ctrl_d.result = result_head_d;
+-    ctrl_d.result_next = result_tail_d;
++    // Logical result contents are reconstructed from the physical banks.
++    ctrl_d.result = '0;
++    ctrl_d.result_next = '0;
+   end
+ 
+   always_ff @(posedge clk or negedge rst_n) begin
+     if (!rst_n) begin
+-      ctrl_q <= '0;
++      ctrl_storage_q <= '0;
+       dense_q <= '0;
+       sparse_storage_q <= '0;
+       info_q <= '0;
+     end else begin
+-      ctrl_q <= ctrl_d;
++      ctrl_storage_q <= ctrl_d;
+       dense_q <= dense_d;
+       sparse_storage_q <= sparse_d;
+       // Product data is stored by g_arithmetic_column.product_q instead.

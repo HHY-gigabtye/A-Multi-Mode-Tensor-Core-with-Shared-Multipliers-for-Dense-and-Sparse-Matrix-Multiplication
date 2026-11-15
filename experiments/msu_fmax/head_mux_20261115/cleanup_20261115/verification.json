@@ -1,0 +1,18 @@
+{
+  "Root": "experiments/msu_fmax/head_mux_20261115",
+  "VerifiedAt": "2026-11-15T23:55:07.5948271+08:00",
+  "OriginalFiles": 241,
+  "OriginalBytes": 588703081.0,
+  "DeletedFiles": 20,
+  "DeletedBytes": 530591763.0,
+  "RetainedOriginalFiles": 221,
+  "RetainedOriginalBytes": 58111318.0,
+  "OriginalContentsVerified": 221,
+  "UpdatedFilesWithVerifiedOriginalBackup": [
+    "README.md",
+    "artifact_inventory.csv"
+  ],
+  "Checkpoint": "product_shadow/fresh_10/refined/routed.dcp",
+  "CheckpointSHA256": "8D5A80B13BEACEBD621D96F26DD5559473C0E4C452431B36F20ED231DA4FC79C",
+  "FunctionalTests": "Not rerun: artifact cleanup only; production RTL unchanged"
+}
