@@ -1,0 +1,35 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/experiments/mlu_bram_100mhz_20261118/grouped_mux/src/fifo_sv/du_tc_bridge.sv
+index 80554c1..1968761 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/experiments/mlu_bram_100mhz_20261118/grouped_mux/src/fifo_sv/du_tc_bridge.sv
+@@ -49,12 +49,24 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  always_comb begin : read_head
+-    head_entry = '0;
+-    for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+-      head_entry = head_entry |
+-          (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
+-  end
++  // Three masked words fit a LUT6. Preserve the three partial reductions
++  // so the eight-way head read uses two LUT levels without another cycle.
++  // This is the same bitwise OR for every select pattern, including empty.
++  (* keep = "true" *) wire [$bits(bridge_entry_t)-1:0] head_group0;
++  (* keep = "true" *) wire [$bits(bridge_entry_t)-1:0] head_group1;
++  (* keep = "true" *) wire [$bits(bridge_entry_t)-1:0] head_group2;
++  assign head_group0 =
++      (q.fifo[0] & {$bits(bridge_entry_t){head_select_q[0]}}) |
++      (q.fifo[1] & {$bits(bridge_entry_t){head_select_q[1]}}) |
++      (q.fifo[2] & {$bits(bridge_entry_t){head_select_q[2]}});
++  assign head_group1 =
++      (q.fifo[3] & {$bits(bridge_entry_t){head_select_q[3]}}) |
++      (q.fifo[4] & {$bits(bridge_entry_t){head_select_q[4]}}) |
++      (q.fifo[5] & {$bits(bridge_entry_t){head_select_q[5]}});
++  assign head_group2 =
++      (q.fifo[6] & {$bits(bridge_entry_t){head_select_q[6]}}) |
++      (q.fifo[7] & {$bits(bridge_entry_t){head_select_q[7]}});
++  assign head_entry = head_group0 | head_group1 | head_group2;
+   assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);

@@ -1,0 +1,179 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Nov 18 22:32:09 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_incremental_reuse -file reuse_loaded.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+| Design State : Unknown
+------------------------------------------------------------------------------------
+
+Incremental Implementation Information
+
+Table of Contents
+-----------------
+1. Incremental Flow Summary
+2. Reuse Summary
+3. Reference Checkpoint Information
+4. Comparison with Reference Run
+5. Optimization Comparison With Reference Run
+5.1 iphys_opt_replay Optimizations
+5.2 QoR Suggestion Optimizations
+6. Command Comparison with Reference Run
+6.1 Reference:
+6.2 Incremental:
+7. Non Reuse Information
+
+1. Incremental Flow Summary
+---------------------------
+
++-----------------------+------------------+
+|    Flow Information   |       Value      |
++-----------------------+------------------+
+| Synthesis Flow        |          Default |
+| Auto Incremental      |               No |
+| Incremental Directive | RuntimeOptimized |
+| Reuse mode            |              Low |
+| Target WNS            |              0.0 |
+| QoR Suggestions       |                0 |
++-----------------------+------------------+
+
+
+2. Reuse Summary
+----------------
+
++-------+----------------------+----------------------------+--------------------+--------+
+|  Type | Matched % (of Total) | Current Reuse % (of Total) | Fixed % (of Total) |  Total |
++-------+----------------------+----------------------------+--------------------+--------+
+| Cells |                77.57 |                      66.95 |               0.00 |  51816 |
+| Nets  |                77.05 |                      32.59 |               0.00 |  40777 |
+| Pins  |                    - |                      22.17 |                  - | 243190 |
+| Ports |               100.00 |                       0.00 |               0.00 |   1022 |
++-------+----------------------+----------------------------+--------------------+--------+
+
+
+3. Reference Checkpoint Information
+-----------------------------------
+
++----------------+----------------------------------------------------------------------------------------------------+
+| DCP Location:  | C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp |
++----------------+----------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+----------------------------+
+|         DCP Information        |            Value           |
++--------------------------------+----------------------------+
+| Vivado Version                 |                     2022.2 |
+| DCP State                      |                 POST_ROUTE |
+| Recorded WNS                   |                      0.002 |
+| Recorded WHS                   |                      0.096 |
+| Reference Speed File Version   | PRODUCTION 1.12 2019-11-22 |
+| Incremental Speed File Version | PRODUCTION 1.12 2019-11-22 |
++--------------------------------+----------------------------+
+* Recorded WNS/WHS timing numbers are estimated timing numbers. They may vary slightly from sign-off timing numbers.
+
+
+4. Comparison with Reference Run
+--------------------------------
+
++-----------------+---------------------------+---------------------------+---------------------------+
+|                 |          WNS(ns)          |  Runtime(elapsed)(hh:mm)  |    Runtime(cpu)(hh:mm)    |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|      Stage      |  Reference  | Incremental |  Reference  | Incremental |  Reference  | Incremental |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| synth_design    |       0.986 |             |       00:07 |       00:05 |       00:06 |       00:05 |
+| opt_design      |             |             |     < 1 min |     < 1 min |     < 1 min |     < 1 min |
+| read_checkpoint |             |             |             |     < 1 min |             |     < 1 min |
+| place_design    |       0.342 |             |       00:03 |             |       00:05 |             |
+| phys_opt_design |       0.342 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |      -0.301 |             |       00:10 |             |       00:19 |             |
+| phys_opt_design |      -0.301 |             |       00:01 |             |       00:01 |             |
+| route_design    |      -0.231 |             |       00:34 |             |       00:58 |             |
+| route_design    |             |             |             |             |             |             |
+| phys_opt_design |      -1.093 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |       0.002 |             |       00:26 |             |       00:44 |             |
+| phys_opt_design |       0.002 |             |       00:03 |             |       00:04 |             |
+| route_design    |       0.002 |             |       00:01 |             |       00:01 |             |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+
+5. Optimization Comparison With Reference Run
+---------------------------------------------
+
+5.1 iphys_opt_replay Optimizations
+----------------------------------
+
++-------------------------+--------+------------+
+| iphys_opt_design replay | Reused | Not Reused |
++-------------------------+--------+------------+
+| critical_cell_opt       |      0 |          3 |
+| restruct_opt            |      1 |         14 |
+| fanout_opt              |      1 |          4 |
++-------------------------+--------+------------+
+
+
+5.2 QoR Suggestion Optimizations
+--------------------------------
+
++-------------------------------------+-------+
+|           QoR Suggestions           | Value |
++-------------------------------------+-------+
+| QoR Suggestions (Recommended)       |     0 |
+|   Suggestions Included In Reference |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+|   New Suggestions (INCR_FRIENDLY=1) |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+| QoR Suggestions (Not Recommended)   |     0 |
+|   New Suggestions (INCR_FRIENDLY=0) |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+| Disabled New Suggestions            |     0 |
++-------------------------------------+-------+
+
+
+6. Command Comparison with Reference Run
+----------------------------------------
+
+6.1 Reference:
+--------------
+synth_design-verilog_define default::[not_specified] -top  sparse_tensor_core_top -part  xc7z020clg484-1 
+opt_design
+place_design
+phys_opt_design -directive Default
+route_design
+phys_opt_design -directive AggressiveExplore
+route_design -directive Explore
+route_design -unroute
+phys_opt_design -force_replication_on_nets
+route_design -directive Explore
+phys_opt_design -directive AggressiveExplore
+route_design -directive Explore
+
+6.2 Incremental:
+----------------
+synth_design-verilog_define default::[not_specified] -top  sparse_tensor_core_top -part  xc7z020clg484-1 
+opt_design
+read_checkpoint -directive RuntimeOptimized  -incremental C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp -force_incr
+
+7. Non Reuse Information
+------------------------
+
++------------------------------------------------------+--------+
+|                         Type                         |    %   |
++------------------------------------------------------+--------+
+| Non-Reused Cells                                     |  33.04 |
+|   New                                                |  20.06 |
+|   Discarded illegal placement due to netlist changes |   9.40 |
+|   Discarded to improve timing                        |   3.57 |
+| Partially reused nets                                |   4.18 |
+| Non-Reused nets                                      |  63.21 |
+| Non-Reused Ports                                     | 100.00 |
++------------------------------------------------------+--------+
+
+

@@ -1,0 +1,12 @@
+Final restored-baseline regression completed 2026-11-15 23:04:29 UTC+08:00, exit 0.
+PASS: all five original isolated units, then original integration (316 completed tiles, 75 resets).
+PASS: 10 unit and 46 integration summary/coverage lines match the pre-experiment baseline in order.
+PASS: all 11 live RTL/package hashes match the audited native 100 MHz baseline.
+PASS: all 76 protected reference/test/vector hashes are unchanged.
+PASS: all 10 comparison rows match reported period, setup/hold/pulse slack and LUT/FF/DSP counts.
+PASS: no tracked working or staged Git diff remains.
+Branch: main
+HEAD: 92c6e44bd003e27ef9b406d7e7d3a6393b13e3db
+No branch/worktree/commit/merge/push created.
+Frequency improvement was NOT achieved; original verified 100 MHz baseline retained.
+All candidate RTL changes were reverted in production and preserved in experiment snapshots/patches.

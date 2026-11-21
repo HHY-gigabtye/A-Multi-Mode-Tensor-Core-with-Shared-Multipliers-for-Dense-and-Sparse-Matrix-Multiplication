@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+MLU BRAM EQUIVALENCE PASS vectors=16708 steps=17171 directed_transitions=18 simultaneous_last=234 stalls=5347 resets=155
+$finish called at time : 171910 ns : File "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/tb_mlu_bram_equiv.sv" Line 186
+INFO: xsimkernel Simulation Memory Usage: 45640 KB (Peak: 45640 KB), Simulation CPU Usage: 20077 ms

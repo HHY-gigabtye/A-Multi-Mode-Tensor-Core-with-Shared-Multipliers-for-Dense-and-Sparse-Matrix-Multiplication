@@ -1,0 +1,93 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 18 23:12:03 2026
+# Process ID: 2380
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch
+# Command line: vivado.exe -mode batch -nojournal -log layout.log -source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/layout_probe.tcl -tclargs C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/flow/initial/placed.dcp C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/layout
+# Log file: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/layout.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/layout_probe.tcl
+# if {$argc != 2} {error "Expected CHECKPOINT NEW_OUTPUT_DIR"}
+# set layout_input [file normalize [lindex $argv 0]]
+# set layout_output [file normalize [lindex $argv 1]]
+# if {[file exists $layout_output]} {error "Preserve existing inventory"}
+# file mkdir $layout_output
+# cd $layout_output
+# set_param general.maxThreads 1
+# open_checkpoint $layout_input
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/flow/initial/placed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.040 . Memory (MB): peak = 353.070 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.303 . Memory (MB): peak = 877.578 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1110 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1720.527 ; gain = 49.289
+Restored from archive | CPU: 2.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1720.527 ; gain = 49.289
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1720.527 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 2d0aeedf
+----- Checksum: PlaceDB: 02f40794 ShapeSum: 2a16e74b RouteDB: 00000000 
+open_checkpoint: Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 1720.527 ; gain = 1367.457
+# set fd [open clock_regions.tsv w]
+# puts $fd "region\tslice_sites\tramb36_sites\tslice_min_x\tslice_max_x\tslice_min_y\tslice_max_y"
+# foreach region [lsort [get_clock_regions]] {
+#     set slices [get_sites -of_objects $region -filter {SITE_TYPE =~ SLIC*}]
+#     set rams [get_sites -of_objects $region -filter {SITE_TYPE == RAMB36E1}]
+#     set xs {}; set ys {}
+#     foreach site $slices {
+#         if {[regexp {SLICE_X(\d+)Y(\d+)} $site all x y]} {lappend xs $x; lappend ys $y}
+#     }
+#     if {[llength $xs] == 0} {error "No slice coordinates in $region"}
+#     set xs [lsort -integer $xs]; set ys [lsort -integer $ys]
+#     puts $fd "$region\t[llength $slices]\t[llength $rams]\t[lindex $xs 0]\t[lindex $xs end]\t[lindex $ys 0]\t[lindex $ys end]"
+# }
+WARNING: [Vivado 12-3731] No sites matched 'SITE_TYPE == RAMB36E1'
+WARNING: [Vivado 12-3731] No sites matched 'SITE_TYPE == RAMB36E1'
+WARNING: [Vivado 12-3731] No sites matched 'SITE_TYPE == RAMB36E1'
+WARNING: [Vivado 12-3731] No sites matched 'SITE_TYPE == RAMB36E1'
+WARNING: [Vivado 12-3731] No sites matched 'SITE_TYPE == RAMB36E1'
+# close $fd
+# set fd [open module_regions.tsv w]
+# puts $fd "module\tregion\tprimitive_count"
+# foreach module {u_mlu u_du_tia u_bridge u_tensor_core u_msu} {
+#     set counts [dict create]
+#     foreach cell [get_cells -hier -filter "IS_PRIMITIVE == 1 && NAME =~ $module/*"] {
+#         set loc [get_property LOC $cell]
+#         if {$loc eq ""} {continue}
+#         set site [get_sites -quiet $loc]
+#         if {[llength $site] != 1} {continue}
+#         set region [get_clock_regions -of_objects $site]
+#         dict incr counts $region
+#     }
+#     dict for {region count} $counts {puts $fd "$module\t$region\t$count"}
+# }
+# close $fd
+# set fd [open ram_locations.tsv w]
+# puts $fd "cell\tlocation\tmode"
+# foreach cell [get_cells -hier -filter {REF_NAME == RAMB36E1}] {
+#     puts $fd "$cell\t[get_property LOC $cell]\t[get_property RAM_MODE $cell]"
+# }
+# close $fd
+# puts "LAYOUT_READ_ONLY_PROBE_COMPLETE"
+LAYOUT_READ_ONLY_PROBE_COMPLETE
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 18 23:12:42 2026...

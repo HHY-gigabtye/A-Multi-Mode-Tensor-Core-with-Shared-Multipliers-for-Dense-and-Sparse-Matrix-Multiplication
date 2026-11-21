@@ -1,0 +1,120 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sat Nov 21 15:01:12 2026
+# Process ID: 25380
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121
+# Command line: vivado.exe -mode batch -nojournal -log clock_check.log -source clock_check.tcl -tclargs ../mlu_bram_100mhz_20261118/rotating_fifo/flow/initial/routed.dcp routed/routed.dcp clocks_verified
+# Log file: C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/clock_check.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at 'C'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
+source clock_check.tcl
+# if {$argc != 3} {error "Expected BASELINE_DCP CANDIDATE_DCP NEW_REPORT_DIRECTORY"}
+# set checkpoints [list [file normalize [lindex $argv 0]] [file normalize [lindex $argv 1]]]
+# set output [file normalize [lindex $argv 2]]
+# if {[file exists $output]} {error "Select a fresh report directory"}
+# file mkdir $output
+# set report [open [file join $output periods.csv] w]
+# puts $report "design,period_ns,mhz,setup_slack_ns,hold_slack_ns"
+# foreach name {baseline candidate} checkpoint $checkpoints {
+#     open_checkpoint $checkpoint
+#     set clock [get_clocks clk]
+#     if {[llength [get_clocks]] != 1 || [get_property PERIOD $clock] != 10} {
+#         error "Expected the 10 ns single-clock implementation"
+#     }
+#     set wns [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+#     set boundary [expr {ceil((10.0 - $wns) * 100.0) / 100.0}]
+#     foreach label {longer shorter} offset {0.0 -0.01} {
+#         set period [format %.3f [expr {$boundary + $offset}]]
+#         create_clock -name clk -period $period -waveform [list 0 [expr {$period / 2.0}]] [get_ports clk]
+#         set setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+#         set hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+#         puts $report "$name,$period,[format %.4f [expr {1000.0/$period}]],$setup,$hold"
+#         flush $report
+#         report_timing_summary -max_paths 1 -file [file join $output ${name}_${label}.rpt]
+#     }
+#     close_design
+# }
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/rotating_fifo/flow/initial/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 330.668 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.269 . Memory (MB): peak = 878.629 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1013 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1738.773 ; gain = 64.691
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1738.773 ; gain = 64.691
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1738.773 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 1a5fb879e
+----- Checksum: PlaceDB: c41cc934 ShapeSum: 0cbb115c RouteDB: d523ad0e 
+open_checkpoint: Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1738.773 ; gain = 1408.105
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:12 ; elapsed = 00:00:07 . Memory (MB): peak = 1791.684 ; gain = 52.910
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:13 ; elapsed = 00:00:07 . Memory (MB): peak = 1800.113 ; gain = 8.430
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:12 ; elapsed = 00:00:07 . Memory (MB): peak = 1844.906 ; gain = 8.395
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/routed/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1844.906 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.165 . Memory (MB): peak = 1844.906 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1059 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1844.906 ; gain = 0.000
+Restored from archive | CPU: 2.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1844.906 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1844.906 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 1e9bff34c
+----- Checksum: PlaceDB: e4d4f247 ShapeSum: 6fd343bc RouteDB: 9517bd49 
+open_checkpoint: Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1844.906 ; gain = 0.000
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:08 ; elapsed = 00:00:05 . Memory (MB): peak = 1844.906 ; gain = 0.000
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1844.906 ; gain = 0.000
+# close $report
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 21 15:02:31 2026...

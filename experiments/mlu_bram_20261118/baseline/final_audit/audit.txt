@@ -1,0 +1,9 @@
+Checkpoint: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp
+Phase: FPGA OOC post-route STA; clocks and constraints unchanged
+Period ns: 10.000
+Setup slack ns: 0.002
+Hold slack ns: 0.096
+RAMB36E1 count: 0
+DSP48E1 count: 128
+DSP AREG=0,BREG=0,MREG=0,PREG=0 count=64
+DSP AREG=0,BREG=0,MREG=0,PREG=1 count=64

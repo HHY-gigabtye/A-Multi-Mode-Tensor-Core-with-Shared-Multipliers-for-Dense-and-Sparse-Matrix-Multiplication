@@ -1,0 +1,7 @@
+"Stage","Phase","PeriodNs","WnsNs","TnsNs","SetupFailingEndpoints","WhsNs","ThsNs","HoldFailingEndpoints","WpwsNs","PulseFailingEndpoints","Report"
+"baseline_default","FPGA OOC post-route","10.000","-0.449","-20.186","261","0.098","0.000","0","4.020","0","experiments/msu_fmax/target_10ns_20261112/native_evidence/default_10ns.rpt"
+"baseline_first_refinement","FPGA OOC post-route","10.000","-0.231","-3.720","70","0.098","0.000","0","4.020","0","experiments/msu_fmax/target_10ns_20261112/native_evidence/refined/timing_summary_routed.rpt"
+"baseline_selected","FPGA OOC post-route","10.000","0.016","0.000","0","0.096","0.000","0","4.020","0","experiments/msu_fmax/native_margin_10ns_20261113/independent_audit/checkpoint/timing_summary.rpt"
+"candidate_default","FPGA OOC post-route","10.000","-0.800","-317.331","2162","0.146","0.000","0","3.750","0","experiments/msu_fmax/result_bank_20261115/distributed_flat/fresh_10/default/timing_summary_routed.rpt"
+"candidate_first_refinement","FPGA OOC post-route","10.000","-0.092","-0.263","11","0.146","0.000","0","3.750","0","experiments/msu_fmax/result_bank_20261115/distributed_flat/fresh_10/refined/timing_summary_routed.rpt"
+"candidate_refined_reopened","FPGA OOC post-route","10.000","-0.092","-0.263","11","0.146","0.000","0","3.750","0","experiments/msu_fmax/result_bank_20261115/distributed_flat/refined_audit/timing_summary.rpt"

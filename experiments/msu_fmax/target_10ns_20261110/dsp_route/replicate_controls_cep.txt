@@ -1,0 +1,8 @@
+# Same measured controls, plus the three local sparse-DSP CEP drivers on
+# violating paths. Each CEP driver has ten sinks and 2.4-2.7 ns route delay.
+u_bridge/dense_q[b_delay][7][6][value][7]_i_1
+u_bridge/ctrl_q[result][6][2][31]_i_1
+u_tensor_core/ctrl_q[result][3][4][31]_i_4
+u_bridge/g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg_i_1
+u_bridge/g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg_i_1
+u_bridge/g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg_i_1_comp

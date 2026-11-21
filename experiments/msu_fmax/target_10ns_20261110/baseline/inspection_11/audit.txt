@@ -1,0 +1,9 @@
+Checkpoint: C:/Users/Jason/Desktop/TC/reports/implementation/recover_11ns_20261110/replicated/timing_closed.dcp
+Reopened existing route; original constraints preserved.
+Setup slack ns: 0.005
+Hold slack ns: 0.098
+DSP48E1 count: 128
+AREG values: 0
+BREG values: 0
+MREG values: 0
+PREG values: 0

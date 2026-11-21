@@ -1,0 +1,9 @@
+# Measured in routed_refine/stage1/critical_paths.rpt, first two paths.
+# Head payload to dense DSP: fanout 10, net delay 2.357 ns.
+u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_3
+# Sparse route count decode: fanout 144, net delay 1.413 ns.
+u_tensor_core/sparse_storage_q[route][enable][0][7]_i_17
+# Sparse route selector: fanout 75, net delay 2.151 ns.
+u_tensor_core/sparse_storage_q[route][delta][2][4][7]_i_34
+# B-column data to A-row muxes: fanout 8, net delay 2.299 ns.
+u_tensor_core/sparse_storage_q[route][delta][2][0][0]_i_13

@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "accepted_100mhz_internal_ooc": true,
+  "recorded_at": "2026-11-19T00:41:04.6858168+08:00",
+  "base_commit": "e3c1ccdf6742165fec1e1ad74561d91e1ed157a8",
+  "selected_source": "rotating_fifo/src",
+  "changed_rtl": [
+    "mlu_sv/mlu.sv",
+    "fifo_sv/du_tc_bridge.sv"
+  ],
+  "unchanged_rtl": "Other nine source/package files, including TC, MSU, DU/TIA and top",
+  "production_rtl_overwritten": false,
+  "committed_merged_or_pushed": false,
+  "tool": "Vivado 2022.2",
+  "part": "xc7z020clg484-1",
+  "speed_file": "-1 PRODUCTION 1.12 2019-11-22",
+  "phase": "FPGA OOC post-route; independently reopened",
+  "clock_period_ns": 10.0,
+  "verified_clock_mhz": 100,
+  "timing": {
+    "wns_ns": 0.011,
+    "tns_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "whs_ns": 0.098,
+    "ths_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "wpws_ns": 4.02,
+    "unconstrained_internal_endpoints": 0,
+    "timing_exceptions": 0
+  },
+  "resources": {
+    "lut": 28213,
+    "ff": 19852,
+    "bram36": 18,
+    "bram18": 0,
+    "dsp48": 128,
+    "latches": 0
+  },
+  "baseline_resources": {
+    "lut": 29405,
+    "ff": 21503,
+    "bram36": 0,
+    "dsp48": 128,
+    "wns_ns": 0.002,
+    "whs_ns": 0.096
+  },
+  "reduction_from_ff": {
+    "lut": 1192,
+    "lut_percent": 4.053732358442442,
+    "ff": 1651,
+    "ff_percent": 7.67799841882528
+  },
+  "routing": {
+    "routable_nets": 40406,
+    "fully_routed_nets": 40406,
+    "errors": 0
+  },
+  "drc": {
+    "errors": 0,
+    "bram_control_reqp_1839": 0,
+    "warnings_same_as_ff_baseline": {
+      "DPOP_1": 64,
+      "ZPS7_1": 1,
+      "DPOP_2": 128,
+      "DPIP_1": 320
+    }
+  },
+  "dsp_pipeline": {
+    "areg": 0,
+    "breg": 0,
+    "mreg": 0,
+    "preg_0_count": 64,
+    "preg_1_count": 64
+  },
+  "validation": {
+    "original_unit_suites": 5,
+    "mlu_c_records": 16708,
+    "du_tia_packets": 3292,
+    "bridge_c_records": 19147,
+    "tc_c_records": 136136,
+    "msu_cycles": 8683,
+    "integration": {
+      "write_beats": 2563,
+      "completed_tiles": 316,
+      "issued_packets": 3124,
+      "resets": 75,
+      "matching_baseline_summary_lines": 46,
+      "seed": "91e10da5"
+    },
+    "mlu_synthesized_primitive": {
+      "resets": 155,
+      "cycle_comparisons": 17171,
+      "stalls": 5347,
+      "source_identity_verified": true,
+      "vectors": 16708,
+      "directed_transitions": 18,
+      "simultaneous_last": 234
+    },
+    "bridge_synthesized_netlist": {
+      "resets": 13,
+      "rejected_edges": 7156,
+      "interface_comparisons": 38294,
+      "vectors": 19147
+    },
+    "original_source_files_unchanged": 11,
+    "protected_files_unchanged": 76
+  },
+  "checkpoint": {
+    "sha256": "6D2D087D2B5114E74F0CBE099A17B132FCDD910DADAD68FF147E4472A551E3A5",
+    "path": "rotating_fifo/flow/initial/routed.dcp"
+  },
+  "baseline_checkpoint": {
+    "sha256": "FD2C8DF2D32C017C432AF7B6F3A0B26979B53BB118B5F01776DCE26937C560F5",
+    "path": "../mlu_bram_20261118/baseline/implementation/closure/routed.dcp"
+  },
+  "source_manifest": "rotating_fifo/sources.csv",
+  "artifact_manifest": "accepted_artifacts.csv",
+  "limitations": [
+    "Only 11 ps setup margin",
+    "Internal FPGA OOC STA; external I/O delays and HD.CLK_SRC remain unspecified as in baseline",
+    "No on-board test, higher-frequency sweep, or power measurement"
+  ],
+  "stopped_alternative": "MSU address-reduction synthesis stopped after acceptance; no incremental/post-route claim for that alternative"
+}

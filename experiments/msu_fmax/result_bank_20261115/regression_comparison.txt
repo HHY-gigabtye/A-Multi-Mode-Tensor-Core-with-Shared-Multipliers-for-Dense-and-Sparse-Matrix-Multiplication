@@ -1,0 +1,8 @@
+Baseline: 10 unit summary lines; 46 integration phase/coverage lines.
+PASS three_bank: all 56 selected summary/coverage lines match baseline in order.
+PASS distributed_bank: all 56 selected summary/coverage lines match baseline in order.
+PASS distributed_flat: all 56 selected summary/coverage lines match baseline in order.
+PASS final_live: all 56 selected summary/coverage lines match baseline in order.
+All five unit-then-integration runs exited 0; original runner verified 76 protected hashes after each run.
+Final live hash verification: 76 protected files unchanged.
+Final restored-source regression completed 2026-11-15 18:40:43 UTC+08:00, exit 0.

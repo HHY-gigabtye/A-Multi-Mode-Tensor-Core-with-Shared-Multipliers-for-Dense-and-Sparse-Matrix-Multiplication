@@ -1,0 +1,159 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/fifo_sv/du_tc_bridge.sv
+index 5bdc938..90cc1c9 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/fifo_sv/du_tc_bridge.sv
+@@ -35,6 +35,9 @@ module du_tc_bridge (
+   fifo_ptr_t fifo_tail;
+   meta_ptr_t meta_tail;
+   logic [FIFO_COUNT_W:0] used_credits;
++  // Redundant decode, advanced on the same accepted edge as q. The payload
++  // remains a combinational FIFO read; neither bypass nor latency is added.
++  (* max_fanout = 128 *) logic [IO_PACKET_FIFO-1:0] head_select_q;
+ 
+   // Widen BEFORE adding so a carry cannot disappear.
+   assign used_credits = {1'b0, q.count} +
+@@ -46,8 +49,27 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  assign head_entry = (q.count != 0) ? q.fifo[q.head] : '0;
+-  assign head_valid = (q.count != 0) &&
++  // Each group combines at most three data/select pairs in one LUT6. Keep
++  // the group outputs so the final OR can use a second LUT level rather
++  // than refactoring the eight-way selection into a deeper mux network.
++  localparam int HEAD_GROUPS = (IO_PACKET_FIFO + 2) / 3;
++  (* keep = "true" *) logic [HEAD_GROUPS-1:0][$bits(bridge_entry_t)-1:0] head_group;
++  for (genvar group_index = 0; group_index < HEAD_GROUPS; group_index++) begin : g_head_group
++    always_comb begin
++      head_group[group_index] = '0;
++      for (int term = 0; term < 3; term++)
++        if ((3*group_index + term) < IO_PACKET_FIFO)
++          head_group[group_index] = head_group[group_index] |
++              (q.fifo[3*group_index + term] &
++               {$bits(bridge_entry_t){head_select_q[3*group_index + term]}});
++    end
++  end
++  always_comb begin : read_head
++    head_entry = '0;
++    for (int group_index = 0; group_index < HEAD_GROUPS; group_index++)
++      head_entry = head_entry | head_group[group_index];
++  end
++  assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);
+   assign result_meta = result_meta_valid ? q.result_meta[q.meta_head] : '0;
+@@ -109,9 +131,14 @@ module du_tc_bridge (
+   end
+ 
+   always_ff @(posedge clk or negedge rst_n) begin
+-    if (!rst_n)
++    if (!rst_n) begin
+       q <= '0;
+-    else if (status == IO_OK)
++      head_select_q <= '0;
++    end else if (status == IO_OK) begin
+       q <= d;
++      for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
++        head_select_q[slot] <= (d.count != 0) &&
++                               (d.head == fifo_ptr_t'(slot));
++    end
+   end
+ endmodule
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index bf3c77e..2629fd5 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -25,8 +25,27 @@ module tensor_core (
+   tc_control_t ctrl_q, ctrl_d;
+   tc_dense_state_t dense_q, dense_d;
+   tc_sparse_state_t sparse_q, sparse_d;
++  tc_sparse_state_t sparse_storage_q;
+   tc_tick_info_t info_q, info_d;
+ 
++  // The existing MUL-stage product registers can live inside the DSPs when
++  // their data bits do not need asynchronous reset. The asynchronously reset
++  // MUL metadata masks every unused product to zero, preserving the complete
++  // visible sparse_q state on reset, bubbles, epochs, and rejected edges.
++  wire sparse_mul_capture = rst_n && (status == TC_OK) && in_valid &&
++                            in_packet.is_sparse;
++  wire [7:0][7:0][15:0] sparse_product_q;
++  always_comb begin : sparse_state_view
++    sparse_q = sparse_storage_q;
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1)
++        sparse_q.mul.product[i][j] =
++            (sparse_storage_q.mul.valid &&
++             (i < int'(sparse_storage_q.mul.a_count)) &&
++             (j < int'(sparse_storage_q.mul.b_count))) ?
++            sparse_product_q[i][j] : 16'd0;
++  end
++
+   // Compute arithmetic from raw data, independently of acceptance/validation.
+   // The existing next_state guards still decide whether to commit each value.
+   // FPGA timing trial: independent dense MAC and sparse multiplier inputs.
+@@ -39,7 +58,7 @@ module tensor_core (
+     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+         wire [7:0] dense_a_value, dense_b_value;
+-        // FPGA mapping hint only: no DSP pipeline registers are introduced.
++        // FPGA mapping hint; both products retain their original cycle boundaries.
+         (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+         if (j != 0) begin : g_a_neighbor
+           assign dense_a_value = dense_q.pe[i][j-1].a.value;
+@@ -60,6 +79,15 @@ module tensor_core (
+                                      in_packet.payload.sparse.b.value[j]);
+         assign dense_product[i][j] = dense_mul;
+         assign sparse_product[i][j] = sparse_mul;
++        // Same MUL edge as before: this register replaces the corresponding
++        // product data storage, and adds no cycle. Invalid data is masked by
++        // the registered metadata, outside the multiplier-to-register path.
++        logic signed [15:0] product_q;
++        always_ff @(posedge clk) begin
++          if (sparse_mul_capture)
++            product_q <= sparse_mul;
++        end
++        assign sparse_product_q[i][j] = product_q;
+         assign dense_sum[i][j] = $signed(dense_q.pe[i][j].acc) +
+                                 extend_product(dense_product[i][j]);
+         // OLD ROUTE and ACC feed the adder directly. First-packet clearing
+@@ -101,18 +129,11 @@ module tensor_core (
+             (rank < int'(sparse_q.mul.b_count)) &&
+             (sparse_q.mul.b_index[rank] == TC_INDEX_W'(coord));
+ 
+-        // Legal vectors already have unique indices. Keep the last matching
+-        // rank even for duplicate indices, preserving the old loop's exact
+-        // overwrite priority without a 64-entry data priority chain.
+-        if (rank == TC_DIM-1) begin : g_last
+-          assign route_a_select[coord][rank] = route_a_match[coord][rank];
+-          assign route_b_select[coord][rank] = route_b_match[coord][rank];
+-        end else begin : g_lower
+-          assign route_a_select[coord][rank] = route_a_match[coord][rank] &&
+-              !(|route_a_match[coord][TC_DIM-1:rank+1]);
+-          assign route_b_select[coord][rank] = route_b_match[coord][rank] &&
+-              !(|route_b_match[coord][TC_DIM-1:rank+1]);
+-        end
++        // valid_vector rejects duplicate/non-increasing indices before the
++        // entire edge can commit. Thus each coordinate matches at most one
++        // stored rank; no last-match priority is needed in this ROUTE stage.
++        assign route_a_select[coord][rank] = route_a_match[coord][rank];
++        assign route_b_select[coord][rank] = route_b_match[coord][rank];
+       end
+       assign route_a_present[coord] = |route_a_match[coord];
+       assign route_b_present[coord] = |route_b_match[coord];
+@@ -423,12 +444,14 @@ module tensor_core (
+     if (!rst_n) begin
+       ctrl_q <= '0;
+       dense_q <= '0;
+-      sparse_q <= '0;
++      sparse_storage_q <= '0;
+       info_q <= '0;
+     end else begin
+       ctrl_q <= ctrl_d;
+       dense_q <= dense_d;
+-      sparse_q <= sparse_d;
++      sparse_storage_q <= sparse_d;
++      // Product data is stored by g_arithmetic_column.product_q instead.
++      sparse_storage_q.mul.product <= '0;
+       info_q <= info_d;
+     end
+   end

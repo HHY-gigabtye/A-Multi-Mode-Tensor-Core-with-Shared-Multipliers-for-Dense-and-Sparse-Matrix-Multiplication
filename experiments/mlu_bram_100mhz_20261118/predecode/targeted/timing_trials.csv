@@ -1,0 +1,3 @@
+trial,wns_ns,whs_ns,checkpoint
+targeted,-2.485,0.052,C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/predecode/targeted/measured/replicated/routed.dcp
+refined,-0.790,0.052,C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/predecode/targeted/refined/routed.dcp

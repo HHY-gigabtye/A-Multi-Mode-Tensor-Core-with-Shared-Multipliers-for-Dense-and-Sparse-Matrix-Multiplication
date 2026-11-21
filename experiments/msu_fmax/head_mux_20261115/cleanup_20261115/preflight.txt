@@ -1,0 +1,6 @@
+Branch: main
+HEAD: 92c6e44bd003e27ef9b406d7e7d3a6393b13e3db
+Protected baseline/reference hashes verified before cleanup: 87
+Native 100 MHz checkpoint hash recorded separately in the same CSV
+All deletion targets are untracked and confined to the two experiment roots
+No reparse points found in either experiment tree

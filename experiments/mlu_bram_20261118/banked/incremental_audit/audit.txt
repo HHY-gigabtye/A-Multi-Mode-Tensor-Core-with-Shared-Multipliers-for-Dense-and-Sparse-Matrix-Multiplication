@@ -1,0 +1,27 @@
+Checkpoint: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/incremental_forced/refined/routed.dcp
+Phase: FPGA OOC post-route STA; clocks and constraints unchanged
+Period ns: 10.000
+Setup slack ns: -1.170
+Hold slack ns: 0.098
+RAMB36E1 count: 18
+u_mlu/g_image[0].memory_reg_0 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[0].memory_reg_1 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[0].memory_reg_2 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[0].memory_reg_3 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[1].memory_reg_0 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[1].memory_reg_1 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[1].memory_reg_2 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[1].memory_reg_3 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[2].memory_reg_0 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[2].memory_reg_1 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[2].memory_reg_2 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[2].memory_reg_3 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[3].memory_reg_0 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[3].memory_reg_1 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[3].memory_reg_2 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[3].memory_reg_3 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[4].memory_reg_0 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+u_mlu/g_image[4].memory_reg_1 mode=SDP read=72/0 write=0/72 output_reg=0/0 write_mode=READ_FIRST/READ_FIRST
+DSP48E1 count: 128
+DSP AREG=0,BREG=0,MREG=0,PREG=0 count=64
+DSP AREG=0,BREG=0,MREG=0,PREG=1 count=64

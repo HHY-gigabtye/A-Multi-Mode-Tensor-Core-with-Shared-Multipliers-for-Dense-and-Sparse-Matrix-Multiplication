@@ -1,0 +1,5 @@
+{
+  "Checkpoint": "project_integration/project_integration.runs/impl_10ns_margin_20261113/sparse_tensor_core_top_routed.dcp",
+  "Expected": "D3BB68943300BCA0E34EA2640293D69E15D7C3865BF0F0ED045596436F09CC8E",
+  "Actual": "614FE4D28CBE21183B294B1D096C63480414169F2CA8E79EFCDDF92CE0AC31DF"
+}

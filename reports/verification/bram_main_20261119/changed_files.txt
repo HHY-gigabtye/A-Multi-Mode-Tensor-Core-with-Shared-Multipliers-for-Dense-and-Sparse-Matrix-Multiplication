@@ -1,0 +1,15 @@
+README.md
+docs/bram-100mhz-gui.md
+mlu_sv/mlu.sv
+fifo_sv/du_tc_bridge.sv
+tools/verify_bram_main.ps1
+tools/check_bram_main_netlists.tcl
+tools/run_bram_100mhz_project.tcl
+tools/open_bram_100mhz_gui.tcl
+project_integration/scripts/bram_100mhz_synth_pre.tcl
+project_integration/scripts/bram_100mhz_impl_pre.tcl
+project_integration/scripts/bram_100mhz_route_post.tcl
+project_integration/scripts/check_bram_100mhz.tcl
+project_integration/project_integration.xpr
+backups/pre_bram_20261119/
+reports/verification/bram_main_20261119/

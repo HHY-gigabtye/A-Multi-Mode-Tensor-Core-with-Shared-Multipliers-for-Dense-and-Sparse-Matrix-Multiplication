@@ -1,0 +1,52 @@
+# do {C:\Users\Jason\Desktop\TC\experiments\outer_product_20261121\simulate.do}
+# C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121
+# C:/Users/Jason/Desktop/TC
+# compare
+# C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/build/compare
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work work 
+# Copying C:/intelFPGA/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 14:54:00 on Nov 21,2026
+# vlog -sv C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core_pkg.sv C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/outer_product_core.sv 
+# -- Compiling package tensor_core_pkg
+# -- Compiling module outer_product_core
+# -- Importing package tensor_core_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/outer_product_core.sv(6): (vlog-13314) Defaulting port 'in_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	outer_product_core
+# End time: 14:54:00 on Nov 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 14:54:01 on Nov 21,2026
+# vlog -sv C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/tb_compare.sv 
+# -- Compiling module tensor_core
+# -- Importing package tensor_core_pkg
+# -- Compiling module tb_compare
+# 
+# Top level modules:
+# 	tb_compare
+# End time: 14:54:01 on Nov 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop -voptargs="+acc" work.tb_compare 
+# Start time: 14:54:01 on Nov 21,2026
+# Loading sv_std.std
+# Loading work.tensor_core_pkg
+# Loading work.tb_compare
+# Loading work.tensor_core
+# Loading work.outer_product_core
+# TC BENCH pattern=0 core=0 tiles=24 cycles=576 min_II=24 max_II=24
+# TC BENCH pattern=0 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=1 core=0 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=1 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=2 core=0 tiles=24 cycles=432 min_II=12 max_II=24
+# TC BENCH pattern=2 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC COMPARISON PASS
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/tb_compare.sv(98)
+#    Time: 4822 ns  Iteration: 0  Instance: /tb_compare
+# Break in Module tb_compare at C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/tb_compare.sv line 98
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/outer_product_20261121/tb_compare.sv line 98
+# End time: 14:54:01 on Nov 21,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

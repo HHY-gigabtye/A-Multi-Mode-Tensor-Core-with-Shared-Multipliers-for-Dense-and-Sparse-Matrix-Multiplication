@@ -1,0 +1,598 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Nov 18 19:34:42 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_cells -hierarchical -filter {IS_SEQUENTIAL == 1 && NAME =~ u_du_tia/*}] -max_paths 10 -input_pins -file du_tia.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -0.199ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][153]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        10.190ns  (logic 1.278ns (12.542%)  route 8.912ns (87.458%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         6.219     9.705    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X9Y15                                                       r  u_mlu/s0_q[packet][payload][153]_i_2/I0
+    SLICE_X9Y15          LUT6 (Prop_lut6_I0_O)        0.124     9.829 r  u_mlu/s0_q[packet][payload][153]_i_2/O
+                         net (fo=1, routed)           1.182    11.011    u_mlu/mlu_packet[payload][153]
+    SLICE_X17Y10                                                      r  u_mlu/s0_q[packet][payload][153]_i_1/I3
+    SLICE_X17Y10         LUT4 (Prop_lut4_I3_O)        0.152    11.163 r  u_mlu/s0_q[packet][payload][153]_i_1/O
+                         net (fo=1, routed)           0.000    11.163    u_du_tia/s0_q_reg[packet][payload][231]_0[153]
+    SLICE_X17Y10         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][153]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X17Y10         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][153]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X17Y10         FDCE (Setup_fdce_C_D)        0.075    10.964    u_du_tia/s0_q_reg[packet][payload][153]
+  -------------------------------------------------------------------
+                         required time                         10.964    
+                         arrival time                         -11.163    
+  -------------------------------------------------------------------
+                         slack                                 -0.199    
+
+Slack (VIOLATED) :        -0.017ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][97]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        10.008ns  (logic 1.526ns (15.248%)  route 8.482ns (84.752%))
+  Logic Levels:           6  (LUT2=1 LUT4=1 LUT5=2 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.896     3.414    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X36Y1                                                       r  u_mlu/bridge_status[1]_INST_0_i_1/I2
+    SLICE_X36Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.745 r  u_mlu/bridge_status[1]_INST_0_i_1/O
+                         net (fo=126, routed)         2.135     5.881    u_mlu/ctrl_q_reg[buffer][0][phase][1]_1
+    SLICE_X14Y17                                                      r  u_mlu/s0_q[packet][payload][103]_i_7/I0
+    SLICE_X14Y17         LUT5 (Prop_lut5_I0_O)        0.124     6.005 f  u_mlu/s0_q[packet][payload][103]_i_7/O
+                         net (fo=16, routed)          2.302     8.307    u_mlu/s0_q[packet][payload][103]_i_7_n_0
+    SLICE_X3Y6                                                        f  u_mlu/s0_q[packet][payload][97]_i_3/I5
+    SLICE_X3Y6           LUT6 (Prop_lut6_I5_O)        0.124     8.431 r  u_mlu/s0_q[packet][payload][97]_i_3/O
+                         net (fo=1, routed)           0.574     9.005    u_mlu/s0_q[packet][payload][97]_i_3_n_0
+    SLICE_X3Y5                                                        r  u_mlu/s0_q[packet][payload][97]_i_2/I0
+    SLICE_X3Y5           LUT5 (Prop_lut5_I0_O)        0.124     9.129 r  u_mlu/s0_q[packet][payload][97]_i_2/O
+                         net (fo=1, routed)           1.700    10.829    u_mlu/mlu_packet[payload][97]
+    SLICE_X24Y4                                                       r  u_mlu/s0_q[packet][payload][97]_i_1/I3
+    SLICE_X24Y4          LUT4 (Prop_lut4_I3_O)        0.152    10.981 r  u_mlu/s0_q[packet][payload][97]_i_1/O
+                         net (fo=1, routed)           0.000    10.981    u_du_tia/s0_q_reg[packet][payload][231]_0[97]
+    SLICE_X24Y4          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][97]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X24Y4          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][97]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X24Y4          FDCE (Setup_fdce_C_D)        0.075    10.964    u_du_tia/s0_q_reg[packet][payload][97]
+  -------------------------------------------------------------------
+                         required time                         10.964    
+                         arrival time                         -10.981    
+  -------------------------------------------------------------------
+                         slack                                 -0.017    
+
+Slack (MET) :             0.106ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][197]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.839ns  (logic 1.250ns (12.704%)  route 8.589ns (87.296%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         5.968     9.455    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X1Y16                                                       r  u_mlu/s0_q[packet][payload][197]_i_2/I0
+    SLICE_X1Y16          LUT6 (Prop_lut6_I0_O)        0.124     9.579 r  u_mlu/s0_q[packet][payload][197]_i_2/O
+                         net (fo=1, routed)           1.110    10.688    u_mlu/mlu_packet[payload][197]
+    SLICE_X15Y14                                                      r  u_mlu/s0_q[packet][payload][197]_i_1/I3
+    SLICE_X15Y14         LUT4 (Prop_lut4_I3_O)        0.124    10.812 r  u_mlu/s0_q[packet][payload][197]_i_1/O
+                         net (fo=1, routed)           0.000    10.812    u_du_tia/s0_q_reg[packet][payload][231]_0[197]
+    SLICE_X15Y14         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][197]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X15Y14         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][197]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X15Y14         FDCE (Setup_fdce_C_D)        0.029    10.918    u_du_tia/s0_q_reg[packet][payload][197]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.812    
+  -------------------------------------------------------------------
+                         slack                                  0.106    
+
+Slack (MET) :             0.301ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[buffer][1][command][mode][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][109]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.690ns  (logic 1.352ns (13.953%)  route 8.338ns (86.047%))
+  Logic Levels:           4  (LUT3=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X33Y2          FDCE                                         r  u_mlu/ctrl_q_reg[buffer][1][command][mode][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X33Y2          FDCE (Prop_fdce_C_Q)         0.419     1.392 f  u_mlu/ctrl_q_reg[buffer][1][command][mode][1]/Q
+                         net (fo=4, routed)           0.756     2.148    u_mlu/ctrl_q_reg[buffer][1][command][mode_n_0_][1]
+    SLICE_X33Y0                                                       f  u_mlu/bridge_status[1]_INST_0_i_2/I0
+    SLICE_X33Y0          LUT3 (Prop_lut3_I0_O)        0.325     2.473 r  u_mlu/bridge_status[1]_INST_0_i_2/O
+                         net (fo=165, routed)         5.345     7.819    u_mlu/bridge_status[1]_INST_0_i_2_n_0
+    SLICE_X6Y17                                                       r  u_mlu/s0_q[packet][payload][109]_i_3/I4
+    SLICE_X6Y17          LUT6 (Prop_lut6_I4_O)        0.332     8.151 f  u_mlu/s0_q[packet][payload][109]_i_3/O
+                         net (fo=1, routed)           0.676     8.827    u_mlu/s0_q[packet][payload][109]_i_3_n_0
+    SLICE_X8Y17                                                       f  u_mlu/s0_q[packet][payload][109]_i_2/I5
+    SLICE_X8Y17          LUT6 (Prop_lut6_I5_O)        0.124     8.951 r  u_mlu/s0_q[packet][payload][109]_i_2/O
+                         net (fo=1, routed)           1.560    10.511    u_mlu/mlu_packet[payload][109]
+    SLICE_X21Y8                                                       r  u_mlu/s0_q[packet][payload][109]_i_1/I3
+    SLICE_X21Y8          LUT4 (Prop_lut4_I3_O)        0.152    10.663 r  u_mlu/s0_q[packet][payload][109]_i_1/O
+                         net (fo=1, routed)           0.000    10.663    u_du_tia/s0_q_reg[packet][payload][231]_0[109]
+    SLICE_X21Y8          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][109]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X21Y8          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][109]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X21Y8          FDCE (Setup_fdce_C_D)        0.075    10.964    u_du_tia/s0_q_reg[packet][payload][109]
+  -------------------------------------------------------------------
+                         required time                         10.964    
+                         arrival time                         -10.663    
+  -------------------------------------------------------------------
+                         slack                                  0.301    
+
+Slack (MET) :             0.322ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][213]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.625ns  (logic 1.250ns (12.987%)  route 8.375ns (87.013%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         5.846     9.332    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X3Y15                                                       r  u_mlu/s0_q[packet][payload][213]_i_2/I0
+    SLICE_X3Y15          LUT6 (Prop_lut6_I0_O)        0.124     9.456 r  u_mlu/s0_q[packet][payload][213]_i_2/O
+                         net (fo=1, routed)           1.017    10.474    u_mlu/mlu_packet[payload][213]
+    SLICE_X17Y11                                                      r  u_mlu/s0_q[packet][payload][213]_i_1/I3
+    SLICE_X17Y11         LUT4 (Prop_lut4_I3_O)        0.124    10.598 r  u_mlu/s0_q[packet][payload][213]_i_1/O
+                         net (fo=1, routed)           0.000    10.598    u_du_tia/s0_q_reg[packet][payload][231]_0[213]
+    SLICE_X17Y11         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][213]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X17Y11         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][213]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X17Y11         FDCE (Setup_fdce_C_D)        0.031    10.920    u_du_tia/s0_q_reg[packet][payload][213]
+  -------------------------------------------------------------------
+                         required time                         10.920    
+                         arrival time                         -10.598    
+  -------------------------------------------------------------------
+                         slack                                  0.322    
+
+Slack (MET) :             0.356ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][217]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.592ns  (logic 1.250ns (13.032%)  route 8.342ns (86.968%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         6.009     9.495    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X7Y13                                                       r  u_mlu/s0_q[packet][payload][217]_i_2/I0
+    SLICE_X7Y13          LUT6 (Prop_lut6_I0_O)        0.124     9.619 r  u_mlu/s0_q[packet][payload][217]_i_2/O
+                         net (fo=1, routed)           0.822    10.441    u_mlu/mlu_packet[payload][217]
+    SLICE_X17Y13                                                      r  u_mlu/s0_q[packet][payload][217]_i_1/I3
+    SLICE_X17Y13         LUT4 (Prop_lut4_I3_O)        0.124    10.565 r  u_mlu/s0_q[packet][payload][217]_i_1/O
+                         net (fo=1, routed)           0.000    10.565    u_du_tia/s0_q_reg[packet][payload][231]_0[217]
+    SLICE_X17Y13         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][217]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X17Y13         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][217]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X17Y13         FDCE (Setup_fdce_C_D)        0.032    10.921    u_du_tia/s0_q_reg[packet][payload][217]
+  -------------------------------------------------------------------
+                         required time                         10.921    
+                         arrival time                         -10.565    
+  -------------------------------------------------------------------
+                         slack                                  0.356    
+
+Slack (MET) :             0.369ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][101]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.665ns  (logic 1.524ns (15.769%)  route 8.141ns (84.231%))
+  Logic Levels:           6  (LUT2=1 LUT4=1 LUT5=2 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.896     3.414    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X36Y1                                                       r  u_mlu/bridge_status[1]_INST_0_i_1/I2
+    SLICE_X36Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.745 r  u_mlu/bridge_status[1]_INST_0_i_1/O
+                         net (fo=126, routed)         2.135     5.881    u_mlu/ctrl_q_reg[buffer][0][phase][1]_1
+    SLICE_X14Y17                                                      r  u_mlu/s0_q[packet][payload][103]_i_7/I0
+    SLICE_X14Y17         LUT5 (Prop_lut5_I0_O)        0.124     6.005 f  u_mlu/s0_q[packet][payload][103]_i_7/O
+                         net (fo=16, routed)          1.696     7.700    u_mlu/s0_q[packet][payload][103]_i_7_n_0
+    SLICE_X2Y17                                                       f  u_mlu/s0_q[packet][payload][101]_i_3/I5
+    SLICE_X2Y17          LUT6 (Prop_lut6_I5_O)        0.124     7.824 r  u_mlu/s0_q[packet][payload][101]_i_3/O
+                         net (fo=1, routed)           0.689     8.513    u_mlu/s0_q[packet][payload][101]_i_3_n_0
+    SLICE_X2Y17                                                       r  u_mlu/s0_q[packet][payload][101]_i_2/I0
+    SLICE_X2Y17          LUT5 (Prop_lut5_I0_O)        0.124     8.637 r  u_mlu/s0_q[packet][payload][101]_i_2/O
+                         net (fo=1, routed)           1.850    10.488    u_mlu/mlu_packet[payload][101]
+    SLICE_X20Y6                                                       r  u_mlu/s0_q[packet][payload][101]_i_1/I3
+    SLICE_X20Y6          LUT4 (Prop_lut4_I3_O)        0.150    10.638 r  u_mlu/s0_q[packet][payload][101]_i_1/O
+                         net (fo=1, routed)           0.000    10.638    u_du_tia/s0_q_reg[packet][payload][231]_0[101]
+    SLICE_X20Y6          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][101]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X20Y6          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][101]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X20Y6          FDCE (Setup_fdce_C_D)        0.118    11.007    u_du_tia/s0_q_reg[packet][payload][101]
+  -------------------------------------------------------------------
+                         required time                         11.007    
+                         arrival time                         -10.638    
+  -------------------------------------------------------------------
+                         slack                                  0.369    
+
+Slack (MET) :             0.482ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][209]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.513ns  (logic 1.250ns (13.140%)  route 8.263ns (86.860%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         5.544     9.031    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X1Y14                                                       r  u_mlu/s0_q[packet][payload][209]_i_2/I0
+    SLICE_X1Y14          LUT6 (Prop_lut6_I0_O)        0.124     9.155 r  u_mlu/s0_q[packet][payload][209]_i_2/O
+                         net (fo=1, routed)           1.207    10.362    u_mlu/mlu_packet[payload][209]
+    SLICE_X16Y15                                                      r  u_mlu/s0_q[packet][payload][209]_i_1/I3
+    SLICE_X16Y15         LUT4 (Prop_lut4_I3_O)        0.124    10.486 r  u_mlu/s0_q[packet][payload][209]_i_1/O
+                         net (fo=1, routed)           0.000    10.486    u_du_tia/s0_q_reg[packet][payload][231]_0[209]
+    SLICE_X16Y15         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][209]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X16Y15         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][209]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X16Y15         FDCE (Setup_fdce_C_D)        0.079    10.968    u_du_tia/s0_q_reg[packet][payload][209]
+  -------------------------------------------------------------------
+                         required time                         10.968    
+                         arrival time                         -10.486    
+  -------------------------------------------------------------------
+                         slack                                  0.482    
+
+Slack (MET) :             0.565ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][216]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.426ns  (logic 1.279ns (13.568%)  route 8.147ns (86.432%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.637     3.156    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.487 r  u_mlu/ctrl_q[next_k][1]_rep__1_i_2/O
+                         net (fo=117, routed)         5.296     8.783    u_mlu/ctrl_q[next_k][1]_rep__1_i_2_n_0
+    SLICE_X5Y4                                                        r  u_mlu/s0_q[packet][payload][216]_i_2/I0
+    SLICE_X5Y4           LUT6 (Prop_lut6_I0_O)        0.124     8.907 r  u_mlu/s0_q[packet][payload][216]_i_2/O
+                         net (fo=1, routed)           1.340    10.246    u_mlu/mlu_packet[payload][216]
+    SLICE_X15Y12                                                      r  u_mlu/s0_q[packet][payload][216]_i_1/I3
+    SLICE_X15Y12         LUT4 (Prop_lut4_I3_O)        0.153    10.399 r  u_mlu/s0_q[packet][payload][216]_i_1/O
+                         net (fo=1, routed)           0.000    10.399    u_du_tia/s0_q_reg[packet][payload][231]_0[216]
+    SLICE_X15Y12         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][216]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X15Y12         FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][216]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X15Y12         FDCE (Setup_fdce_C_D)        0.075    10.964    u_du_tia/s0_q_reg[packet][payload][216]
+  -------------------------------------------------------------------
+                         required time                         10.964    
+                         arrival time                         -10.399    
+  -------------------------------------------------------------------
+                         slack                                  0.565    
+
+Slack (MET) :             0.568ns  (required time - arrival time)
+  Source:                 u_mlu/ctrl_q_reg[count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_du_tia/s0_q_reg[packet][payload][123]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.466ns  (logic 1.278ns (13.501%)  route 8.188ns (86.499%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=19423, unset)        0.973     0.973    u_mlu/clk
+    SLICE_X36Y0          FDCE                                         r  u_mlu/ctrl_q_reg[count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y0          FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_mlu/ctrl_q_reg[count][1]/Q
+                         net (fo=11, routed)          0.874     2.365    u_mlu/p_0_in[1]
+    SLICE_X38Y1                                                       r  u_mlu/read_addr[63]_INST_0_i_4/I1
+    SLICE_X38Y1          LUT2 (Prop_lut2_I1_O)        0.153     2.518 r  u_mlu/read_addr[63]_INST_0_i_4/O
+                         net (fo=9, routed)           0.633     3.152    u_mlu/read_addr[63]_INST_0_i_4_n_0
+    SLICE_X35Y1                                                       r  u_mlu/bridge_status[2]_INST_0_i_4/I2
+    SLICE_X35Y1          LUT6 (Prop_lut6_I2_O)        0.331     3.483 r  u_mlu/bridge_status[2]_INST_0_i_4/O
+                         net (fo=119, routed)         4.987     8.470    u_mlu/ctrl_q_reg[buffer][0][phase][1]_0
+    SLICE_X3Y16                                                       r  u_mlu/s0_q[packet][payload][123]_i_2/I0
+    SLICE_X3Y16          LUT6 (Prop_lut6_I0_O)        0.124     8.594 r  u_mlu/s0_q[packet][payload][123]_i_2/O
+                         net (fo=1, routed)           1.694    10.287    u_mlu/mlu_packet[payload][123]
+    SLICE_X18Y6                                                       r  u_mlu/s0_q[packet][payload][123]_i_1/I3
+    SLICE_X18Y6          LUT4 (Prop_lut4_I3_O)        0.152    10.439 r  u_mlu/s0_q[packet][payload][123]_i_1/O
+                         net (fo=1, routed)           0.000    10.439    u_du_tia/s0_q_reg[packet][payload][231]_0[123]
+    SLICE_X18Y6          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][123]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=19423, unset)        0.924    10.924    u_du_tia/clk
+    SLICE_X18Y6          FDCE                                         r  u_du_tia/s0_q_reg[packet][payload][123]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X18Y6          FDCE (Setup_fdce_C_D)        0.118    11.007    u_du_tia/s0_q_reg[packet][payload][123]
+  -------------------------------------------------------------------
+                         required time                         11.007    
+                         arrival time                         -10.439    
+  -------------------------------------------------------------------
+                         slack                                  0.568    
+
+
+
+

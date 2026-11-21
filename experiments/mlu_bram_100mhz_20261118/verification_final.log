@@ -1,0 +1,4 @@
+PASS rotating_fifo: frozen source hashes; five units; integration; 46 baseline summary lines identical.
+Changed RTL: fifo_sv/du_tc_bridge.sv, mlu_sv/mlu.sv
+Matching MLU primitive comparison: C:\Users\Jason\Desktop\TC\experiments\mlu_bram_100mhz_20261118\early_prefetch\equiv_netlist\result.log
+PASS 11 original sources and 76 protected files unchanged.

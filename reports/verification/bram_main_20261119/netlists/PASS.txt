@@ -1,0 +1,1 @@
+PASS newly synthesized main MLU and Bridge observable-cycle comparisons against original RTL and immutable C vectors

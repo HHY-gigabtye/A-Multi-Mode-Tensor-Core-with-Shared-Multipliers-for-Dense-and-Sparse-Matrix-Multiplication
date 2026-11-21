@@ -1,0 +1,11 @@
+# do reports/verification/tc_cycles_github_fe14c132/run_compare.do
+# C:/mtitcl/vsim
+# C:/
+# C:/mtitcl/vsim/build
+# ** Error: can't create directory "C:/mtitcl/vsim/build": no such file or directory
+# Error in macro ./reports/verification/tc_cycles_github_fe14c132/run_compare.do line 5
+# can't create directory "C:/mtitcl/vsim/build": no such file or directory
+#     while executing
+# "file mkdir $build"
+# 
+# <EOF>

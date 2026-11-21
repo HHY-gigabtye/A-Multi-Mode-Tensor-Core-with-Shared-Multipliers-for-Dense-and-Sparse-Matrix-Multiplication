@@ -1,0 +1,97 @@
+module mlu_netlist_wrapper (
+  input  logic clk,
+  input  logic rst_n,
+
+  input  logic command_valid,
+  input  mlu_pkg::io_command_t command,
+  output logic command_ready,
+
+  output logic read_request_valid,
+  input  logic read_request_ready,
+  output logic [63:0] read_addr,
+  output logic [2:0] read_beats, // actual beat count, 4 or 5; NOT AXI ARLEN
+
+  input  logic read_data_valid,
+  output logic read_data_ready,
+  input  mlu_pkg::io_beat_t read_data,
+  input  logic read_last,
+
+  output logic out_valid,
+  input  logic out_ready, // bridge credit, not raw TC input_ready
+  output du_tia_pkg::du_tia_input_t out_packet,
+  output mlu_pkg::io_meta_t out_meta,
+  output logic [2:0] out_k,
+
+  output mlu_pkg::io_status_t status,
+  output mlu_pkg::mlu_tick_info_t tick_info
+);
+  wire [2:0] net_status;
+  wire [1:0] net_mode;
+  assign status = mlu_pkg::io_status_t'(net_status);
+  assign out_packet.mode = du_tia_pkg::compiler_mode_e'(net_mode);
+  mlu_netlist u_netlist (
+    .clk(clk),
+    .rst_n(rst_n),
+    .command_valid(command_valid),
+    .command_ready(command_ready),
+    .read_request_valid(read_request_valid),
+    .read_request_ready(read_request_ready),
+    .read_addr(read_addr),
+    .read_beats(read_beats),
+    .read_data_valid(read_data_valid),
+    .read_data_ready(read_data_ready),
+    .read_last(read_last),
+    .out_valid(out_valid),
+    .out_ready(out_ready),
+    .out_k(out_k),
+    .status(net_status),
+    .\command[mode] (command.mode),
+    .\command[src_addr] (command.src_addr),
+    .\command[meta][tile_id] (command.meta.tile_id),
+    .\command[meta][dst_addr] (command.meta.dst_addr),
+    .\out_packet[mode] (net_mode),
+    .\out_packet[k_position] (out_packet.k_position),
+    .\out_packet[payload] (out_packet.payload),
+    .\out_meta[tile_id] (out_meta.tile_id),
+    .\out_meta[dst_addr] (out_meta.dst_addr),
+    .\tick_info[command_accepted] (tick_info.command_accepted),
+    .\tick_info[read_request_accepted] (tick_info.read_request_accepted),
+    .\tick_info[read_data_accepted] (tick_info.read_data_accepted),
+    .\tick_info[packet_issued] (tick_info.packet_issued),
+    .\tick_info[tile_issued] (tick_info.tile_issued),
+    .\tick_info[tile_id] (tick_info.tile_id),
+    .\tick_info[k] (tick_info.k),
+    .\read_data[0] (read_data[0]),
+    .\read_data[1] (read_data[1]),
+    .\read_data[2] (read_data[2]),
+    .\read_data[3] (read_data[3]),
+    .\read_data[4] (read_data[4]),
+    .\read_data[5] (read_data[5]),
+    .\read_data[6] (read_data[6]),
+    .\read_data[7] (read_data[7]),
+    .\read_data[8] (read_data[8]),
+    .\read_data[9] (read_data[9]),
+    .\read_data[10] (read_data[10]),
+    .\read_data[11] (read_data[11]),
+    .\read_data[12] (read_data[12]),
+    .\read_data[13] (read_data[13]),
+    .\read_data[14] (read_data[14]),
+    .\read_data[15] (read_data[15]),
+    .\read_data[16] (read_data[16]),
+    .\read_data[17] (read_data[17]),
+    .\read_data[18] (read_data[18]),
+    .\read_data[19] (read_data[19]),
+    .\read_data[20] (read_data[20]),
+    .\read_data[21] (read_data[21]),
+    .\read_data[22] (read_data[22]),
+    .\read_data[23] (read_data[23]),
+    .\read_data[24] (read_data[24]),
+    .\read_data[25] (read_data[25]),
+    .\read_data[26] (read_data[26]),
+    .\read_data[27] (read_data[27]),
+    .\read_data[28] (read_data[28]),
+    .\read_data[29] (read_data[29]),
+    .\read_data[30] (read_data[30]),
+    .\read_data[31] (read_data[31])
+  );
+endmodule

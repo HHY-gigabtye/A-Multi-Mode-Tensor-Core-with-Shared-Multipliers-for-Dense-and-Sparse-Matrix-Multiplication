@@ -1,0 +1,50 @@
+Main RTL sources: C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core_pkg.sv C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge_pkg.sv C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia_pkg.sv C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia.sv C:/Users/Jason/Desktop/TC/mlu_sv/mlu_pkg.sv C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu_pkg.sv C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv C:/Users/Jason/Desktop/TC/integration_sv/rtl/sparse_tensor_core_top.sv
+synth_bram_100mhz CONSTRSET: constrs_bram_100mhz
+synth_bram_100mhz PARENT: 
+synth_bram_100mhz SRCSET: sources_1
+synth_bram_100mhz STATUS: Not started
+synth_bram_100mhz STEPS.SYNTH_DESIGN.TCL.PRE: C:/Users/Jason/Desktop/TC/project_integration/scripts/bram_100mhz_synth_pre.tcl
+synth_bram_100mhz STEPS.SYNTH_DESIGN.TCL.POST: 
+synth_bram_100mhz STEPS.SYNTH_DESIGN.ARGS.DIRECTIVE: Default
+synth_bram_100mhz STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS: -mode out_of_context
+impl_bram_100mhz CONSTRSET: constrs_bram_100mhz
+impl_bram_100mhz PARENT: synth_bram_100mhz
+impl_bram_100mhz SRCSET: sources_1
+impl_bram_100mhz STATUS: Not started
+impl_bram_100mhz STEPS.INIT_DESIGN.TCL.PRE: C:/Users/Jason/Desktop/TC/project_integration/scripts/bram_100mhz_impl_pre.tcl
+impl_bram_100mhz STEPS.INIT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.INIT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.OPT_DESIGN.IS_ENABLED: 1
+impl_bram_100mhz STEPS.OPT_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.OPT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.OPT_DESIGN.ARGS.DIRECTIVE: Default
+impl_bram_100mhz STEPS.OPT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.POWER_OPT_DESIGN.IS_ENABLED: 0
+impl_bram_100mhz STEPS.POWER_OPT_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.POWER_OPT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.POWER_OPT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.PLACE_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.PLACE_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.PLACE_DESIGN.ARGS.DIRECTIVE: Default
+impl_bram_100mhz STEPS.PLACE_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.POST_PLACE_POWER_OPT_DESIGN.IS_ENABLED: 0
+impl_bram_100mhz STEPS.POST_PLACE_POWER_OPT_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.POST_PLACE_POWER_OPT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.POST_PLACE_POWER_OPT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.PHYS_OPT_DESIGN.IS_ENABLED: 1
+impl_bram_100mhz STEPS.PHYS_OPT_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.PHYS_OPT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE: Default
+impl_bram_100mhz STEPS.PHYS_OPT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.ROUTE_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.ROUTE_DESIGN.TCL.POST: C:/Users/Jason/Desktop/TC/project_integration/scripts/bram_100mhz_route_post.tcl
+impl_bram_100mhz STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE: Default
+impl_bram_100mhz STEPS.ROUTE_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.POST_ROUTE_PHYS_OPT_DESIGN.IS_ENABLED: 0
+impl_bram_100mhz STEPS.POST_ROUTE_PHYS_OPT_DESIGN.TCL.PRE: 
+impl_bram_100mhz STEPS.POST_ROUTE_PHYS_OPT_DESIGN.TCL.POST: 
+impl_bram_100mhz STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE: Default
+impl_bram_100mhz STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.MORE OPTIONS: 
+impl_bram_100mhz STEPS.WRITE_BITSTREAM.TCL.PRE: 
+impl_bram_100mhz STEPS.WRITE_BITSTREAM.TCL.POST: 
+impl_bram_100mhz STEPS.WRITE_BITSTREAM.ARGS.MORE OPTIONS: 

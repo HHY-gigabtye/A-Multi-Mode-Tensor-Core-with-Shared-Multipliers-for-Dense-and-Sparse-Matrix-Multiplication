@@ -1,0 +1,36 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sat Nov 21 17:26:28 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_drc -checks REQP-1839 -file C:/Users/Jason/Desktop/TC/reports/verification/outer_main_20261121/native/independent_checkpoint/bram_control_drc.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020clg484-1
+| Speed File   : -1
+| Design State : ignored
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_main_bram_routed
+      Design limits: <entire design considered>
+
+            Checks: REQP-1839
+             Max violations: <unlimited>
+             Violations found: 0
++------+----------+-------------+------------+
+| Rule | Severity | Description | Violations |
++------+----------+-------------+------------+
++------+----------+-------------+------------+
+
+2. REPORT DETAILS
+-----------------
+

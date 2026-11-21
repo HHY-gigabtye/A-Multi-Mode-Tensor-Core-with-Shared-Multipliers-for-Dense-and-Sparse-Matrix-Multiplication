@@ -1,0 +1,73 @@
+# do {C:\Users\Jason\Desktop\TC\experiments\mlu_bram_100mhz_20261118\run_tests.do}
+# C:/Users/Jason/Desktop/TC
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast
+# mlu
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/build/mlu
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:40:20 on Nov 18,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/mlu_sv/du_tia_pkg.sv 
+# -- Compiling package du_tia_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 21:40:20 on Nov 18,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:40:20 on Nov 18,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu_pkg.sv 
+# -- Compiling package mlu_pkg
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 21:40:20 on Nov 18,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:40:20 on Nov 18,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv 
+# -- Compiling module mlu
+# -- Importing package mlu_pkg
+# -- Importing package du_tia_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(14): (vlog-13314) Defaulting port 'command' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(24): (vlog-13314) Defaulting port 'read_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(129): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(130): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(131): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(132): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(134): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(135): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(136): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/head_cache_fast/src/mlu_sv/mlu.sv(137): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# 
+# Top level modules:
+# 	mlu
+# End time: 21:40:20 on Nov 18,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 10
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:40:20 on Nov 18,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/mlu_sv/tb_mlu.sv 
+# -- Compiling module tb_mlu
+# -- Importing package mlu_pkg
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	tb_mlu
+# End time: 21:40:20 on Nov 18,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_mlu.tb_mlu "+VECTORS=C:/Users/Jason/Desktop/TC/mlu_sv/mlu_vectors.txt" 
+# Start time: 21:40:21 on Nov 18,2026
+# Loading sv_std.std
+# Loading unit_mlu.du_tia_pkg
+# Loading unit_mlu.mlu_pkg
+# Loading unit_mlu.tb_mlu
+# Loading unit_mlu.mlu
+# ALL PASS MLU unit C/SV: 16708 records, 145 resets, 128 rejected edges
+#   commands=1397 packets=10236 retired=1279
+#   command+retire=1 read+output=4087 full_stalls=13908 both_ready=4396
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/mlu_sv/tb_mlu.sv(146)
+#    Time: 167080 ns  Iteration: 0  Instance: /tb_mlu
+# Break in Module tb_mlu at C:/Users/Jason/Desktop/TC/mlu_sv/tb_mlu.sv line 146
+# Stopped at C:/Users/Jason/Desktop/TC/mlu_sv/tb_mlu.sv line 146
+# End time: 21:40:28 on Nov 18,2026, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 0

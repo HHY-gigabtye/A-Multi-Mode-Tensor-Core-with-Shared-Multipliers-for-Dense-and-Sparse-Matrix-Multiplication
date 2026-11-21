@@ -1,0 +1,105 @@
+{
+  "reason": "Unmodified historical evidence copies. Maintained archive guides have no exemptions. Exact targets and occurrence counts only; changing an original file fails hash verification.",
+  "documents": [
+    {
+      "path": "backups/pre_bram_20261119/snapshot/README.md",
+      "sha256": "b800c1602d640ce5031bc1bb2da1a9dfcc1e5689755b4152cde301e038edd748",
+      "missingLinks": [
+        {
+          "target": "mlu_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "du_tia_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "fifo_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "tensor_core_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "msu_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "integration_sv/README.md",
+          "count": 1
+        },
+        {
+          "target": "integration_sv/tb/tb_sparse_tensor_core_top.sv",
+          "count": 1
+        },
+        {
+          "target": "docs/Overall%20System%20Architecture.png",
+          "count": 1
+        },
+        {
+          "target": "docs/DU%26TIA%20and%20Tensor%20Core%20architecture.png",
+          "count": 1
+        },
+        {
+          "target": "experiments/msu_fmax/margin_10ns_20261113/final_live/units.log",
+          "count": 1
+        },
+        {
+          "target": "experiments/msu_fmax/margin_10ns_20261113/final_live/top.log",
+          "count": 1
+        },
+        {
+          "target": "experiments/msu_fmax/margin_10ns_20261113/final_live/functional_validation.txt",
+          "count": 1
+        },
+        {
+          "target": "docs/verification-and-reproduction.md",
+          "count": 2
+        },
+        {
+          "target": "experiments/msu_fmax/native_margin_10ns_20261113/README.md",
+          "count": 1
+        },
+        {
+          "target": "experiments/msu_fmax/native_margin_10ns_20261113/independent_audit/checkpoint/timing_summary.rpt",
+          "count": 1
+        },
+        {
+          "target": "experiments/msu_fmax/native_margin_10ns_20261113/result.json",
+          "count": 1
+        },
+        {
+          "target": "docs/source-audit.md",
+          "count": 1
+        },
+        {
+          "target": "reports/verification/2026-11-13-native-publication/README.md",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "experiments/msu_fmax/result_bank_20261115/cleanup_20261115/README.before.md",
+      "sha256": "49abb48228a3691b531c66ee50f6c38e25094370cd151691e410eb90bc7e075f",
+      "missingLinks": [
+        {
+          "target": "distributed_flat/rtl.patch",
+          "count": 1
+        },
+        {
+          "target": "timing_comparison.csv",
+          "count": 1
+        },
+        {
+          "target": "final_verification.txt",
+          "count": 1
+        },
+        {
+          "target": "artifact_inventory.csv",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

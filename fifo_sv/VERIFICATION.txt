@@ -1,0 +1,51 @@
+FIFO / DU-TC Bridge -- standalone unit-test package
+Revision date: 2026-10-24
+
+Only instantiated DUT: du_tc_bridge
+Compiled SV files in order:
+  tensor_core_pkg.sv (shared types/constants only)
+  du_tc_bridge_pkg.sv
+  du_tc_bridge.sv
+  tb_bridge.sv
+
+No MLU, DU/TIA, Tensor Core, or MSU module is compiled or instantiated.
+The local integration wrapper/testbench/scripts and other unit RTL have
+been removed from this package. The four SV files above are byte-identical
+to the previously delivered version.
+
+Executed after the package change:
+  python3 run_tests.py --regenerate
+This regenerates vectors from the unchanged C reference model/testbench,
+compiles only tb_bridge and its dependencies, and runs the unit test.
+Simulator: Verilator (banner reports 5.49), using --timing -O0.
+
+All bridge state bits (2941), public data/metadata outputs, counts,
+head eligibility, credit readiness, and status are checked each record.
+Rejected edges must leave the entire bridge state unchanged.
+Testbench uses procedural if/$fatal, with no SVA or DPI.
+
+Actual C reference output:
+BRIDGE PASS guards: empty/format/DU timing/mode/rejected state unchanged
+BRIDGE PASS continuous: packets=768 tiles=96 cycles=774 max_fifo=1 max_inflight=4 max_meta=1 push_pop=767 meta_push_pop=95 wraps=96 credit_blocks=0 meta_blocks=0
+BRIDGE PASS stalls: packets=768 tiles=96 cycles=1161 max_fifo=8 max_inflight=4 max_meta=2 push_pop=586 meta_push_pop=59 wraps=96 credit_blocks=137 meta_blocks=61
+BRIDGE PASS reset after 2 edges: fresh stream 8 tiles, no stale metadata
+BRIDGE PASS reset after 8 edges: fresh stream 8 tiles, no stale metadata
+BRIDGE PASS reset after 24 edges: fresh stream 8 tiles, no stale metadata
+ALL BRIDGE TESTS PASS (standalone, no DU/TC/MLU/MSU model linked)
+BRIDGE PASS random seed=1 packets=1024 cycles=2448
+BRIDGE PASS random seed=2 packets=1024 cycles=2446
+BRIDGE PASS random seed=3 packets=1024 cycles=2427
+BRIDGE PASS random seed=4 packets=1024 cycles=2473
+VECTORS rows=19147 rejected_edges=7156 state_bits=2941
+
+Actual standalone RTL output:
+BRIDGE RTL PASS: C-equivalent rows=19147 rejected_edges=7156 resets=13
+- tb_bridge.sv:91: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.49
+- Verilator: $finish at 191us; walltime 0.609 s; speed 314.619 us/s
+- Verilator: cpu 0.609 s on 1 threads; allocated 6 MB
+
+ModelSim/Questa entry point: do run_bridge.do
+ModelSim/Questa scripts have not been run in this environment.
+This is functional/cycle-level testing, not a formal equivalence proof.
+No synthesis, place-and-route, timing, power, or area result is claimed.

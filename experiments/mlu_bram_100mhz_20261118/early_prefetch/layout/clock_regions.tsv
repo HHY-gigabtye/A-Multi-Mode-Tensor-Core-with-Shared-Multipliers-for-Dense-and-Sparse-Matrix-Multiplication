@@ -1,0 +1,7 @@
+region	slice_sites	ramb36_sites	slice_min_x	slice_max_x	slice_min_y	slice_max_y
+X0Y0	2500	18	0	49	0	49
+X0Y1	1200	0	26	49	50	99
+X0Y2	1200	0	26	49	100	149
+X1Y0	3200	0	50	113	0	49
+X1Y1	2600	0	50	113	50	99
+X1Y2	2600	0	50	113	100	149

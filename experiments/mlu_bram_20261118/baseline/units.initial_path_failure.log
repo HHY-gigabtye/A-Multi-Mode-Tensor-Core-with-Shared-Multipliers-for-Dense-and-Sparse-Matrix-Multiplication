@@ -1,0 +1,15 @@
+# do {C:\Users\Jason\Desktop\TC\experiments\mlu_bram_20261118\run_tests.do}
+# C:/
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/src
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline
+# units
+# C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/build/units
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:03:44 on Nov 18,2026
+# vlog -sv -work unit_mlu C:/mlu_sv/du_tia_pkg.sv 
+# ** Error: (vlog-7) Failed to open design unit file "C:/mlu_sv/du_tia_pkg.sv" in read mode.
+# No such file or directory. (errno = ENOENT)
+# End time: 17:03:44 on Nov 18,2026, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vlog failed.
+# Executing ONERROR command at macro C:\Users\Jason\Desktop\TC\experiments\mlu_bram_20261118\run_tests.do line 52

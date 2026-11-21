@@ -1,0 +1,40 @@
+
+# The first route_design has completed. Optimize at the active clock period.
+set_param general.maxThreads 4
+set task_clock [get_clocks clk]
+if {[llength $task_clock] != 1} {
+    error "The main implementation requires exactly one clock named clk"
+}
+set task_period [get_property PERIOD $task_clock]
+if {![string is double -strict $task_period] || $task_period <= 0} {
+    error "Invalid clk period: $task_period"
+}
+puts "MAIN_TIMING_TARGET period=$task_period ns"
+# The recovery tool can resume a checkpoint that already completed refinement.
+if {![info exists task_post_route_refined] || !$task_post_route_refined} {
+    phys_opt_design -directive AggressiveExplore
+    route_design -directive Explore
+}
+unset -nocomplain task_post_route_refined
+set task_refined_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+if {abs($task_period - 11.0) < 0.000001 && $task_refined_setup ne "" && $task_refined_setup < 0} {
+    write_checkpoint -force timing_refined.dcp
+    report_timing_summary -max_paths 20 -file timing_refined.rpt
+    source [file join [file dirname [info script]] replicate_11ns_controls.tcl]
+}
+write_checkpoint -force timing_closed.dcp
+report_timing_summary -max_paths 20 -report_unconstrained -file timing_closed.rpt
+report_route_status -file timing_closed_route_status.rpt
+report_utilization -file timing_closed_utilization.rpt
+report_drc -file timing_closed_drc.rpt
+# Authoritative final gate. Route 35-39 is a project-level WARNING because
+# intermediate routes may fail before the remaining physical steps complete.
+set task_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+set task_hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+if {$task_setup eq "" || $task_hold eq ""} {
+    send_msg_id {TC 1-2} ERROR "Missing final setup/hold timing paths; inspect timing_closed.rpt"
+}
+if {$task_setup < 0 || $task_hold < 0} {
+    send_msg_id {TC 1-1} ERROR "$task_period ns FINAL timing failed: setup=$task_setup ns, hold=$task_hold ns; inspect timing_closed.rpt"
+}
+puts "MAIN_TIMING_PASS period=$task_period ns setup=$task_setup hold=$task_hold"

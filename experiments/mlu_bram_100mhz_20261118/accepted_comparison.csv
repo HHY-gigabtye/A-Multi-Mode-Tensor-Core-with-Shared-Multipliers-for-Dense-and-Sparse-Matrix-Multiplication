@@ -1,0 +1,4 @@
+"Version","Phase","Clock_ns","LUT","FF","BRAM36","DSP48","WNS_ns","TNS_ns","Failing_setup_endpoints","WHS_ns","THS_ns","Routed_nets","Setup_hold_met_10ns","Report_directory"
+"Original FF baseline","FPGA OOC post-route","10","29405","21503","0","128","0.002","0.000","0","0.096","0.000","41611","True","C:\Users\Jason\Desktop\TC\experiments\mlu_bram_20261118\baseline\final_audit"
+"Previous 18-BRAM candidate","FPGA OOC post-route","10","26573","19223","18","128","-1.116","-3737.138","11591","0.098","0.000","39199","False","C:\Users\Jason\Desktop\TC\experiments\mlu_bram_20261118\banked\final_audit"
+"18 BRAM rotating physical FIFO","FPGA OOC post-route","10","28213","19852","18","128","0.011","0.000","0","0.098","0.000","40406","True","C:\Users\Jason\Desktop\TC\experiments\mlu_bram_100mhz_20261118\rotating_fifo\flow\initial"

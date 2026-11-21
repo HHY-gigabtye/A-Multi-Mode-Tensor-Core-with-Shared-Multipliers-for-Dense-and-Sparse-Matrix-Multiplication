@@ -1,0 +1,6 @@
+# Measured violating control drivers in fresh_10/refined/critical_paths.rpt.
+# Global TC update enable (1633 sinks), result selection (128 sinks),
+# and result data selection (1032 sinks). No clock/data pipeline retiming.
+u_bridge/dense_q[b_delay][7][6][value][7]_i_1
+u_bridge/ctrl_q[result][6][2][31]_i_1
+u_tensor_core/ctrl_q[result][3][4][31]_i_4

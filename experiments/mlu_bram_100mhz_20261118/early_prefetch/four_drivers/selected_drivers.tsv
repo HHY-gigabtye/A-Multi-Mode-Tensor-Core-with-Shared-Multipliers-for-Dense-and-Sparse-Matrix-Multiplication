@@ -1,0 +1,5 @@
+driver	type	net
+u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_3	LUT6	u_bridge/q_reg[fifo][1][packet][payload][178]_0[34]
+u_tensor_core/sparse_storage_q[route][enable][0][7]_i_17	LUT4	u_tensor_core/p_607_in
+u_tensor_core/sparse_storage_q[route][delta][2][4][7]_i_34	LUT3	u_tensor_core/sparse_storage_q[route][delta][2][4][7]_i_34_n_0
+u_tensor_core/sparse_storage_q[route][delta][2][0][0]_i_13	LUT4	u_tensor_core/sparse_storage_q[route][delta][2][0][0]_i_13_n_0

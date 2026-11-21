@@ -1,0 +1,121 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/fifo_sv/du_tc_bridge.sv
+index 5bdc938..80554c1 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/fifo_sv/du_tc_bridge.sv
+@@ -35,6 +35,9 @@ module du_tc_bridge (
+   fifo_ptr_t fifo_tail;
+   meta_ptr_t meta_tail;
+   logic [FIFO_COUNT_W:0] used_credits;
++  // Redundant decode, advanced on the same accepted edge as q. The payload
++  // remains a combinational FIFO read; neither bypass nor latency is added.
++  (* max_fanout = 128 *) logic [IO_PACKET_FIFO-1:0] head_select_q;
+ 
+   // Widen BEFORE adding so a carry cannot disappear.
+   assign used_credits = {1'b0, q.count} +
+@@ -46,8 +49,13 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  assign head_entry = (q.count != 0) ? q.fifo[q.head] : '0;
+-  assign head_valid = (q.count != 0) &&
++  always_comb begin : read_head
++    head_entry = '0;
++    for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
++      head_entry = head_entry |
++          (q.fifo[slot] & {$bits(bridge_entry_t){head_select_q[slot]}});
++  end
++  assign head_valid = (|head_select_q) &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);
+   assign result_meta = result_meta_valid ? q.result_meta[q.meta_head] : '0;
+@@ -109,9 +117,14 @@ module du_tc_bridge (
+   end
+ 
+   always_ff @(posedge clk or negedge rst_n) begin
+-    if (!rst_n)
++    if (!rst_n) begin
+       q <= '0;
+-    else if (status == IO_OK)
++      head_select_q <= '0;
++    end else if (status == IO_OK) begin
+       q <= d;
++      for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
++        head_select_q[slot] <= (d.count != 0) &&
++                               (d.head == fifo_ptr_t'(slot));
++    end
+   end
+ endmodule
+diff --git a/tensor_core_sv/tensor_core.sv b/tensor_core_sv/tensor_core.sv
+index bf3c77e..d5e6dfe 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/tensor_core_sv/tensor_core.sv
+@@ -25,8 +25,27 @@ module tensor_core (
+   tc_control_t ctrl_q, ctrl_d;
+   tc_dense_state_t dense_q, dense_d;
+   tc_sparse_state_t sparse_q, sparse_d;
++  tc_sparse_state_t sparse_storage_q;
+   tc_tick_info_t info_q, info_d;
+ 
++  // The existing MUL-stage product registers can live inside the DSPs when
++  // their data bits do not need asynchronous reset. The asynchronously reset
++  // MUL metadata masks every unused product to zero, preserving the complete
++  // visible sparse_q state on reset, bubbles, epochs, and rejected edges.
++  wire sparse_mul_capture = rst_n && (status == TC_OK) && in_valid &&
++                            in_packet.is_sparse;
++  wire [7:0][7:0][15:0] sparse_product_q;
++  always_comb begin : sparse_state_view
++    sparse_q = sparse_storage_q;
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1)
++        sparse_q.mul.product[i][j] =
++            (sparse_storage_q.mul.valid &&
++             (i < int'(sparse_storage_q.mul.a_count)) &&
++             (j < int'(sparse_storage_q.mul.b_count))) ?
++            sparse_product_q[i][j] : 16'd0;
++  end
++
+   // Compute arithmetic from raw data, independently of acceptance/validation.
+   // The existing next_state guards still decide whether to commit each value.
+   // FPGA timing trial: independent dense MAC and sparse multiplier inputs.
+@@ -39,7 +58,7 @@ module tensor_core (
+     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+         wire [7:0] dense_a_value, dense_b_value;
+-        // FPGA mapping hint only: no DSP pipeline registers are introduced.
++        // FPGA mapping hint; both products retain their original cycle boundaries.
+         (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+         if (j != 0) begin : g_a_neighbor
+           assign dense_a_value = dense_q.pe[i][j-1].a.value;
+@@ -60,6 +79,15 @@ module tensor_core (
+                                      in_packet.payload.sparse.b.value[j]);
+         assign dense_product[i][j] = dense_mul;
+         assign sparse_product[i][j] = sparse_mul;
++        // Same MUL edge as before: this register replaces the corresponding
++        // product data storage, and adds no cycle. Invalid data is masked by
++        // the registered metadata, outside the multiplier-to-register path.
++        logic signed [15:0] product_q;
++        always_ff @(posedge clk) begin
++          if (sparse_mul_capture)
++            product_q <= sparse_mul;
++        end
++        assign sparse_product_q[i][j] = product_q;
+         assign dense_sum[i][j] = $signed(dense_q.pe[i][j].acc) +
+                                 extend_product(dense_product[i][j]);
+         // OLD ROUTE and ACC feed the adder directly. First-packet clearing
+@@ -423,12 +451,14 @@ module tensor_core (
+     if (!rst_n) begin
+       ctrl_q <= '0;
+       dense_q <= '0;
+-      sparse_q <= '0;
++      sparse_storage_q <= '0;
+       info_q <= '0;
+     end else begin
+       ctrl_q <= ctrl_d;
+       dense_q <= dense_d;
+-      sparse_q <= sparse_d;
++      sparse_storage_q <= sparse_d;
++      // Product data is stored by g_arithmetic_column.product_q instead.
++      sparse_storage_q.mul.product <= '0;
+       info_q <= info_d;
+     end
+   end

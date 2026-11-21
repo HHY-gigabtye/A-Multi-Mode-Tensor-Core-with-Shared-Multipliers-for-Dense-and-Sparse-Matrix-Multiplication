@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+BRIDGE NETLIST EQUIVALENCE PASS rows=19147 rejected=7156 resets=13 comparisons=38294
+$finish called at time : 191670 ns : File "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/tb_bridge_netlist.sv" Line 85
+INFO: xsimkernel Simulation Memory Usage: 47256 KB (Peak: 47256 KB), Simulation CPU Usage: 11108 ms

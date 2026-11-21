@@ -1,0 +1,1 @@
+GUI_BRAM_OPENED run=impl_bram_100mhz period_ns=10.000 setup=0.011 hold=0.098 bram36=18

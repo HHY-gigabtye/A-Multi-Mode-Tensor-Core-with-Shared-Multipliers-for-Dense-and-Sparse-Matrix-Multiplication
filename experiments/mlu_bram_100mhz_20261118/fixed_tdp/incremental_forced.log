@@ -1,0 +1,1380 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 18 22:30:41 2026
+# Process ID: 27552
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp
+# Command line: vivado.exe -mode batch -nojournal -log incremental_forced.log -source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/incremental_forced_flow.tcl -tclargs C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/implementation/synthesized.dcp C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/incremental_forced 36
+# Log file: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/incremental_forced.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/incremental_forced_flow.tcl
+# if {$argc != 4} {error "Expected SYNTH_DCP REFERENCE_DCP NEW_OUTPUT_ROOT BRAM_COUNT"}
+# set incr_scripts [file normalize [file dirname [info script]]]
+# set incr_input [file normalize [lindex $argv 0]]
+# set incr_reference [file normalize [lindex $argv 1]]
+# set incr_output [file normalize [lindex $argv 2]]
+# set incr_brams [lindex $argv 3]
+# if {$incr_brams ni {18 36}} {error "Unsupported BRAM count"}
+# if {[file exists $incr_output]} {error "Preserve previous incremental result"}
+# file mkdir $incr_output
+# cd $incr_output
+# set_param general.maxThreads 2
+# open_checkpoint $incr_input
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/implementation/synthesized.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.051 . Memory (MB): peak = 322.730 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.313 . Memory (MB): peak = 876.344 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1800 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Constraints 18-5170] The checkpoint was created with non-default parameter values which do not match the current Vivado settings.  Mismatching parameters are:
+  general.maxThreads
+INFO: [Project 1-853] Binary constraint restore complete.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1666.297 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 41abed2b
+----- Checksum: PlaceDB: 00000000 ShapeSum: 41abed2b RouteDB: 00000000 
+open_checkpoint: Time (s): cpu = 00:00:24 ; elapsed = 00:00:28 . Memory (MB): peak = 1666.297 ; gain = 1343.566
+# if {[llength [get_clocks]] != 1 || abs([get_property PERIOD [get_clocks clk]] - 10.0) > 0.000001} {
+#     error "Expected original 10.000 ns clock"
+# }
+# if {[llength [get_cells -hier -filter {REF_NAME == RAMB36E1}]] != $incr_brams} {
+#     error "Unexpected candidate memory configuration"
+# }
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1674.309 ; gain = 8.012
+
+Starting Cache Timing Information Task
+Ending Cache Timing Information Task | Checksum: fb401ccd
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.036 . Memory (MB): peak = 1674.309 ; gain = 0.000
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+INFO: [Opt 31-1287] Pulled Inverter u_mlu/image_pending_slot_i_1 into driver instance u_mlu/ctrl_q[buffer][1][beats_received][0]_i_2, which resulted in an inversion of 19 pins
+INFO: [Opt 31-1287] Pulled Inverter u_mlu/mlu_status[1]_INST_0 into driver instance u_mlu/mlu_status[1]_INST_0_i_1, which resulted in an inversion of 21 pins
+INFO: [Opt 31-1287] Pulled Inverter u_mlu/q[count][3]_i_1 into driver instance u_mlu/q[count][3]_i_3, which resulted in an inversion of 12 pins
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 137019bd9
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 3 cells
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: a0f52c06
+
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:03 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: 12ced3445
+
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+
+Phase 4 BUFG optimization
+Phase 4 BUFG optimization | Checksum: 12ced3445
+
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 5 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 5 Shift Register Optimization | Checksum: 12ced3445
+
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: 12ced3445
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 1986.648 ; gain = 0.000
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               3  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.081 . Memory (MB): peak = 1986.648 ; gain = 0.000
+Ending Logic Optimization Task | Checksum: bbba6807
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 1986.648 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+INFO: [Pwropt 34-9] Applying IDT optimizations ...
+INFO: [Pwropt 34-10] Applying ODC optimizations ...
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+
+
+Starting PowerOpt Patch Enables Task
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 36 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
+Number of BRAM Ports augmented: 0 newly gated: 56 Total Ports: 72
+Number of Flops added for Enable Generation: 26
+
+Ending PowerOpt Patch Enables Task | Checksum: 127916f95
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.248 . Memory (MB): peak = 2207.180 ; gain = 0.000
+Ending Power Optimization Task | Checksum: 127916f95
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:09 . Memory (MB): peak = 2207.180 ; gain = 220.531
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 127916f95
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.066 . Memory (MB): peak = 2207.180 ; gain = 0.000
+Ending Netlist Obfuscation Task | Checksum: 183ecddb4
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.072 . Memory (MB): peak = 2207.180 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+24 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:28 ; elapsed = 00:00:18 . Memory (MB): peak = 2207.180 ; gain = 540.883
+# read_checkpoint -incremental -force_incr $incr_reference
+Command: read_checkpoint -incremental -force_incr C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp
+INFO: [Vivado 12-9151] Incremental flow is being run with directive 'RuntimeOptimized'. This will override place_design, post-place phys_opt_design and route_design directives being called in high reuse mode.
+
+Starting Incremental read checkpoint Task
+
+Phase 1 Process Reference Checkpoint Netlist
+INFO: [Netlist 29-17] Analyzing 1716 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 2207.180 ; gain = 0.000
+INFO: [Vivado 12-23653] The design will run in the incremental flow irrespective of the incremental flow criteria checks as -force_incr switch has been used.
+WARNING: [Vivado 12-12053] Cell Matching (77.52 %) is less than the threshold (80.00 %) needed to run Incremental flow.
+WARNING: [Vivado 12-23631] Design does not meet incremental flow criteria checks. Continuing the incremental flow as -force_incr switch has been used. Run <report_incremental_reuse> to get more details.
+
+Phase 2 Initialization
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 2207.180 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Phase 3 Replay Physical Synthesis Transforms
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_mlu/state_q_reg[head_n_0_]
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/sparse_storage_q[route][delta][6][4][15]_i_7/I0
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][6][5][acc][31]_i_7/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][7][3][acc][31]_i_6/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/sparse_storage_q[acc][4][7][31]_i_3/I2
+WARNING: [Vivado_Tcl 4-428] Pin u_bridge/sparse_storage_q[mul][b_index][7][2]_i_3/I2 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][0]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][10]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][12]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][13]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][14]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][15]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][17]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][1]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][2]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][3]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][4]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][1][6]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/ctrl_q[finish_pending]_i_5/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][5][b][value][7]_i_2/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][6][1][b][valid]_i_2/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][0]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][10]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][11]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][12]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][13]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][14]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][15]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][16]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][17]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][18]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][19]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][20]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][21]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][22]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][24]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][25]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][26]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][28]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][29]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][2]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][30]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][31]_i_2/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][5]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][8]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][acc][9]_i_1/I1 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][2][31]_i_1/I2 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][7][5][a][valid]_i_1/I3 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/tc_status[1]_INST_0_i_5/I4
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/bridge_status[1]_INST_0_i_9/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][0][acc][16]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][0][acc][19]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][10]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][11]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][12]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][13]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][14]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][15]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][17]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][18]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][19]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][20]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][21]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][23]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][26]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][28]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][29]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][2]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][4]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][8]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][5][0][acc][9]_i_1/I2
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][7][31]_i_3/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][10]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][15]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][21]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][23]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][28]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][2]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][31]_i_2/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][3]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][4]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][6][acc][7]_i_1/I5
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][0]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][13]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][1]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][21]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][22]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][23]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][28]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][30]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][31]_i_2/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][3]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/dense_q[pe][4][3][acc][9]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][4][29]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][4][30]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][5][4][31]_i_2/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][20]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][21]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][23]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][24]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][25]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][26]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][27]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][28]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][29]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][30]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][6][4][31]_i_2/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][0]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][10]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][12]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][13]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][14]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][15]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][16]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][17]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][18]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][22]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][27]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][28]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][2]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][31]_i_2/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][5][3][acc][9]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][0]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][16]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][17]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][18]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][20]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][21]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][23]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][26]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][27]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][28]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][29]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][3][4][acc][7]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][7][3][acc][0]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][7][3][acc][16]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][7][3][acc][19]_i_1/I2
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_bridge/dense_q[pe][0][0][b][value][7]_i_1/I4
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][10]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][11]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][17]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][19]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][4]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][6]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][1][0][7]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][22]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][24]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][25]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][27]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][28]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][2][29]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][5][15]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][5][17]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][10]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][11]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][12]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][13]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][14]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][15]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][16]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][17]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][18]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][19]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][20]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][21]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][22]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][23]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][24]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+WARNING: [Vivado_Tcl 4-428] Pin u_tensor_core/sparse_storage_q[acc][2][6][25]_i_1/I0 is not connecting to net u_tensor_core/ctrl_q_reg[busy_n_0_]. Skip the pin
+INFO: [Common 17-14] Message 'Vivado_Tcl 4-428' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][1][a][valid]_i_2/I1
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[b_delay][7][6][value][7]_i_4/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][1][0][b][value][4]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][0]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][10]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][11]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][12]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][13]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][14]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][15]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][16]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][17]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][18]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][19]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][1]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][20]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][21]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][22]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][23]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][24]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][25]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][26]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][27]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][28]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][29]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][2]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][30]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][31]_i_2/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][3]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][4]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][5]_i_1/I5
+WARNING: [Vivado_Tcl 4-417] Can not find load pin u_tensor_core/dense_q[pe][2][0][acc][6]_i_1/I5
+INFO: [Common 17-14] Message 'Vivado_Tcl 4-417' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Physopt 32-81] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]. Replicated 29 times.
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/rst_n_12
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/q_reg[fifo][1][packet][is_sparse]_0
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_5[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_tensor_core/ctrl_q_reg[result_count][0]_0
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/rst_n_12
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_3[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_5[0]_repN
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_15[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/rst_n_11_repN_5
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_6[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_8[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/rst_n_11_repN_4
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/tc_status[1]_INST_0_i_12_0
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_5[0]_repN_1
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_4[0]
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_5[0]_repN_1
+WARNING: [Vivado_Tcl 4-418] Can not find target net u_bridge/ctrl_q_reg[result_count][0]_11[0]
+WARNING: [Vivado_Tcl 4-425] iphys_opt_design failed to replay transformation for net u_tensor_core/ctrl_q[result][3][1][25]_i_1_n_0.
+INFO: [Vivado_Tcl 4-521] iPhys_opt_design summary: tried 23 changes and 2 changes are successfully applied
+
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Phase 4 Build Reuse DB
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.323 . Memory (MB): peak = 2207.180 ; gain = 0.000
+Reading placer database...
+Read XDEF Files: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2207.180 ; gain = 0.000
+Finished XDEF File Restore: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2207.180 ; gain = 0.000
+INFO: [Designutils 20-2297] Reference Design: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp, Summary | WNS = 0.002 | WHS = 0.096 | State = POST_ROUTE |
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:26 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Phase 5 Checking legality
+Phase 5 Checking legality | Checksum: d2f703ca
+
+Time (s): cpu = 00:00:38 ; elapsed = 00:00:37 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Phase 6 Reporting
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Nov 18 22:32:08 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+| Design State : Unknown
+------------------------------------------------------------------------------------
+
+Incremental Implementation Information
+
+Table of Contents
+-----------------
+1. Incremental Flow Summary
+2. Reuse Summary
+3. Reference Checkpoint Information
+4. Comparison with Reference Run
+5. Optimization Comparison With Reference Run
+5.1 iphys_opt_replay Optimizations
+5.2 QoR Suggestion Optimizations
+6. Command Comparison with Reference Run
+6.1 Reference:
+6.2 Incremental:
+7. Non Reuse Information
+
+1. Incremental Flow Summary
+---------------------------
+
++-----------------------+------------------+
+|    Flow Information   |       Value      |
++-----------------------+------------------+
+| Synthesis Flow        |          Default |
+| Auto Incremental      |               No |
+| Incremental Directive | RuntimeOptimized |
+| Reuse mode            |              Low |
+| Target WNS            |              0.0 |
+| QoR Suggestions       |                0 |
++-----------------------+------------------+
+
+
+2. Reuse Summary
+----------------
+
++-------+----------------------+----------------------------+--------------------+--------+
+|  Type | Matched % (of Total) | Current Reuse % (of Total) | Fixed % (of Total) |  Total |
++-------+----------------------+----------------------------+--------------------+--------+
+| Cells |                77.57 |                      66.95 |               0.00 |  51816 |
+| Nets  |                77.05 |                      32.59 |               0.00 |  40777 |
+| Pins  |                    - |                      22.17 |                  - | 243190 |
+| Ports |               100.00 |                       0.00 |               0.00 |   1022 |
++-------+----------------------+----------------------------+--------------------+--------+
+
+
+3. Reference Checkpoint Information
+-----------------------------------
+
++----------------+----------------------------------------------------------------------------------------------------+
+| DCP Location:  | C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp |
++----------------+----------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+----------------------------+
+|         DCP Information        |            Value           |
++--------------------------------+----------------------------+
+| Vivado Version                 |                     2022.2 |
+| DCP State                      |                 POST_ROUTE |
+| Recorded WNS                   |                      0.002 |
+| Recorded WHS                   |                      0.096 |
+| Reference Speed File Version   | PRODUCTION 1.12 2019-11-22 |
+| Incremental Speed File Version | PRODUCTION 1.12 2019-11-22 |
++--------------------------------+----------------------------+
+* Recorded WNS/WHS timing numbers are estimated timing numbers. They may vary slightly from sign-off timing numbers.
+
+
+4. Comparison with Reference Run
+--------------------------------
+
++-----------------+---------------------------+---------------------------+---------------------------+
+|                 |          WNS(ns)          |  Runtime(elapsed)(hh:mm)  |    Runtime(cpu)(hh:mm)    |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|      Stage      |  Reference  | Incremental |  Reference  | Incremental |  Reference  | Incremental |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| synth_design    |       0.986 |             |       00:07 |       00:05 |       00:06 |       00:05 |
+| opt_design      |             |             |     < 1 min |     < 1 min |     < 1 min |     < 1 min |
+| read_checkpoint |             |             |             |             |             |             |
+| place_design    |       0.342 |             |       00:03 |             |       00:05 |             |
+| phys_opt_design |       0.342 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |      -0.301 |             |       00:10 |             |       00:19 |             |
+| phys_opt_design |      -0.301 |             |       00:01 |             |       00:01 |             |
+| route_design    |      -0.231 |             |       00:34 |             |       00:58 |             |
+| route_design    |             |             |             |             |             |             |
+| phys_opt_design |      -1.093 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |       0.002 |             |       00:26 |             |       00:44 |             |
+| phys_opt_design |       0.002 |             |       00:03 |             |       00:04 |             |
+| route_design    |       0.002 |             |       00:01 |             |       00:01 |             |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+
+5. Optimization Comparison With Reference Run
+---------------------------------------------
+
+5.1 iphys_opt_replay Optimizations
+----------------------------------
+
++-------------------------+--------+------------+
+| iphys_opt_design replay | Reused | Not Reused |
++-------------------------+--------+------------+
+| critical_cell_opt       |      0 |          3 |
+| restruct_opt            |      1 |         14 |
+| fanout_opt              |      1 |          4 |
++-------------------------+--------+------------+
+
+
+5.2 QoR Suggestion Optimizations
+--------------------------------
+
++-------------------------------------+-------+
+|           QoR Suggestions           | Value |
++-------------------------------------+-------+
+| QoR Suggestions (Recommended)       |     0 |
+|   Suggestions Included In Reference |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+|   New Suggestions (INCR_FRIENDLY=1) |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+| QoR Suggestions (Not Recommended)   |     0 |
+|   New Suggestions (INCR_FRIENDLY=0) |     0 |
+|     Yet to apply                    |     0 |
+|     Applied                         |     0 |
+|     Failed to apply                 |     0 |
+| Disabled New Suggestions            |     0 |
++-------------------------------------+-------+
+
+
+6. Command Comparison with Reference Run
+----------------------------------------
+
+6.1 Reference:
+--------------
+synth_design-verilog_define default::[not_specified] -top  sparse_tensor_core_top -part  xc7z020clg484-1 
+opt_design
+place_design
+phys_opt_design -directive Default
+route_design
+phys_opt_design -directive AggressiveExplore
+route_design -directive Explore
+route_design -unroute
+phys_opt_design -force_replication_on_nets
+route_design -directive Explore
+phys_opt_design -directive AggressiveExplore
+route_design -directive Explore
+
+6.2 Incremental:
+----------------
+synth_design-verilog_define default::[not_specified] -top  sparse_tensor_core_top -part  xc7z020clg484-1 
+opt_design
+read_checkpoint -directive RuntimeOptimized  -incremental C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp -force_incr
+
+7. Non Reuse Information
+------------------------
+
++------------------------------------------------------+--------+
+|                         Type                         |    %   |
++------------------------------------------------------+--------+
+| Non-Reused Cells                                     |  33.04 |
+|   New                                                |  20.06 |
+|   Discarded illegal placement due to netlist changes |   9.40 |
+|   Discarded to improve timing                        |   3.57 |
+| Partially reused nets                                |   4.18 |
+| Non-Reused nets                                      |  63.21 |
+| Non-Reused Ports                                     | 100.00 |
++------------------------------------------------------+--------+
+
+
+
+Time (s): cpu = 00:00:39 ; elapsed = 00:00:38 . Memory (MB): peak = 2207.180 ; gain = 0.000
+
+Time (s): cpu = 00:00:40 ; elapsed = 00:00:38 . Memory (MB): peak = 2207.180 ; gain = 0.000
+read_checkpoint: Time (s): cpu = 00:00:40 ; elapsed = 00:00:38 . Memory (MB): peak = 2207.180 ; gain = 0.000
+# report_incremental_reuse -file reuse_loaded.rpt
+# place_design
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+
+Starting Incremental Placer Task
+INFO: [Vivado_Tcl 4-24] Running Incremental Placer flow for unplaced cells using reference design-checkpoint 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/baseline/implementation/closure/routed.dcp'.
+INFO: [Place 46-42] Incremental Compile is being run in Low Reuse Mode.
+INFO: [Place 46-44] place_design is using directive Default with target WNS of 0 ns.
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 2217.238 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: d2f703ca
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.283 . Memory (MB): peak = 2217.238 ; gain = 10.059
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: d2f703ca
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2286.086 ; gain = 78.906
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 1c3ac2509
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:24 . Memory (MB): peak = 2356.785 ; gain = 149.605
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 1c3ac2509
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 2356.785 ; gain = 149.605
+Phase 1 Placer Initialization | Checksum: 1c3ac2509
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 2356.785 ; gain = 149.605
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 12ce5fee4
+
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:30 . Memory (MB): peak = 2378.242 ; gain = 171.062
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: 1c40d2802
+
+Time (s): cpu = 00:00:52 ; elapsed = 00:00:35 . Memory (MB): peak = 2378.242 ; gain = 171.062
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: 1e02dc226
+
+Time (s): cpu = 00:00:52 ; elapsed = 00:00:35 . Memory (MB): peak = 2378.242 ; gain = 171.062
+
+Phase 2.4 Global Placement Core
+Phase 2.4 Global Placement Core | Checksum: f5199a8f
+
+Time (s): cpu = 00:02:49 ; elapsed = 00:01:56 . Memory (MB): peak = 2588.297 ; gain = 381.117
+Phase 2 Global Placement | Checksum: f5199a8f
+
+Time (s): cpu = 00:02:49 ; elapsed = 00:01:56 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 13a067042
+
+Time (s): cpu = 00:02:52 ; elapsed = 00:01:59 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 164e0e9ac
+
+Time (s): cpu = 00:03:03 ; elapsed = 00:02:08 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 3.3 Place Remaining
+Phase 3.3 Place Remaining | Checksum: fbd16a29
+
+Time (s): cpu = 00:03:49 ; elapsed = 00:02:56 . Memory (MB): peak = 2588.297 ; gain = 381.117
+Phase 3 Detail Placement | Checksum: 14b91eb8c
+
+Time (s): cpu = 00:04:01 ; elapsed = 00:03:03 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: d0d00e8f
+
+Phase 4.1.1.1 BUFG Insertion
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-4.650 | TNS=-33787.142 |
+Phase 1 Physical Synthesis Initialization | Checksum: 15cd08f65
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 2588.297 ; gain = 0.000
+INFO: [Place 46-33] Processed net u_tensor_core/rst_n_0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-33] Processed net u_msu/meta_q[0][95]_i_1_n_0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-33] Processed net u_msu/meta_q[1][95]_i_1_n_0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-56] BUFG insertion identified 3 candidate nets. Inserted BUFG: 0, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 3, Skipped due to Timing Degradation: 0, Skipped due to Illegal Netlist: 0.
+Ending Physical Synthesis Task | Checksum: 16307a500
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 2588.297 ; gain = 0.000
+Phase 4.1.1.1 BUFG Insertion | Checksum: d0d00e8f
+
+Time (s): cpu = 00:04:20 ; elapsed = 00:03:15 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 4.1.1.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=-2.306. For the most accurate timing information please run report_timing.
+Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: e3cbc49b
+
+Time (s): cpu = 00:05:26 ; elapsed = 00:04:17 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Time (s): cpu = 00:05:26 ; elapsed = 00:04:17 . Memory (MB): peak = 2588.297 ; gain = 381.117
+Phase 4.1 Post Commit Optimization | Checksum: e3cbc49b
+
+Time (s): cpu = 00:05:26 ; elapsed = 00:04:18 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 4.2 Sweep Clock Roots: Post-Placement
+Phase 4.2 Sweep Clock Roots: Post-Placement | Checksum: e3cbc49b
+
+Time (s): cpu = 00:05:26 ; elapsed = 00:04:18 . Memory (MB): peak = 2588.297 ; gain = 381.117
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion 
+ ____________________________________________________
+|           | Global Congestion | Short Congestion  |
+| Direction | Region Size       | Region Size       |
+|___________|___________________|___________________|
+|      North|              16x16|              16x16|
+|___________|___________________|___________________|
+|      South|                4x4|                8x8|
+|___________|___________________|___________________|
+|       East|              32x32|              16x16|
+|___________|___________________|___________________|
+|       West|                8x8|                4x4|
+|___________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 17f2c145a
+
+Time (s): cpu = 00:05:41 ; elapsed = 00:04:27 . Memory (MB): peak = 2605.250 ; gain = 398.070
+Phase 4.3 Placer Reporting | Checksum: 17f2c145a
+
+Time (s): cpu = 00:05:42 ; elapsed = 00:04:27 . Memory (MB): peak = 2605.250 ; gain = 398.070
+
+Phase 4.4 Post Placement Cleanup
+Phase 4.4 Post Placement Cleanup | Checksum: 17f2c145a
+
+Time (s): cpu = 00:05:42 ; elapsed = 00:04:28 . Memory (MB): peak = 2605.250 ; gain = 398.070
+
+Phase 4.5 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.113 . Memory (MB): peak = 2605.250 ; gain = 0.000
+
+Time (s): cpu = 00:05:42 ; elapsed = 00:04:28 . Memory (MB): peak = 2605.250 ; gain = 398.070
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 1ae885e08
+
+Time (s): cpu = 00:05:42 ; elapsed = 00:04:28 . Memory (MB): peak = 2605.250 ; gain = 398.070
+INFO: [Place 46-3] During incremental compilation, routing data from the original checkpoint is applied during place_design. As a result, dangling route segments and route conflicts may appear in the post place_design implementation due to changes between the original and incremental netlists. These routes can be ignored as they will be subsequently resolved by route_design. This issue will be cleaned up automatically in place_design in a future software release.
+
++-------------------------------------------------------------------------------+
+|Incremental Placement Summary                                                  |
++-------------------------------------------------------------------------------+
+|                          Type                           | Count  | Percentage |
++-------------------------------------------------------------------------------+
+|  Total instances                                        |  51816 |     100.00 |
+|  Reused instances                                       |  20540 |      39.64 |
+|  Non-reused instances                                   |  31276 |      60.35 |
+|    New                                                  |  10398 |      20.06 |
+|    Discarded illegal placement due to netlist changes   |   4848 |       9.35 |
+|    Discarded to improve timing                          |  16030 |      30.93 |
++-------------------------------------------------------------------------------+
+|Incremental Placement Runtime Summary                                          |
++-------------------------------------------------------------------------------+
+|  Initialization time(elapsed secs)                                   |  24.81 |
+|  Incremental Placer time(elapsed secs)                               | 243.21 |
++-------------------------------------------------------------------------------+
+
+Reference - Incremental Comparison Summary
+
+1. Comparison with Reference Run
+--------------------------------
+
++-----------------+---------------------------+---------------------------+---------------------------+
+|                 |          WNS(ns)          |  Runtime(elapsed)(hh:mm)  |    Runtime(cpu)(hh:mm)    |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|      Stage      |  Reference  | Incremental |  Reference  | Incremental |  Reference  | Incremental |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| synth_design    |       0.986 |             |       00:07 |       00:05 |       00:06 |       00:05 |
+| opt_design      |             |             |     < 1 min |     < 1 min |     < 1 min |     < 1 min |
+| read_checkpoint |             |             |             |     < 1 min |             |     < 1 min |
+| place_design    |       0.342 |      -2.031 |       00:03 |       00:04 |       00:05 |       00:06 |
+| phys_opt_design |       0.342 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |      -0.301 |             |       00:10 |             |       00:19 |             |
+| phys_opt_design |      -0.301 |             |       00:01 |             |       00:01 |             |
+| route_design    |      -0.231 |             |       00:34 |             |       00:58 |             |
+| route_design    |             |             |             |             |             |             |
+| phys_opt_design |      -1.093 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |       0.002 |             |       00:26 |             |       00:44 |             |
+| phys_opt_design |       0.002 |             |       00:03 |             |       00:04 |             |
+| route_design    |       0.002 |             |       00:01 |             |       00:01 |             |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+
+Ending Incremental Placer Task | Checksum: ec63dafc
+
+Time (s): cpu = 00:05:43 ; elapsed = 00:04:28 . Memory (MB): peak = 2605.250 ; gain = 398.070
+INFO: [Common 17-83] Releasing license: Implementation
+14 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:05:43 ; elapsed = 00:04:28 . Memory (MB): peak = 2605.250 ; gain = 398.070
+# write_checkpoint placed.dcp
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:07 ; elapsed = 00:00:04 . Memory (MB): peak = 2605.250 ; gain = 0.000
+report_design_analysis: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2605.250 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/incremental_forced/placed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:22 ; elapsed = 00:00:18 . Memory (MB): peak = 2605.250 ; gain = 0.000
+# report_timing_summary -max_paths 10 -file timing_placed.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:17 ; elapsed = 00:00:10 . Memory (MB): peak = 2605.250 ; gain = 0.000
+# report_incremental_reuse -file reuse_placed.rpt
+# phys_opt_design -directive AggressiveExplore
+Command: phys_opt_design -directive AggressiveExplore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Vivado_Tcl 4-1309] Incremental directive 'RuntimeOptimized' has been set. This will overwrite phys_opt_design -directive 'AggressiveExplore' which was called in this command.
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 0.00s |  WALL: 0.01s
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 2605.250 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-673] Physical synthesis flow is being used in incremental compile flow
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.031 | TNS=-15581.531 |
+Phase 1 Physical Synthesis Initialization | Checksum: 272a2bc25
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:08 . Memory (MB): peak = 2605.250 ; gain = 0.000
+INFO: [Physopt 32-673] Physical synthesis flow is being used in incremental compile flow
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.031 | TNS=-15581.531 |
+
+Phase 2 DSP Register Optimization
+INFO: [Physopt 32-457] Pass 1. Identified 3 candidate cells for DSP register optimization.
+INFO: [Physopt 32-666] Processed cell u_tensor_core/g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg. No change.
+INFO: [Physopt 32-666] Processed cell u_tensor_core/g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg. No change.
+INFO: [Physopt 32-666] Processed cell u_tensor_core/g_arithmetic_row[0].g_arithmetic_column[2].product_q_reg. No change.
+INFO: [Physopt 32-775] End 2 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.109 . Memory (MB): peak = 2605.250 ; gain = 0.000
+Phase 2 DSP Register Optimization | Checksum: 272a2bc25
+
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:17 . Memory (MB): peak = 2605.250 ; gain = 0.000
+
+Phase 3 Critical Path Optimization
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.031 | TNS=-15581.531 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg_n_105. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in13_in[199].  Re-placed instance u_bridge/q_reg[fifo][7][packet][payload][95]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in13_in[199]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.028 | TNS=-15567.066 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in[199].  Re-placed instance u_bridge/q_reg[fifo][0][packet][payload][95]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in[199]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.001 | TNS=-15114.223 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[130].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][26]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[130]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.993 | TNS=-15114.086 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[257].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][153]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[257]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.993 | TNS=-15113.904 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[258].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][154]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[258]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.956 | TNS=-15113.733 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[238].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][134]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[238]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.956 | TNS=-15113.397 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[260].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][156]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[260]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.956 | TNS=-15113.140 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[261].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][157]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[261]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.956 | TNS=-15112.950 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[172].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][68]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[172]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.922 | TNS=-15112.691 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[232].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][128]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[232]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.911 | TNS=-15112.581 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[133].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][29]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[133]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.911 | TNS=-15112.417 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[148].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][44]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[148]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15112.248 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][30].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][30]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][30]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15112.551 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][31].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][31]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][31]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15113.087 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][6].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][6]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][6]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15113.399 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][7].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][7]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][7]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15113.965 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][8].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][8]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][8]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15114.265 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][9].  Re-placed instance u_tensor_core/dense_q_reg[pe][0][4][acc][9]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][0][4][acc][9]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15114.835 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][20].  Re-placed instance u_tensor_core/dense_q_reg[pe][6][2][acc][20]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][20]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15115.133 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][2].  Re-placed instance u_tensor_core/dense_q_reg[pe][6][2][acc][2]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15115.419 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][30].  Re-placed instance u_tensor_core/dense_q_reg[pe][6][2][acc][30]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][30]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.894 | TNS=-15115.716 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][3].  Re-placed instance u_tensor_core/dense_q_reg[pe][6][2][acc][3]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][6][2][acc][3]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.891 | TNS=-15116.158 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg_n_105. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_bridge/head_select_q[6].  Re-placed instance u_bridge/head_select_q_reg[6]
+INFO: [Physopt 32-735] Processed net u_bridge/head_select_q[6]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.891 | TNS=-15071.791 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[173].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][69]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[173]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.890 | TNS=-15071.570 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_11.  Re-placed instance u_tensor_core/ctrl_q_reg[busy]_replica_11
+INFO: [Physopt 32-735] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_11. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.886 | TNS=-15071.270 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_19.  Re-placed instance u_tensor_core/ctrl_q_reg[busy]_replica_19
+INFO: [Physopt 32-735] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_19. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.886 | TNS=-15070.848 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[0].  Re-placed instance u_bridge/q_reg[fifo][6][k][0]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[0]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.885 | TNS=-15070.491 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in9_in[133].  Re-placed instance u_bridge/q_reg[fifo][5][packet][payload][29]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in9_in[133]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.874 | TNS=-15070.305 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in3_in[199].  Re-placed instance u_bridge/q_reg[fifo][2][packet][payload][95]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in3_in[199]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.878 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[246].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][142]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[246]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.685 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[256].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][152]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[256]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.491 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[264].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][160]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[264]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.301 |
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.301 |
+Phase 3 Critical Path Optimization | Checksum: 289126502
+
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:20 . Memory (MB): peak = 2605.250 ; gain = 0.000
+
+Phase 4 Critical Path Optimization
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.301 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[277].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][173]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[277]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15027.107 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[137].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][33]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[137]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15026.952 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[139].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][35]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[139]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.872 | TNS=-15026.762 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in11_in[141].  Re-placed instance u_bridge/q_reg[fifo][6][packet][payload][37]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in11_in[141]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.871 | TNS=-15026.428 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][1][6][acc][12].  Re-placed instance u_tensor_core/dense_q_reg[pe][1][6][acc][12]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][1][6][acc][12]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.871 | TNS=-15026.695 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][1][6][acc][13]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net u_bridge/q_reg[meta_count_n_0_][0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-601] Processed net u_tensor_core/p_533_out. Net driver u_tensor_core/dense_q[pe][1][6][acc][31]_i_3 was replaced.
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_533_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.869 | TNS=-15022.587 |
+INFO: [Physopt 32-663] Processed net u_bridge/p_1_in7_in[151].  Re-placed instance u_bridge/q_reg[fifo][4][packet][payload][47]
+INFO: [Physopt 32-735] Processed net u_bridge/p_1_in7_in[151]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.867 | TNS=-15022.569 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][20].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][20]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][20]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.867 | TNS=-15022.647 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][21].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][21]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][21]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.867 | TNS=-15022.822 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][22].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][22]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][22]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.867 | TNS=-15022.827 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][23].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][23]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][23]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.863 | TNS=-15022.701 |
+INFO: [Physopt 32-702] Processed net u_bridge/p_1_in7_in[130]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net u_bridge/q_reg[meta_head]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 14 pins.
+INFO: [Physopt 32-735] Processed net u_mlu/q[count][3]_i_3_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.860 | TNS=-14772.501 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][3][5][acc][0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_bridge/q_reg[meta_count_n_0_][0].  Re-placed instance u_bridge/q_reg[meta_count][0]
+INFO: [Physopt 32-735] Processed net u_bridge/q_reg[meta_count_n_0_][0]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.855 | TNS=-14236.329 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg_n_105. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_bridge/head_select_q_reg[1]_rep_n_0.  Re-placed instance u_bridge/head_select_q_reg[1]_rep
+INFO: [Physopt 32-735] Processed net u_bridge/head_select_q_reg[1]_rep_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.852 | TNS=-14228.874 |
+INFO: [Physopt 32-702] Processed net u_bridge/head_select_q_reg[1]_rep_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 21 pins.
+INFO: [Physopt 32-735] Processed net u_bridge/ctrl_q_reg[is_sparse]_rep__19. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.816 | TNS=-14120.435 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/sparse_storage_q_reg[route][delta][5][5]_140[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[mul][a_count][1].  Re-placed instance u_tensor_core/sparse_storage_q_reg[mul][a_count][1]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[mul][a_count][1]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.803 | TNS=-14106.025 |
+INFO: [Physopt 32-702] Processed net u_bridge/head_select_q[6]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net u_bridge/ctrl_q_reg[is_sparse]_rep__19. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 11 pins.
+INFO: [Physopt 32-735] Processed net u_bridge/tc_status[1]_INST_0_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.773 | TNS=-13999.201 |
+INFO: [Physopt 32-702] Processed net u_bridge/q_reg[meta_count_n_0_][0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 13 pins.
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_444_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.773 | TNS=-13974.177 |
+INFO: [Physopt 32-702] Processed net u_mlu/q[count][3]_i_3_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_bridge/head_select_q_reg[5]_0.  Re-placed instance u_bridge/bridge_status[1]_INST_0_i_4
+INFO: [Physopt 32-735] Processed net u_bridge/head_select_q_reg[5]_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.764 | TNS=-13210.968 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/sparse_storage_q_reg[route][delta][0][2]_148[13]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net u_tensor_core/g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg_n_92. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-735] Processed net u_tensor_core/route_or865_return[13]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.757 | TNS=-13210.451 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][3][3][acc][27]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 17 pins.
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_434_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.756 | TNS=-13186.323 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][1][0][acc][14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_tensor_core/p_503_out.  Re-placed instance u_tensor_core/dense_q[pe][1][0][acc][31]_i_3
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_503_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.756 | TNS=-13163.834 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][2][4][acc][16].  Re-placed instance u_tensor_core/dense_q_reg[pe][2][4][acc][16]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][2][4][acc][16]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.756 | TNS=-13164.361 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][2][4][acc][17]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_tensor_core/p_481_out.  Re-placed instance u_tensor_core/dense_q[pe][2][4][acc][31]_i_3
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_481_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.756 | TNS=-13160.317 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/sparse_storage_q_reg[route][delta_n_0_][6][6][10]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net u_tensor_core/g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg_n_95. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q[route][delta][6][6][10]_i_3_n_0.  Re-placed instance u_tensor_core/sparse_storage_q[route][delta][6][6][10]_i_3
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q[route][delta][6][6][10]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.750 | TNS=-13160.180 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/tc_status[1].  Re-placed instance u_tensor_core/tc_status[2]_INST_0
+INFO: [Physopt 32-735] Processed net u_tensor_core/tc_status[1]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.749 | TNS=-13115.696 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 12 pins.
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_481_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.742 | TNS=-13090.032 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_20.  Re-placed instance u_tensor_core/ctrl_q_reg[busy]_replica_20
+INFO: [Physopt 32-735] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_20. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.734 | TNS=-13089.983 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][8].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][8]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][8]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.734 | TNS=-13089.781 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][9].  Re-placed instance u_tensor_core/sparse_storage_q_reg[acc][4][7][9]
+INFO: [Physopt 32-735] Processed net u_tensor_core/sparse_storage_q_reg[acc_n_0_][4][7][9]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.733 | TNS=-13089.605 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_1.  Re-placed instance u_tensor_core/ctrl_q_reg[busy]_replica_1
+INFO: [Physopt 32-735] Processed net u_tensor_core/ctrl_q_reg[busy_n_0_]_repN_1. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.733 | TNS=-13089.503 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][1][6][acc][13]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net u_tensor_core/p_533_out.  Re-placed instance u_tensor_core/dense_q[pe][1][6][acc][31]_i_3
+INFO: [Physopt 32-735] Processed net u_tensor_core/p_533_out. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.732 | TNS=-13083.247 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][4][6][acc][14].  Re-placed instance u_tensor_core/dense_q_reg[pe][4][6][acc][14]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][4][6][acc][14]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.732 | TNS=-13083.652 |
+INFO: [Physopt 32-702] Processed net u_tensor_core/dense_q_reg[pe][4][6][acc][15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 17 pins.
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q[pe][4][6][acc][31]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.730 | TNS=-13069.412 |
+INFO: [Physopt 32-663] Processed net u_tensor_core/dense_q_reg[pe][2][3][acc][0].  Re-placed instance u_tensor_core/dense_q_reg[pe][2][3][acc][0]
+INFO: [Physopt 32-735] Processed net u_tensor_core/dense_q_reg[pe][2][3][acc][0]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.730 | TNS=-13069.787 |
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.730 | TNS=-13069.787 |
+Phase 4 Critical Path Optimization | Checksum: 1c811f3d2
+
+Time (s): cpu = 00:01:05 ; elapsed = 00:00:43 . Memory (MB): peak = 2605.250 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.122 . Memory (MB): peak = 2605.250 ; gain = 0.000
+INFO: [Physopt 32-603] Post Physical Optimization Timing Summary | WNS=-1.730 | TNS=-13069.787 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  DSP Register   |          0.000  |          0.000  |            0  |              0  |                     0  |           0  |           1  |  00:00:08  |
+|  Critical Path  |          0.301  |       2511.743  |            0  |              0  |                    67  |           0  |           2  |  00:00:27  |
+|  Total          |          0.301  |       2511.743  |            0  |              0  |                    67  |           0  |           3  |  00:00:35  |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 2605.250 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 273d10af9
+
+Time (s): cpu = 00:01:06 ; elapsed = 00:00:45 . Memory (MB): peak = 2605.250 ; gain = 0.000
+
+Reference - Incremental Comparison Summary
+
+1. Comparison with Reference Run
+--------------------------------
+
++-----------------+---------------------------+---------------------------+---------------------------+
+|                 |          WNS(ns)          |  Runtime(elapsed)(hh:mm)  |    Runtime(cpu)(hh:mm)    |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|      Stage      |  Reference  | Incremental |  Reference  | Incremental |  Reference  | Incremental |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| synth_design    |       0.986 |             |       00:07 |       00:05 |       00:06 |       00:05 |
+| opt_design      |             |             |     < 1 min |     < 1 min |     < 1 min |     < 1 min |
+| read_checkpoint |             |             |             |     < 1 min |             |     < 1 min |
+| place_design    |       0.342 |      -2.031 |       00:03 |       00:04 |       00:05 |       00:06 |
+| phys_opt_design |       0.342 |      -1.730 |     < 1 min |     < 1 min |     < 1 min |       00:01 |
+| route_design    |      -0.301 |             |       00:10 |             |       00:19 |             |
+| phys_opt_design |      -0.301 |             |       00:01 |             |       00:01 |             |
+| route_design    |      -0.231 |             |       00:34 |             |       00:58 |             |
+| route_design    |             |             |             |             |             |             |
+| phys_opt_design |      -1.093 |             |     < 1 min |             |     < 1 min |             |
+| route_design    |       0.002 |             |       00:26 |             |       00:44 |             |
+| phys_opt_design |       0.002 |             |       00:03 |             |       00:04 |             |
+| route_design    |       0.002 |             |       00:01 |             |       00:01 |             |
++-----------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+
+INFO: [Common 17-83] Releasing license: Implementation
+243 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:01:06 ; elapsed = 00:00:45 . Memory (MB): peak = 2605.250 ; gain = 0.000
+# write_checkpoint physopt.dcp
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 2605.250 ; gain = 0.000
+report_design_analysis: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2605.250 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/incremental_forced/physopt.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:21 ; elapsed = 00:00:18 . Memory (MB): peak = 2605.250 ; gain = 0.000
+# route_design
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Starting Incremental Route Task
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: 6d62da94 ConstDB: 0 ShapeSum: fb6ff3a7 RouteDB: 2a94a221
+WARNING: [Route 35-197] Clock port "clk" does not have an associated HD.CLK_SRC. Without this constraint, timing analysis may not be accurate and upstream checks cannot be done to ensure correct clock placement.
+WARNING: [Route 35-198] Port "read_data[26][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][34]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][34]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][37]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][37]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][60]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][60]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "rst_n" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "rst_n". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[11][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[11][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[26][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[26][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[17][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[17][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[18][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[18][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[18][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[18][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[18][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[18][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[16][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[16][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][48]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][48]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][61]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][61]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][32]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][32]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][40]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][40]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][53]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][53]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][62]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][62]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][63]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][63]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][41]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][41]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][13]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][13]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][24]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][24]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][28]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][28]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][29]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][29]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[23][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[23][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[20][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[20][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[12][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[12][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[15][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[15][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[13][7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[13][7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[14][5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[14][5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][35]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][35]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][19]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][19]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][33]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][33]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][dst_addr][54]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][dst_addr][54]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "command[meta][tile_id][12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "command[meta][tile_id][12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[8][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[8][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "read_data[29][1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "read_data[29][1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+INFO: [Common 17-14] Message 'Route 35-198' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+Phase 1 Build RT Design | Checksum: f2b0067d
+
+Time (s): cpu = 00:00:41 ; elapsed = 00:00:32 . Memory (MB): peak = 2640.500 ; gain = 35.250
+Post Restoration Checksum: NetGraph: 30951b9 NumContArr: 9832b1f Constraints: 0 Timing: 0
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 0c8c7cd8
+
+Time (s): cpu = 00:00:43 ; elapsed = 00:00:34 . Memory (MB): peak = 2642.988 ; gain = 37.738
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 106f68ca1
+
+Time (s): cpu = 00:00:43 ; elapsed = 00:00:34 . Memory (MB): peak = 2642.988 ; gain = 37.738
+--------------------------------------------------------
+|Incremental Routing Reuse Summary                      |
+--------------------------------------------------------
+|Type                     | Count    | Percentage       |
+--------------------------------------------------------
+|Fully reused nets        |      6991|            16.88 |
+|Partially reused nets    |      1134|             2.74 |
+|Non-reused nets          |     33283|            80.38 |
+--------------------------------------------------------
+INFO: [Route 35-560] Router is in low reuse mode, switching to default router using directive 'Default' with target wns 0 ns
+ Number of Nodes with overlaps = 0
+
+Phase 2.3 Update Timing
+Phase 2.3 Update Timing | Checksum: 1be7d52e6
+
+Time (s): cpu = 00:01:02 ; elapsed = 00:00:47 . Memory (MB): peak = 2674.277 ; gain = 69.027
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.531 | TNS=-6856.785| WHS=-0.067 | THS=-1.788 |
+
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 7.43445 %
+  Global Horizontal Routing Utilization  = 7.98242 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 34418
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 31426
+  Number of Partially Routed Nets     = 2992
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 1e3a29810
+
+Time (s): cpu = 00:01:14 ; elapsed = 00:00:54 . Memory (MB): peak = 2878.059 ; gain = 272.809
+
+Phase 3 Initial Routing
+
+Phase 3.1 Global Routing
+Phase 3.1 Global Routing | Checksum: 1e3a29810
+
+Time (s): cpu = 00:01:14 ; elapsed = 00:00:54 . Memory (MB): peak = 2878.059 ; gain = 272.809
+Phase 3 Initial Routing | Checksum: 43a9989e
+
+Time (s): cpu = 00:01:47 ; elapsed = 00:01:13 . Memory (MB): peak = 2878.059 ; gain = 272.809
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+
+Phase 4.1.1 Update Timing
+Phase 4.1.1 Update Timing | Checksum: 9b845290
+
+Time (s): cpu = 00:01:49 ; elapsed = 00:01:14 . Memory (MB): peak = 2878.059 ; gain = 272.809
+WARNING: [Route 35-447] Congestion is preventing the router from routing all nets. The router will prioritize the successful completion of routing all nets over timing optimizations.
+Phase 4.1 Global Iteration 0 | Checksum: 4d1e4847
+
+Time (s): cpu = 00:01:59 ; elapsed = 00:01:20 . Memory (MB): peak = 2902.430 ; gain = 297.180
+
+Phase 4.2 Global Iteration 1

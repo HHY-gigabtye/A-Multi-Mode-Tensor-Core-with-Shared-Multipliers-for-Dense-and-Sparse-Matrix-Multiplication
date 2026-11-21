@@ -1,0 +1,91 @@
+diff --git a/tensor_core_sv/tensor_core.sv b/experiments/mlu_bram_100mhz_20261118/dense_acc_local/src/tensor_core_sv/tensor_core.sv
+index 2629fd5..69e536a 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/experiments/mlu_bram_100mhz_20261118/dense_acc_local/src/tensor_core_sv/tensor_core.sv
+@@ -54,6 +54,7 @@ module tensor_core (
+   // actual DSP count and timing must be checked after implementation.
+   wire [7:0][7:0][15:0] dense_product, sparse_product;
+   wire [7:0][7:0][31:0] dense_sum, sparse_sum;
++  wire [7:0][7:0] dense_a_valid, dense_b_valid;
+   generate
+     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_arithmetic_row
+       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_arithmetic_column
+@@ -62,17 +63,23 @@ module tensor_core (
+         (* use_dsp = "yes" *) wire signed [15:0] dense_mul, sparse_mul;
+         if (j != 0) begin : g_a_neighbor
+           assign dense_a_value = dense_q.pe[i][j-1].a.value;
++          assign dense_a_valid[i][j] = dense_q.pe[i][j-1].a.valid;
+         end else if (i != 0) begin : g_a_skew
+           assign dense_a_value = dense_q.a_delay[i][i-1].value;
++          assign dense_a_valid[i][j] = dense_q.a_delay[i][i-1].valid;
+         end else begin : g_a_input
+           assign dense_a_value = in_packet.payload.dense.dense_a[i];
++          assign dense_a_valid[i][j] = in_valid;
+         end
+         if (i != 0) begin : g_b_neighbor
+           assign dense_b_value = dense_q.pe[i-1][j].b.value;
++          assign dense_b_valid[i][j] = dense_q.pe[i-1][j].b.valid;
+         end else if (j != 0) begin : g_b_skew
+           assign dense_b_value = dense_q.b_delay[j][j-1].value;
++          assign dense_b_valid[i][j] = dense_q.b_delay[j][j-1].valid;
+         end else begin : g_b_input
+           assign dense_b_value = in_packet.payload.dense.dense_b[j];
++          assign dense_b_valid[i][j] = in_valid;
+         end
+         assign dense_mul = mul_int8(dense_a_value, dense_b_value);
+         assign sparse_mul = mul_int8(in_packet.payload.sparse.a.value[i],
+@@ -241,6 +248,30 @@ module tensor_core (
+       end
+   end
+ 
++  // Factor ACC enables from OLD state. Every accepted idle epoch clears
++  // all dense accumulators, including a new sparse epoch. Only PE[0][0]
++  // receives valid dense tokens on the initial edge; all skew/neighbor
++  // tokens in the new epoch are zero. Existing dense epochs stop advancing
++  // while publishing/holding a result, exactly as next_state below does.
++  (* max_fanout = 128 *) wire dense_epoch_clear = (status == TC_OK) &&
++      !ctrl_q.busy && in_valid;
++  (* max_fanout = 128 *) wire dense_existing_step = (status == TC_OK) &&
++      ctrl_q.busy && !ctrl_q.is_sparse &&
++      !ctrl_q.result_valid && !ctrl_q.finish_pending;
++  tc_matrix_t dense_acc_d;
++  always_comb begin : dense_acc_storage
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1) begin
++        dense_acc_d[i][j] = dense_q.pe[i][j].acc;
++        if (dense_epoch_clear) begin
++          dense_acc_d[i][j] = '0;
++          if ((i == 0) && (j == 0) && !in_packet.is_sparse && !ctrl_q.result_valid)
++            dense_acc_d[i][j] = extend_product(dense_product[i][j]);
++        end else if (dense_existing_step && dense_a_valid[i][j] && dense_b_valid[i][j])
++          dense_acc_d[i][j] = dense_sum[i][j];
++      end
++  end
++
+   always_comb begin : next_state
+     tc_dense_state_t dense_base;
+     tc_sparse_state_t sparse_base;
+@@ -422,11 +453,8 @@ module tensor_core (
+               dense_d.pe[i][j].a = a;
+               dense_d.pe[i][j].b = b;
+               if (a.valid && b.valid) begin
+-                // A new epoch has a zero accumulator. Select after arithmetic
+-                // so epoch clearing does not feed the multiplier/adder chain.
+-                // Other new-epoch PEs have invalid tokens and keep their reset.
+-                dense_d.pe[i][j].acc = ctrl_q.busy ? dense_sum[i][j] :
+-                                      extend_product(dense_product[i][j]);
++                // ACC data/enable is factored above; diagnostics and final
++                // token detection keep their original state-machine guards.
+                 info_d.macs = info_d.macs + 7'd1;
+                 if ((i == TC_DIM-1) && (j == TC_DIM-1) && a.last)
+                   ctrl_d.finish_pending = 1'b1;
+@@ -436,6 +464,9 @@ module tensor_core (
+         ctrl_d.busy = (ctrl_d.outstanding != 0);
+       end
+     end
++    for (int i = 0; i < TC_DIM; i = i + 1)
++      for (int j = 0; j < TC_DIM; j = j + 1)
++        dense_d.pe[i][j].acc = dense_acc_d[i][j];
+     ctrl_d.result = result_head_d;
+     ctrl_d.result_next = result_tail_d;
+   end

@@ -1,0 +1,5 @@
+Input checkpoint: C:/Users/Jason/Desktop/TC/project_integration/project_integration.runs/impl_10ns/sparse_tensor_core_top_routed.dcp
+Search period ns: 9.750
+Operating period ns: 10.000
+Setup slack ns: 0.016
+Hold slack ns: 0.096

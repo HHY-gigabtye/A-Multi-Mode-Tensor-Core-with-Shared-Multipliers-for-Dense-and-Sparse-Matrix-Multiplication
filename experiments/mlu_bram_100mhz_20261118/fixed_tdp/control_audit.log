@@ -1,0 +1,61 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 18 19:59:49 2026
+# Process ID: 18800
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp
+# Command line: vivado.exe -mode batch -nojournal -log control_audit.log -source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/check_bram_controls.tcl -tclargs C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/probe/synthesized.dcp C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/control_audit
+# Log file: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/control_audit.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/check_bram_controls.tcl
+# if {$argc != 2} {error "Expected INPUT_DCP NEW_OUTPUT_DIR"}
+# set input_dcp [file normalize [lindex $argv 0]]
+# set output_dir [file normalize [lindex $argv 1]]
+# if {[file exists $output_dir]} {error "Preserve previous audit"}
+# file mkdir $output_dir
+# cd $output_dir
+# set_param general.maxThreads 4
+# open_checkpoint $input_dcp
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/probe/synthesized.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.039 . Memory (MB): peak = 331.848 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 826.125 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 782 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'mlu' is not ideal for floorplanning, since the cellview 'mlu' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1535.172 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: b9a45615
+----- Checksum: PlaceDB: 00000000 ShapeSum: b9a45615 RouteDB: 00000000 
+open_checkpoint: Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 1535.172 ; gain = 1203.324
+# report_drc -checks [get_drc_checks REQP-1839] -file bram_control_drc.rpt
+Command: report_drc -checks REQP-1839 -file bram_control_drc.rpt
+INFO: [DRC 23-27] Running DRC with 4 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/fixed_tdp/control_audit/bram_control_drc.rpt.
+report_drc completed successfully
+# set brams [get_cells -hierarchical -filter {REF_NAME == RAMB36E1}]
+# if {[llength $brams] != 36} {error "Expected 36 RAMB36E1 primitives"}
+# set fd [open bram_modes.tsv w]
+# puts $fd "cell\tmode\twrite_mode_a\twrite_mode_b\tdoa_reg\tdob_reg"
+# foreach cell $brams {
+#     puts $fd "$cell\t[get_property RAM_MODE $cell]\t[get_property WRITE_MODE_A $cell]\t[get_property WRITE_MODE_B $cell]\t[get_property DOA_REG $cell]\t[get_property DOB_REG $cell]"
+# }
+# close $fd
+# puts "BRAM_CONTROL_AUDIT_COMPLETE count=[llength $brams]"
+BRAM_CONTROL_AUDIT_COMPLETE count=36
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 18 20:00:11 2026...

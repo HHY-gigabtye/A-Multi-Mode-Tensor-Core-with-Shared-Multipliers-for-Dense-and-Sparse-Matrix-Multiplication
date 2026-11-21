@@ -1,0 +1,18 @@
+Property               Type     Read-only  Value
+CELL_COUNT             int      true       1
+CLASS                  string   true       pblock
+CONTAIN_ROUTING        bool     false      0
+DERIVED_RANGES         string*  true       SLICE_X80Y100:SLICE_X113Y149 SLICE_X50Y100:SLICE_X67Y149
+EXCLUDE_PLACEMENT      bool     false      0
+GRIDTYPES              string   false      SLICE
+GRID_RANGES            string*  true       SLICE_X80Y100:SLICE_X113Y149 SLICE_X50Y100:SLICE_X67Y149
+IS_SOFT                bool     false      0
+NAME                   string   false      pblock_msu_top
+PARENT                 string   false      ROOT
+PARTPIN_SPREADING      int      false      5
+PRIMITIVE_COUNT        int      true       6398
+RECTANGLE_COUNT        int      true       1
+RECTANGLE_SITES        int      true       { 80 100 113 149 } { 50 100 67 149 }
+RECTANGLE_SITES_COUNT  int      true       2600
+RESET_AFTER_RECONFIG   bool     false      0
+SNAPPING_MODE          enum     false      

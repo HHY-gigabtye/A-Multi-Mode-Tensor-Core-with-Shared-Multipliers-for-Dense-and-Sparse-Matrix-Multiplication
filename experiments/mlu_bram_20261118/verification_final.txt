@@ -1,0 +1,2 @@
+PASS integrity: 11 main/baseline sources unchanged; only candidate MLU differs; 76 protected files unchanged.
+PASS log audit: five units and integration for both snapshots; 46 identical integration summary/coverage lines; RTL and RAM primitive cycle comparisons passed.

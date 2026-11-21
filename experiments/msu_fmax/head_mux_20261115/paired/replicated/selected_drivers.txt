@@ -1,0 +1,6 @@
+u_bridge/ctrl_q[is_sparse]_i_1	LUT3	u_bridge/ctrl_q_reg[is_sparse]_rep__18_10
+u_bridge/g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg_i_1	LUT4	u_bridge/rst_n_10
+u_bridge/g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg_i_1	LUT4	u_bridge/rst_n_16
+u_tensor_core/ctrl_q[result][4][7][31]_i_1_comp	LUT6	u_tensor_core/ctrl_q[result][4][7][31]_i_1_n_0
+u_tensor_core/ctrl_q[result][2][7][31]_i_3_comp	LUT6	u_tensor_core/ctrl_q[result][2][7][31]_i_3_n_0
+u_bridge/g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg_i_1	LUT4	u_bridge/q_reg[fifo][1][packet][payload][71]_3[1]

@@ -1,0 +1,340 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 18 23:51:38 2026
+# Process ID: 12484
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch
+# Command line: vivado.exe -mode batch -nojournal -log routed_refine.log -source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/refine_routed_only.tcl -tclargs C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/refined/routed.dcp C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine
+# Log file: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/refine_routed_only.tcl
+# if {$argc != 2} {error "Expected ROUTED_DCP NEW_OUTPUT_DIR"}
+# set ro_scripts [file normalize [file dirname [info script]]]
+# set ro_input [file normalize [lindex $argv 0]]
+# set ro_output [file normalize [lindex $argv 1]]
+# if {[file exists $ro_output]} {error "Preserve previous refinement"}
+# file mkdir $ro_output
+# set_param general.maxThreads 2
+# open_checkpoint $ro_input
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/refined/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 332.242 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.291 . Memory (MB): peak = 877.602 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1110 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1737.758 ; gain = 63.219
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1737.758 ; gain = 63.219
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1737.758 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 19d70603d
+----- Checksum: PlaceDB: e5b0344f ShapeSum: 6807f2d5 RouteDB: 4fb83919 
+open_checkpoint: Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1737.758 ; gain = 1405.516
+# if {[llength [get_clocks]] != 1 || abs([get_property PERIOD [get_clocks clk]] - 10.0) > 0.000001} {
+#     error "Expected original single 10.000 ns clock"
+# }
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:13 ; elapsed = 00:00:07 . Memory (MB): peak = 1796.531 ; gain = 58.773
+# set ro_previous [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+# set fd [open [file join $ro_output stages.csv] w]
+# puts $fd "stage,setup_ns,hold_ns,complete"
+# close $fd
+# foreach ro_stage {1 2 3} {
+#     set ro_stage_dir [file join $ro_output stage$ro_stage]
+#     file mkdir $ro_stage_dir
+#     cd $ro_stage_dir
+#     phys_opt_design -directive AggressiveExplore
+#     write_checkpoint routed.dcp
+#     report_route_status -file route_status.rpt
+#     report_timing_summary -max_paths 20 -report_unconstrained -file timing_summary_routed.rpt
+#     report_timing -max_paths 100 -input_pins -file critical_paths.rpt
+#     report_utilization -file utilization_routed.rpt
+#     report_drc -file drc_routed.rpt
+#     set ro_setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+#     set ro_hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+#     set fd [open route_status.rpt r]
+#     set ro_status [read $fd]
+#     close $fd
+#     set ro_complete 0
+#     if {[regexp {# of routable nets\.+\s*:\s*(\d+)} $ro_status all total] &&
+#         [regexp {# of fully routed nets\.+\s*:\s*(\d+)} $ro_status all routed] &&
+#         [regexp {# of nets with routing errors\.+\s*:\s*(\d+)} $ro_status all errors]} {
+#         set ro_complete [expr {$total == $routed && $errors == 0}]
+#     }
+#     set fd [open [file join $ro_output stages.csv] a]
+#     puts $fd "$ro_stage,$ro_setup,$ro_hold,$ro_complete"
+#     close $fd
+#     puts "ROUTED_REFINEMENT stage=$ro_stage setup=$ro_setup hold=$ro_hold complete=$ro_complete"
+#     if {!$ro_complete} {error "Physical optimization left incomplete routing; do not accept this stage"}
+#     if {$ro_setup >= 0.0 && $ro_hold >= 0.0} {
+#         close_project
+#         set argv [list [file join $ro_stage_dir routed.dcp] [file join $ro_stage_dir final_audit] 18]
+#         set argc 3
+#         source [file join $ro_scripts final_gate.tcl]
+#         break
+#     }
+#     if {$ro_setup <= $ro_previous + 0.001} {
+#         puts "STOP_NO_SETUP_IMPROVEMENT previous=$ro_previous current=$ro_setup"
+#         break
+#     }
+#     set ro_previous $ro_setup
+# }
+Command: phys_opt_design -directive AggressiveExplore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Vivado_Tcl 4-241] Physical synthesis in post route mode ( 100.0% nets are fully routed)
+INFO: [Vivado_Tcl 4-137] Directive used for phys_opt_design is: AggressiveExplore
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 1.00s |  WALL: 1.40s
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1828.324 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.378 | TNS=-240.659 | WHS=0.082 | THS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 23e0da5d8
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:09 . Memory (MB): peak = 1844.461 ; gain = 16.137
+
+Phase 2 Critical Path Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.378 | TNS=-240.659 | WHS=0.082 | THS=0.000 |
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/ctrl_q_reg[result_next][1][4]_34[1].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/head_select_q_reg[4]_rep_n_0_repN.
+INFO: [Physopt 32-710] Processed net u_tensor_core/ctrl_q[result_next][1][4][31]_i_1_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/ctrl_q[result_next][1][4][31]_i_1_comp_1.
+INFO: [Physopt 32-952] Improved path group WNS = -0.373. Path group: clk. Processed net: u_bridge/ctrl_q_reg[is_sparse]_rep__21_77.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/sparse_storage_q_reg[route][delta][4][0]_125[7].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/sparse_storage_q_reg[mul][b_count][1].
+INFO: [Physopt 32-710] Processed net u_tensor_core/sparse_d[7]. Critical path length was reduced through logic transformation on cell u_tensor_core/sparse_storage_q[route][delta][4][0][7]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.373. Path group: clk. Processed net: u_tensor_core/route_or895_return[7].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/sparse_storage_q_reg[route][delta][3][5]_117[15].
+INFO: [Physopt 32-710] Processed net u_tensor_core/sparse_storage_q[route][delta][3][5][15]_i_1_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/sparse_storage_q[route][delta][3][5][15]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.367. Path group: clk. Processed net: u_tensor_core/route_or892_return[15].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q_reg[pe][0][0][acc][3].
+INFO: [Physopt 32-952] Improved path group WNS = -0.366. Path group: clk. Processed net: u_bridge/head_select_q_reg[0]_rep_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q_reg[pe][7][6][acc][10].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/head_select_q[5].
+INFO: [Physopt 32-710] Processed net u_bridge/ctrl_q_reg[is_sparse]_rep__21_3[0]. Critical path length was reduced through logic transformation on cell u_bridge/dense_q[pe][7][6][acc][31]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.361. Path group: clk. Processed net: u_bridge/dense_q[pe][7][6][acc][31]_i_3_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/ctrl_q_reg[result][5][7][31]_0[19].
+INFO: [Physopt 32-710] Processed net u_tensor_core/ctrl_q[result][5][7][31]_i_1_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/ctrl_q[result][5][7][31]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.356. Path group: clk. Processed net: u_bridge/ctrl_q_reg[is_sparse]_rep__21_77.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/ctrl_q_reg[result][5][6][31]_0[16].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/q_reg[meta_count_n_0_][0]_repN_1.
+INFO: [Physopt 32-952] Improved path group WNS = -0.356. Path group: clk. Processed net: u_tensor_core/ctrl_q[result][4][7][31]_i_3_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/ctrl_q[result][4][7][31]_i_3_n_0.
+INFO: [Physopt 32-710] Processed net u_tensor_core/ctrl_q[result][4][7][31]_i_3_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/ctrl_q[result][4][7][31]_i_3_comp_1.
+INFO: [Physopt 32-952] Improved path group WNS = -0.351. Path group: clk. Processed net: u_bridge/q_reg[meta_count][0]_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/sparse_storage_q_reg[route][delta][7][1]_96[1].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/p_584_in.
+INFO: [Physopt 32-710] Processed net u_tensor_core/sparse_storage_q[route][delta][7][1][1]_i_1_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/sparse_storage_q[route][delta][7][1][1]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.344. Path group: clk. Processed net: u_tensor_core/route_or8120_return[1].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/ctrl_q_reg[result][1][7][31]_0[2].
+INFO: [Physopt 32-710] Processed net u_tensor_core/ctrl_q[result][2][3][31]_i_1_n_0. Critical path length was reduced through logic transformation on cell u_tensor_core/ctrl_q[result][2][3][31]_i_1_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.332. Path group: clk. Processed net: u_bridge/ctrl_q_reg[is_sparse]_rep__21_77.
+INFO: [Physopt 32-952] Improved path group WNS = -0.321. Path group: clk. Processed net: u_bridge/head_select_q_reg[0]_rep_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q[pe][0][0][acc][3]_i_1_n_0.
+INFO: [Physopt 32-952] Improved path group WNS = -0.318. Path group: clk. Processed net: u_bridge/q_reg[fifo][1][packet][payload][178]_0[67].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/q_reg[fifo][1][packet][payload][178]_0[67].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg_i_23_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg_i_33_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_sum[0][0]__0[3].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q_reg[pe][0][0][acc][3].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/head_select_q_reg[0]_rep_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q[pe][0][0][acc][3]_i_1_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/q_reg[fifo][1][packet][payload][178]_0[34].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_16_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_30_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_sum[0][0]__0[3].
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+Phase 2 Critical Path Optimization | Checksum: 23e0da5d8
+
+Time (s): cpu = 00:01:55 ; elapsed = 00:01:38 . Memory (MB): peak = 2134.539 ; gain = 306.215
+
+Phase 3 Hold Fix Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+INFO: [Physopt 32-66] No high hold slack nets found for hold slack optimization.
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+Phase 3 Hold Fix Optimization | Checksum: 23e0da5d8
+
+Time (s): cpu = 00:01:55 ; elapsed = 00:01:38 . Memory (MB): peak = 2134.539 ; gain = 306.215
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 2134.539 ; gain = 0.000
+INFO: [Physopt 32-669] Post Physical Optimization Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Critical Path  |          0.061  |         69.587  |            0  |              0  |                    12  |           0  |           1  |  00:01:24  |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Summary of Hold Fix Optimizations
+=================================
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization               |  WHS Gain (ns)  |  THS Gain (ns)  |  Added LUTs  |  Added FFs  |  Optimized Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT1 and ZHOLD Insertion   |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+|  Total                      |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 2134.539 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 12e16be82
+
+Time (s): cpu = 00:01:56 ; elapsed = 00:01:39 . Memory (MB): peak = 2134.539 ; gain = 306.215
+INFO: [Common 17-83] Releasing license: Implementation
+60 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:01:57 ; elapsed = 00:01:40 . Memory (MB): peak = 2134.539 ; gain = 338.008
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:06 ; elapsed = 00:00:03 . Memory (MB): peak = 2134.539 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine/stage1/routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 2134.539 ; gain = 0.000
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:15 ; elapsed = 00:00:09 . Memory (MB): peak = 2134.539 ; gain = 0.000
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 100 -nworst 1 -delay_type max -sort_by slack.
+Command: report_drc -file drc_routed.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine/stage1/drc_routed.rpt.
+report_drc completed successfully
+ROUTED_REFINEMENT stage=1 setup=-0.317 hold=0.082 complete=1
+Command: phys_opt_design -directive AggressiveExplore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Vivado_Tcl 4-241] Physical synthesis in post route mode ( 100.0% nets are fully routed)
+INFO: [Vivado_Tcl 4-137] Directive used for phys_opt_design is: AggressiveExplore
+
+Starting Initial Update Timing Task
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 2134.539 ; gain = 0.000
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 14.00s |  WALL: 8.31s
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 2134.539 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 12e16be82
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:03 . Memory (MB): peak = 2134.539 ; gain = 0.000
+
+Phase 2 Critical Path Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q_reg[pe][0][0][acc][3].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/head_select_q_reg[0]_rep_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q[pe][0][0][acc][3]_i_1_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/q_reg[fifo][1][packet][payload][178]_0[34].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_16_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_30_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_sum[0][0]__0[3].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q_reg[pe][0][0][acc][3].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/head_select_q_reg[0]_rep_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_q[pe][0][0][acc][3]_i_1_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/q_reg[fifo][1][packet][payload][178]_0[34].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_16_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_bridge/g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg_i_30_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk. Processed net: u_tensor_core/dense_sum[0][0]__0[3].
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+Phase 2 Critical Path Optimization | Checksum: 12e16be82
+
+Time (s): cpu = 00:00:49 ; elapsed = 00:00:38 . Memory (MB): peak = 2162.688 ; gain = 28.148
+
+Phase 3 Hold Fix Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+INFO: [Physopt 32-66] No high hold slack nets found for hold slack optimization.
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+Phase 3 Hold Fix Optimization | Checksum: 12e16be82
+
+Time (s): cpu = 00:00:49 ; elapsed = 00:00:39 . Memory (MB): peak = 2162.688 ; gain = 28.148
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.026 . Memory (MB): peak = 2162.688 ; gain = 0.000
+INFO: [Physopt 32-669] Post Physical Optimization Timing Summary | WNS=-0.317 | TNS=-171.073 | WHS=0.082 | THS=0.000 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Critical Path  |          0.000  |          0.000  |            0  |              0  |                     0  |           0  |           1  |  00:00:35  |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Summary of Hold Fix Optimizations
+=================================
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization               |  WHS Gain (ns)  |  THS Gain (ns)  |  Added LUTs  |  Added FFs  |  Optimized Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT1 and ZHOLD Insertion   |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+|  Total                      |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 2162.688 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 12e16be82
+
+Time (s): cpu = 00:00:50 ; elapsed = 00:00:40 . Memory (MB): peak = 2162.688 ; gain = 28.148
+INFO: [Common 17-83] Releasing license: Implementation
+98 Infos, 3 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:01:03 ; elapsed = 00:00:48 . Memory (MB): peak = 2162.688 ; gain = 28.148
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:07 ; elapsed = 00:00:03 . Memory (MB): peak = 2162.688 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine/stage2/routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 2162.688 ; gain = 0.000
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:15 ; elapsed = 00:00:09 . Memory (MB): peak = 2162.688 ; gain = 0.000
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 100 -nworst 1 -delay_type max -sort_by slack.
+Command: report_drc -file drc_routed.rpt
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/early_prefetch/routed_refine/stage2/drc_routed.rpt.
+report_drc completed successfully
+ROUTED_REFINEMENT stage=2 setup=-0.317 hold=0.082 complete=1
+STOP_NO_SETUP_IMPROVEMENT previous=-0.317 current=-0.317
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 18 23:55:38 2026...

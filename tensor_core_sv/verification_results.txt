@@ -1,0 +1,7 @@
+ALL PASS C/SV: 136136 records, 169 resets, 13 RTL rejection cases
+  published=6440 consumed=6392 overlap_starts=1609
+  pop_and_push=1 consume_and_start=151 full_fifo_cycles=3480
+- tensor_core_sv/tb_tensor_core.sv:157: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.49
+- Verilator: $finish at 1ms; walltime 8.869 s; speed 153.704 us/s
+- Verilator: cpu 8.857 s on 1 threads; allocated 6 MB

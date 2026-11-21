@@ -1,0 +1,18 @@
+diff --git a/msu_sv/rtl/msu.sv b/experiments/mlu_bram_100mhz_20261118/msu_addr_reduce/src/msu_sv/rtl/msu.sv
+index 02b8138..cb851c8 100644
+--- a/msu_sv/rtl/msu.sv
++++ b/experiments/mlu_bram_100mhz_20261118/msu_addr_reduce/src/msu_sv/rtl/msu.sv
+@@ -51,8 +51,11 @@ module msu (
+ 
+   assign capacity_ready = (count_q < 2'd2);
+   // 32-byte alignment and a complete 256-byte address span.
+-  assign addr_bad = (result_meta.dst_addr[4:0] != 5'd0) ||
+-                   (result_meta.dst_addr > 64'hffff_ffff_ffff_ff00);
++  // addr > UINT64_MAX-255 iff its upper 56 bits are all ones and its
++  // low byte is nonzero. Express the predicate without a wide comparator
++  // carry chain; the last legal aligned base remains ffff_ffff_ffff_ff00.
++  assign addr_bad = (|result_meta.dst_addr[4:0]) ||
++                   ((&result_meta.dst_addr[63:8]) && (|result_meta.dst_addr[7:0]));
+   // Like C, metadata is checked only when the input has capacity to accept.
+   always_comb begin : check_format
+     status = IO_OK;

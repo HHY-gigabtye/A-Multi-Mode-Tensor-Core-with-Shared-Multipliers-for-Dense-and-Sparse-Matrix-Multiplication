@@ -1,0 +1,57 @@
+diff --git a/tensor_core_sv/tensor_core.sv b/experiments/mlu_bram_100mhz_20261118/direct_guard/src/tensor_core_sv/tensor_core.sv
+index 2629fd5..51c75cb 100644
+--- a/tensor_core_sv/tensor_core.sv
++++ b/experiments/mlu_bram_100mhz_20261118/direct_guard/src/tensor_core_sv/tensor_core.sv
+@@ -27,12 +27,13 @@ module tensor_core (
+   tc_sparse_state_t sparse_q, sparse_d;
+   tc_sparse_state_t sparse_storage_q;
+   tc_tick_info_t info_q, info_d;
++  (* keep = "true", max_fanout = 128 *) wire edge_commit;
+ 
+   // The existing MUL-stage product registers can live inside the DSPs when
+   // their data bits do not need asynchronous reset. The asynchronously reset
+   // MUL metadata masks every unused product to zero, preserving the complete
+   // visible sparse_q state on reset, bubbles, epochs, and rejected edges.
+-  wire sparse_mul_capture = rst_n && (status == TC_OK) && in_valid &&
++  wire sparse_mul_capture = rst_n && edge_commit && in_valid &&
+                             in_packet.is_sparse;
+   wire [7:0][7:0][15:0] sparse_product_q;
+   always_comb begin : sparse_state_view
+@@ -197,6 +198,16 @@ module tensor_core (
+     end
+   end
+ 
++  // The update permit is the conjunction of the original contract checks.
++  // Keep status encoding/error precedence above for diagnostics; storage
++  // need not encode a nonzero error and then decode it back to a permit.
++  // No invalid input is accepted, including a malformed idle sparse epoch.
++  assign edge_commit =
++      !in_valid || (in_ready &&
++          (!in_packet.is_sparse ||
++           (valid_vector(in_packet.payload.sparse.a.count, in_packet.payload.sparse.a.index) &&
++            valid_vector(in_packet.payload.sparse.b.count, in_packet.payload.sparse.b.index))));
++
+   // Result storage depends only on OLD control/accumulator state. Keep its
+   // selection independent of the sequential-looking ctrl_d bookkeeping below.
+   // Pop precedes publish; a new idle epoch clears both physical slots. Invalid
+@@ -212,9 +223,9 @@ module tensor_core (
+   wire result_shift = result_pop && (ctrl_q.result_count == 2'd2);
+   // Mapping hints allow separate local drivers for the wide result enables.
+   // They add no pipeline register and do not change the acceptance contract.
+-  (* max_fanout = 128 *) wire result_head_write = (status == TC_OK) &&
++  (* max_fanout = 128 *) wire result_head_write = edge_commit &&
+       (result_epoch_clear || result_head_publish || result_shift);
+-  (* max_fanout = 128 *) wire result_tail_write = (status == TC_OK) &&
++  (* max_fanout = 128 *) wire result_tail_write = edge_commit &&
+       (result_epoch_clear || result_tail_publish);
+   tc_matrix_t result_head_d, result_tail_d;
+   always_comb begin : result_storage
+@@ -263,7 +274,7 @@ module tensor_core (
+     old_result_valid = ctrl_q.result_valid;
+     run_pipeline = 1'b0;
+ 
+-    if (status == TC_OK) begin
++    if (edge_commit) begin
+       // FIFO pop first. Newly published data cannot be consumed on this edge.
+       if (old_result_valid && result_ready) begin
+         ctrl_d.result_count = ctrl_d.result_count - 2'd1;

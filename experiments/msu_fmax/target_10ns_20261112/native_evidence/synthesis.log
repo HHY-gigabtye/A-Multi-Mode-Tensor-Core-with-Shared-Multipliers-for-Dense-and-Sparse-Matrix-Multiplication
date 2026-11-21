@@ -1,0 +1,1294 @@
+
+*** Running vivado
+    with args -log sparse_tensor_core_top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source sparse_tensor_core_top.tcl
+
+
+
+****** Vivado v2022.2 (64-bit)
+  **** SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source sparse_tensor_core_top.tcl -notrace
+source C:/Users/Jason/Desktop/TC/project_integration/scripts/init_12ns.tcl
+Command: synth_design -top sparse_tensor_core_top -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 30008
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [C:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1232.328 ; gain = 408.090
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'sparse_tensor_core_top' [C:/Users/Jason/Desktop/TC/integration_sv/rtl/sparse_tensor_core_top.sv:5]
+INFO: [Synth 8-6157] synthesizing module 'mlu' [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:9]
+INFO: [Synth 8-6155] done synthesizing module 'mlu' (0#1) [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:9]
+INFO: [Synth 8-6157] synthesizing module 'du_tia' [C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia.sv:4]
+INFO: [Synth 8-226] default block is never used [C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia_pkg.sv:222]
+INFO: [Synth 8-226] default block is never used [C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia_pkg.sv:222]
+INFO: [Synth 8-6155] done synthesizing module 'du_tia' (0#1) [C:/Users/Jason/Desktop/TC/du_tia_sv/rtl/du_tia.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'du_tc_bridge' [C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'du_tc_bridge' (0#1) [C:/Users/Jason/Desktop/TC/fifo_sv/du_tc_bridge.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'tensor_core' [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:9]
+INFO: [Synth 8-6155] done synthesizing module 'tensor_core' (0#1) [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:9]
+INFO: [Synth 8-6157] synthesizing module 'msu' [C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv:10]
+INFO: [Synth 8-6155] done synthesizing module 'msu' (0#1) [C:/Users/Jason/Desktop/TC/msu_sv/rtl/msu.sv:10]
+INFO: [Synth 8-6155] done synthesizing module 'sparse_tensor_core_top' (0#1) [C:/Users/Jason/Desktop/TC/integration_sv/rtl/sparse_tensor_core_top.sv:5]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][159] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][158] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][157] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][156] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][155] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][154] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][153] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][152] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][151] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][150] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][149] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][148] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][147] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][146] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][145] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][1][image][144] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][159] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][158] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][157] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][156] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][155] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][154] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][153] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][152] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][151] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][150] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][149] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][148] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][147] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][146] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][145] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[buffer][0][image][144] was removed.  [C:/Users/Jason/Desktop/TC/mlu_sv/mlu.sv:189]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][5][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][4][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][3][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][2][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][1][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][6][0][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][5][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][5][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][5][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][4][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][3][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][2][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][1][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][5][0][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][5][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][5][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][5][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][4][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][4][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][4][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][3][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][2][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][1][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][4][0][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][5][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][5][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][5][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][4][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][4][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][4][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][3][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][3][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][3][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][2][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][1][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][3][0][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][5][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][5][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][5][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][4][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][4][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][4][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][3][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][3][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][3][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][2][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][2][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][2][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][1][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][2][0][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][1][6][valid] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][1][6][last] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+WARNING: [Synth 8-6014] Unused sequential element dense_q_reg[a_delay][1][6][value] was removed.  [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Common 17-14] Message 'Synth 8-6014' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.717 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/Jason/Desktop/TC/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc]
+Finished Parsing XDC File [C:/Users/Jason/Desktop/TC/project_integration/project_integration.srcs/constrs_1/new/constraint.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.780 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [C:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:39 ; elapsed = 00:00:39 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:07 ; elapsed = 00:01:09 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   64 Bit       Adders := 1     
+	   2 Input   32 Bit       Adders := 64    
+	  64 Input    7 Bit       Adders := 2     
+	   2 Input    5 Bit       Adders := 2     
+	   2 Input    4 Bit       Adders := 4     
+	   3 Input    4 Bit       Adders := 4     
+	   8 Input    4 Bit       Adders := 2     
+	   4 Input    4 Bit       Adders := 3     
+	   5 Input    4 Bit       Adders := 3     
+	   6 Input    4 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 9     
+	   3 Input    3 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 10    
+	   3 Input    2 Bit       Adders := 2     
+	   2 Input    1 Bit       Adders := 2     
+	   3 Input    1 Bit       Adders := 8     
++---XORs : 
+	   2 Input      1 Bit         XORs := 3     
++---Registers : 
+	              232 Bit    Registers := 1     
+	              196 Bit    Registers := 1     
+	              184 Bit    Registers := 10    
+	               96 Bit    Registers := 2     
+	               64 Bit    Registers := 19    
+	               32 Bit    Registers := 402   
+	               16 Bit    Registers := 64    
+	                8 Bit    Registers := 477   
+	                7 Bit    Registers := 1     
+	                4 Bit    Registers := 5     
+	                3 Bit    Registers := 23    
+	                2 Bit    Registers := 11    
+	                1 Bit    Registers := 236   
++---Muxes : 
+	   2 Input  256 Bit        Muxes := 1     
+	   4 Input  232 Bit        Muxes := 1     
+	   2 Input  232 Bit        Muxes := 3     
+	   4 Input  196 Bit        Muxes := 1     
+	   2 Input  196 Bit        Muxes := 1     
+	   2 Input  184 Bit        Muxes := 4     
+	   2 Input   96 Bit        Muxes := 1     
+	   2 Input   64 Bit        Muxes := 23    
+	   2 Input   60 Bit        Muxes := 1     
+	   2 Input   32 Bit        Muxes := 908   
+	   2 Input   24 Bit        Muxes := 14    
+	   2 Input   16 Bit        Muxes := 192   
+	   2 Input    8 Bit        Muxes := 2352  
+	   4 Input    8 Bit        Muxes := 2     
+	   2 Input    7 Bit        Muxes := 4     
+	   2 Input    4 Bit        Muxes := 15    
+	   3 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 132   
+	   4 Input    3 Bit        Muxes := 1     
+	   6 Input    3 Bit        Muxes := 1     
+	  16 Input    3 Bit        Muxes := 12    
+	   2 Input    2 Bit        Muxes := 43    
+	   4 Input    2 Bit        Muxes := 1     
+	   3 Input    2 Bit        Muxes := 2     
+	  16 Input    2 Bit        Muxes := 8     
+	   2 Input    1 Bit        Muxes := 2603  
+	   4 Input    1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+DSP Report: Generating DSP dense_sum[2][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][3] is absorbed into DSP dense_sum[2][3].
+DSP Report: operator mul_int818_return is absorbed into DSP dense_sum[2][3].
+DSP Report: Generating DSP dense_sum[4][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][5] is absorbed into DSP dense_sum[4][5].
+DSP Report: operator mul_int836_return is absorbed into DSP dense_sum[4][5].
+DSP Report: Generating DSP dense_sum[7][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][3] is absorbed into DSP dense_sum[7][3].
+DSP Report: operator mul_int858_return is absorbed into DSP dense_sum[7][3].
+DSP Report: Generating DSP dense_sum[1][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][7] is absorbed into DSP dense_sum[1][7].
+DSP Report: operator mul_int814_return is absorbed into DSP dense_sum[1][7].
+DSP Report: Generating DSP dense_sum[6][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][7] is absorbed into DSP dense_sum[6][7].
+DSP Report: operator mul_int854_return is absorbed into DSP dense_sum[6][7].
+DSP Report: Generating DSP dense_sum[3][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][0] is absorbed into DSP dense_sum[3][0].
+DSP Report: operator mul_int823_return is absorbed into DSP dense_sum[3][0].
+DSP Report: Generating DSP dense_sum[5][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][0] is absorbed into DSP dense_sum[5][0].
+DSP Report: operator mul_int839_return is absorbed into DSP dense_sum[5][0].
+DSP Report: Generating DSP dense_sum[0][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][7] is absorbed into DSP dense_sum[0][7].
+DSP Report: operator mul_int86_return is absorbed into DSP dense_sum[0][7].
+DSP Report: Generating DSP dense_sum[3][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][4] is absorbed into DSP dense_sum[3][4].
+DSP Report: operator mul_int827_return is absorbed into DSP dense_sum[3][4].
+DSP Report: Generating DSP dense_sum[2][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][7] is absorbed into DSP dense_sum[2][7].
+DSP Report: operator mul_int822_return is absorbed into DSP dense_sum[2][7].
+DSP Report: Generating DSP dense_sum[0][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][0] is absorbed into DSP dense_sum[0][0].
+DSP Report: operator mul_int8_return is absorbed into DSP dense_sum[0][0].
+DSP Report: Generating DSP dense_sum[5][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][2] is absorbed into DSP dense_sum[5][2].
+DSP Report: operator mul_int841_return is absorbed into DSP dense_sum[5][2].
+DSP Report: Generating DSP dense_sum[6][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][3] is absorbed into DSP dense_sum[6][3].
+DSP Report: operator mul_int850_return is absorbed into DSP dense_sum[6][3].
+DSP Report: Generating DSP dense_sum[0][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][5] is absorbed into DSP dense_sum[0][5].
+DSP Report: operator mul_int84_return is absorbed into DSP dense_sum[0][5].
+DSP Report: Generating DSP dense_sum[3][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][6] is absorbed into DSP dense_sum[3][6].
+DSP Report: operator mul_int829_return is absorbed into DSP dense_sum[3][6].
+DSP Report: Generating DSP dense_sum[5][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][7] is absorbed into DSP dense_sum[5][7].
+DSP Report: operator mul_int846_return is absorbed into DSP dense_sum[5][7].
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int862_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int860_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int861_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int858_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int856_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int857_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int859_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[7].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[7].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int855_return is absorbed into DSP g_arithmetic_row[7].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int846_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int844_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int845_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int842_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int840_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int841_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int843_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[5].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[5].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int839_return is absorbed into DSP g_arithmetic_row[5].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int854_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int852_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int853_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int850_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int848_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int849_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int851_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[6].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[6].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int847_return is absorbed into DSP g_arithmetic_row[6].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int830_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int828_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int829_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int826_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int824_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int825_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int827_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[3].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[3].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int823_return is absorbed into DSP g_arithmetic_row[3].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int814_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int812_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int813_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int810_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int88_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int89_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int811_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[1].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[1].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int87_return is absorbed into DSP g_arithmetic_row[1].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int822_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int820_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int821_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int818_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int816_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int817_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int819_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[2].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[2].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int815_return is absorbed into DSP g_arithmetic_row[2].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int838_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int836_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int837_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int834_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int832_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int833_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int835_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[4].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[4].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int831_return is absorbed into DSP g_arithmetic_row[4].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[7].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[7].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[7].product_q_reg.
+DSP Report: operator mul_int86_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[7].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[5].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[5].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[5].product_q_reg.
+DSP Report: operator mul_int84_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[5].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[6].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[6].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[6].product_q_reg.
+DSP Report: operator mul_int85_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[6].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[3].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[3].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[3].product_q_reg.
+DSP Report: operator mul_int82_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[3].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[1].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[1].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[1].product_q_reg.
+DSP Report: operator mul_int80_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[1].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[2].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[2].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[2].product_q_reg.
+DSP Report: operator mul_int81_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[2].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[4].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[4].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[4].product_q_reg.
+DSP Report: operator mul_int83_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[4].product_q_reg.
+DSP Report: Generating DSP g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg, operation Mode is: (A*B)'.
+DSP Report: register g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg.
+DSP Report: operator mul_int8_return is absorbed into DSP g_arithmetic_row[0].g_arithmetic_column[0].product_q_reg.
+DSP Report: Generating DSP dense_sum[7][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][7] is absorbed into DSP dense_sum[7][7].
+DSP Report: operator mul_int862_return is absorbed into DSP dense_sum[7][7].
+DSP Report: Generating DSP dense_sum[1][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][4] is absorbed into DSP dense_sum[1][4].
+DSP Report: operator mul_int811_return is absorbed into DSP dense_sum[1][4].
+DSP Report: Generating DSP dense_sum[6][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][6] is absorbed into DSP dense_sum[6][6].
+DSP Report: operator mul_int853_return is absorbed into DSP dense_sum[6][6].
+DSP Report: Generating DSP dense_sum[7][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][6] is absorbed into DSP dense_sum[7][6].
+DSP Report: operator mul_int861_return is absorbed into DSP dense_sum[7][6].
+DSP Report: Generating DSP dense_sum[2][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][0] is absorbed into DSP dense_sum[2][0].
+DSP Report: operator mul_int815_return is absorbed into DSP dense_sum[2][0].
+DSP Report: Generating DSP dense_sum[7][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][5] is absorbed into DSP dense_sum[7][5].
+DSP Report: operator mul_int860_return is absorbed into DSP dense_sum[7][5].
+DSP Report: Generating DSP dense_sum[5][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][6] is absorbed into DSP dense_sum[5][6].
+DSP Report: operator mul_int845_return is absorbed into DSP dense_sum[5][6].
+DSP Report: Generating DSP dense_sum[4][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][7] is absorbed into DSP dense_sum[4][7].
+DSP Report: operator mul_int838_return is absorbed into DSP dense_sum[4][7].
+DSP Report: Generating DSP dense_sum[4][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][6] is absorbed into DSP dense_sum[4][6].
+DSP Report: operator mul_int837_return is absorbed into DSP dense_sum[4][6].
+DSP Report: Generating DSP dense_sum[2][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][2] is absorbed into DSP dense_sum[2][2].
+DSP Report: operator mul_int817_return is absorbed into DSP dense_sum[2][2].
+DSP Report: Generating DSP dense_sum[2][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][1] is absorbed into DSP dense_sum[2][1].
+DSP Report: operator mul_int816_return is absorbed into DSP dense_sum[2][1].
+DSP Report: Generating DSP dense_sum[7][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][2] is absorbed into DSP dense_sum[7][2].
+DSP Report: operator mul_int857_return is absorbed into DSP dense_sum[7][2].
+DSP Report: Generating DSP dense_sum[5][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][3] is absorbed into DSP dense_sum[5][3].
+DSP Report: operator mul_int842_return is absorbed into DSP dense_sum[5][3].
+DSP Report: Generating DSP dense_sum[1][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][6] is absorbed into DSP dense_sum[1][6].
+DSP Report: operator mul_int813_return is absorbed into DSP dense_sum[1][6].
+DSP Report: Generating DSP dense_sum[1][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][5] is absorbed into DSP dense_sum[1][5].
+DSP Report: operator mul_int812_return is absorbed into DSP dense_sum[1][5].
+DSP Report: Generating DSP dense_sum[6][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][5] is absorbed into DSP dense_sum[6][5].
+DSP Report: operator mul_int852_return is absorbed into DSP dense_sum[6][5].
+DSP Report: Generating DSP dense_sum[1][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][1] is absorbed into DSP dense_sum[1][1].
+DSP Report: operator mul_int88_return is absorbed into DSP dense_sum[1][1].
+DSP Report: Generating DSP dense_sum[3][7], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][7] is absorbed into DSP dense_sum[3][7].
+DSP Report: operator mul_int830_return is absorbed into DSP dense_sum[3][7].
+DSP Report: Generating DSP dense_sum[0][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][4] is absorbed into DSP dense_sum[0][4].
+DSP Report: operator mul_int83_return is absorbed into DSP dense_sum[0][4].
+DSP Report: Generating DSP dense_sum[0][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][3] is absorbed into DSP dense_sum[0][3].
+DSP Report: operator mul_int82_return is absorbed into DSP dense_sum[0][3].
+DSP Report: Generating DSP dense_sum[2][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][4] is absorbed into DSP dense_sum[2][4].
+DSP Report: operator mul_int819_return is absorbed into DSP dense_sum[2][4].
+DSP Report: Generating DSP dense_sum[3][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][2] is absorbed into DSP dense_sum[3][2].
+DSP Report: operator mul_int825_return is absorbed into DSP dense_sum[3][2].
+DSP Report: Generating DSP dense_sum[2][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][5] is absorbed into DSP dense_sum[2][5].
+DSP Report: operator mul_int820_return is absorbed into DSP dense_sum[2][5].
+DSP Report: Generating DSP dense_sum[2][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[2][6] is absorbed into DSP dense_sum[2][6].
+DSP Report: operator mul_int821_return is absorbed into DSP dense_sum[2][6].
+DSP Report: Generating DSP dense_sum[0][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][1] is absorbed into DSP dense_sum[0][1].
+DSP Report: operator mul_int80_return is absorbed into DSP dense_sum[0][1].
+DSP Report: Generating DSP dense_sum[3][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][1] is absorbed into DSP dense_sum[3][1].
+DSP Report: operator mul_int824_return is absorbed into DSP dense_sum[3][1].
+DSP Report: Generating DSP dense_sum[6][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][2] is absorbed into DSP dense_sum[6][2].
+DSP Report: operator mul_int849_return is absorbed into DSP dense_sum[6][2].
+DSP Report: Generating DSP dense_sum[6][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][4] is absorbed into DSP dense_sum[6][4].
+DSP Report: operator mul_int851_return is absorbed into DSP dense_sum[6][4].
+DSP Report: Generating DSP dense_sum[5][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][5] is absorbed into DSP dense_sum[5][5].
+DSP Report: operator mul_int844_return is absorbed into DSP dense_sum[5][5].
+DSP Report: Generating DSP dense_sum[5][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][4] is absorbed into DSP dense_sum[5][4].
+DSP Report: operator mul_int843_return is absorbed into DSP dense_sum[5][4].
+DSP Report: Generating DSP dense_sum[7][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][1] is absorbed into DSP dense_sum[7][1].
+DSP Report: operator mul_int856_return is absorbed into DSP dense_sum[7][1].
+DSP Report: Generating DSP dense_sum[7][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][4] is absorbed into DSP dense_sum[7][4].
+DSP Report: operator mul_int859_return is absorbed into DSP dense_sum[7][4].
+DSP Report: Generating DSP dense_sum[4][4], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][4] is absorbed into DSP dense_sum[4][4].
+DSP Report: operator mul_int835_return is absorbed into DSP dense_sum[4][4].
+DSP Report: Generating DSP dense_sum[4][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][3] is absorbed into DSP dense_sum[4][3].
+DSP Report: operator mul_int834_return is absorbed into DSP dense_sum[4][3].
+DSP Report: Generating DSP dense_sum[4][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][2] is absorbed into DSP dense_sum[4][2].
+DSP Report: operator mul_int833_return is absorbed into DSP dense_sum[4][2].
+DSP Report: Generating DSP dense_sum[4][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][1] is absorbed into DSP dense_sum[4][1].
+DSP Report: operator mul_int832_return is absorbed into DSP dense_sum[4][1].
+DSP Report: Generating DSP dense_sum[1][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][3] is absorbed into DSP dense_sum[1][3].
+DSP Report: operator mul_int810_return is absorbed into DSP dense_sum[1][3].
+DSP Report: Generating DSP dense_sum[1][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][0] is absorbed into DSP dense_sum[1][0].
+DSP Report: operator mul_int87_return is absorbed into DSP dense_sum[1][0].
+DSP Report: Generating DSP dense_sum[3][5], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][5] is absorbed into DSP dense_sum[3][5].
+DSP Report: operator mul_int828_return is absorbed into DSP dense_sum[3][5].
+DSP Report: Generating DSP dense_sum[3][3], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[3][3] is absorbed into DSP dense_sum[3][3].
+DSP Report: operator mul_int826_return is absorbed into DSP dense_sum[3][3].
+DSP Report: Generating DSP dense_sum[0][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][2] is absorbed into DSP dense_sum[0][2].
+DSP Report: operator mul_int81_return is absorbed into DSP dense_sum[0][2].
+DSP Report: Generating DSP dense_sum[4][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[4][0] is absorbed into DSP dense_sum[4][0].
+DSP Report: operator mul_int831_return is absorbed into DSP dense_sum[4][0].
+DSP Report: Generating DSP dense_sum[5][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[5][1] is absorbed into DSP dense_sum[5][1].
+DSP Report: operator mul_int840_return is absorbed into DSP dense_sum[5][1].
+DSP Report: Generating DSP dense_sum[6][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][0] is absorbed into DSP dense_sum[6][0].
+DSP Report: operator mul_int847_return is absorbed into DSP dense_sum[6][0].
+DSP Report: Generating DSP dense_sum[6][1], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[6][1] is absorbed into DSP dense_sum[6][1].
+DSP Report: operator mul_int848_return is absorbed into DSP dense_sum[6][1].
+DSP Report: Generating DSP dense_sum[7][0], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[7][0] is absorbed into DSP dense_sum[7][0].
+DSP Report: operator mul_int855_return is absorbed into DSP dense_sum[7][0].
+DSP Report: Generating DSP dense_sum[1][2], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[1][2] is absorbed into DSP dense_sum[1][2].
+DSP Report: operator mul_int89_return is absorbed into DSP dense_sum[1][2].
+DSP Report: Generating DSP dense_sum[0][6], operation Mode is: C+A*B.
+DSP Report: operator dense_sum[0][6] is absorbed into DSP dense_sum[0][6].
+DSP Report: operator mul_int85_return is absorbed into DSP dense_sum[0][6].
+WARNING: [Synth 8-3917] design mlu has port read_beats[1] driven by constant 0
+WARNING: [Synth 8-3917] design mlu has port status[2] driven by constant 0
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s1_comb.result" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][6]' (FDCE) to 'u_bridge/q_reg[side][0][k][7]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][7]' (FDCE) to 'u_bridge/q_reg[side][0][k][5]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][5]' (FDCE) to 'u_bridge/q_reg[side][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][0][k][4]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][6]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][7]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][5]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][4]' (FDCE) to 'u_bridge/q_reg[side][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][1][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][17]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][20]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][23]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][24]' (FDC) to 'u_du_tia/s1_q_reg[payload][25]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][25]' (FDC) to 'u_du_tia/s1_q_reg[payload][29]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][26]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][7]' (FDC) to 'u_du_tia/s1_q_reg[payload][8]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][9]' (FDC) to 'u_du_tia/s1_q_reg[payload][10]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][10]' (FDC) to 'u_du_tia/s1_q_reg[payload][11]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][11]' (FDC) to 'u_du_tia/s1_q_reg[payload][14]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][47]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][50]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][53]' (FDC) to 'u_du_tia/s1_q_reg[payload][56]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][54]' (FDC) to 'u_du_tia/s1_q_reg[payload][55]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][55]' (FDC) to 'u_du_tia/s1_q_reg[payload][59]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\u_du_tia/s1_q_reg[payload][56] )
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][37]' (FDC) to 'u_du_tia/s1_q_reg[payload][38]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][39]' (FDC) to 'u_du_tia/s1_q_reg[payload][40]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][40]' (FDC) to 'u_du_tia/s1_q_reg[payload][41]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s1_q_reg[payload][41]' (FDC) to 'u_du_tia/s1_q_reg[payload][44]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][6]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][7]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][5]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][4]' (FDCE) to 'u_bridge/q_reg[side][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][6]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][7]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][5]' (FDCE) to 'u_bridge/q_reg[side][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][4]' (FDCE) to 'u_bridge/q_reg[side][3][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][6]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][7]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][5]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][4]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][1][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][2][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][3][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][4][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][5][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][6][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][k][4]' (FDCE) to 'u_bridge/q_reg[fifo][7][k][3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][2][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][19]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][21]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s2_q_reg[packet][payload][22]' (FDC) to 'u_du_tia/s2_q_reg[packet][payload][23]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[side][3][k][3]' (FDCE) to 'u_bridge/q_reg[side][0][k][3]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][19]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][21]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_du_tia/s3_q_reg[packet][payload][22]' (FDC) to 'u_du_tia/s3_q_reg[packet][payload][23]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[side][0][k][3] )
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][19]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][20]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][21]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][22]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][0][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][0][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][1][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][1][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][2][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][2][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][3][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][3][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][4][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][4][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][5][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][5][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][6][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][6][packet][payload][23]'
+INFO: [Synth 8-3886] merging instance 'u_bridge/q_reg[fifo][7][packet][payload][22]' (FDCE) to 'u_bridge/q_reg[fifo][7][packet][payload][23]'
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][0][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][1][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][2][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][3][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][4][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][5][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][6][k][3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (u_bridge/\q_reg[fifo][7][k][3] )
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:50 ; elapsed = 00:01:53 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | (A*B)'      | 8      | 8      | -      | -      | 16     | 0    | 0    | -    | -    | -     | 1    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|tensor_core | C+A*B       | 8      | 8      | 32     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:59 ; elapsed = 00:02:02 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:04:52 ; elapsed = 00:04:56 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [C:/Users/Jason/Desktop/TC/tensor_core_sv/tensor_core.sv:446]
+INFO: [Common 17-14] Message 'Synth 8-5844' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:05:19 ; elapsed = 00:05:35 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:05:33 ; elapsed = 00:05:51 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:05:33 ; elapsed = 00:05:51 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:05:40 ; elapsed = 00:05:58 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:05:40 ; elapsed = 00:05:58 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:05:49 ; elapsed = 00:06:07 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:05:49 ; elapsed = 00:06:07 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++-----------------------+-------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name            | RTL Name                      | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++-----------------------+-------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|sparse_tensor_core_top | u_bridge/q_reg[side][3][k][2] | 4      | 101   | YES          | NO                 | YES               | 101    | 0       | 
++-----------------------+-------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | (A*B)'      | 30     | 18     | -      | -      | 16     | 0    | 0    | -    | -    | -     | 0    | 1    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
+|tensor_core | Dynamic     | -      | -      | -      | -      | 32     | -    | -    | -    | -    | -     | 0    | 0    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |CARRY4  |   554|
+|2     |DSP48E1 |   128|
+|4     |LUT1    |    70|
+|5     |LUT2    |  1994|
+|6     |LUT3    |  4905|
+|7     |LUT4    | 10488|
+|8     |LUT5    |  2616|
+|9     |LUT6    | 13508|
+|10    |MUXF7   |   912|
+|11    |MUXF8   |   122|
+|12    |SRL16E  |   101|
+|13    |FDCE    | 21359|
+|14    |FDRE    |   101|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:05:49 ; elapsed = 00:06:07 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:05:16 ; elapsed = 00:06:01 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+Synthesis Optimization Complete : Time (s): cpu = 00:05:49 ; elapsed = 00:06:09 . Memory (MB): peak = 2478.320 ; gain = 1654.082
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.517 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1716 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete, checksum: a8dd2d53
+INFO: [Common 17-83] Releasing license: Synthesis
+267 Infos, 102 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:05:59 ; elapsed = 00:06:20 . Memory (MB): peak = 2478.320 ; gain = 2083.523
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/project_integration/project_integration.runs/synth_10ns/sparse_tensor_core_top.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 2478.320 ; gain = 0.000
+INFO: [runtcl-4] Executing : report_utilization -file sparse_tensor_core_top_utilization_synth.rpt -pb sparse_tensor_core_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 12 18:17:11 2026...

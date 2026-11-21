@@ -1,0 +1,13 @@
+Branch: main
+HEAD: 92c6e44bd003e27ef9b406d7e7d3a6393b13e3db
+Tracked working-tree diff: empty.
+Production sources matching the independently audited 100 MHz build: 11.
+Verified immutable snapshot files across five trials: 55.
+Protected reference/test/vector files unchanged: 76.
+Final live unit-then-integration regression: exit 0, completed 2026-11-15 18:40:43 UTC+08:00.
+All 56 selected summary/coverage lines match the baseline in each candidate and final live run.
+Distributed-flat implementation: exit 0, completed 2026-11-15 19:00:11 UTC+08:00; setup FAILED.
+Reopened refined checkpoint audit: exit 0, completed 2026-11-15 19:01:48 UTC+08:00.
+Refined audit at 10.000 ns: WNS -0.092, TNS -0.263, 11 setup failures, WHS +0.146, THS 0, WPWS +3.750.
+The audit exit code indicates report completion, not a timing pass.
+No new branch, worktree, commit, merge or push. Production remains the original baseline.

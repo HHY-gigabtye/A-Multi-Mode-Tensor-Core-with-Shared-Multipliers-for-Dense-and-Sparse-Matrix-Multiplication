@@ -1,0 +1,701 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Thu Nov 19 00:35:44 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_cells -hierarchical -filter {IS_SEQUENTIAL == 1 && NAME =~ u_msu/*}] -max_paths 10 -input_pins -file msu.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.274ns  (required time - arrival time)
+  Source:                 u_msu/row_q_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/events_q_reg[completed][tile_id][2]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.719ns  (logic 0.642ns (6.605%)  route 9.077ns (93.395%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_msu/clk
+    SLICE_X26Y92         FDCE                                         r  u_msu/row_q_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X26Y92         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_msu/row_q_reg[0]/Q
+                         net (fo=120, routed)         9.077    10.568    u_msu/row_q_reg_n_0_[0]
+    SLICE_X58Y17                                                      r  u_msu/events_q[completed][tile_id][2]_i_1/I2
+    SLICE_X58Y17         LUT6 (Prop_lut6_I2_O)        0.124    10.692 r  u_msu/events_q[completed][tile_id][2]_i_1/O
+                         net (fo=1, routed)           0.000    10.692    u_msu/events_q[completed][tile_id][2]_i_1_n_0
+    SLICE_X58Y17         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X58Y17         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][2]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X58Y17         FDCE (Setup_fdce_C_D)        0.077    10.966    u_msu/events_q_reg[completed][tile_id][2]
+  -------------------------------------------------------------------
+                         required time                         10.966    
+                         arrival time                         -10.692    
+  -------------------------------------------------------------------
+                         slack                                  0.274    
+
+Slack (MET) :             0.285ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/result_q_reg[1][2][3][7]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.462ns  (logic 2.362ns (24.963%)  route 7.100ns (75.037%))
+  Logic Levels:           12  (CARRY4=8 LUT2=1 LUT5=2 LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X54Y28         FDCE                                         r  u_bridge/state_q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X54Y28         FDCE (Prop_fdce_C_Q)         0.518     1.491 f  u_bridge/state_q_reg[meta_count][1]/Q
+                         net (fo=136, routed)         1.061     2.552    u_bridge/state_q_reg[meta_count_n_0_][1]
+    SLICE_X55Y27                                                      f  u_bridge/meta_q[0][2]_i_1/I1
+    SLICE_X55Y27         LUT5 (Prop_lut5_I1_O)        0.124     2.676 f  u_bridge/meta_q[0][2]_i_1/O
+                         net (fo=5, routed)           0.817     3.493    u_bridge/D[2]
+    SLICE_X56Y23                                                      f  u_bridge/write_valid_INST_0_i_46/I0
+    SLICE_X56Y23         LUT2 (Prop_lut2_I0_O)        0.124     3.617 r  u_bridge/write_valid_INST_0_i_46/O
+                         net (fo=1, routed)           0.000     3.617    u_bridge/write_valid_INST_0_i_46_n_0
+    SLICE_X56Y23                                                      r  u_bridge/write_valid_INST_0_i_35/S[1]
+    SLICE_X56Y23         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.167 r  u_bridge/write_valid_INST_0_i_35/CO[3]
+                         net (fo=1, routed)           0.000     4.167    u_bridge/write_valid_INST_0_i_35_n_0
+    SLICE_X56Y24                                                      r  u_bridge/write_valid_INST_0_i_30/CI
+    SLICE_X56Y24         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.281 r  u_bridge/write_valid_INST_0_i_30/CO[3]
+                         net (fo=1, routed)           0.009     4.290    u_bridge/write_valid_INST_0_i_30_n_0
+    SLICE_X56Y25                                                      r  u_bridge/write_valid_INST_0_i_25/CI
+    SLICE_X56Y25         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.404 r  u_bridge/write_valid_INST_0_i_25/CO[3]
+                         net (fo=1, routed)           0.000     4.404    u_bridge/write_valid_INST_0_i_25_n_0
+    SLICE_X56Y26                                                      r  u_bridge/write_valid_INST_0_i_20/CI
+    SLICE_X56Y26         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.518 r  u_bridge/write_valid_INST_0_i_20/CO[3]
+                         net (fo=1, routed)           0.000     4.518    u_bridge/write_valid_INST_0_i_20_n_0
+    SLICE_X56Y27                                                      r  u_bridge/write_valid_INST_0_i_15/CI
+    SLICE_X56Y27         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.632 r  u_bridge/write_valid_INST_0_i_15/CO[3]
+                         net (fo=1, routed)           0.000     4.632    u_bridge/write_valid_INST_0_i_15_n_0
+    SLICE_X56Y28                                                      r  u_bridge/write_valid_INST_0_i_10/CI
+    SLICE_X56Y28         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.746 r  u_bridge/write_valid_INST_0_i_10/CO[3]
+                         net (fo=1, routed)           0.000     4.746    u_bridge/write_valid_INST_0_i_10_n_0
+    SLICE_X56Y29                                                      r  u_bridge/write_valid_INST_0_i_5/CI
+    SLICE_X56Y29         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.860 r  u_bridge/write_valid_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     4.860    u_bridge/write_valid_INST_0_i_5_n_0
+    SLICE_X56Y30                                                      r  u_bridge/write_valid_INST_0_i_3/CI
+    SLICE_X56Y30         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.974 f  u_bridge/write_valid_INST_0_i_3/CO[3]
+                         net (fo=5, routed)           1.312     6.287    u_bridge/write_valid_INST_0_i_3_n_0
+    SLICE_X54Y41                                                      f  u_bridge/msu_status[1]_INST_0/I1
+    SLICE_X54Y41         LUT5 (Prop_lut5_I1_O)        0.124     6.411 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=120, routed)         1.240     7.651    u_msu/row_q_reg[2]_0
+    SLICE_X57Y63                                                      f  u_msu/meta_q[1][95]_i_1/I5
+    SLICE_X57Y63         LUT6 (Prop_lut6_I5_O)        0.124     7.775 r  u_msu/meta_q[1][95]_i_1/O
+                         net (fo=2144, routed)        2.660    10.435    u_msu/meta_q[1][95]_i_1_n_0
+    SLICE_X108Y90        FDCE                                         r  u_msu/result_q_reg[1][2][3][7]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X108Y90        FDCE                                         r  u_msu/result_q_reg[1][2][3][7]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X108Y90        FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_msu/result_q_reg[1][2][3][7]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.435    
+  -------------------------------------------------------------------
+                         slack                                  0.285    
+
+Slack (MET) :             0.285ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/result_q_reg[1][3][3][7]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.462ns  (logic 2.362ns (24.963%)  route 7.100ns (75.037%))
+  Logic Levels:           12  (CARRY4=8 LUT2=1 LUT5=2 LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X54Y28         FDCE                                         r  u_bridge/state_q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X54Y28         FDCE (Prop_fdce_C_Q)         0.518     1.491 f  u_bridge/state_q_reg[meta_count][1]/Q
+                         net (fo=136, routed)         1.061     2.552    u_bridge/state_q_reg[meta_count_n_0_][1]
+    SLICE_X55Y27                                                      f  u_bridge/meta_q[0][2]_i_1/I1
+    SLICE_X55Y27         LUT5 (Prop_lut5_I1_O)        0.124     2.676 f  u_bridge/meta_q[0][2]_i_1/O
+                         net (fo=5, routed)           0.817     3.493    u_bridge/D[2]
+    SLICE_X56Y23                                                      f  u_bridge/write_valid_INST_0_i_46/I0
+    SLICE_X56Y23         LUT2 (Prop_lut2_I0_O)        0.124     3.617 r  u_bridge/write_valid_INST_0_i_46/O
+                         net (fo=1, routed)           0.000     3.617    u_bridge/write_valid_INST_0_i_46_n_0
+    SLICE_X56Y23                                                      r  u_bridge/write_valid_INST_0_i_35/S[1]
+    SLICE_X56Y23         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.167 r  u_bridge/write_valid_INST_0_i_35/CO[3]
+                         net (fo=1, routed)           0.000     4.167    u_bridge/write_valid_INST_0_i_35_n_0
+    SLICE_X56Y24                                                      r  u_bridge/write_valid_INST_0_i_30/CI
+    SLICE_X56Y24         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.281 r  u_bridge/write_valid_INST_0_i_30/CO[3]
+                         net (fo=1, routed)           0.009     4.290    u_bridge/write_valid_INST_0_i_30_n_0
+    SLICE_X56Y25                                                      r  u_bridge/write_valid_INST_0_i_25/CI
+    SLICE_X56Y25         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.404 r  u_bridge/write_valid_INST_0_i_25/CO[3]
+                         net (fo=1, routed)           0.000     4.404    u_bridge/write_valid_INST_0_i_25_n_0
+    SLICE_X56Y26                                                      r  u_bridge/write_valid_INST_0_i_20/CI
+    SLICE_X56Y26         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.518 r  u_bridge/write_valid_INST_0_i_20/CO[3]
+                         net (fo=1, routed)           0.000     4.518    u_bridge/write_valid_INST_0_i_20_n_0
+    SLICE_X56Y27                                                      r  u_bridge/write_valid_INST_0_i_15/CI
+    SLICE_X56Y27         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.632 r  u_bridge/write_valid_INST_0_i_15/CO[3]
+                         net (fo=1, routed)           0.000     4.632    u_bridge/write_valid_INST_0_i_15_n_0
+    SLICE_X56Y28                                                      r  u_bridge/write_valid_INST_0_i_10/CI
+    SLICE_X56Y28         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.746 r  u_bridge/write_valid_INST_0_i_10/CO[3]
+                         net (fo=1, routed)           0.000     4.746    u_bridge/write_valid_INST_0_i_10_n_0
+    SLICE_X56Y29                                                      r  u_bridge/write_valid_INST_0_i_5/CI
+    SLICE_X56Y29         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.860 r  u_bridge/write_valid_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     4.860    u_bridge/write_valid_INST_0_i_5_n_0
+    SLICE_X56Y30                                                      r  u_bridge/write_valid_INST_0_i_3/CI
+    SLICE_X56Y30         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.974 f  u_bridge/write_valid_INST_0_i_3/CO[3]
+                         net (fo=5, routed)           1.312     6.287    u_bridge/write_valid_INST_0_i_3_n_0
+    SLICE_X54Y41                                                      f  u_bridge/msu_status[1]_INST_0/I1
+    SLICE_X54Y41         LUT5 (Prop_lut5_I1_O)        0.124     6.411 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=120, routed)         1.240     7.651    u_msu/row_q_reg[2]_0
+    SLICE_X57Y63                                                      f  u_msu/meta_q[1][95]_i_1/I5
+    SLICE_X57Y63         LUT6 (Prop_lut6_I5_O)        0.124     7.775 r  u_msu/meta_q[1][95]_i_1/O
+                         net (fo=2144, routed)        2.660    10.435    u_msu/meta_q[1][95]_i_1_n_0
+    SLICE_X108Y90        FDCE                                         r  u_msu/result_q_reg[1][3][3][7]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X108Y90        FDCE                                         r  u_msu/result_q_reg[1][3][3][7]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X108Y90        FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_msu/result_q_reg[1][3][3][7]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.435    
+  -------------------------------------------------------------------
+                         slack                                  0.285    
+
+Slack (MET) :             0.381ns  (required time - arrival time)
+  Source:                 u_msu/row_q_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/events_q_reg[completed][tile_id][10]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.564ns  (logic 0.642ns (6.712%)  route 8.922ns (93.288%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_msu/clk
+    SLICE_X26Y92         FDCE                                         r  u_msu/row_q_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X26Y92         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_msu/row_q_reg[0]/Q
+                         net (fo=120, routed)         8.922    10.413    u_msu/row_q_reg_n_0_[0]
+    SLICE_X57Y17                                                      r  u_msu/events_q[completed][tile_id][10]_i_1/I2
+    SLICE_X57Y17         LUT6 (Prop_lut6_I2_O)        0.124    10.537 r  u_msu/events_q[completed][tile_id][10]_i_1/O
+                         net (fo=1, routed)           0.000    10.537    u_msu/events_q[completed][tile_id][10]_i_1_n_0
+    SLICE_X57Y17         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X57Y17         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][10]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X57Y17         FDCE (Setup_fdce_C_D)        0.029    10.918    u_msu/events_q_reg[completed][tile_id][10]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.537    
+  -------------------------------------------------------------------
+                         slack                                  0.381    
+
+Slack (MET) :             0.384ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/result_q_reg[1][2][5][28]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.363ns  (logic 2.362ns (25.226%)  route 7.001ns (74.774%))
+  Logic Levels:           12  (CARRY4=8 LUT2=1 LUT5=2 LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X54Y28         FDCE                                         r  u_bridge/state_q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X54Y28         FDCE (Prop_fdce_C_Q)         0.518     1.491 f  u_bridge/state_q_reg[meta_count][1]/Q
+                         net (fo=136, routed)         1.061     2.552    u_bridge/state_q_reg[meta_count_n_0_][1]
+    SLICE_X55Y27                                                      f  u_bridge/meta_q[0][2]_i_1/I1
+    SLICE_X55Y27         LUT5 (Prop_lut5_I1_O)        0.124     2.676 f  u_bridge/meta_q[0][2]_i_1/O
+                         net (fo=5, routed)           0.817     3.493    u_bridge/D[2]
+    SLICE_X56Y23                                                      f  u_bridge/write_valid_INST_0_i_46/I0
+    SLICE_X56Y23         LUT2 (Prop_lut2_I0_O)        0.124     3.617 r  u_bridge/write_valid_INST_0_i_46/O
+                         net (fo=1, routed)           0.000     3.617    u_bridge/write_valid_INST_0_i_46_n_0
+    SLICE_X56Y23                                                      r  u_bridge/write_valid_INST_0_i_35/S[1]
+    SLICE_X56Y23         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.167 r  u_bridge/write_valid_INST_0_i_35/CO[3]
+                         net (fo=1, routed)           0.000     4.167    u_bridge/write_valid_INST_0_i_35_n_0
+    SLICE_X56Y24                                                      r  u_bridge/write_valid_INST_0_i_30/CI
+    SLICE_X56Y24         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.281 r  u_bridge/write_valid_INST_0_i_30/CO[3]
+                         net (fo=1, routed)           0.009     4.290    u_bridge/write_valid_INST_0_i_30_n_0
+    SLICE_X56Y25                                                      r  u_bridge/write_valid_INST_0_i_25/CI
+    SLICE_X56Y25         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.404 r  u_bridge/write_valid_INST_0_i_25/CO[3]
+                         net (fo=1, routed)           0.000     4.404    u_bridge/write_valid_INST_0_i_25_n_0
+    SLICE_X56Y26                                                      r  u_bridge/write_valid_INST_0_i_20/CI
+    SLICE_X56Y26         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.518 r  u_bridge/write_valid_INST_0_i_20/CO[3]
+                         net (fo=1, routed)           0.000     4.518    u_bridge/write_valid_INST_0_i_20_n_0
+    SLICE_X56Y27                                                      r  u_bridge/write_valid_INST_0_i_15/CI
+    SLICE_X56Y27         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.632 r  u_bridge/write_valid_INST_0_i_15/CO[3]
+                         net (fo=1, routed)           0.000     4.632    u_bridge/write_valid_INST_0_i_15_n_0
+    SLICE_X56Y28                                                      r  u_bridge/write_valid_INST_0_i_10/CI
+    SLICE_X56Y28         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.746 r  u_bridge/write_valid_INST_0_i_10/CO[3]
+                         net (fo=1, routed)           0.000     4.746    u_bridge/write_valid_INST_0_i_10_n_0
+    SLICE_X56Y29                                                      r  u_bridge/write_valid_INST_0_i_5/CI
+    SLICE_X56Y29         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.860 r  u_bridge/write_valid_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     4.860    u_bridge/write_valid_INST_0_i_5_n_0
+    SLICE_X56Y30                                                      r  u_bridge/write_valid_INST_0_i_3/CI
+    SLICE_X56Y30         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.974 f  u_bridge/write_valid_INST_0_i_3/CO[3]
+                         net (fo=5, routed)           1.312     6.287    u_bridge/write_valid_INST_0_i_3_n_0
+    SLICE_X54Y41                                                      f  u_bridge/msu_status[1]_INST_0/I1
+    SLICE_X54Y41         LUT5 (Prop_lut5_I1_O)        0.124     6.411 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=120, routed)         1.240     7.651    u_msu/row_q_reg[2]_0
+    SLICE_X57Y63                                                      f  u_msu/meta_q[1][95]_i_1/I5
+    SLICE_X57Y63         LUT6 (Prop_lut6_I5_O)        0.124     7.775 r  u_msu/meta_q[1][95]_i_1/O
+                         net (fo=2144, routed)        2.561    10.336    u_msu/meta_q[1][95]_i_1_n_0
+    SLICE_X34Y107        FDCE                                         r  u_msu/result_q_reg[1][2][5][28]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X34Y107        FDCE                                         r  u_msu/result_q_reg[1][2][5][28]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X34Y107        FDCE (Setup_fdce_C_CE)      -0.169    10.720    u_msu/result_q_reg[1][2][5][28]
+  -------------------------------------------------------------------
+                         required time                         10.720    
+                         arrival time                         -10.336    
+  -------------------------------------------------------------------
+                         slack                                  0.384    
+
+Slack (MET) :             0.387ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/result_q_reg[1][2][3][16]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.324ns  (logic 2.362ns (25.332%)  route 6.962ns (74.668%))
+  Logic Levels:           12  (CARRY4=8 LUT2=1 LUT5=2 LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X54Y28         FDCE                                         r  u_bridge/state_q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X54Y28         FDCE (Prop_fdce_C_Q)         0.518     1.491 f  u_bridge/state_q_reg[meta_count][1]/Q
+                         net (fo=136, routed)         1.061     2.552    u_bridge/state_q_reg[meta_count_n_0_][1]
+    SLICE_X55Y27                                                      f  u_bridge/meta_q[0][2]_i_1/I1
+    SLICE_X55Y27         LUT5 (Prop_lut5_I1_O)        0.124     2.676 f  u_bridge/meta_q[0][2]_i_1/O
+                         net (fo=5, routed)           0.817     3.493    u_bridge/D[2]
+    SLICE_X56Y23                                                      f  u_bridge/write_valid_INST_0_i_46/I0
+    SLICE_X56Y23         LUT2 (Prop_lut2_I0_O)        0.124     3.617 r  u_bridge/write_valid_INST_0_i_46/O
+                         net (fo=1, routed)           0.000     3.617    u_bridge/write_valid_INST_0_i_46_n_0
+    SLICE_X56Y23                                                      r  u_bridge/write_valid_INST_0_i_35/S[1]
+    SLICE_X56Y23         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.167 r  u_bridge/write_valid_INST_0_i_35/CO[3]
+                         net (fo=1, routed)           0.000     4.167    u_bridge/write_valid_INST_0_i_35_n_0
+    SLICE_X56Y24                                                      r  u_bridge/write_valid_INST_0_i_30/CI
+    SLICE_X56Y24         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.281 r  u_bridge/write_valid_INST_0_i_30/CO[3]
+                         net (fo=1, routed)           0.009     4.290    u_bridge/write_valid_INST_0_i_30_n_0
+    SLICE_X56Y25                                                      r  u_bridge/write_valid_INST_0_i_25/CI
+    SLICE_X56Y25         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.404 r  u_bridge/write_valid_INST_0_i_25/CO[3]
+                         net (fo=1, routed)           0.000     4.404    u_bridge/write_valid_INST_0_i_25_n_0
+    SLICE_X56Y26                                                      r  u_bridge/write_valid_INST_0_i_20/CI
+    SLICE_X56Y26         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.518 r  u_bridge/write_valid_INST_0_i_20/CO[3]
+                         net (fo=1, routed)           0.000     4.518    u_bridge/write_valid_INST_0_i_20_n_0
+    SLICE_X56Y27                                                      r  u_bridge/write_valid_INST_0_i_15/CI
+    SLICE_X56Y27         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.632 r  u_bridge/write_valid_INST_0_i_15/CO[3]
+                         net (fo=1, routed)           0.000     4.632    u_bridge/write_valid_INST_0_i_15_n_0
+    SLICE_X56Y28                                                      r  u_bridge/write_valid_INST_0_i_10/CI
+    SLICE_X56Y28         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.746 r  u_bridge/write_valid_INST_0_i_10/CO[3]
+                         net (fo=1, routed)           0.000     4.746    u_bridge/write_valid_INST_0_i_10_n_0
+    SLICE_X56Y29                                                      r  u_bridge/write_valid_INST_0_i_5/CI
+    SLICE_X56Y29         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.860 r  u_bridge/write_valid_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     4.860    u_bridge/write_valid_INST_0_i_5_n_0
+    SLICE_X56Y30                                                      r  u_bridge/write_valid_INST_0_i_3/CI
+    SLICE_X56Y30         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.974 f  u_bridge/write_valid_INST_0_i_3/CO[3]
+                         net (fo=5, routed)           1.312     6.287    u_bridge/write_valid_INST_0_i_3_n_0
+    SLICE_X54Y41                                                      f  u_bridge/msu_status[1]_INST_0/I1
+    SLICE_X54Y41         LUT5 (Prop_lut5_I1_O)        0.124     6.411 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=120, routed)         1.240     7.651    u_msu/row_q_reg[2]_0
+    SLICE_X57Y63                                                      f  u_msu/meta_q[1][95]_i_1/I5
+    SLICE_X57Y63         LUT6 (Prop_lut6_I5_O)        0.124     7.775 r  u_msu/meta_q[1][95]_i_1/O
+                         net (fo=2144, routed)        2.522    10.297    u_msu/meta_q[1][95]_i_1_n_0
+    SLICE_X109Y86        FDCE                                         r  u_msu/result_q_reg[1][2][3][16]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X109Y86        FDCE                                         r  u_msu/result_q_reg[1][2][3][16]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X109Y86        FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_msu/result_q_reg[1][2][3][16]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.297    
+  -------------------------------------------------------------------
+                         slack                                  0.387    
+
+Slack (MET) :             0.387ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/result_q_reg[1][2][3][9]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.324ns  (logic 2.362ns (25.332%)  route 6.962ns (74.668%))
+  Logic Levels:           12  (CARRY4=8 LUT2=1 LUT5=2 LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X54Y28         FDCE                                         r  u_bridge/state_q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X54Y28         FDCE (Prop_fdce_C_Q)         0.518     1.491 f  u_bridge/state_q_reg[meta_count][1]/Q
+                         net (fo=136, routed)         1.061     2.552    u_bridge/state_q_reg[meta_count_n_0_][1]
+    SLICE_X55Y27                                                      f  u_bridge/meta_q[0][2]_i_1/I1
+    SLICE_X55Y27         LUT5 (Prop_lut5_I1_O)        0.124     2.676 f  u_bridge/meta_q[0][2]_i_1/O
+                         net (fo=5, routed)           0.817     3.493    u_bridge/D[2]
+    SLICE_X56Y23                                                      f  u_bridge/write_valid_INST_0_i_46/I0
+    SLICE_X56Y23         LUT2 (Prop_lut2_I0_O)        0.124     3.617 r  u_bridge/write_valid_INST_0_i_46/O
+                         net (fo=1, routed)           0.000     3.617    u_bridge/write_valid_INST_0_i_46_n_0
+    SLICE_X56Y23                                                      r  u_bridge/write_valid_INST_0_i_35/S[1]
+    SLICE_X56Y23         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.167 r  u_bridge/write_valid_INST_0_i_35/CO[3]
+                         net (fo=1, routed)           0.000     4.167    u_bridge/write_valid_INST_0_i_35_n_0
+    SLICE_X56Y24                                                      r  u_bridge/write_valid_INST_0_i_30/CI
+    SLICE_X56Y24         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.281 r  u_bridge/write_valid_INST_0_i_30/CO[3]
+                         net (fo=1, routed)           0.009     4.290    u_bridge/write_valid_INST_0_i_30_n_0
+    SLICE_X56Y25                                                      r  u_bridge/write_valid_INST_0_i_25/CI
+    SLICE_X56Y25         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.404 r  u_bridge/write_valid_INST_0_i_25/CO[3]
+                         net (fo=1, routed)           0.000     4.404    u_bridge/write_valid_INST_0_i_25_n_0
+    SLICE_X56Y26                                                      r  u_bridge/write_valid_INST_0_i_20/CI
+    SLICE_X56Y26         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.518 r  u_bridge/write_valid_INST_0_i_20/CO[3]
+                         net (fo=1, routed)           0.000     4.518    u_bridge/write_valid_INST_0_i_20_n_0
+    SLICE_X56Y27                                                      r  u_bridge/write_valid_INST_0_i_15/CI
+    SLICE_X56Y27         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.632 r  u_bridge/write_valid_INST_0_i_15/CO[3]
+                         net (fo=1, routed)           0.000     4.632    u_bridge/write_valid_INST_0_i_15_n_0
+    SLICE_X56Y28                                                      r  u_bridge/write_valid_INST_0_i_10/CI
+    SLICE_X56Y28         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.746 r  u_bridge/write_valid_INST_0_i_10/CO[3]
+                         net (fo=1, routed)           0.000     4.746    u_bridge/write_valid_INST_0_i_10_n_0
+    SLICE_X56Y29                                                      r  u_bridge/write_valid_INST_0_i_5/CI
+    SLICE_X56Y29         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.860 r  u_bridge/write_valid_INST_0_i_5/CO[3]
+                         net (fo=1, routed)           0.000     4.860    u_bridge/write_valid_INST_0_i_5_n_0
+    SLICE_X56Y30                                                      r  u_bridge/write_valid_INST_0_i_3/CI
+    SLICE_X56Y30         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.974 f  u_bridge/write_valid_INST_0_i_3/CO[3]
+                         net (fo=5, routed)           1.312     6.287    u_bridge/write_valid_INST_0_i_3_n_0
+    SLICE_X54Y41                                                      f  u_bridge/msu_status[1]_INST_0/I1
+    SLICE_X54Y41         LUT5 (Prop_lut5_I1_O)        0.124     6.411 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=120, routed)         1.240     7.651    u_msu/row_q_reg[2]_0
+    SLICE_X57Y63                                                      f  u_msu/meta_q[1][95]_i_1/I5
+    SLICE_X57Y63         LUT6 (Prop_lut6_I5_O)        0.124     7.775 r  u_msu/meta_q[1][95]_i_1/O
+                         net (fo=2144, routed)        2.522    10.297    u_msu/meta_q[1][95]_i_1_n_0
+    SLICE_X109Y86        FDCE                                         r  u_msu/result_q_reg[1][2][3][9]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X109Y86        FDCE                                         r  u_msu/result_q_reg[1][2][3][9]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X109Y86        FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_msu/result_q_reg[1][2][3][9]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.297    
+  -------------------------------------------------------------------
+                         slack                                  0.387    
+
+Slack (MET) :             0.393ns  (required time - arrival time)
+  Source:                 u_msu/row_q_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/events_q_reg[completed][tile_id][11]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.552ns  (logic 0.642ns (6.721%)  route 8.910ns (93.279%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_msu/clk
+    SLICE_X26Y92         FDCE                                         r  u_msu/row_q_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X26Y92         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_msu/row_q_reg[0]/Q
+                         net (fo=120, routed)         8.910    10.401    u_msu/row_q_reg_n_0_[0]
+    SLICE_X60Y16                                                      r  u_msu/events_q[completed][tile_id][11]_i_1/I2
+    SLICE_X60Y16         LUT6 (Prop_lut6_I2_O)        0.124    10.525 r  u_msu/events_q[completed][tile_id][11]_i_1/O
+                         net (fo=1, routed)           0.000    10.525    u_msu/events_q[completed][tile_id][11]_i_1_n_0
+    SLICE_X60Y16         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X60Y16         FDCE                                         r  u_msu/events_q_reg[completed][tile_id][11]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X60Y16         FDCE (Setup_fdce_C_D)        0.029    10.918    u_msu/events_q_reg[completed][tile_id][11]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.525    
+  -------------------------------------------------------------------
+                         slack                                  0.393    
+
+Slack (MET) :             0.396ns  (required time - arrival time)
+  Source:                 u_msu/row_q_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/events_q_reg[completed][dst_addr][9]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.551ns  (logic 0.642ns (6.722%)  route 8.909ns (93.278%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_msu/clk
+    SLICE_X26Y92         FDCE                                         r  u_msu/row_q_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X26Y92         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_msu/row_q_reg[0]/Q
+                         net (fo=120, routed)         8.909    10.400    u_msu/row_q_reg_n_0_[0]
+    SLICE_X63Y16                                                      r  u_msu/events_q[completed][dst_addr][9]_i_1/I2
+    SLICE_X63Y16         LUT6 (Prop_lut6_I2_O)        0.124    10.524 r  u_msu/events_q[completed][dst_addr][9]_i_1/O
+                         net (fo=1, routed)           0.000    10.524    u_msu/events_q[completed][dst_addr][9]_i_1_n_0
+    SLICE_X63Y16         FDCE                                         r  u_msu/events_q_reg[completed][dst_addr][9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X63Y16         FDCE                                         r  u_msu/events_q_reg[completed][dst_addr][9]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X63Y16         FDCE (Setup_fdce_C_D)        0.031    10.920    u_msu/events_q_reg[completed][dst_addr][9]
+  -------------------------------------------------------------------
+                         required time                         10.920    
+                         arrival time                         -10.524    
+  -------------------------------------------------------------------
+                         slack                                  0.396    
+
+Slack (MET) :             0.397ns  (required time - arrival time)
+  Source:                 u_msu/row_q_reg[0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_msu/events_q_reg[completed][dst_addr][7]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.548ns  (logic 0.642ns (6.724%)  route 8.906ns (93.276%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20052, unset)        0.973     0.973    u_msu/clk
+    SLICE_X26Y92         FDCE                                         r  u_msu/row_q_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X26Y92         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_msu/row_q_reg[0]/Q
+                         net (fo=120, routed)         8.906    10.397    u_msu/row_q_reg_n_0_[0]
+    SLICE_X65Y16                                                      r  u_msu/events_q[completed][dst_addr][7]_i_1/I2
+    SLICE_X65Y16         LUT6 (Prop_lut6_I2_O)        0.124    10.521 r  u_msu/events_q[completed][dst_addr][7]_i_1/O
+                         net (fo=1, routed)           0.000    10.521    u_msu/events_q[completed][dst_addr][7]_i_1_n_0
+    SLICE_X65Y16         FDCE                                         r  u_msu/events_q_reg[completed][dst_addr][7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20052, unset)        0.924    10.924    u_msu/clk
+    SLICE_X65Y16         FDCE                                         r  u_msu/events_q_reg[completed][dst_addr][7]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X65Y16         FDCE (Setup_fdce_C_D)        0.029    10.918    u_msu/events_q_reg[completed][dst_addr][7]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.521    
+  -------------------------------------------------------------------
+                         slack                                  0.397    
+
+
+
+

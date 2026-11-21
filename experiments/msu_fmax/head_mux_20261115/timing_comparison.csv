@@ -1,0 +1,11 @@
+candidate,phase,period_ns,wns_ns,tns_ns,whs_ns,ths_ns,wpws_ns,luts,ffs,dsps,timing_report,disposition
+baseline,native_post_route_independent_audit,10.000,0.016,0.000,0.096,0.000,4.020,29406,21503,128,../native_margin_10ns_20261113/independent_audit/checkpoint/timing_summary.rpt,verified_reference
+paired,default_post_route,10.000,-0.832,-1093.281,0.096,0.000,4.020,29728,21496,128,paired/fresh_10/default/timing_summary_routed.rpt,failed_setup
+paired,refined_post_route_independent_audit,10.000,-0.336,-48.157,0.096,0.000,4.020,29750,21496,128,paired/refined_audit/timing_summary.rpt,failed_setup
+paired,targeted_replication_post_route,10.000,-0.967,-974.744,0.096,0.000,4.020,29786,21496,128,paired/replicated/timing_summary_routed.rpt,failed_setup
+operand_pairs,default_post_route,10.000,-0.878,-405.055,0.096,0.000,4.020,29258,21509,128,operand_pairs/fresh_10/default/timing_summary_routed.rpt,failed_setup
+operand_pairs,refined_post_route,10.000,-0.443,-87.673,0.096,0.000,4.020,29262,21509,128,operand_pairs/fresh_10/refined/timing_summary_routed.rpt,failed_setup
+product_shadow,default_post_route,10.000,-0.242,-66.980,0.096,0.000,4.020,30388,22560,128,product_shadow/fresh_10/default/timing_summary_routed.rpt,failed_setup
+product_shadow,refined_post_route_independent_audit,10.000,-0.103,-3.100,0.096,0.000,4.020,30396,22560,128,product_shadow/refined_audit/timing_summary.rpt,failed_setup
+product_shadow,head_replication_post_route,10.000,-0.361,-100.810,0.096,0.000,4.020,30396,22616,128,product_shadow/replicated_head/timing_summary_routed.rpt,failed_setup
+product_shadow,closure_post_route,9.900,-0.203,-29.679,0.096,0.000,3.970,30396,22560,128,product_shadow/closure_9p9/timing_summary_routed.rpt,failed_setup

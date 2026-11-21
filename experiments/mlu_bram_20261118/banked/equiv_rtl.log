@@ -1,0 +1,168 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Nov 18 17:19:11 2026
+# Process ID: 15824
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked
+# Command line: vivado.exe -mode batch -nojournal -log equiv_rtl.log -source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/equiv.tcl -tclargs C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/src RTL C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl
+# Log file: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/equiv.tcl
+# if {$argc != 3} {error "Expected SOURCE_SNAPSHOT NETLIST_OR_RTL NEW_OUTPUT_DIR"}
+# set eq_dir [file normalize [file dirname [info script]]]
+# set eq_repo [file normalize [file join $eq_dir ../..]]
+# set eq_source [file normalize [lindex $argv 0]]
+# set eq_design [lindex $argv 1]
+# if {$eq_design ne "RTL"} {set eq_design [file normalize $eq_design]}
+# set eq_output [file normalize [lindex $argv 2]]
+# if {[file exists $eq_output]} {error "Preserve earlier simulation output"}
+# file mkdir $eq_output
+# cd $eq_output
+# set f [open [file join $eq_dir baseline src mlu_sv mlu.sv] r]
+# set original [read $f]
+# close $f
+# if {[regsub {module mlu \(} $original {module mlu_reference (} reference] != 1} {
+#     error "Expected exactly one baseline module declaration"
+# }
+# set f [open mlu_reference.sv w]
+# puts -nonewline $f $reference
+# close $f
+# create_project sim_project [file join $eq_output project] -part xc7z020clg484-1
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 394.340 ; gain = 42.062
+# set_property target_simulator XSim [current_project]
+# add_files -fileset sim_1 [list \
+#     [file join $eq_source du_tia_sv rtl du_tia_pkg.sv] \
+#     [file join $eq_source mlu_sv mlu_pkg.sv] \
+#     [file join $eq_output mlu_reference.sv] \
+#     [file join $eq_dir tb_mlu_bram_equiv.sv]]
+# if {$eq_design eq "RTL"} {
+#     add_files -fileset sim_1 [file join $eq_source mlu_sv mlu.sv]
+# } else {
+#     add_files -fileset sim_1 $eq_design
+#     set_property verilog_define NETLIST [get_filesets sim_1]
+#     # Vivado flattens struct and packed-array ports into escaped field names.
+#     # Reconnect every field explicitly; never rewrite the generated netlist.
+#     set header_start [string first {module mlu (} $original]
+#     set header_end [string first "\n);" $original $header_start]
+#     if {$header_start < 0 || $header_end < 0} {error "Missing baseline port declaration"}
+#     set header [string range $original $header_start [expr {$header_end+2}]]
+#     set wrapper [string map {{module mlu (} {module mlu_netlist_wrapper (}} $header]
+#     append wrapper "\n" {  wire [2:0] net_status;
+#   wire [1:0] net_mode;
+#   assign status = mlu_pkg::io_status_t'(net_status);
+#   assign out_packet.mode = du_tia_pkg::compiler_mode_e'(net_mode);
+#   mlu_netlist u_netlist (
+# }
+#     set connections {}
+#     foreach port {clk rst_n command_valid command_ready read_request_valid read_request_ready read_addr read_beats read_data_valid read_data_ready read_last out_valid out_ready out_k status} {
+#         set expression $port
+#         if {$port eq "status"} {set expression net_status}
+#         append connections [format {    .%s(%s),} $port $expression] "\n"
+#     }
+#     foreach {port expression} {
+#         {command[mode]} command.mode
+#         {command[src_addr]} command.src_addr
+#         {command[meta][tile_id]} command.meta.tile_id
+#         {command[meta][dst_addr]} command.meta.dst_addr
+#         {out_packet[mode]} net_mode
+#         {out_packet[k_position]} out_packet.k_position
+#         {out_packet[payload]} out_packet.payload
+#         {out_meta[tile_id]} out_meta.tile_id
+#         {out_meta[dst_addr]} out_meta.dst_addr
+#         {tick_info[command_accepted]} tick_info.command_accepted
+#         {tick_info[read_request_accepted]} tick_info.read_request_accepted
+#         {tick_info[read_data_accepted]} tick_info.read_data_accepted
+#         {tick_info[packet_issued]} tick_info.packet_issued
+#         {tick_info[tile_issued]} tick_info.tile_issued
+#         {tick_info[tile_id]} tick_info.tile_id
+#         {tick_info[k]} tick_info.k
+#     } {append connections [format {    .\%s (%s),} $port $expression] "\n"}
+#     for {set byte 0} {$byte < 32} {incr byte} {
+#         append connections [format {    .\read_data[%d] (read_data[%d]),} $byte $byte] "\n"
+#     }
+#     append wrapper [string trimright $connections ",\n"] "\n  );\nendmodule\n"
+#     set f [open mlu_netlist_wrapper.sv w]
+#     puts -nonewline $f $wrapper
+#     close $f
+#     add_files -fileset sim_1 [file join $eq_output mlu_netlist_wrapper.sv]
+# }
+# set_property top tb_mlu_bram_equiv [get_filesets sim_1]
+# set_property xsim.simulate.runtime all [get_filesets sim_1]
+# set_property -dict [list xsim.simulate.xsim.more_options \
+#     "-testplusarg VECTORS=[file join $eq_repo mlu_sv mlu_vectors.txt]"] [get_filesets sim_1]
+# update_compile_order -fileset sim_1
+# launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_mlu_bram_equiv'
+WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/project/sim_project.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from 'C:/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_mlu_bram_equiv' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/project/sim_project.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -L uvm -prj tb_mlu_bram_equiv_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/src/du_tia_sv/rtl/du_tia_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/src/mlu_sv/mlu_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/src/mlu_sv/mlu.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mlu
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/mlu_reference.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mlu_reference
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/tb_mlu_bram_equiv.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_mlu_bram_equiv
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/project/sim_project.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/project/sim_project.sim/sim_1/behav/xsim'
+"xelab --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_mlu_bram_equiv_behav xil_defaultlib.tb_mlu_bram_equiv xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_mlu_bram_equiv_behav xil_defaultlib.tb_mlu_bram_equiv xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.mlu_pkg
+Compiling package xil_defaultlib.du_tia_pkg
+Compiling module xil_defaultlib.mlu_default
+Compiling module xil_defaultlib.mlu_reference_default
+Compiling module xil_defaultlib.tb_mlu_bram_equiv
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_mlu_bram_equiv_behav
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 419.215 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/banked/equiv_rtl/project/sim_project.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_mlu_bram_equiv_behav -key {Behavioral:sim_1:Functional:tb_mlu_bram_equiv} -tclbatch {tb_mlu_bram_equiv.tcl} -log {simulate.log} -testplusarg VECTORS=C:/Users/Jason/Desktop/TC/mlu_sv/mlu_vectors.txt"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_mlu_bram_equiv.tcl
+## current_wave_config
+MLU BRAM EQUIVALENCE PASS vectors=16708 steps=17171 directed_transitions=18 simultaneous_last=234 stalls=5347 resets=155
+$finish called at time : 171910 ns : File "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_20261118/tb_mlu_bram_equiv.sv" Line 186
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_mlu_bram_equiv_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for all
+launch_simulation: Time (s): cpu = 00:00:01 ; elapsed = 00:00:12 . Memory (MB): peak = 435.492 ; gain = 41.148
+# close_sim
+INFO: [Simtcl 6-16] Simulation closed
+# set transcript [file join $eq_output project sim_project.sim sim_1 behav xsim simulate.log]
+# set f [open $transcript r]
+# set body [read $f]
+# close $f
+# if {[string first {MLU BRAM EQUIVALENCE PASS} $body] < 0 ||
+#     [regexp -nocase {Fatal:|Error:|\$fatal} $body]} {error "Equivalence simulation failed; inspect $transcript"}
+# file copy $transcript [file join $eq_output result.log]
+# puts "MLU_BRAM_EQUIV_COMPLETE mode=$eq_design"
+MLU_BRAM_EQUIV_COMPLETE mode=RTL
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 18 17:19:36 2026...

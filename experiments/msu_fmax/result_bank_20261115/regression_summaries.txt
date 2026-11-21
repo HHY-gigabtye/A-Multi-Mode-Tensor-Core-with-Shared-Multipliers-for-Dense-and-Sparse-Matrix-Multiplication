@@ -1,0 +1,56 @@
+# ALL PASS MLU unit C/SV: 16708 records, 145 resets, 128 rejected edges
+#   commands=1397 packets=10236 retired=1279
+#   command+retire=1 read+output=4087 full_stalls=13908 both_ready=4396
+# [PASS] DU/TIA compact RTL: 3292 packets checked
+#        directed=12 hybrid-exhaustive=24 bitmap-exhaustive=256 random=3000
+# BRIDGE RTL PASS: C-equivalent rows=19147 rejected_edges=7156 resets=13
+# ALL PASS C/SV: 136136 records, 169 resets, 13 RTL rejection cases
+#   published=6440 consumed=6392 overlap_starts=1609
+#   pop_and_push=1 consume_and_start=151 full_fifo_cycles=3480
+# MSU SV PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full_last=632 wraps=335 max_count=2
+# TOP PHASE PASS epoch=1 tiles=64 cycles=547 stalls=0
+# TOP PHASE PASS epoch=2 tiles=96 cycles=1697 stalls=1
+# TOP PHASE PASS epoch=3 tiles=48 cycles=834 stalls=1
+# TOP PHASE PASS epoch=5 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=7 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=9 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=11 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=13 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=15 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=17 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=19 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=21 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=23 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=25 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=27 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=29 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=31 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=33 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=35 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=37 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=39 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=41 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=43 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=45 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=47 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=49 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=51 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=53 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=55 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=57 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=59 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=61 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=63 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=65 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=67 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=69 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=71 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=73 tiles=3 cycles=91 stalls=0
+# TOP PHASE PASS epoch=75 tiles=3 cycles=91 stalls=0
+# TOP COVERAGE full_credit=2175 fifo_full=1667 inflight4=2489 meta_full=1287 msu_full=1320 tc_full=535
+# TOP COVERAGE fifo_both=2167 meta_both=4 fifo_wrap=367 meta_wrap=150 sparse_II8=145
+# TOP COVERAGE write_stall=1138 last_stall=43 mlu_stall=1521 read_stall=37 command_stall=3754 mode_wait=81
+# TOP COVERAGE modes=104/159/117 zero_count=383 full_count=383 stored_zero=1269
+# TOP MODE TRANSITIONS 0->0/1/2=47/47/10 1->0/1/2=10/11/96 2->0/1/2=10/77/11
+# TOP RESET COVERAGE fifo=1ff inflight=1f meta=7 msu=7 tc=7 mlu=7 rows=ff read=1 last=1
+# TOP INTEGRATION PASS: completed_tiles=316 issued_packets=3124 write_beats=2563 resets=75 seed=91e10da5

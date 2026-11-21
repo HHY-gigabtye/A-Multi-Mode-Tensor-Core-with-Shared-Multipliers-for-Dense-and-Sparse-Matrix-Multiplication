@@ -1,0 +1,1 @@
+PASS: source snapshot and original integration coverage match.

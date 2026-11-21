@@ -1,0 +1,38 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Nov 18 21:32:22 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_design_analysis -congestion -file congestion.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+| Design State : Routed
+------------------------------------------------------------------------------------
+
+Report Design Analysis
+
+Table of Contents
+-----------------
+1. Placer Final Level Congestion Reporting
+2. SLR Net Crossing Reporting
+
+1. Placer Final Level Congestion Reporting
+------------------------------------------
+
++-----------+--------+-------+------------+---------------------------------+---------------+---------------+-----+--------+------+------+------+------+-------+-----+----------------------------------------------------------+
+| Direction |  Type  | Level | Congestion |              Window             | Combined LUTs | Avg LUT Input | LUT | LUTRAM | Flop | MUXF | RAMB |  DSP | CARRY | SRL |                        Cell Names                        |
++-----------+--------+-------+------------+---------------------------------+---------------+---------------+-----+--------+------+------+------+------+-------+-----+----------------------------------------------------------+
+| East      | Global |     5 |       105% | (CLBLM_R_X29Y23,CLBLM_R_X61Y54) |           11% |         4.785 | 92% | 0%     |  36% |   2% | 16%  | 100% |    1% |  0% | u_tensor_core(69%),u_msu(20%),sparse_tensor_core_top(9%) |
+| West      | Global |     5 |       123% | (CLBLM_L_X26Y44,CLBLM_L_X58Y75) |           25% |         4.826 | 94% | 0%     |  52% |   2% | 0%   | NA   |    2% |  0% | u_tensor_core(79%),u_msu(19%)                            |
++-----------+--------+-------+------------+---------------------------------+---------------+---------------+-----+--------+------+------+------+------+-------+-----+----------------------------------------------------------+
+
+
+2. SLR Net Crossing Reporting
+-----------------------------
+
++------------+-----------------------------+
+| Cell Names | Number of Nets crossing SLR |
++------------+-----------------------------+
+* The current part is not an SSI device
+
+

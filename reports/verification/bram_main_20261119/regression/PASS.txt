@@ -1,0 +1,1 @@
+PASS main BRAM RTL: five units then integration; 46 baseline summaries identical; 11 accepted sources and 76 protected files unchanged.

@@ -1,0 +1,694 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 15 18:15:36 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_cells -hierarchical -filter {IS_SEQUENTIAL == 1 && NAME =~ u_tensor_core/sparse*}] -max_paths 10 -input_pins -file tc_sparse.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.116ns  (required time - arrival time)
+  Source:                 u_bridge/head_select_q_reg[4]_rep__0/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][5][3][21]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.595ns  (logic 1.572ns (16.384%)  route 8.023ns (83.616%))
+  Logic Levels:           9  (LUT2=1 LUT3=2 LUT4=2 LUT5=1 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X45Y43         FDCE                                         r  u_bridge/head_select_q_reg[4]_rep__0/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X45Y43         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  u_bridge/head_select_q_reg[4]_rep__0/Q
+                         net (fo=90, estimated)       0.971     2.400    u_bridge/head_select_q_reg[4]_rep__0_n_0
+    SLICE_X50Y44                                                      f  u_bridge/dense_q[b_delay][4][0][value][2]_i_3/I1
+    SLICE_X50Y44         LUT4 (Prop_lut4_I1_O)        0.124     2.524 f  u_bridge/dense_q[b_delay][4][0][value][2]_i_3/O
+                         net (fo=1, estimated)        0.635     3.159    u_bridge/dense_q[b_delay][4][0][value][2]_i_3_n_0
+    SLICE_X53Y43                                                      f  u_bridge/dense_q[b_delay][4][0][value][2]_i_2/I0
+    SLICE_X53Y43         LUT4 (Prop_lut4_I0_O)        0.124     3.283 f  u_bridge/dense_q[b_delay][4][0][value][2]_i_2/O
+                         net (fo=10, estimated)       0.619     3.902    u_bridge/head_entry[packet][payload]__0[90]
+    SLICE_X52Y41                                                      f  u_bridge/tc_status[1]_INST_0_i_29/I0
+    SLICE_X52Y41         LUT3 (Prop_lut3_I0_O)        0.124     4.026 r  u_bridge/tc_status[1]_INST_0_i_29/O
+                         net (fo=2, estimated)        1.028     5.054    u_bridge/tc_status[1]_INST_0_i_29_n_0
+    SLICE_X55Y41                                                      r  u_bridge/tc_status[1]_INST_0_i_13/I0
+    SLICE_X55Y41         LUT6 (Prop_lut6_I0_O)        0.124     5.178 f  u_bridge/tc_status[1]_INST_0_i_13/O
+                         net (fo=1, estimated)        0.811     5.989    u_bridge/tc_status[1]_INST_0_i_13_n_0
+    SLICE_X57Y41                                                      f  u_bridge/tc_status[1]_INST_0_i_3/I0
+    SLICE_X57Y41         LUT6 (Prop_lut6_I0_O)        0.124     6.113 f  u_bridge/tc_status[1]_INST_0_i_3/O
+                         net (fo=2, estimated)        0.844     6.957    u_bridge/tc_status[1]_INST_0_i_3_n_0
+    SLICE_X63Y46                                                      f  u_bridge/tc_status[1]_INST_0_i_1/I1
+    SLICE_X63Y46         LUT6 (Prop_lut6_I1_O)        0.124     7.081 f  u_bridge/tc_status[1]_INST_0_i_1/O
+                         net (fo=5, estimated)        0.184     7.265    u_tensor_core/tc_status_1_sn_1
+    SLICE_X63Y46                                                      f  u_tensor_core/tc_status[1]_INST_0/I1
+    SLICE_X63Y46         LUT2 (Prop_lut2_I1_O)        0.124     7.389 f  u_tensor_core/tc_status[1]_INST_0/O
+                         net (fo=49, estimated)       0.659     8.048    u_tensor_core/tc_status[1]
+    SLICE_X63Y48                                                      f  u_tensor_core/sparse_storage_q[acc][0][6][31]_i_4/I0
+    SLICE_X63Y48         LUT3 (Prop_lut3_I0_O)        0.124     8.172 r  u_tensor_core/sparse_storage_q[acc][0][6][31]_i_4/O
+                         net (fo=14, estimated)       1.667     9.839    u_tensor_core/sparse_storage_q[acc][0][6][31]_i_4_n_0
+    SLICE_X83Y84                                                      r  u_tensor_core/sparse_storage_q[acc][5][3][31]_i_1/I2
+    SLICE_X83Y84         LUT5 (Prop_lut5_I2_O)        0.124     9.963 r  u_tensor_core/sparse_storage_q[acc][5][3][31]_i_1/O
+                         net (fo=32, estimated)       0.605    10.568    u_tensor_core/sparse_storage_q[acc][5][3][31]_i_1_n_0
+    SLICE_X85Y79         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][5][3][21]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X85Y79         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][5][3][21]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X85Y79         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][5][3][21]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.568    
+  -------------------------------------------------------------------
+                         slack                                  0.116    
+
+Slack (MET) :             0.146ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[route][delta][0][3][3]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.565ns  (logic 1.386ns (14.490%)  route 8.179ns (85.510%))
+  Logic Levels:           7  (LUT3=2 LUT4=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.850     4.738    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X71Y41                                                      r  u_bridge/tc_status[2]_INST_0_i_1/I0
+    SLICE_X71Y41         LUT6 (Prop_lut6_I0_O)        0.124     4.862 f  u_bridge/tc_status[2]_INST_0_i_1/O
+                         net (fo=119, estimated)      0.660     5.522    u_bridge/rst_n_4
+    SLICE_X67Y42                                                      f  u_bridge/tc_status[1]_INST_0_i_7/I1
+    SLICE_X67Y42         LUT3 (Prop_lut3_I1_O)        0.124     5.646 r  u_bridge/tc_status[1]_INST_0_i_7/O
+                         net (fo=2, estimated)        1.278     6.924    u_bridge/tc_status[1]_INST_0_i_7_n_0
+    SLICE_X59Y48                                                      r  u_bridge/dense_q[pe][2][4][a][valid]_i_1/I1
+    SLICE_X59Y48         LUT6 (Prop_lut6_I1_O)        0.124     7.048 r  u_bridge/dense_q[pe][2][4][a][valid]_i_1/O
+                         net (fo=339, estimated)      0.845     7.893    u_bridge/ctrl_storage_q_reg[busy]_55
+    SLICE_X59Y47                                                      r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_3/I0
+    SLICE_X59Y47         LUT3 (Prop_lut3_I0_O)        0.124     8.017 r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_3/O
+                         net (fo=2, estimated)        0.801     8.818    u_bridge/ctrl_storage_q_reg[busy]_57
+    SLICE_X51Y38                                                      r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_1/I0
+    SLICE_X51Y38         LUT4 (Prop_lut4_I0_O)        0.124     8.942 r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_1/O
+                         net (fo=1077, estimated)     1.596    10.538    u_tensor_core/E[0]
+    SLICE_X80Y25         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][0][3][3]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X80Y25         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][0][3][3]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X80Y25         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[route][delta][0][3][3]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.538    
+  -------------------------------------------------------------------
+                         slack                                  0.146    
+
+Slack (MET) :             0.146ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[route][delta][5][3][3]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.565ns  (logic 1.386ns (14.490%)  route 8.179ns (85.510%))
+  Logic Levels:           7  (LUT3=2 LUT4=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.850     4.738    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X71Y41                                                      r  u_bridge/tc_status[2]_INST_0_i_1/I0
+    SLICE_X71Y41         LUT6 (Prop_lut6_I0_O)        0.124     4.862 f  u_bridge/tc_status[2]_INST_0_i_1/O
+                         net (fo=119, estimated)      0.660     5.522    u_bridge/rst_n_4
+    SLICE_X67Y42                                                      f  u_bridge/tc_status[1]_INST_0_i_7/I1
+    SLICE_X67Y42         LUT3 (Prop_lut3_I1_O)        0.124     5.646 r  u_bridge/tc_status[1]_INST_0_i_7/O
+                         net (fo=2, estimated)        1.278     6.924    u_bridge/tc_status[1]_INST_0_i_7_n_0
+    SLICE_X59Y48                                                      r  u_bridge/dense_q[pe][2][4][a][valid]_i_1/I1
+    SLICE_X59Y48         LUT6 (Prop_lut6_I1_O)        0.124     7.048 r  u_bridge/dense_q[pe][2][4][a][valid]_i_1/O
+                         net (fo=339, estimated)      0.845     7.893    u_bridge/ctrl_storage_q_reg[busy]_55
+    SLICE_X59Y47                                                      r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_3/I0
+    SLICE_X59Y47         LUT3 (Prop_lut3_I0_O)        0.124     8.017 r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_3/O
+                         net (fo=2, estimated)        0.801     8.818    u_bridge/ctrl_storage_q_reg[busy]_57
+    SLICE_X51Y38                                                      r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_1/I0
+    SLICE_X51Y38         LUT4 (Prop_lut4_I0_O)        0.124     8.942 r  u_bridge/sparse_storage_q[route][delta][1][1][15]_i_1/O
+                         net (fo=1077, estimated)     1.596    10.538    u_tensor_core/E[0]
+    SLICE_X80Y25         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][5][3][3]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X80Y25         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][5][3][3]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X80Y25         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[route][delta][5][3][3]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.538    
+  -------------------------------------------------------------------
+                         slack                                  0.146    
+
+Slack (MET) :             0.149ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][16]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.562ns  (logic 1.510ns (15.792%)  route 8.052ns (84.208%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.062    10.535    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X60Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][16]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X60Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][16]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X60Y81         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][16]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.535    
+  -------------------------------------------------------------------
+                         slack                                  0.149    
+
+Slack (MET) :             0.149ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][20]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.562ns  (logic 1.510ns (15.792%)  route 8.052ns (84.208%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.062    10.535    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][20]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][20]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X61Y81         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][20]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.535    
+  -------------------------------------------------------------------
+                         slack                                  0.149    
+
+Slack (MET) :             0.149ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][22]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.562ns  (logic 1.510ns (15.792%)  route 8.052ns (84.208%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.062    10.535    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X60Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][22]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X60Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][22]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X60Y81         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][22]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.535    
+  -------------------------------------------------------------------
+                         slack                                  0.149    
+
+Slack (MET) :             0.149ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][24]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.562ns  (logic 1.510ns (15.792%)  route 8.052ns (84.208%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.062    10.535    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][24]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][24]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X61Y81         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][24]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.535    
+  -------------------------------------------------------------------
+                         slack                                  0.149    
+
+Slack (MET) :             0.149ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][26]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.562ns  (logic 1.510ns (15.792%)  route 8.052ns (84.208%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.062    10.535    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][26]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X61Y81         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][26]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X61Y81         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][26]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.535    
+  -------------------------------------------------------------------
+                         slack                                  0.149    
+
+Slack (MET) :             0.150ns  (required time - arrival time)
+  Source:                 u_bridge/q_reg[meta_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[acc][6][5][14]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.561ns  (logic 1.510ns (15.793%)  route 8.051ns (84.207%))
+  Logic Levels:           8  (LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=3)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_bridge/clk
+    SLICE_X100Y32        FDCE                                         r  u_bridge/q_reg[meta_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X100Y32        FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/q_reg[meta_count][1]/Q
+                         net (fo=135, estimated)      1.369     2.860    u_bridge/q_reg[meta_count_n_0_][1]
+    SLICE_X71Y36                                                      r  u_bridge/tc_status[2]_INST_0_i_8/I2
+    SLICE_X71Y36         LUT4 (Prop_lut4_I2_O)        0.124     2.984 f  u_bridge/tc_status[2]_INST_0_i_8/O
+                         net (fo=1, estimated)        0.780     3.764    u_bridge/tc_status[2]_INST_0_i_8_n_0
+    SLICE_X71Y39                                                      f  u_bridge/tc_status[2]_INST_0_i_3/I2
+    SLICE_X71Y39         LUT6 (Prop_lut6_I2_O)        0.124     3.888 r  u_bridge/tc_status[2]_INST_0_i_3/O
+                         net (fo=9, estimated)        0.988     4.876    u_bridge/tc_status[2]_INST_0_i_3_n_0
+    SLICE_X68Y42                                                      r  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/I0
+    SLICE_X68Y42         LUT6 (Prop_lut6_I0_O)        0.124     5.000 f  u_bridge/dense_q[b_delay][5][0][value][7]_i_2/O
+                         net (fo=119, estimated)      0.406     5.406    u_bridge/rst_n_9
+    SLICE_X67Y42                                                      f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/I0
+    SLICE_X67Y42         LUT2 (Prop_lut2_I0_O)        0.124     5.530 f  u_bridge/dense_q[pe][5][5][acc][31]_i_5/O
+                         net (fo=119, estimated)      0.804     6.334    u_bridge/ctrl_storage_q_reg[busy]_26
+    SLICE_X64Y47                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/I3
+    SLICE_X64Y47         LUT5 (Prop_lut5_I3_O)        0.124     6.458 f  u_bridge/dense_q[pe][7][7][acc][31]_i_3/O
+                         net (fo=128, estimated)      1.238     7.696    u_bridge/ctrl_storage_q_reg[is_sparse]_rep__20_18
+    SLICE_X62Y72                                                      f  u_bridge/dense_q[pe][7][7][acc][31]_i_5/I0
+    SLICE_X62Y72         LUT6 (Prop_lut6_I0_O)        0.124     7.820 r  u_bridge/dense_q[pe][7][7][acc][31]_i_5/O
+                         net (fo=126, estimated)      0.740     8.560    u_bridge/ctrl_storage_q_reg[finish_pending]_34
+    SLICE_X61Y68                                                      r  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/I1
+    SLICE_X61Y68         LUT3 (Prop_lut3_I1_O)        0.124     8.684 f  u_bridge/sparse_storage_q[acc][3][6][31]_i_4/O
+                         net (fo=132, estimated)      0.665     9.349    u_tensor_core/sparse_storage_q_reg[acc][3][6][0]_0
+    SLICE_X60Y65                                                      f  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/I4
+    SLICE_X60Y65         LUT5 (Prop_lut5_I4_O)        0.124     9.473 r  u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1/O
+                         net (fo=32, estimated)       1.061    10.534    u_tensor_core/sparse_storage_q[acc][6][5][31]_i_1_n_0
+    SLICE_X57Y80         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][14]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X57Y80         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[acc][6][5][14]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X57Y80         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/sparse_storage_q_reg[acc][6][5][14]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.534    
+  -------------------------------------------------------------------
+                         slack                                  0.150    
+
+Slack (MET) :             0.152ns  (required time - arrival time)
+  Source:                 u_tensor_core/sparse_storage_q_reg[mul][a_count][1]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/sparse_storage_q_reg[route][delta][6][0][3]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.793ns  (logic 1.450ns (14.806%)  route 8.343ns (85.194%))
+  Logic Levels:           5  (LUT4=2 LUT5=1 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=20312, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X44Y29         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[mul][a_count][1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X44Y29         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/sparse_storage_q_reg[mul][a_count][1]/Q
+                         net (fo=229, estimated)      0.920     2.312    u_tensor_core/sparse_storage_q_reg[mul][a_count][1]
+    SLICE_X43Y28                                                      r  u_tensor_core/sparse_storage_q[route][delta][1][1][15]_i_21/I0
+    SLICE_X43Y28         LUT4 (Prop_lut4_I0_O)        0.299     2.611 r  u_tensor_core/sparse_storage_q[route][delta][1][1][15]_i_21/O
+                         net (fo=40, estimated)       1.690     4.301    u_tensor_core/p_624_in
+    SLICE_X54Y39                                                      r  u_tensor_core/sparse_storage_q[route][delta][6][3][15]_i_5/I0
+    SLICE_X54Y39         LUT4 (Prop_lut4_I0_O)        0.153     4.454 r  u_tensor_core/sparse_storage_q[route][delta][6][3][15]_i_5/O
+                         net (fo=129, estimated)      2.795     7.249    u_tensor_core/route_a_select[6]_6
+    SLICE_X4Y16                                                       r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_4/I0
+    SLICE_X4Y16          LUT5 (Prop_lut5_I0_O)        0.331     7.580 r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_4/O
+                         net (fo=1, estimated)        0.852     8.432    u_tensor_core/g_route_rows[6].g_column[0].words[6]_109[3]
+    SLICE_X4Y16                                                       r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_2/I0
+    SLICE_X4Y16          LUT6 (Prop_lut6_I0_O)        0.124     8.556 r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_2/O
+                         net (fo=1, estimated)        2.086    10.642    u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_2_n_0
+    SLICE_X41Y32                                                      r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_1/I2
+    SLICE_X41Y32         LUT6 (Prop_lut6_I2_O)        0.124    10.766 r  u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_1/O
+                         net (fo=1, routed)           0.000    10.766    u_tensor_core/sparse_storage_q[route][delta][6][0][3]_i_1_n_0
+    SLICE_X41Y32         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][6][0][3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=20312, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X41Y32         FDCE                                         r  u_tensor_core/sparse_storage_q_reg[route][delta][6][0][3]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X41Y32         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/sparse_storage_q_reg[route][delta][6][0][3]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.766    
+  -------------------------------------------------------------------
+                         slack                                  0.152    
+
+
+
+
