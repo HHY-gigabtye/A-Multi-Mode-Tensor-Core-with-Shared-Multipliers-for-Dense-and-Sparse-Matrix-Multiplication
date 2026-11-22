@@ -1,0 +1,2 @@
+baseline PASS: internal FPGA OOC 100 MHz
+candidate PASS: internal FPGA OOC 100 MHz

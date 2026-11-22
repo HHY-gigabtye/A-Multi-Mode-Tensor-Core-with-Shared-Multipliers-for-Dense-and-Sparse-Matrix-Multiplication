@@ -1,0 +1,1 @@
+PASS: 93 production inputs unchanged; 186 snapshot hashes unchanged; only candidate TC differs; original tests, vectors, reused flow and pre-existing AGENTS.md edit preserved.

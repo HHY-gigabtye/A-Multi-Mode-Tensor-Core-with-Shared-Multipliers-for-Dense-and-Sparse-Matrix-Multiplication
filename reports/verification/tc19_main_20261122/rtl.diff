@@ -1,0 +1,107 @@
+diff --git a/tensor_core_sv/outer_product_core.sv b/tensor_core_sv/outer_product_core.sv
+index 2ba0269..fb3642b 100644
+--- a/tensor_core_sv/outer_product_core.sv
++++ b/tensor_core_sv/outer_product_core.sv
+@@ -1,7 +1,7 @@
+ `timescale 1ns/1ps
+ 
+-// Experimental operand routing before multiplication. External timing and
+-// strict error/credit handling match the production outer-product core.
++// Isolated signed 19-bit accumulation with exact INT32 external results.
++// External timing and strict error/credit handling match the production core.
+ // One packet describes one k slice; reserve a result slot on its first slice.
+ module outer_product_core (
+   input logic clk, rst_n, in_valid, result_ready,
+@@ -15,7 +15,18 @@ module outer_product_core (
+   logic [2:0] next_k;
+   logic [1:0] outstanding, result_count;
+   logic publish_q;
++  // Eight signed INT8 products fit in [-130048, 131072], including every
++  // partial sum. This requires 19 signed bits (18 cannot hold +131072).
++  // No cross-K-tile accumulation is supported by the unchanged contract.
++  localparam int ACC_W = 19;
++  typedef logic [7:0][7:0][ACC_W-1:0] acc_matrix_t;
++  acc_matrix_t acc_q, result_q, tail_q;
++  // Preserve the existing full-width observation names without extra storage.
+   tc_matrix_t tail, acc;
++  function automatic logic signed [ACC_W-1:0] product_to_acc(
++      input logic [15:0] value);
++    return {{(ACC_W-16){value[15]}}, value};
++  endfunction
+   typedef struct packed {
+     logic valid, first, last;
+     tc_lane_data_t a_value, b_value;
+@@ -28,7 +39,7 @@ module outer_product_core (
+   operand_reg_t operand_q;
+   product_meta_t product_meta_q;
+   wire [7:0][7:0][15:0] product_q;
+-  wire [7:0][7:0][31:0] acc_sum;
++  wire [7:0][7:0][ACC_W-1:0] acc_sum;
+   wire [7:0][7:0] a_select, b_select, acc_enable;
+   wire [7:0] a_present, b_present;
+   tc_lane_data_t routed_a, routed_b;
+@@ -52,6 +63,9 @@ module outer_product_core (
+   wire capture_product = rst_n && operand_q.valid && status == TC_OK;
+   for (genvar i=0; i<TC_DIM; i++) begin : g_row
+     for (genvar j=0; j<TC_DIM; j++) begin : g_col
++      assign result[i][j] = {{(32-ACC_W){result_q[i][j][ACC_W-1]}}, result_q[i][j]};
++      assign tail[i][j] = {{(32-ACC_W){tail_q[i][j][ACC_W-1]}}, tail_q[i][j]};
++      assign acc[i][j] = {{(32-ACC_W){acc_q[i][j][ACC_W-1]}}, acc_q[i][j]};
+       (* use_dsp = "yes" *) wire signed [15:0] product =
+           mul_int8(operand_q.a_value[i], operand_q.b_value[j]);
+       logic signed [15:0] p;
+@@ -60,10 +74,10 @@ module outer_product_core (
+       assign product_q[i][j] = p;
+       assign acc_enable[i][j] = product_meta_q.a_present[i] &&
+                                 product_meta_q.b_present[j];
+-      // Keep the baseline's fabric INT32 adder. Otherwise synthesis can
++      // Keep accumulation in fabric at the authorized narrower width. Otherwise synthesis can
+       // duplicate the multiplier into an additional DSP multiply-add cone.
+-      (* use_dsp = "no" *) wire signed [31:0] fabric_sum =
+-          $signed(acc[i][j]) + extend_product(product_q[i][j]);
++      (* use_dsp = "no" *) wire signed [ACC_W-1:0] fabric_sum =
++          $signed(acc_q[i][j]) + product_to_acc(product_q[i][j]);
+       assign acc_sum[i][j] = fabric_sum;
+     end
+   end
+@@ -111,20 +125,20 @@ module outer_product_core (
+       operand_q <= '0;
+       product_meta_q <= '0;
+       publish_q <= 1'b0;
+-      result <= '0;
+-      tail <= '0;
+-      acc <= '0;
++      result_q <= '0;
++      tail_q <= '0;
++      acc_q <= '0;
+     end else if (status == TC_OK) begin
+       if (in_valid) next_k <= next_k + 3'd1;
+       outstanding <= outstanding + {1'b0, first} - {1'b0, pop};
+       result_count <= result_count + {1'b0, publish_q} - {1'b0, pop};
+       if (!busy && first) begin
+-        result <= '0;
+-        tail <= '0;
++        result_q <= '0;
++        tail_q <= '0;
+       end else begin
+-        if (publish_q && empty_after_pop) result <= acc;
+-        else if (pop && result_count == 2) result <= tail;
+-        if (publish_q && !empty_after_pop) tail <= acc;
++        if (publish_q && empty_after_pop) result_q <= acc_q;
++        else if (pop && result_count == 2) result_q <= tail_q;
++        if (publish_q && !empty_after_pop) tail_q <= acc_q;
+       end
+       operand_q.valid <= in_valid;
+       operand_q.first <= first;
+@@ -147,9 +161,9 @@ module outer_product_core (
+         for (int i=0; i<TC_DIM; i++)
+           for (int j=0; j<TC_DIM; j++) begin
+             if (product_meta_q.first)
+-              acc[i][j] <= acc_enable[i][j] ? extend_product(product_q[i][j]) : '0;
++              acc_q[i][j] <= acc_enable[i][j] ? product_to_acc(product_q[i][j]) : '0;
+             else if (acc_enable[i][j])
+-              acc[i][j] <= acc_sum[i][j];
++              acc_q[i][j] <= acc_sum[i][j];
+           end
+       end
+     end

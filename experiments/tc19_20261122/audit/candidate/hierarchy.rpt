@@ -1,0 +1,35 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 12:11:34 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/audit/candidate/hierarchy.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020clg484-1
+| Speed File   : -1
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|          Instance          |       Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| sparse_tensor_core_top     |              (top) |      10101 |      10000 |       0 |  101 | 11295 |     18 |      0 |         64 |
+|   (sparse_tensor_core_top) |              (top) |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|   u_bridge                 |       du_tc_bridge |       1574 |       1473 |       0 |  101 |  2674 |      0 |      0 |          0 |
+|   u_du_tia                 |             du_tia |       2149 |       2149 |       0 |    0 |   800 |      0 |      0 |          0 |
+|   u_mlu                    |                mlu |       2170 |       2170 |       0 |    0 |  1038 |     18 |      0 |          0 |
+|   u_msu                    |                msu |       1064 |       1064 |       0 |    0 |  2738 |      0 |      0 |          0 |
+|   u_tensor_core            | outer_product_core |       3146 |       3146 |       0 |    0 |  4045 |      0 |      0 |         64 |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

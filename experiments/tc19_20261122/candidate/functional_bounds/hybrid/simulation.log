@@ -1,0 +1,26 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 12:13:52 2026
+# Process ID: 25008
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/functional_bounds
+# Command line: xsim.exe -log C:\Users\Jason\Desktop\TC\experiments\tc19_20261122\candidate\functional_bounds\hybrid\simulation.log -mode tcl -source {xsim.dir/workload_sim/xsim_script.tcl}
+# Log file: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/functional_bounds/hybrid/simulation.log
+# Journal file: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/functional_bounds\xsim.jou
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source xsim.dir/workload_sim/xsim_script.tcl
+# xsim {workload_sim} -testplusarg HYBRID -testplusarg BOUNDS -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/functional_bounds/hybrid/run.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/functional_bounds/hybrid/run.tcl
+## run all
+POWER WORKLOAD PASS mode=1 seed=51a7c0de tiles=288 cycles=2343 beats=2304 present_a=18432 present_b=9216 nonzero_a=18432 nonzero_b=9216 II=8
+$finish called at time : 23638 ns : File "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/tb_tc19_system.sv" Line 252
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:16 . Memory (MB): peak = 239.438 ; gain = 0.000
+## if {[get_value -radix unsigned /tb_tc19_system/passed] != 1} {error {Workload did not pass}}
+## puts {TC19_WORKLOAD_PASS}
+TC19_WORKLOAD_PASS
+## quit
+INFO: xsimkernel Simulation Memory Usage: 119212 KB (Peak: 119212 KB), Simulation CPU Usage: 15796 ms
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 12:14:10 2026...

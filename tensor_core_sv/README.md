@@ -1,6 +1,17 @@
 # Shared outer-product Tensor Core
 
-The production module [`outer_product_core.sv`](outer_product_core.sv) accepts one indexed A/B operand pair per k slice. Dense, hybrid and dual-sparse tiles share operand routing, 64 signed INT8 multipliers, INT32 accumulation and two result slots. Routing restores the two eight-element INT8 vectors before multiplication, with zero-filled missing coordinates and separate presence masks. Products use fixed coordinates; the two 16-bit product-routing banks are removed. The fabric accumulator addition has `use_dsp="no"` to preserve the 64-DSP implementation. See the [November 22 promotion](../reports/verification/operand_route_main_20261122/README.md) and [measured comparison](../experiments/pre_route_20261122/REPORT.md). The dedicated dense systolic array and the earlier multiply-before-route shared core remain archived.
+The production module [`outer_product_core.sv`](outer_product_core.sv) accepts one indexed A/B operand pair per k slice. Dense, hybrid and dual-sparse tiles share operand routing, 64 signed INT8 multipliers, signed 19-bit accumulation/storage and two result slots, with exact INT32 external results. Routing restores the two eight-element INT8 vectors before multiplication, with zero-filled missing coordinates and separate presence masks. Products use fixed coordinates; the two 16-bit product-routing banks are removed. The fabric accumulator addition has `use_dsp="no"` to preserve the 64-DSP implementation. See the [19-bit promotion](../reports/verification/tc19_main_20261122/README.md) and [measured comparison](../experiments/tc19_20261122/REPORT.md). The dedicated dense systolic array and the earlier multiply-before-route shared core remain archived.
+
+## Internal precision and external INT32
+
+Products remain signed 16 bits and are sign-extended to 19 bits before addition.
+`acc_q`, `result_q`, and `tail_q` use 19-bit elements. Output elements are
+sign-extended to INT32; combinational `acc` and `tail` views preserve the original
+unit-test observations without duplicate registers. One signed INT8 product is
+in [-16256, 16384], so every partial sum of at most eight products lies in
+[-130048, 131072]. Signed 19 bits cover both endpoints; signed 18 bits do not
+cover +131072. This exact-width argument requires K=8, zero initial accumulation,
+and independent tiles. Ports, public types, handshake rules, and MSU are unchanged.
 
 ## Current packet and admission contract
 
@@ -83,17 +94,21 @@ regression passes 21,032 compatible C records, 1,366 publications, six malformed
 offers, one full-credit rejection, and the existing TC comparison. Integration
 completes 369 tiles with 77 resets and preserves all 50 baseline summary lines,
 including II=8 and k=7+3 timing. See the
-[current verification evidence and applied diff](../reports/verification/operand_route_main_20261122/README.md).
-These runs preceded this documentation update; no simulation is rerun for README edits.
+[current verification evidence and applied diff](../reports/verification/tc19_main_20261122/README.md).
 
-The isolated experiment additionally exhausts all 65,536 A/B bitmap pairs in a
-standalone TC comparison with independent GEMM, timing, error, backpressure, and
-reset checks. Its snapshots, added tests, and results remain under the
-[operand-routing experiment](../experiments/pre_route_20261122/README.md).
-The promoted source matches the validated 64-DSP candidate exactly; the first
-128-DSP attempt remains historical. Integrated post-route area, timing, and
-functional-SAIF power estimates are in the [measurement report](../experiments/pre_route_20261122/REPORT.md),
-not a fresh implementation of the main working tree.
+The promotion also reruns the preserved standalone equivalence test against the
+32-bit baseline, including all 65,536 A/B bitmap pairs, and the bounds test covering
+all 65,536 signed INT8 operand pairs accumulated over eight slices. These check
+exact results, II=8, k=7+3 publication, errors, backpressure, and resets.
+The [19-bit experiment](../experiments/tc19_20261122/README.md) retains the original
+snapshots and additional tests. Main matches the validated candidate exactly.
+Its retained integrated post-route result is 10,101 LUTs, 11,295 FFs, 64 DSPs and
+18 RAMB36s at 100 MHz, with setup WNS +0.004 ns and hold WHS +0.098 ns. The 4 ps
+setup margin is small. These are source-matched OOC measurements, not a fresh
+implementation of the main working tree or board timing sign-off. No power
+measurement was made for the 19-bit version. The previous
+[32-bit operand-routing/power report](../experiments/pre_route_20261122/REPORT.md)
+remains historical evidence.
 
 ## Legacy core and cycle reference
 

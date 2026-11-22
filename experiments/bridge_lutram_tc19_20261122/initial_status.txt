@@ -1,0 +1,11 @@
+## main...origin/main
+ M AGENTS.md
+ M README.md
+ M docs/architecture.md
+ M docs/verification-and-reproduction.md
+ M integration_sv/README.md
+ M tensor_core_sv/README.md
+ M tensor_core_sv/outer_product_core.sv
+?? experiments/bridge_lutram_tc19_20261122/
+?? experiments/tc19_20261122/
+?? reports/verification/tc19_main_20261122/

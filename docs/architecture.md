@@ -9,6 +9,8 @@
 
 > Updated on 2026-11-22: production now restores operand coordinates before multiplication and uses the shared DU/TIA whole-union assignment repair. The prior snapshots and reports are retained. [Promotion and verification record](../reports/verification/operand_route_main_20261122/README.md)
 
+> Later update on 2026-11-22: adopted the validated 19-bit TC accumulator/result storage with exact INT32 interfaces, unchanged II=8 and k=7+3 publication. The source-matched 100 MHz OOC route passes with only 4 ps setup margin. [19-bit promotion and verification record](../reports/verification/tc19_main_20261122/README.md)
+
 ## 1. Goal and current scope
 
 The project implements an 8×8 Tensor Core supporting dense and sparse workloads.
@@ -18,8 +20,8 @@ compatible sparse windows remain a cycle oracle, while dense and mixed-format
 behavior use the current RTL contract and independent GEMM tests. The
 [November 21 record](../reports/verification/outer_main_20261121/README.md)
 documents the transition to shared multipliers. The
-[November 22 promotion](../reports/verification/operand_route_main_20261122/README.md)
-records the current operand-routing core, DU/TIA repair, fresh main-source
+[19-bit promotion](../reports/verification/tc19_main_20261122/README.md)
+records the current operand-routing core with narrowed TC storage, DU/TIA repair, fresh main-source
 regression, and retained source-matched FPGA post-route evidence. ASIC
 implementation remains outside the verified scope.
 
@@ -59,7 +61,8 @@ are outside the simplified model's scope.
 | Matrix dimensions | M=N=K=8; eight k slices per tile |
 | Multiplication operands | Signed INT8 (-128 to 127) |
 | Product | Signed 16 bits suffice for one INT8×INT8 product |
-| Accumulator / result | Signed INT32; 8×8 result |
+| TC accumulator / result storage | Signed 19-bit elements; exact for eight signed INT8 products from zero |
+| External result | Signed INT32; 8×8 matrix, sign-extended from internal TC storage |
 | `IO_DENSE=0` | Dense A × dense B; full-count indexed outer product |
 | `IO_HYBRID=1` | Unstructured A × 2:4 structured B; sparse outer product |
 | `IO_DUAL=2` | Unstructured A × unstructured B; sparse outer product |
@@ -146,7 +149,9 @@ once.** Do not update DU first and use its new S3 as the same-edge FIFO input.
 
 The current shared pipeline is **Routing → MUL → ACC** for dense, hybrid, and dual-sparse tiles.
 
-Each accepted slice first restores A and B independently from packed operand lanes to original row and column coordinates, zero-filling missing coordinates. The first stage registers two eight-element INT8 vectors and separate presence masks. The second stage registers fixed-coordinate products from one 8×8 bank of signed INT8 multipliers. The accumulator sign-extends each product into INT32 and initializes each output coordinate on the first slice of a tile. The fabric addition is explicitly marked `use_dsp="no"`, while multiplication uses `use_dsp="yes"`, preserving 64 DSPs. The historical `tick_info.mul` and `tick_info.route` fields still observe the first and second phases respectively; their names do not describe the new physical ordering.
+Each accepted slice first restores A and B independently from packed operand lanes to original row and column coordinates, zero-filling missing coordinates. The first stage registers two eight-element INT8 vectors and separate presence masks. The second stage registers fixed-coordinate 16-bit products from one 8×8 bank of signed INT8 multipliers. The accumulator sign-extends each product to 19 bits and initializes each output coordinate on the first slice of a tile. The fabric addition is explicitly marked `use_dsp="no"`, while multiplication uses `use_dsp="yes"`, preserving 64 DSPs. The historical `tick_info.mul` and `tick_info.route` fields still observe the first and second phases respectively; their names do not describe the new physical ordering.
+
+`acc_q`, `result_q`, and `tail_q` store 19-bit elements. The external result and the combinational `acc`/`tail` observation views sign-extend these elements to 32 bits. A signed INT8 product is in [-16256, 16384]; every partial sum of at most eight such products is in [-130048, 131072]. Signed 19-bit storage is exact, while 18 bits cannot represent +131072. This depends on fixed K=8, zero initial accumulation, and no cross-tile accumulation. Any extension of that scope requires a new width proof. MSU continues to accept arbitrary INT32 values; its RTL and public types are unchanged.
 
 All three formats use the same pipeline and two result slots. A tile reserves its slot when k=0 is accepted and releases it on the result handshake. With eight consecutive accepted slices, the result becomes available three advancing edges after acceptance of k=7. Unstalled dense, sparse and mixed streams can start a tile every eight cycles. Format changes have no drain requirement. End-to-end writeback also depends on MSU and memory readiness.
 

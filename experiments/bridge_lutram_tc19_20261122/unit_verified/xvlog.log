@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/unit_netlist/bridge_flat_netlist.v" into library work
+INFO: [VRFC 10-311] analyzing module bridge_flat_netlist
+INFO: [VRFC 10-311] analyzing module du_tc_bridge
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Xilinx/Vivado/2022.2/data/verilog/src/glbl.v" into library work

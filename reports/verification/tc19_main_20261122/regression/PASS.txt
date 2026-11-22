@@ -1,0 +1,1 @@
+PASS: production units, additional equivalence/bounds units, and integration; all 50 accepted top summaries identical; 93 production source/reference/test hashes match the validated candidate; pre-update backups and 326 historical evidence artifacts unchanged.

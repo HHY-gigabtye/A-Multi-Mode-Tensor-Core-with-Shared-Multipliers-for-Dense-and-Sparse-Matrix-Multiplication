@@ -1,0 +1,51 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 12:14:11 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_high_fanout_nets -max_nets 30 -file high_fanout.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+------------------------------------------------------------------------------------
+
+High Fan-out Nets Information
+
+1. Summary
+----------
+
++------------------------------------------+--------+-------------+
+| Net Name                                 | Fanout | Driver Type |
++------------------------------------------+--------+-------------+
+| u_tensor_core/rst_n_0                    |  10503 | LUT1        |
+| u_msu/meta_q[0][95]_i_1_n_0              |   1312 | LUT6        |
+| u_msu/meta_q[1][95]_i_1_n_0              |   1312 | LUT6        |
+| u_tensor_core/result_q                   |   1216 | LUT6        |
+| u_tensor_core/tail_q                     |   1216 | LUT6        |
+| u_msu/head_q_reg_n_0                     |    863 | FDCE        |
+| u_mlu/make_frame[packet][mode]_return[1] |    588 | LUT3        |
+| u_mlu/make_frame[packet][mode]_return[0] |    483 | LUT3        |
+| u_mlu/ctrl_q_reg[next_k_n_0_][1]         |    370 | FDCE        |
+| u_tensor_core/next_k                     |    355 | LUT2        |
+| u_bridge/state_q                         |    318 | LUT3        |
+| u_bridge/s3_q_reg[valid]                 |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_0         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_1         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_2         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_3         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_4         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_5         |    284 | LUT5        |
+| u_bridge/state_q_reg[count][2]_6         |    284 | LUT5        |
+| u_bridge/fifo_storage_q                  |    283 | LUT5        |
+| u_bridge/fifo_storage_q[0][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[1][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[2][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[3][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[4][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[5][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_bridge/fifo_storage_q[6][k][2]_i_1_n_0 |    283 | LUT5        |
+| u_mlu/image_write                        |    262 | LUT6        |
+| u_mlu/info_d14_in                        |    256 | LUT3        |
+| u_mlu/last_packet_q[mode][1]_i_1_n_0     |    235 | LUT6        |
++------------------------------------------+--------+-------------+
+
+

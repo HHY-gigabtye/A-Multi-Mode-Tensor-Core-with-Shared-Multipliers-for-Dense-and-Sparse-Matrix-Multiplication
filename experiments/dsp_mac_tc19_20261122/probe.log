@@ -1,0 +1,699 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 16:46:02 2026
+# Process ID: 11320
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/dsp_mac_tc19_20261122
+# Command line: vivado.exe -mode batch -nojournal -log probe.log -source probe_core.tcl
+# Log file: C:/Users/Jason/Desktop/TC/experiments/dsp_mac_tc19_20261122/probe.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at 'C'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
+source probe_core.tcl
+# set trial [file normalize [file dirname [info script]]]
+# set out [file join $trial core_probe]
+# if {[file exists $out]} {error "Choose a fresh probe directory"}
+# file mkdir $out
+# cd $out
+# set_param general.maxThreads 1
+# create_project -in_memory -part xc7z020clg484-1
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 394.711 ; gain = 63.836
+# set root [file join $trial candidate src tensor_core_sv]
+# read_verilog -sv [file join $root tensor_core_pkg.sv]
+# read_verilog -sv [file join $root outer_product_core.sv]
+# synth_design -mode out_of_context -top outer_product_core -part xc7z020clg484-1
+Command: synth_design -mode out_of_context -top outer_product_core -part xc7z020clg484-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 1 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 28400
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [C:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 832.590 ; gain = 412.996
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'outer_product_core' [C:/Users/Jason/Desktop/TC/experiments/dsp_mac_tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'outer_product_core' (0#1) [C:/Users/Jason/Desktop/TC/experiments/dsp_mac_tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv:6]
+WARNING: [Synth 8-6014] Unused sequential element acc_initialized_reg was removed.  [C:/Users/Jason/Desktop/TC/experiments/dsp_mac_tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv:67]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 960.988 ; gain = 541.395
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 960.988 ; gain = 541.395
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 960.988 ; gain = 541.395
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:11 . Memory (MB): peak = 960.988 ; gain = 541.395
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	  64 Input    7 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 1     
+	   4 Input    2 Bit       Adders := 2     
++---Registers : 
+	               19 Bit    Registers := 192   
+	                8 Bit    Registers := 20    
+	                7 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 17    
++---Muxes : 
+	   2 Input   19 Bit        Muxes := 256   
+	   2 Input    7 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 3     
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 18    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP g_row[7].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[7].p_reg is absorbed into DSP g_row[7].g_col[7].p_reg.
+DSP Report: register g_row[7].g_col[7].m_reg is absorbed into DSP g_row[7].g_col[7].p_reg.
+DSP Report: operator g_row[7].g_col[7].p0 is absorbed into DSP g_row[7].g_col[7].p_reg.
+DSP Report: operator g_row[7].g_col[7].m0 is absorbed into DSP g_row[7].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[6].p_reg is absorbed into DSP g_row[7].g_col[6].p_reg.
+DSP Report: register g_row[7].g_col[6].m_reg is absorbed into DSP g_row[7].g_col[6].p_reg.
+DSP Report: operator g_row[7].g_col[6].p0 is absorbed into DSP g_row[7].g_col[6].p_reg.
+DSP Report: operator g_row[7].g_col[6].m0 is absorbed into DSP g_row[7].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[5].p_reg is absorbed into DSP g_row[7].g_col[5].p_reg.
+DSP Report: register g_row[7].g_col[5].m_reg is absorbed into DSP g_row[7].g_col[5].p_reg.
+DSP Report: operator g_row[7].g_col[5].p0 is absorbed into DSP g_row[7].g_col[5].p_reg.
+DSP Report: operator g_row[7].g_col[5].m0 is absorbed into DSP g_row[7].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[4].p_reg is absorbed into DSP g_row[7].g_col[4].p_reg.
+DSP Report: register g_row[7].g_col[4].m_reg is absorbed into DSP g_row[7].g_col[4].p_reg.
+DSP Report: operator g_row[7].g_col[4].p0 is absorbed into DSP g_row[7].g_col[4].p_reg.
+DSP Report: operator g_row[7].g_col[4].m0 is absorbed into DSP g_row[7].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[3].p_reg is absorbed into DSP g_row[7].g_col[3].p_reg.
+DSP Report: register g_row[7].g_col[3].m_reg is absorbed into DSP g_row[7].g_col[3].p_reg.
+DSP Report: operator g_row[7].g_col[3].p0 is absorbed into DSP g_row[7].g_col[3].p_reg.
+DSP Report: operator g_row[7].g_col[3].m0 is absorbed into DSP g_row[7].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[2].p_reg is absorbed into DSP g_row[7].g_col[2].p_reg.
+DSP Report: register g_row[7].g_col[2].m_reg is absorbed into DSP g_row[7].g_col[2].p_reg.
+DSP Report: operator g_row[7].g_col[2].p0 is absorbed into DSP g_row[7].g_col[2].p_reg.
+DSP Report: operator g_row[7].g_col[2].m0 is absorbed into DSP g_row[7].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[1].p_reg is absorbed into DSP g_row[7].g_col[1].p_reg.
+DSP Report: register g_row[7].g_col[1].m_reg is absorbed into DSP g_row[7].g_col[1].p_reg.
+DSP Report: operator g_row[7].g_col[1].p0 is absorbed into DSP g_row[7].g_col[1].p_reg.
+DSP Report: operator g_row[7].g_col[1].m0 is absorbed into DSP g_row[7].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[7].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[7].g_col[0].p_reg is absorbed into DSP g_row[7].g_col[0].p_reg.
+DSP Report: register g_row[7].g_col[0].m_reg is absorbed into DSP g_row[7].g_col[0].p_reg.
+DSP Report: operator g_row[7].g_col[0].p0 is absorbed into DSP g_row[7].g_col[0].p_reg.
+DSP Report: operator g_row[7].g_col[0].m0 is absorbed into DSP g_row[7].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[7].p_reg is absorbed into DSP g_row[6].g_col[7].p_reg.
+DSP Report: register g_row[6].g_col[7].m_reg is absorbed into DSP g_row[6].g_col[7].p_reg.
+DSP Report: operator g_row[6].g_col[7].p0 is absorbed into DSP g_row[6].g_col[7].p_reg.
+DSP Report: operator g_row[6].g_col[7].m0 is absorbed into DSP g_row[6].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[6].p_reg is absorbed into DSP g_row[6].g_col[6].p_reg.
+DSP Report: register g_row[6].g_col[6].m_reg is absorbed into DSP g_row[6].g_col[6].p_reg.
+DSP Report: operator g_row[6].g_col[6].p0 is absorbed into DSP g_row[6].g_col[6].p_reg.
+DSP Report: operator g_row[6].g_col[6].m0 is absorbed into DSP g_row[6].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[5].p_reg is absorbed into DSP g_row[6].g_col[5].p_reg.
+DSP Report: register g_row[6].g_col[5].m_reg is absorbed into DSP g_row[6].g_col[5].p_reg.
+DSP Report: operator g_row[6].g_col[5].p0 is absorbed into DSP g_row[6].g_col[5].p_reg.
+DSP Report: operator g_row[6].g_col[5].m0 is absorbed into DSP g_row[6].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[4].p_reg is absorbed into DSP g_row[6].g_col[4].p_reg.
+DSP Report: register g_row[6].g_col[4].m_reg is absorbed into DSP g_row[6].g_col[4].p_reg.
+DSP Report: operator g_row[6].g_col[4].p0 is absorbed into DSP g_row[6].g_col[4].p_reg.
+DSP Report: operator g_row[6].g_col[4].m0 is absorbed into DSP g_row[6].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[3].p_reg is absorbed into DSP g_row[6].g_col[3].p_reg.
+DSP Report: register g_row[6].g_col[3].m_reg is absorbed into DSP g_row[6].g_col[3].p_reg.
+DSP Report: operator g_row[6].g_col[3].p0 is absorbed into DSP g_row[6].g_col[3].p_reg.
+DSP Report: operator g_row[6].g_col[3].m0 is absorbed into DSP g_row[6].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[2].p_reg is absorbed into DSP g_row[6].g_col[2].p_reg.
+DSP Report: register g_row[6].g_col[2].m_reg is absorbed into DSP g_row[6].g_col[2].p_reg.
+DSP Report: operator g_row[6].g_col[2].p0 is absorbed into DSP g_row[6].g_col[2].p_reg.
+DSP Report: operator g_row[6].g_col[2].m0 is absorbed into DSP g_row[6].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[1].p_reg is absorbed into DSP g_row[6].g_col[1].p_reg.
+DSP Report: register g_row[6].g_col[1].m_reg is absorbed into DSP g_row[6].g_col[1].p_reg.
+DSP Report: operator g_row[6].g_col[1].p0 is absorbed into DSP g_row[6].g_col[1].p_reg.
+DSP Report: operator g_row[6].g_col[1].m0 is absorbed into DSP g_row[6].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[6].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[6].g_col[0].p_reg is absorbed into DSP g_row[6].g_col[0].p_reg.
+DSP Report: register g_row[6].g_col[0].m_reg is absorbed into DSP g_row[6].g_col[0].p_reg.
+DSP Report: operator g_row[6].g_col[0].p0 is absorbed into DSP g_row[6].g_col[0].p_reg.
+DSP Report: operator g_row[6].g_col[0].m0 is absorbed into DSP g_row[6].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[7].p_reg is absorbed into DSP g_row[5].g_col[7].p_reg.
+DSP Report: register g_row[5].g_col[7].m_reg is absorbed into DSP g_row[5].g_col[7].p_reg.
+DSP Report: operator g_row[5].g_col[7].p0 is absorbed into DSP g_row[5].g_col[7].p_reg.
+DSP Report: operator g_row[5].g_col[7].m0 is absorbed into DSP g_row[5].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[6].p_reg is absorbed into DSP g_row[5].g_col[6].p_reg.
+DSP Report: register g_row[5].g_col[6].m_reg is absorbed into DSP g_row[5].g_col[6].p_reg.
+DSP Report: operator g_row[5].g_col[6].p0 is absorbed into DSP g_row[5].g_col[6].p_reg.
+DSP Report: operator g_row[5].g_col[6].m0 is absorbed into DSP g_row[5].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[5].p_reg is absorbed into DSP g_row[5].g_col[5].p_reg.
+DSP Report: register g_row[5].g_col[5].m_reg is absorbed into DSP g_row[5].g_col[5].p_reg.
+DSP Report: operator g_row[5].g_col[5].p0 is absorbed into DSP g_row[5].g_col[5].p_reg.
+DSP Report: operator g_row[5].g_col[5].m0 is absorbed into DSP g_row[5].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[4].p_reg is absorbed into DSP g_row[5].g_col[4].p_reg.
+DSP Report: register g_row[5].g_col[4].m_reg is absorbed into DSP g_row[5].g_col[4].p_reg.
+DSP Report: operator g_row[5].g_col[4].p0 is absorbed into DSP g_row[5].g_col[4].p_reg.
+DSP Report: operator g_row[5].g_col[4].m0 is absorbed into DSP g_row[5].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[3].p_reg is absorbed into DSP g_row[5].g_col[3].p_reg.
+DSP Report: register g_row[5].g_col[3].m_reg is absorbed into DSP g_row[5].g_col[3].p_reg.
+DSP Report: operator g_row[5].g_col[3].p0 is absorbed into DSP g_row[5].g_col[3].p_reg.
+DSP Report: operator g_row[5].g_col[3].m0 is absorbed into DSP g_row[5].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[2].p_reg is absorbed into DSP g_row[5].g_col[2].p_reg.
+DSP Report: register g_row[5].g_col[2].m_reg is absorbed into DSP g_row[5].g_col[2].p_reg.
+DSP Report: operator g_row[5].g_col[2].p0 is absorbed into DSP g_row[5].g_col[2].p_reg.
+DSP Report: operator g_row[5].g_col[2].m0 is absorbed into DSP g_row[5].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[1].p_reg is absorbed into DSP g_row[5].g_col[1].p_reg.
+DSP Report: register g_row[5].g_col[1].m_reg is absorbed into DSP g_row[5].g_col[1].p_reg.
+DSP Report: operator g_row[5].g_col[1].p0 is absorbed into DSP g_row[5].g_col[1].p_reg.
+DSP Report: operator g_row[5].g_col[1].m0 is absorbed into DSP g_row[5].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[5].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[5].g_col[0].p_reg is absorbed into DSP g_row[5].g_col[0].p_reg.
+DSP Report: register g_row[5].g_col[0].m_reg is absorbed into DSP g_row[5].g_col[0].p_reg.
+DSP Report: operator g_row[5].g_col[0].p0 is absorbed into DSP g_row[5].g_col[0].p_reg.
+DSP Report: operator g_row[5].g_col[0].m0 is absorbed into DSP g_row[5].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[7].p_reg is absorbed into DSP g_row[4].g_col[7].p_reg.
+DSP Report: register g_row[4].g_col[7].m_reg is absorbed into DSP g_row[4].g_col[7].p_reg.
+DSP Report: operator g_row[4].g_col[7].p0 is absorbed into DSP g_row[4].g_col[7].p_reg.
+DSP Report: operator g_row[4].g_col[7].m0 is absorbed into DSP g_row[4].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[6].p_reg is absorbed into DSP g_row[4].g_col[6].p_reg.
+DSP Report: register g_row[4].g_col[6].m_reg is absorbed into DSP g_row[4].g_col[6].p_reg.
+DSP Report: operator g_row[4].g_col[6].p0 is absorbed into DSP g_row[4].g_col[6].p_reg.
+DSP Report: operator g_row[4].g_col[6].m0 is absorbed into DSP g_row[4].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[5].p_reg is absorbed into DSP g_row[4].g_col[5].p_reg.
+DSP Report: register g_row[4].g_col[5].m_reg is absorbed into DSP g_row[4].g_col[5].p_reg.
+DSP Report: operator g_row[4].g_col[5].p0 is absorbed into DSP g_row[4].g_col[5].p_reg.
+DSP Report: operator g_row[4].g_col[5].m0 is absorbed into DSP g_row[4].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[4].p_reg is absorbed into DSP g_row[4].g_col[4].p_reg.
+DSP Report: register g_row[4].g_col[4].m_reg is absorbed into DSP g_row[4].g_col[4].p_reg.
+DSP Report: operator g_row[4].g_col[4].p0 is absorbed into DSP g_row[4].g_col[4].p_reg.
+DSP Report: operator g_row[4].g_col[4].m0 is absorbed into DSP g_row[4].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[3].p_reg is absorbed into DSP g_row[4].g_col[3].p_reg.
+DSP Report: register g_row[4].g_col[3].m_reg is absorbed into DSP g_row[4].g_col[3].p_reg.
+DSP Report: operator g_row[4].g_col[3].p0 is absorbed into DSP g_row[4].g_col[3].p_reg.
+DSP Report: operator g_row[4].g_col[3].m0 is absorbed into DSP g_row[4].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[2].p_reg is absorbed into DSP g_row[4].g_col[2].p_reg.
+DSP Report: register g_row[4].g_col[2].m_reg is absorbed into DSP g_row[4].g_col[2].p_reg.
+DSP Report: operator g_row[4].g_col[2].p0 is absorbed into DSP g_row[4].g_col[2].p_reg.
+DSP Report: operator g_row[4].g_col[2].m0 is absorbed into DSP g_row[4].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[1].p_reg is absorbed into DSP g_row[4].g_col[1].p_reg.
+DSP Report: register g_row[4].g_col[1].m_reg is absorbed into DSP g_row[4].g_col[1].p_reg.
+DSP Report: operator g_row[4].g_col[1].p0 is absorbed into DSP g_row[4].g_col[1].p_reg.
+DSP Report: operator g_row[4].g_col[1].m0 is absorbed into DSP g_row[4].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[4].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[4].g_col[0].p_reg is absorbed into DSP g_row[4].g_col[0].p_reg.
+DSP Report: register g_row[4].g_col[0].m_reg is absorbed into DSP g_row[4].g_col[0].p_reg.
+DSP Report: operator g_row[4].g_col[0].p0 is absorbed into DSP g_row[4].g_col[0].p_reg.
+DSP Report: operator g_row[4].g_col[0].m0 is absorbed into DSP g_row[4].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[7].p_reg is absorbed into DSP g_row[3].g_col[7].p_reg.
+DSP Report: register g_row[3].g_col[7].m_reg is absorbed into DSP g_row[3].g_col[7].p_reg.
+DSP Report: operator g_row[3].g_col[7].p0 is absorbed into DSP g_row[3].g_col[7].p_reg.
+DSP Report: operator g_row[3].g_col[7].m0 is absorbed into DSP g_row[3].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[6].p_reg is absorbed into DSP g_row[3].g_col[6].p_reg.
+DSP Report: register g_row[3].g_col[6].m_reg is absorbed into DSP g_row[3].g_col[6].p_reg.
+DSP Report: operator g_row[3].g_col[6].p0 is absorbed into DSP g_row[3].g_col[6].p_reg.
+DSP Report: operator g_row[3].g_col[6].m0 is absorbed into DSP g_row[3].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[5].p_reg is absorbed into DSP g_row[3].g_col[5].p_reg.
+DSP Report: register g_row[3].g_col[5].m_reg is absorbed into DSP g_row[3].g_col[5].p_reg.
+DSP Report: operator g_row[3].g_col[5].p0 is absorbed into DSP g_row[3].g_col[5].p_reg.
+DSP Report: operator g_row[3].g_col[5].m0 is absorbed into DSP g_row[3].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[4].p_reg is absorbed into DSP g_row[3].g_col[4].p_reg.
+DSP Report: register g_row[3].g_col[4].m_reg is absorbed into DSP g_row[3].g_col[4].p_reg.
+DSP Report: operator g_row[3].g_col[4].p0 is absorbed into DSP g_row[3].g_col[4].p_reg.
+DSP Report: operator g_row[3].g_col[4].m0 is absorbed into DSP g_row[3].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[3].p_reg is absorbed into DSP g_row[3].g_col[3].p_reg.
+DSP Report: register g_row[3].g_col[3].m_reg is absorbed into DSP g_row[3].g_col[3].p_reg.
+DSP Report: operator g_row[3].g_col[3].p0 is absorbed into DSP g_row[3].g_col[3].p_reg.
+DSP Report: operator g_row[3].g_col[3].m0 is absorbed into DSP g_row[3].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[2].p_reg is absorbed into DSP g_row[3].g_col[2].p_reg.
+DSP Report: register g_row[3].g_col[2].m_reg is absorbed into DSP g_row[3].g_col[2].p_reg.
+DSP Report: operator g_row[3].g_col[2].p0 is absorbed into DSP g_row[3].g_col[2].p_reg.
+DSP Report: operator g_row[3].g_col[2].m0 is absorbed into DSP g_row[3].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[1].p_reg is absorbed into DSP g_row[3].g_col[1].p_reg.
+DSP Report: register g_row[3].g_col[1].m_reg is absorbed into DSP g_row[3].g_col[1].p_reg.
+DSP Report: operator g_row[3].g_col[1].p0 is absorbed into DSP g_row[3].g_col[1].p_reg.
+DSP Report: operator g_row[3].g_col[1].m0 is absorbed into DSP g_row[3].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[3].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[3].g_col[0].p_reg is absorbed into DSP g_row[3].g_col[0].p_reg.
+DSP Report: register g_row[3].g_col[0].m_reg is absorbed into DSP g_row[3].g_col[0].p_reg.
+DSP Report: operator g_row[3].g_col[0].p0 is absorbed into DSP g_row[3].g_col[0].p_reg.
+DSP Report: operator g_row[3].g_col[0].m0 is absorbed into DSP g_row[3].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[7].p_reg is absorbed into DSP g_row[2].g_col[7].p_reg.
+DSP Report: register g_row[2].g_col[7].m_reg is absorbed into DSP g_row[2].g_col[7].p_reg.
+DSP Report: operator g_row[2].g_col[7].p0 is absorbed into DSP g_row[2].g_col[7].p_reg.
+DSP Report: operator g_row[2].g_col[7].m0 is absorbed into DSP g_row[2].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[6].p_reg is absorbed into DSP g_row[2].g_col[6].p_reg.
+DSP Report: register g_row[2].g_col[6].m_reg is absorbed into DSP g_row[2].g_col[6].p_reg.
+DSP Report: operator g_row[2].g_col[6].p0 is absorbed into DSP g_row[2].g_col[6].p_reg.
+DSP Report: operator g_row[2].g_col[6].m0 is absorbed into DSP g_row[2].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[5].p_reg is absorbed into DSP g_row[2].g_col[5].p_reg.
+DSP Report: register g_row[2].g_col[5].m_reg is absorbed into DSP g_row[2].g_col[5].p_reg.
+DSP Report: operator g_row[2].g_col[5].p0 is absorbed into DSP g_row[2].g_col[5].p_reg.
+DSP Report: operator g_row[2].g_col[5].m0 is absorbed into DSP g_row[2].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[4].p_reg is absorbed into DSP g_row[2].g_col[4].p_reg.
+DSP Report: register g_row[2].g_col[4].m_reg is absorbed into DSP g_row[2].g_col[4].p_reg.
+DSP Report: operator g_row[2].g_col[4].p0 is absorbed into DSP g_row[2].g_col[4].p_reg.
+DSP Report: operator g_row[2].g_col[4].m0 is absorbed into DSP g_row[2].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[3].p_reg is absorbed into DSP g_row[2].g_col[3].p_reg.
+DSP Report: register g_row[2].g_col[3].m_reg is absorbed into DSP g_row[2].g_col[3].p_reg.
+DSP Report: operator g_row[2].g_col[3].p0 is absorbed into DSP g_row[2].g_col[3].p_reg.
+DSP Report: operator g_row[2].g_col[3].m0 is absorbed into DSP g_row[2].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[2].p_reg is absorbed into DSP g_row[2].g_col[2].p_reg.
+DSP Report: register g_row[2].g_col[2].m_reg is absorbed into DSP g_row[2].g_col[2].p_reg.
+DSP Report: operator g_row[2].g_col[2].p0 is absorbed into DSP g_row[2].g_col[2].p_reg.
+DSP Report: operator g_row[2].g_col[2].m0 is absorbed into DSP g_row[2].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[1].p_reg is absorbed into DSP g_row[2].g_col[1].p_reg.
+DSP Report: register g_row[2].g_col[1].m_reg is absorbed into DSP g_row[2].g_col[1].p_reg.
+DSP Report: operator g_row[2].g_col[1].p0 is absorbed into DSP g_row[2].g_col[1].p_reg.
+DSP Report: operator g_row[2].g_col[1].m0 is absorbed into DSP g_row[2].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[2].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[2].g_col[0].p_reg is absorbed into DSP g_row[2].g_col[0].p_reg.
+DSP Report: register g_row[2].g_col[0].m_reg is absorbed into DSP g_row[2].g_col[0].p_reg.
+DSP Report: operator g_row[2].g_col[0].p0 is absorbed into DSP g_row[2].g_col[0].p_reg.
+DSP Report: operator g_row[2].g_col[0].m0 is absorbed into DSP g_row[2].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[7].p_reg is absorbed into DSP g_row[1].g_col[7].p_reg.
+DSP Report: register g_row[1].g_col[7].m_reg is absorbed into DSP g_row[1].g_col[7].p_reg.
+DSP Report: operator g_row[1].g_col[7].p0 is absorbed into DSP g_row[1].g_col[7].p_reg.
+DSP Report: operator g_row[1].g_col[7].m0 is absorbed into DSP g_row[1].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[6].p_reg is absorbed into DSP g_row[1].g_col[6].p_reg.
+DSP Report: register g_row[1].g_col[6].m_reg is absorbed into DSP g_row[1].g_col[6].p_reg.
+DSP Report: operator g_row[1].g_col[6].p0 is absorbed into DSP g_row[1].g_col[6].p_reg.
+DSP Report: operator g_row[1].g_col[6].m0 is absorbed into DSP g_row[1].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[5].p_reg is absorbed into DSP g_row[1].g_col[5].p_reg.
+DSP Report: register g_row[1].g_col[5].m_reg is absorbed into DSP g_row[1].g_col[5].p_reg.
+DSP Report: operator g_row[1].g_col[5].p0 is absorbed into DSP g_row[1].g_col[5].p_reg.
+DSP Report: operator g_row[1].g_col[5].m0 is absorbed into DSP g_row[1].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[4].p_reg is absorbed into DSP g_row[1].g_col[4].p_reg.
+DSP Report: register g_row[1].g_col[4].m_reg is absorbed into DSP g_row[1].g_col[4].p_reg.
+DSP Report: operator g_row[1].g_col[4].p0 is absorbed into DSP g_row[1].g_col[4].p_reg.
+DSP Report: operator g_row[1].g_col[4].m0 is absorbed into DSP g_row[1].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[3].p_reg is absorbed into DSP g_row[1].g_col[3].p_reg.
+DSP Report: register g_row[1].g_col[3].m_reg is absorbed into DSP g_row[1].g_col[3].p_reg.
+DSP Report: operator g_row[1].g_col[3].p0 is absorbed into DSP g_row[1].g_col[3].p_reg.
+DSP Report: operator g_row[1].g_col[3].m0 is absorbed into DSP g_row[1].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[2].p_reg is absorbed into DSP g_row[1].g_col[2].p_reg.
+DSP Report: register g_row[1].g_col[2].m_reg is absorbed into DSP g_row[1].g_col[2].p_reg.
+DSP Report: operator g_row[1].g_col[2].p0 is absorbed into DSP g_row[1].g_col[2].p_reg.
+DSP Report: operator g_row[1].g_col[2].m0 is absorbed into DSP g_row[1].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[1].p_reg is absorbed into DSP g_row[1].g_col[1].p_reg.
+DSP Report: register g_row[1].g_col[1].m_reg is absorbed into DSP g_row[1].g_col[1].p_reg.
+DSP Report: operator g_row[1].g_col[1].p0 is absorbed into DSP g_row[1].g_col[1].p_reg.
+DSP Report: operator g_row[1].g_col[1].m0 is absorbed into DSP g_row[1].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[1].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[1].g_col[0].p_reg is absorbed into DSP g_row[1].g_col[0].p_reg.
+DSP Report: register g_row[1].g_col[0].m_reg is absorbed into DSP g_row[1].g_col[0].p_reg.
+DSP Report: operator g_row[1].g_col[0].p0 is absorbed into DSP g_row[1].g_col[0].p_reg.
+DSP Report: operator g_row[1].g_col[0].m0 is absorbed into DSP g_row[1].g_col[0].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[7].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[7].p_reg is absorbed into DSP g_row[0].g_col[7].p_reg.
+DSP Report: register g_row[0].g_col[7].m_reg is absorbed into DSP g_row[0].g_col[7].p_reg.
+DSP Report: operator g_row[0].g_col[7].p0 is absorbed into DSP g_row[0].g_col[7].p_reg.
+DSP Report: operator g_row[0].g_col[7].m0 is absorbed into DSP g_row[0].g_col[7].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[6].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[6].p_reg is absorbed into DSP g_row[0].g_col[6].p_reg.
+DSP Report: register g_row[0].g_col[6].m_reg is absorbed into DSP g_row[0].g_col[6].p_reg.
+DSP Report: operator g_row[0].g_col[6].p0 is absorbed into DSP g_row[0].g_col[6].p_reg.
+DSP Report: operator g_row[0].g_col[6].m0 is absorbed into DSP g_row[0].g_col[6].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[5].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[5].p_reg is absorbed into DSP g_row[0].g_col[5].p_reg.
+DSP Report: register g_row[0].g_col[5].m_reg is absorbed into DSP g_row[0].g_col[5].p_reg.
+DSP Report: operator g_row[0].g_col[5].p0 is absorbed into DSP g_row[0].g_col[5].p_reg.
+DSP Report: operator g_row[0].g_col[5].m0 is absorbed into DSP g_row[0].g_col[5].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[4].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[4].p_reg is absorbed into DSP g_row[0].g_col[4].p_reg.
+DSP Report: register g_row[0].g_col[4].m_reg is absorbed into DSP g_row[0].g_col[4].p_reg.
+DSP Report: operator g_row[0].g_col[4].p0 is absorbed into DSP g_row[0].g_col[4].p_reg.
+DSP Report: operator g_row[0].g_col[4].m0 is absorbed into DSP g_row[0].g_col[4].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[3].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[3].p_reg is absorbed into DSP g_row[0].g_col[3].p_reg.
+DSP Report: register g_row[0].g_col[3].m_reg is absorbed into DSP g_row[0].g_col[3].p_reg.
+DSP Report: operator g_row[0].g_col[3].p0 is absorbed into DSP g_row[0].g_col[3].p_reg.
+DSP Report: operator g_row[0].g_col[3].m0 is absorbed into DSP g_row[0].g_col[3].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[2].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[2].p_reg is absorbed into DSP g_row[0].g_col[2].p_reg.
+DSP Report: register g_row[0].g_col[2].m_reg is absorbed into DSP g_row[0].g_col[2].p_reg.
+DSP Report: operator g_row[0].g_col[2].p0 is absorbed into DSP g_row[0].g_col[2].p_reg.
+DSP Report: operator g_row[0].g_col[2].m0 is absorbed into DSP g_row[0].g_col[2].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[1].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[1].p_reg is absorbed into DSP g_row[0].g_col[1].p_reg.
+DSP Report: register g_row[0].g_col[1].m_reg is absorbed into DSP g_row[0].g_col[1].p_reg.
+DSP Report: operator g_row[0].g_col[1].p0 is absorbed into DSP g_row[0].g_col[1].p_reg.
+DSP Report: operator g_row[0].g_col[1].m0 is absorbed into DSP g_row[0].g_col[1].p_reg.
+DSP Report: Generating DSP g_row[0].g_col[0].p_reg, operation Mode is: ((C:0x0) or P)+(A*B)'.
+DSP Report: register g_row[0].g_col[0].p_reg is absorbed into DSP g_row[0].g_col[0].p_reg.
+DSP Report: register g_row[0].g_col[0].m_reg is absorbed into DSP g_row[0].g_col[0].p_reg.
+DSP Report: operator g_row[0].g_col[0].p0 is absorbed into DSP g_row[0].g_col[0].p_reg.
+DSP Report: operator g_row[0].g_col[0].m0 is absorbed into DSP g_row[0].g_col[0].p_reg.
+WARNING: [Synth 8-3917] design outer_product_core has port status[0] driven by constant 0
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1270.762 ; gain = 851.168
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++-------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name        | DSP Mapping           | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++-------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
+|outer_product_core | ((C:0x0) or P)+(A*B)' | 8      | 8      | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 1    | 1    | 
++-------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 1279.652 ; gain = 860.059
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:33 ; elapsed = 00:00:33 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:33 ; elapsed = 00:00:33 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:33 ; elapsed = 00:00:33 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:33 ; elapsed = 00:00:33 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++-------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name        | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++-------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
+|outer_product_core | Dynamic     | -      | -      | -      | -      | 19     | -    | -    | -    | -    | -     | 1    | 1    | 
++-------------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |DSP48E1 |    64|
+|2     |LUT1    |     2|
+|3     |LUT2    |  1228|
+|4     |LUT3    |    72|
+|5     |LUT4    |  1334|
+|6     |LUT5    |    54|
+|7     |LUT6    |   760|
+|8     |FDCE    |  2836|
++------+--------+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |  6350|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1279.805 ; gain = 860.211
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1279.805 ; gain = 860.211
+Synthesis Optimization Complete : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1279.805 ; gain = 860.211
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.080 . Memory (MB): peak = 1291.719 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 64 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'outer_product_core' is not ideal for floorplanning, since the cellview 'outer_product_core' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1295.359 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete, checksum: 1ae909e6
+INFO: [Common 17-83] Releasing license: Synthesis
+15 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:36 ; elapsed = 00:00:36 . Memory (MB): peak = 1295.359 ; gain = 900.648
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+# report_utilization -file utilization.rpt
+# write_verilog -mode funcsim core_netlist.v
+# set dsps [get_cells -hier -filter {REF_NAME == DSP48E1}]
+# puts "DSP_COUNT=[llength $dsps]"
+DSP_COUNT=64
+# if {[llength $dsps] != 64} {error "Expected 64 MACs"}
+# foreach d $dsps {
+#     foreach {key val} {AREG 0 BREG 0 MREG 1 PREG 1 USE_MULT MULTIPLY} {
+#         if {[get_property $key $d] ne $val} {error "$d: expected $key=$val"}
+#     }
+# }
+# puts "ALL_64_MREG_PREG_MAC_REGISTERS_PRESENT"
+ALL_64_MREG_PREG_MAC_REGISTERS_PRESENT
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 22 16:46:50 2026...

@@ -1,0 +1,6 @@
+**/c_vectors.txt
+**/build/
+**/xsim.dir/
+**/routed_functional.v
+**/glbl.v
+**/functional/*.prj

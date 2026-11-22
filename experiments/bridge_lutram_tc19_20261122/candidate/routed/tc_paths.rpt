@@ -1,0 +1,431 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 16:41:44 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -to [get_cells -hier -filter {NAME =~ u_tensor_core/* && IS_SEQUENTIAL}] -max_paths 5 -file tc_paths.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -0.049ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/result_q_reg[0][1][12]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.760ns  (logic 2.691ns (27.572%)  route 7.069ns (72.428%))
+  Logic Levels:           15  (CARRY4=8 LUT2=1 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=9604, unset)         0.973     0.973    u_bridge/clk
+    SLICE_X50Y39         FDCE                                         r  u_bridge/state_q_reg[meta_count][0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X50Y39         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/state_q_reg[meta_count][0]/Q
+                         net (fo=103, routed)         0.847     2.338    u_bridge/state_q_reg[meta_count_n_0_][0]
+    SLICE_X47Y40         LUT2 (Prop_lut2_I0_O)        0.124     2.462 f  u_bridge/msu_status[1]_INST_0_i_2/O
+                         net (fo=39, routed)          0.382     2.844    u_bridge/state_q_reg[meta_count][0]_0
+    SLICE_X47Y41         LUT6 (Prop_lut6_I2_O)        0.124     2.968 r  u_bridge/msu_status[1]_INST_0_i_41/O
+                         net (fo=1, routed)           0.543     3.511    u_bridge/msu_status[1]_INST_0_i_41_n_0
+    SLICE_X48Y40         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     4.018 r  u_bridge/msu_status[1]_INST_0_i_34/CO[3]
+                         net (fo=1, routed)           0.000     4.018    u_bridge/msu_status[1]_INST_0_i_34_n_0
+    SLICE_X48Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.132 r  u_bridge/msu_status[1]_INST_0_i_29/CO[3]
+                         net (fo=1, routed)           0.000     4.132    u_bridge/msu_status[1]_INST_0_i_29_n_0
+    SLICE_X48Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.246 r  u_bridge/msu_status[1]_INST_0_i_24/CO[3]
+                         net (fo=1, routed)           0.000     4.246    u_bridge/msu_status[1]_INST_0_i_24_n_0
+    SLICE_X48Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.360 r  u_bridge/msu_status[1]_INST_0_i_19/CO[3]
+                         net (fo=1, routed)           0.000     4.360    u_bridge/msu_status[1]_INST_0_i_19_n_0
+    SLICE_X48Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.474 r  u_bridge/msu_status[1]_INST_0_i_14/CO[3]
+                         net (fo=1, routed)           0.000     4.474    u_bridge/msu_status[1]_INST_0_i_14_n_0
+    SLICE_X48Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.588 r  u_bridge/msu_status[1]_INST_0_i_9/CO[3]
+                         net (fo=1, routed)           0.000     4.588    u_bridge/msu_status[1]_INST_0_i_9_n_0
+    SLICE_X48Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.702 r  u_bridge/msu_status[1]_INST_0_i_4/CO[3]
+                         net (fo=1, routed)           0.000     4.702    u_bridge/msu_status[1]_INST_0_i_4_n_0
+    SLICE_X48Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.816 f  u_bridge/msu_status[1]_INST_0_i_3/CO[3]
+                         net (fo=1, routed)           0.616     5.433    u_bridge/msu_status[1]_INST_0_i_3_n_0
+    SLICE_X51Y47         LUT6 (Prop_lut6_I5_O)        0.124     5.557 f  u_bridge/msu_status[1]_INST_0_i_1/O
+                         net (fo=1, routed)           0.707     6.263    u_bridge/u_msu/addr_bad
+    SLICE_X62Y47         LUT6 (Prop_lut6_I0_O)        0.124     6.387 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=123, routed)         0.624     7.011    u_bridge/result_count_reg[1]
+    SLICE_X69Y45         LUT5 (Prop_lut5_I0_O)        0.124     7.135 r  u_bridge/tail_q[7][7][18]_i_4/O
+                         net (fo=3, routed)           0.930     8.065    u_tensor_core/tc_result_ready
+    SLICE_X89Y44         LUT4 (Prop_lut4_I1_O)        0.124     8.189 r  u_tensor_core/result_q[7][7][18]_i_3/O
+                         net (fo=1217, routed)        0.948     9.138    u_tensor_core/result_q[7][7][18]_i_3_n_0
+    SLICE_X90Y43         LUT6 (Prop_lut6_I5_O)        0.124     9.262 r  u_tensor_core/result_q[7][7][18]_i_1/O
+                         net (fo=1216, routed)        1.471    10.733    u_tensor_core/result_q
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[0][1][12]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=9604, unset)         0.924    10.924    u_tensor_core/clk
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[0][1][12]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X70Y43         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/result_q_reg[0][1][12]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.733    
+  -------------------------------------------------------------------
+                         slack                                 -0.049    
+
+Slack (VIOLATED) :        -0.049ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/result_q_reg[0][1][2]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.760ns  (logic 2.691ns (27.572%)  route 7.069ns (72.428%))
+  Logic Levels:           15  (CARRY4=8 LUT2=1 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=9604, unset)         0.973     0.973    u_bridge/clk
+    SLICE_X50Y39         FDCE                                         r  u_bridge/state_q_reg[meta_count][0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X50Y39         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/state_q_reg[meta_count][0]/Q
+                         net (fo=103, routed)         0.847     2.338    u_bridge/state_q_reg[meta_count_n_0_][0]
+    SLICE_X47Y40         LUT2 (Prop_lut2_I0_O)        0.124     2.462 f  u_bridge/msu_status[1]_INST_0_i_2/O
+                         net (fo=39, routed)          0.382     2.844    u_bridge/state_q_reg[meta_count][0]_0
+    SLICE_X47Y41         LUT6 (Prop_lut6_I2_O)        0.124     2.968 r  u_bridge/msu_status[1]_INST_0_i_41/O
+                         net (fo=1, routed)           0.543     3.511    u_bridge/msu_status[1]_INST_0_i_41_n_0
+    SLICE_X48Y40         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     4.018 r  u_bridge/msu_status[1]_INST_0_i_34/CO[3]
+                         net (fo=1, routed)           0.000     4.018    u_bridge/msu_status[1]_INST_0_i_34_n_0
+    SLICE_X48Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.132 r  u_bridge/msu_status[1]_INST_0_i_29/CO[3]
+                         net (fo=1, routed)           0.000     4.132    u_bridge/msu_status[1]_INST_0_i_29_n_0
+    SLICE_X48Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.246 r  u_bridge/msu_status[1]_INST_0_i_24/CO[3]
+                         net (fo=1, routed)           0.000     4.246    u_bridge/msu_status[1]_INST_0_i_24_n_0
+    SLICE_X48Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.360 r  u_bridge/msu_status[1]_INST_0_i_19/CO[3]
+                         net (fo=1, routed)           0.000     4.360    u_bridge/msu_status[1]_INST_0_i_19_n_0
+    SLICE_X48Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.474 r  u_bridge/msu_status[1]_INST_0_i_14/CO[3]
+                         net (fo=1, routed)           0.000     4.474    u_bridge/msu_status[1]_INST_0_i_14_n_0
+    SLICE_X48Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.588 r  u_bridge/msu_status[1]_INST_0_i_9/CO[3]
+                         net (fo=1, routed)           0.000     4.588    u_bridge/msu_status[1]_INST_0_i_9_n_0
+    SLICE_X48Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.702 r  u_bridge/msu_status[1]_INST_0_i_4/CO[3]
+                         net (fo=1, routed)           0.000     4.702    u_bridge/msu_status[1]_INST_0_i_4_n_0
+    SLICE_X48Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.816 f  u_bridge/msu_status[1]_INST_0_i_3/CO[3]
+                         net (fo=1, routed)           0.616     5.433    u_bridge/msu_status[1]_INST_0_i_3_n_0
+    SLICE_X51Y47         LUT6 (Prop_lut6_I5_O)        0.124     5.557 f  u_bridge/msu_status[1]_INST_0_i_1/O
+                         net (fo=1, routed)           0.707     6.263    u_bridge/u_msu/addr_bad
+    SLICE_X62Y47         LUT6 (Prop_lut6_I0_O)        0.124     6.387 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=123, routed)         0.624     7.011    u_bridge/result_count_reg[1]
+    SLICE_X69Y45         LUT5 (Prop_lut5_I0_O)        0.124     7.135 r  u_bridge/tail_q[7][7][18]_i_4/O
+                         net (fo=3, routed)           0.930     8.065    u_tensor_core/tc_result_ready
+    SLICE_X89Y44         LUT4 (Prop_lut4_I1_O)        0.124     8.189 r  u_tensor_core/result_q[7][7][18]_i_3/O
+                         net (fo=1217, routed)        0.948     9.138    u_tensor_core/result_q[7][7][18]_i_3_n_0
+    SLICE_X90Y43         LUT6 (Prop_lut6_I5_O)        0.124     9.262 r  u_tensor_core/result_q[7][7][18]_i_1/O
+                         net (fo=1216, routed)        1.471    10.733    u_tensor_core/result_q
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[0][1][2]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=9604, unset)         0.924    10.924    u_tensor_core/clk
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[0][1][2]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X70Y43         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/result_q_reg[0][1][2]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.733    
+  -------------------------------------------------------------------
+                         slack                                 -0.049    
+
+Slack (VIOLATED) :        -0.049ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/result_q_reg[1][1][8]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.760ns  (logic 2.691ns (27.572%)  route 7.069ns (72.428%))
+  Logic Levels:           15  (CARRY4=8 LUT2=1 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=9604, unset)         0.973     0.973    u_bridge/clk
+    SLICE_X50Y39         FDCE                                         r  u_bridge/state_q_reg[meta_count][0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X50Y39         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/state_q_reg[meta_count][0]/Q
+                         net (fo=103, routed)         0.847     2.338    u_bridge/state_q_reg[meta_count_n_0_][0]
+    SLICE_X47Y40         LUT2 (Prop_lut2_I0_O)        0.124     2.462 f  u_bridge/msu_status[1]_INST_0_i_2/O
+                         net (fo=39, routed)          0.382     2.844    u_bridge/state_q_reg[meta_count][0]_0
+    SLICE_X47Y41         LUT6 (Prop_lut6_I2_O)        0.124     2.968 r  u_bridge/msu_status[1]_INST_0_i_41/O
+                         net (fo=1, routed)           0.543     3.511    u_bridge/msu_status[1]_INST_0_i_41_n_0
+    SLICE_X48Y40         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     4.018 r  u_bridge/msu_status[1]_INST_0_i_34/CO[3]
+                         net (fo=1, routed)           0.000     4.018    u_bridge/msu_status[1]_INST_0_i_34_n_0
+    SLICE_X48Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.132 r  u_bridge/msu_status[1]_INST_0_i_29/CO[3]
+                         net (fo=1, routed)           0.000     4.132    u_bridge/msu_status[1]_INST_0_i_29_n_0
+    SLICE_X48Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.246 r  u_bridge/msu_status[1]_INST_0_i_24/CO[3]
+                         net (fo=1, routed)           0.000     4.246    u_bridge/msu_status[1]_INST_0_i_24_n_0
+    SLICE_X48Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.360 r  u_bridge/msu_status[1]_INST_0_i_19/CO[3]
+                         net (fo=1, routed)           0.000     4.360    u_bridge/msu_status[1]_INST_0_i_19_n_0
+    SLICE_X48Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.474 r  u_bridge/msu_status[1]_INST_0_i_14/CO[3]
+                         net (fo=1, routed)           0.000     4.474    u_bridge/msu_status[1]_INST_0_i_14_n_0
+    SLICE_X48Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.588 r  u_bridge/msu_status[1]_INST_0_i_9/CO[3]
+                         net (fo=1, routed)           0.000     4.588    u_bridge/msu_status[1]_INST_0_i_9_n_0
+    SLICE_X48Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.702 r  u_bridge/msu_status[1]_INST_0_i_4/CO[3]
+                         net (fo=1, routed)           0.000     4.702    u_bridge/msu_status[1]_INST_0_i_4_n_0
+    SLICE_X48Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.816 f  u_bridge/msu_status[1]_INST_0_i_3/CO[3]
+                         net (fo=1, routed)           0.616     5.433    u_bridge/msu_status[1]_INST_0_i_3_n_0
+    SLICE_X51Y47         LUT6 (Prop_lut6_I5_O)        0.124     5.557 f  u_bridge/msu_status[1]_INST_0_i_1/O
+                         net (fo=1, routed)           0.707     6.263    u_bridge/u_msu/addr_bad
+    SLICE_X62Y47         LUT6 (Prop_lut6_I0_O)        0.124     6.387 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=123, routed)         0.624     7.011    u_bridge/result_count_reg[1]
+    SLICE_X69Y45         LUT5 (Prop_lut5_I0_O)        0.124     7.135 r  u_bridge/tail_q[7][7][18]_i_4/O
+                         net (fo=3, routed)           0.930     8.065    u_tensor_core/tc_result_ready
+    SLICE_X89Y44         LUT4 (Prop_lut4_I1_O)        0.124     8.189 r  u_tensor_core/result_q[7][7][18]_i_3/O
+                         net (fo=1217, routed)        0.948     9.138    u_tensor_core/result_q[7][7][18]_i_3_n_0
+    SLICE_X90Y43         LUT6 (Prop_lut6_I5_O)        0.124     9.262 r  u_tensor_core/result_q[7][7][18]_i_1/O
+                         net (fo=1216, routed)        1.471    10.733    u_tensor_core/result_q
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[1][1][8]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=9604, unset)         0.924    10.924    u_tensor_core/clk
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[1][1][8]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X70Y43         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/result_q_reg[1][1][8]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.733    
+  -------------------------------------------------------------------
+                         slack                                 -0.049    
+
+Slack (VIOLATED) :        -0.049ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/result_q_reg[2][1][1]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.760ns  (logic 2.691ns (27.572%)  route 7.069ns (72.428%))
+  Logic Levels:           15  (CARRY4=8 LUT2=1 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=9604, unset)         0.973     0.973    u_bridge/clk
+    SLICE_X50Y39         FDCE                                         r  u_bridge/state_q_reg[meta_count][0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X50Y39         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/state_q_reg[meta_count][0]/Q
+                         net (fo=103, routed)         0.847     2.338    u_bridge/state_q_reg[meta_count_n_0_][0]
+    SLICE_X47Y40         LUT2 (Prop_lut2_I0_O)        0.124     2.462 f  u_bridge/msu_status[1]_INST_0_i_2/O
+                         net (fo=39, routed)          0.382     2.844    u_bridge/state_q_reg[meta_count][0]_0
+    SLICE_X47Y41         LUT6 (Prop_lut6_I2_O)        0.124     2.968 r  u_bridge/msu_status[1]_INST_0_i_41/O
+                         net (fo=1, routed)           0.543     3.511    u_bridge/msu_status[1]_INST_0_i_41_n_0
+    SLICE_X48Y40         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     4.018 r  u_bridge/msu_status[1]_INST_0_i_34/CO[3]
+                         net (fo=1, routed)           0.000     4.018    u_bridge/msu_status[1]_INST_0_i_34_n_0
+    SLICE_X48Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.132 r  u_bridge/msu_status[1]_INST_0_i_29/CO[3]
+                         net (fo=1, routed)           0.000     4.132    u_bridge/msu_status[1]_INST_0_i_29_n_0
+    SLICE_X48Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.246 r  u_bridge/msu_status[1]_INST_0_i_24/CO[3]
+                         net (fo=1, routed)           0.000     4.246    u_bridge/msu_status[1]_INST_0_i_24_n_0
+    SLICE_X48Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.360 r  u_bridge/msu_status[1]_INST_0_i_19/CO[3]
+                         net (fo=1, routed)           0.000     4.360    u_bridge/msu_status[1]_INST_0_i_19_n_0
+    SLICE_X48Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.474 r  u_bridge/msu_status[1]_INST_0_i_14/CO[3]
+                         net (fo=1, routed)           0.000     4.474    u_bridge/msu_status[1]_INST_0_i_14_n_0
+    SLICE_X48Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.588 r  u_bridge/msu_status[1]_INST_0_i_9/CO[3]
+                         net (fo=1, routed)           0.000     4.588    u_bridge/msu_status[1]_INST_0_i_9_n_0
+    SLICE_X48Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.702 r  u_bridge/msu_status[1]_INST_0_i_4/CO[3]
+                         net (fo=1, routed)           0.000     4.702    u_bridge/msu_status[1]_INST_0_i_4_n_0
+    SLICE_X48Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.816 f  u_bridge/msu_status[1]_INST_0_i_3/CO[3]
+                         net (fo=1, routed)           0.616     5.433    u_bridge/msu_status[1]_INST_0_i_3_n_0
+    SLICE_X51Y47         LUT6 (Prop_lut6_I5_O)        0.124     5.557 f  u_bridge/msu_status[1]_INST_0_i_1/O
+                         net (fo=1, routed)           0.707     6.263    u_bridge/u_msu/addr_bad
+    SLICE_X62Y47         LUT6 (Prop_lut6_I0_O)        0.124     6.387 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=123, routed)         0.624     7.011    u_bridge/result_count_reg[1]
+    SLICE_X69Y45         LUT5 (Prop_lut5_I0_O)        0.124     7.135 r  u_bridge/tail_q[7][7][18]_i_4/O
+                         net (fo=3, routed)           0.930     8.065    u_tensor_core/tc_result_ready
+    SLICE_X89Y44         LUT4 (Prop_lut4_I1_O)        0.124     8.189 r  u_tensor_core/result_q[7][7][18]_i_3/O
+                         net (fo=1217, routed)        0.948     9.138    u_tensor_core/result_q[7][7][18]_i_3_n_0
+    SLICE_X90Y43         LUT6 (Prop_lut6_I5_O)        0.124     9.262 r  u_tensor_core/result_q[7][7][18]_i_1/O
+                         net (fo=1216, routed)        1.471    10.733    u_tensor_core/result_q
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[2][1][1]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=9604, unset)         0.924    10.924    u_tensor_core/clk
+    SLICE_X70Y43         FDCE                                         r  u_tensor_core/result_q_reg[2][1][1]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X70Y43         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/result_q_reg[2][1][1]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.733    
+  -------------------------------------------------------------------
+                         slack                                 -0.049    
+
+Slack (VIOLATED) :        -0.045ns  (required time - arrival time)
+  Source:                 u_bridge/state_q_reg[meta_count][0]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/result_q_reg[0][1][13]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.756ns  (logic 2.691ns (27.583%)  route 7.065ns (72.417%))
+  Logic Levels:           15  (CARRY4=8 LUT2=1 LUT4=1 LUT5=1 LUT6=4)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=9604, unset)         0.973     0.973    u_bridge/clk
+    SLICE_X50Y39         FDCE                                         r  u_bridge/state_q_reg[meta_count][0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X50Y39         FDCE (Prop_fdce_C_Q)         0.518     1.491 r  u_bridge/state_q_reg[meta_count][0]/Q
+                         net (fo=103, routed)         0.847     2.338    u_bridge/state_q_reg[meta_count_n_0_][0]
+    SLICE_X47Y40         LUT2 (Prop_lut2_I0_O)        0.124     2.462 f  u_bridge/msu_status[1]_INST_0_i_2/O
+                         net (fo=39, routed)          0.382     2.844    u_bridge/state_q_reg[meta_count][0]_0
+    SLICE_X47Y41         LUT6 (Prop_lut6_I2_O)        0.124     2.968 r  u_bridge/msu_status[1]_INST_0_i_41/O
+                         net (fo=1, routed)           0.543     3.511    u_bridge/msu_status[1]_INST_0_i_41_n_0
+    SLICE_X48Y40         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     4.018 r  u_bridge/msu_status[1]_INST_0_i_34/CO[3]
+                         net (fo=1, routed)           0.000     4.018    u_bridge/msu_status[1]_INST_0_i_34_n_0
+    SLICE_X48Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.132 r  u_bridge/msu_status[1]_INST_0_i_29/CO[3]
+                         net (fo=1, routed)           0.000     4.132    u_bridge/msu_status[1]_INST_0_i_29_n_0
+    SLICE_X48Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.246 r  u_bridge/msu_status[1]_INST_0_i_24/CO[3]
+                         net (fo=1, routed)           0.000     4.246    u_bridge/msu_status[1]_INST_0_i_24_n_0
+    SLICE_X48Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.360 r  u_bridge/msu_status[1]_INST_0_i_19/CO[3]
+                         net (fo=1, routed)           0.000     4.360    u_bridge/msu_status[1]_INST_0_i_19_n_0
+    SLICE_X48Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.474 r  u_bridge/msu_status[1]_INST_0_i_14/CO[3]
+                         net (fo=1, routed)           0.000     4.474    u_bridge/msu_status[1]_INST_0_i_14_n_0
+    SLICE_X48Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.588 r  u_bridge/msu_status[1]_INST_0_i_9/CO[3]
+                         net (fo=1, routed)           0.000     4.588    u_bridge/msu_status[1]_INST_0_i_9_n_0
+    SLICE_X48Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.702 r  u_bridge/msu_status[1]_INST_0_i_4/CO[3]
+                         net (fo=1, routed)           0.000     4.702    u_bridge/msu_status[1]_INST_0_i_4_n_0
+    SLICE_X48Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     4.816 f  u_bridge/msu_status[1]_INST_0_i_3/CO[3]
+                         net (fo=1, routed)           0.616     5.433    u_bridge/msu_status[1]_INST_0_i_3_n_0
+    SLICE_X51Y47         LUT6 (Prop_lut6_I5_O)        0.124     5.557 f  u_bridge/msu_status[1]_INST_0_i_1/O
+                         net (fo=1, routed)           0.707     6.263    u_bridge/u_msu/addr_bad
+    SLICE_X62Y47         LUT6 (Prop_lut6_I0_O)        0.124     6.387 f  u_bridge/msu_status[1]_INST_0/O
+                         net (fo=123, routed)         0.624     7.011    u_bridge/result_count_reg[1]
+    SLICE_X69Y45         LUT5 (Prop_lut5_I0_O)        0.124     7.135 r  u_bridge/tail_q[7][7][18]_i_4/O
+                         net (fo=3, routed)           0.930     8.065    u_tensor_core/tc_result_ready
+    SLICE_X89Y44         LUT4 (Prop_lut4_I1_O)        0.124     8.189 r  u_tensor_core/result_q[7][7][18]_i_3/O
+                         net (fo=1217, routed)        0.948     9.138    u_tensor_core/result_q[7][7][18]_i_3_n_0
+    SLICE_X90Y43         LUT6 (Prop_lut6_I5_O)        0.124     9.262 r  u_tensor_core/result_q[7][7][18]_i_1/O
+                         net (fo=1216, routed)        1.467    10.729    u_tensor_core/result_q
+    SLICE_X74Y47         FDCE                                         r  u_tensor_core/result_q_reg[0][1][13]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=9604, unset)         0.924    10.924    u_tensor_core/clk
+    SLICE_X74Y47         FDCE                                         r  u_tensor_core/result_q_reg[0][1][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X74Y47         FDCE (Setup_fdce_C_CE)      -0.205    10.684    u_tensor_core/result_q_reg[0][1][13]
+  -------------------------------------------------------------------
+                         required time                         10.684    
+                         arrival time                         -10.729    
+  -------------------------------------------------------------------
+                         slack                                 -0.045    
+
+
+
+

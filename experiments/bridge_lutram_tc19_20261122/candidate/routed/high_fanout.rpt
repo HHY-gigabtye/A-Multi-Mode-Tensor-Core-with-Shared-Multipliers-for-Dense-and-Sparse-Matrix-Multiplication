@@ -1,0 +1,51 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 16:41:44 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_high_fanout_nets -max_nets 30 -file high_fanout.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020
+------------------------------------------------------------------------------------
+
+High Fan-out Nets Information
+
+1. Summary
+----------
+
++----------------------------------------------------+--------+-------------+
+| Net Name                                           | Fanout | Driver Type |
++----------------------------------------------------+--------+-------------+
+| u_tensor_core/rst_n_0                              |   8228 | LUT1        |
+| u_msu/meta_q[0][95]_i_1_n_0                        |   1312 | LUT4        |
+| u_msu/meta_q[1][95]_i_1_n_0                        |   1312 | LUT4        |
+| u_tensor_core/result_q[7][7][18]_i_3_n_0           |   1217 | LUT4        |
+| u_tensor_core/result_q                             |   1216 | LUT6        |
+| u_tensor_core/tail_q                               |   1216 | LUT6        |
+| u_mlu/make_frame[packet][mode]_return[1]           |    588 | LUT3        |
+| u_mlu/make_frame[packet][mode]_return[0]           |    483 | LUT3        |
+| u_bridge/write_ptr_q[0]                            |    387 | FDCE        |
+| u_bridge/write_ptr_q[1]                            |    386 | FDCE        |
+| u_bridge/write_ptr_q[2]                            |    385 | FDCE        |
+| u_mlu/s3_q_reg[valid]                              |    384 | LUT4        |
+| u_mlu/ctrl_q_reg[next_k_n_0_][1]                   |    364 | FDCE        |
+| u_bridge/outstanding_reg[1]                        |    355 | LUT2        |
+| u_mlu/state_q                                      |    318 | LUT2        |
+| u_bridge/state_q_reg[head][0]                      |    291 | FDCE        |
+| u_bridge/state_q_reg[head][1]                      |    290 | FDCE        |
+| u_bridge/state_q_reg[head][2]                      |    289 | FDCE        |
+| u_mlu/image_write                                  |    262 | LUT6        |
+| u_mlu/last_packet_q[mode][1]_i_1_n_0               |    235 | LUT6        |
+| u_mlu/g_image[2].write_enable                      |    193 | LUT4        |
+| u_du_tia/s1_q_reg[valid]__0                        |    183 | FDCE        |
+| u_du_tia/s2_q_reg[valid]__0                        |    183 | FDCE        |
+| u_du_tia/out_packet[is_sparse]                     |    182 | FDCE        |
+| u_mlu/ctrl_q[buffer][0][beats_received][2]_i_3_n_0 |    175 | LUT2        |
+| u_mlu/bridge_status[1]_INST_0_i_6_n_0              |    170 | LUT3        |
+| u_msu/p_7_in                                       |    169 | LUT3        |
+| u_msu/row_q_reg_n_0_[2]                            |    165 | FDCE        |
+| u_mlu/ctrl_q[buffer][0][command][mode][1]_i_1_n_0  |    162 | LUT2        |
+| u_mlu/ctrl_q[buffer][1][command][mode][1]_i_1_n_0  |    162 | LUT2        |
++----------------------------------------------------+--------+-------------+
+
+

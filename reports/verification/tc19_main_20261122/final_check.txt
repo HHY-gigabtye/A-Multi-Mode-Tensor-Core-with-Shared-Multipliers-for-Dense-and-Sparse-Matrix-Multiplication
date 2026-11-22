@@ -1,0 +1,5 @@
+PASS: 93 production inputs match the validated candidate; TC is byte-identical.
+PASS: 7 pre-update backups and 326 experimental evidence artifacts unchanged.
+PASS: all 21 local links in the promotion record resolve; git diff --check passes.
+PASS: regression/PASS.txt records original units, supplemental units and integration success.
+Scope: unrelated experiments/bridge_lutram_tc19_20261122/ appeared during adoption and was left untouched.

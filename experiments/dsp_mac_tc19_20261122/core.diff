@@ -1,0 +1,89 @@
+diff --git a/tensor_core_sv/outer_product_core.sv b/experiments/dsp_mac_tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv
+index fb3642b..cfe7b88 100644
+--- a/tensor_core_sv/outer_product_core.sv
++++ b/experiments/dsp_mac_tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv
+@@ -1,6 +1,6 @@
+ `timescale 1ns/1ps
+ 
+-// Isolated signed 19-bit accumulation with exact INT32 external results.
++// Isolated DSP MAC trial with 19-bit sums and exact INT32 external results.
+ // External timing and strict error/credit handling match the production core.
+ // One packet describes one k slice; reserve a result slot on its first slice.
+ module outer_product_core (
+@@ -38,8 +38,6 @@ module outer_product_core (
+   } product_meta_t;
+   operand_reg_t operand_q;
+   product_meta_t product_meta_q;
+-  wire [7:0][7:0][15:0] product_q;
+-  wire [7:0][7:0][ACC_W-1:0] acc_sum;
+   wire [7:0][7:0] a_select, b_select, acc_enable;
+   wire [7:0] a_present, b_present;
+   tc_lane_data_t routed_a, routed_b;
+@@ -61,24 +59,31 @@ module outer_product_core (
+   wire empty_after_pop = result_count == {1'b0, pop};
+   // A rejected input freezes every stage, including a pending multiply.
+   wire capture_product = rst_n && operand_q.valid && status == TC_OK;
++  wire advance_acc = rst_n && product_meta_q.valid && status == TC_OK;
++  // The first accumulated slice overwrites all physical sums after reset.
++  // Preserve asynchronous zero in the logical accumulator observation.
++  logic acc_initialized;
++  always_ff @(posedge clk or negedge rst_n)
++    if (!rst_n) acc_initialized <= 1'b0;
++    else if (advance_acc) acc_initialized <= 1'b1;
+   for (genvar i=0; i<TC_DIM; i++) begin : g_row
+     for (genvar j=0; j<TC_DIM; j++) begin : g_col
+       assign result[i][j] = {{(32-ACC_W){result_q[i][j][ACC_W-1]}}, result_q[i][j]};
+       assign tail[i][j] = {{(32-ACC_W){tail_q[i][j][ACC_W-1]}}, tail_q[i][j]};
+-      assign acc[i][j] = {{(32-ACC_W){acc_q[i][j][ACC_W-1]}}, acc_q[i][j]};
+-      (* use_dsp = "yes" *) wire signed [15:0] product =
+-          mul_int8(operand_q.a_value[i], operand_q.b_value[j]);
+-      logic signed [15:0] p;
+-      always_ff @(posedge clk)
+-        if (capture_product) p <= product;
+-      assign product_q[i][j] = p;
++      assign acc[i][j] = acc_initialized ? $signed(acc_q[i][j]) : 32'sd0;
+       assign acc_enable[i][j] = product_meta_q.a_present[i] &&
+                                 product_meta_q.b_present[j];
+-      // Keep accumulation in fabric at the authorized narrower width. Otherwise synthesis can
+-      // duplicate the multiplier into an additional DSP multiply-add cone.
+-      (* use_dsp = "no" *) wire signed [ACC_W-1:0] fabric_sum =
+-          $signed(acc_q[i][j]) + product_to_acc(product_q[i][j]);
+-      assign acc_sum[i][j] = fabric_sum;
++      // MREG captures the signed product. PREG loads M on the first slice
++      // and accumulates P + M afterwards. Routing zero-fills absent inputs.
++      logic signed [15:0] m;
++      (* use_dsp = "yes" *) logic signed [ACC_W-1:0] p;
++      always_ff @(posedge clk) begin
++        if (capture_product)
++          m <= $signed(operand_q.a_value[i]) * $signed(operand_q.b_value[j]);
++        if (advance_acc && (product_meta_q.first || acc_enable[i][j]))
++          p <= (product_meta_q.first ? 19'sd0 : p) + product_to_acc(m);
++      end
++      assign acc_q[i][j] = p;
+     end
+   end
+ 
+@@ -127,7 +132,6 @@ module outer_product_core (
+       publish_q <= 1'b0;
+       result_q <= '0;
+       tail_q <= '0;
+-      acc_q <= '0;
+     end else if (status == TC_OK) begin
+       if (in_valid) next_k <= next_k + 3'd1;
+       outstanding <= outstanding + {1'b0, first} - {1'b0, pop};
+@@ -157,15 +161,6 @@ module outer_product_core (
+         product_meta_q.b_present <= operand_q.b_present;
+       end
+       publish_q <= product_meta_q.valid && product_meta_q.last;
+-      if (product_meta_q.valid) begin
+-        for (int i=0; i<TC_DIM; i++)
+-          for (int j=0; j<TC_DIM; j++) begin
+-            if (product_meta_q.first)
+-              acc_q[i][j] <= acc_enable[i][j] ? product_to_acc(product_q[i][j]) : '0;
+-            else if (acc_enable[i][j])
+-              acc_q[i][j] <= acc_sum[i][j];
+-          end
+-      end
+     end
+   end
+ 

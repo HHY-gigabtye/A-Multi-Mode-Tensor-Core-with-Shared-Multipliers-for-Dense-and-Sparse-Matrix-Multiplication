@@ -4,10 +4,13 @@
 
 Current `main` builds `outer_product_core.sv` for dense, hybrid and dual-sparse
 tiles using **Routing → MUL → ACC**, together with the DU/TIA whole-union
-assignment repair. The [November 22 verification record](../reports/verification/operand_route_main_20261122/README.md)
-contains the fresh main-source unit/integration results and links to the retained
-candidate post-route and power evidence whose source hashes match main. Promotion
-did not rerun implementation. The [November 21 record](../reports/verification/outer_main_20261121/README.md)
+assignment repair. TC now uses signed 19-bit internal accumulation/result storage
+and exact INT32 external results. The [19-bit verification record](../reports/verification/tc19_main_20261122/README.md)
+contains fresh main-source units, additional equivalence/bounds units, integration
+results, and retained candidate post-route evidence whose source hashes match main.
+Promotion did not rerun implementation; no 19-bit power estimate was measured.
+The [earlier November 22 record](../reports/verification/operand_route_main_20261122/README.md)
+describes the 32-bit operand-routing core and its power evidence. The [November 21 record](../reports/verification/outer_main_20261121/README.md)
 describes the preceding multiply-before-route shared core; the older observations
 below apply to their dated snapshots.
 
@@ -29,12 +32,14 @@ The original C tests and full legacy replay remain predecessor evidence.
 For a repeat that preserves the accepted logs, choose a fresh run name:
 
 ```powershell
-./reports/verification/operand_route_main_20261122/run_regression.ps1 -RunName regression_repeat
+./reports/verification/tc19_main_20261122/run_regression.ps1 -RunName regression_repeat
 ```
 
-`tools/verify_bram_main.ps1` checks the November 21 source manifest and will
-reject the promoted TC/DU/TIA sources. It remains a historical reproduction
-entry point; use the November 22 launcher for the current source manifest.
+The older `tools/verify_bram_main.ps1`, operand-route promotion launcher, and
+19-bit experiment integrity/regression scripts check their dated pre-promotion
+production manifests and will reject the current TC source. They are preserved
+historical entry points. Use the `tc19_main_20261122` launcher above to check the
+current source manifest without rewriting historical evidence.
 
 ## October 29, 2026 rerun
 

@@ -1,0 +1,516 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 16:40:14 2026
+# Process ID: 13144
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122
+# Command line: vivado.exe -mode batch -nojournal -log netlist_native.log -source ../mlu_bram_100mhz_20261118/bridge_netlist_check.tcl -tclargs candidate/src netlist_native
+# Log file: C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source ../mlu_bram_100mhz_20261118/bridge_netlist_check.tcl
+# if {$argc != 2} {error "Expected SOURCE_SNAPSHOT NEW_OUTPUT_DIR"}
+# set bn_scripts [file normalize [file dirname [info script]]]
+# set bn_repo [file normalize [file join $bn_scripts ../..]]
+# set bn_source [file normalize [lindex $argv 0]]
+# set bn_output [file normalize [lindex $argv 1]]
+# if {[file exists $bn_output]} {error "Preserve earlier bridge proof"}
+# file mkdir $bn_output
+# cd $bn_output
+# set_param general.maxThreads 1
+# create_project -in_memory -part xc7z020clg484-1
+# foreach src {tensor_core_sv/tensor_core_pkg.sv fifo_sv/du_tc_bridge_pkg.sv fifo_sv/du_tc_bridge.sv} {
+#     read_verilog -sv [file join $bn_source $src]
+# }
+# read_verilog -sv [file join $bn_scripts bridge_flat.sv]
+# set fd [open clock.xdc w]
+# puts $fd {create_clock -period 10.000 -name clk [get_ports clk]}
+# close $fd
+# read_xdc clock.xdc
+# synth_design -top bridge_flat -part xc7z020clg484-1 -mode out_of_context
+Command: synth_design -top bridge_flat -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 1 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 2016
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [C:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1230.871 ; gain = 406.285
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'bridge_flat' [C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/bridge_flat.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'du_tc_bridge' [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:6]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[0][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[0][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[0][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[0][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[0][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[1][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[1][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[1][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[1][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[1][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[2][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[2][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[2][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[2][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[2][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[3][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[3][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[3][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[3][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[3][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[4][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[4][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[4][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[4][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[4][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[5][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[5][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[5][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[5][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[5][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[6][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[6][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[6][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[6][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[6][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[7][packet][is_sparse]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[7][packet][payload]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[7][meta][tile_id]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[7][meta][dst_addr]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'fifo_mem[7][k]' is not inferred as ram due to incorrect usage [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:35]
+INFO: [Synth 8-6155] done synthesizing module 'du_tc_bridge' (0#1) [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'bridge_flat' (0#1) [C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/bridge_flat.sv:2]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][7][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][7][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][7][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][7][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][7][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][6][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][6][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][6][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][6][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][6][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][5][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][5][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][5][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][5][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][5][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][4][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][4][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][4][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][4][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][4][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][3][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][3][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][3][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][3][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][3][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][2][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][2][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][2][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][2][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][2][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][1][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][1][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][1][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][1][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][1][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][0][packet][is_sparse] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][0][packet][payload] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][0][meta][tile_id] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][0][meta][dst_addr] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+WARNING: [Synth 8-6014] Unused sequential element state_q_reg[fifo][0][k] was removed.  [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv:69]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1324.246 ; gain = 499.660
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1324.246 ; gain = 499.660
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1324.246 ; gain = 499.660
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1324.246 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/clock.xdc]
+Finished Parsing XDC File [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/clock.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1373.324 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1373.324 ; gain = 0.000
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [C:/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    5 Bit       Adders := 1     
+	   3 Input    4 Bit       Adders := 1     
+	   3 Input    3 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 2     
+	   3 Input    2 Bit       Adders := 1     
+	   2 Input    1 Bit       Adders := 2     
++---Registers : 
+	               64 Bit    Registers := 5     
+	               32 Bit    Registers := 5     
+	                8 Bit    Registers := 3     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 10    
++---Muxes : 
+	   2 Input  184 Bit        Muxes := 1     
+	   2 Input   64 Bit        Muxes := 4     
+	   2 Input   32 Bit        Muxes := 4     
+	   2 Input    8 Bit        Muxes := 1     
+	   6 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 8     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++------------+----------------------------------------+----------------+----------------------+---------------+
+|Module Name | RTL Object                             | Inference      | Size (Depth x Width) | Primitives    | 
++------------+----------------------------------------+----------------+----------------------+---------------+
+|bridge_flat | dut/fifo_mem_reg[7][k]                 | User Attribute | 8 x 8                | RAM32M x 2    | 
+|bridge_flat | dut/fifo_mem_reg[7][packet][is_sparse] | User Attribute | 8 x 1                | RAM16X1D x 1  | 
+|bridge_flat | dut/fifo_mem_reg[7][meta][dst_addr]    | User Attribute | 8 x 64               | RAM32M x 11   | 
+|bridge_flat | dut/fifo_mem_reg[7][meta][tile_id]     | User Attribute | 8 x 32               | RAM32M x 6    | 
+|bridge_flat | dut/fifo_mem_reg[7][packet][payload]   | User Attribute | 8 x 184              | RAM32M x 31   | 
++------------+----------------------------------------+----------------+----------------------+---------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1373.324 ; gain = 548.738
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping Report
++------------+----------------------------------------+----------------+----------------------+---------------+
+|Module Name | RTL Object                             | Inference      | Size (Depth x Width) | Primitives    | 
++------------+----------------------------------------+----------------+----------------------+---------------+
+|bridge_flat | dut/fifo_mem_reg[7][k]                 | User Attribute | 8 x 8                | RAM32M x 2    | 
+|bridge_flat | dut/fifo_mem_reg[7][packet][is_sparse] | User Attribute | 8 x 1                | RAM16X1D x 1  | 
+|bridge_flat | dut/fifo_mem_reg[7][meta][dst_addr]    | User Attribute | 8 x 64               | RAM32M x 11   | 
+|bridge_flat | dut/fifo_mem_reg[7][meta][tile_id]     | User Attribute | 8 x 32               | RAM32M x 6    | 
+|bridge_flat | dut/fifo_mem_reg[7][packet][payload]   | User Attribute | 8 x 184              | RAM32M x 31   | 
++------------+----------------------------------------+----------------+----------------------+---------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++------------+--------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name | RTL Name                       | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++------------+--------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|bridge_flat | dut/state_q_reg[side][3][k][7] | 4      | 106   | YES          | NO                 | YES               | 106    | 0       | 
++------------+--------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |LUT1     |     1|
+|2     |LUT2     |   500|
+|3     |LUT3     |    10|
+|4     |LUT4     |    11|
+|5     |LUT5     |   105|
+|6     |LUT6     |    11|
+|7     |RAM16X1D |     1|
+|8     |RAM32M   |    48|
+|9     |SRL16E   |   106|
+|10    |FDCE     |   320|
+|11    |FDRE     |   106|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:24 . Memory (MB): peak = 1373.836 ; gain = 500.172
+Synthesis Optimization Complete : Time (s): cpu = 00:00:26 ; elapsed = 00:00:26 . Memory (MB): peak = 1373.836 ; gain = 549.250
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1382.848 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 49 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'bridge_flat' is not ideal for floorplanning, since the cellview 'du_tc_bridge' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/clock.xdc]
+Finished Parsing XDC File [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/clock.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1397.641 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 49 instances were transformed.
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 1 instance 
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 48 instances
+
+Synth Design complete, checksum: 3017a031
+INFO: [Common 17-83] Releasing license: Synthesis
+20 Infos, 82 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:33 . Memory (MB): peak = 1397.641 ; gain = 1002.645
+INFO: [Common 17-600] The following parameters have non-default value.
+general.maxThreads
+# write_checkpoint synthesized.dcp
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-480] Writing timing data to binary archive.
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/synthesized.dcp' has been generated.
+# report_utilization -file utilization.rpt
+# report_timing_summary -max_paths 10 -file timing.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+# write_verilog -mode funcsim -rename_top bridge_flat_netlist bridge_flat_netlist.v
+# close_project
+# set fd [open [file join $bn_repo experiments mlu_bram_20261118 baseline src fifo_sv du_tc_bridge.sv] r]
+# set bn_original [read $fd]
+# close $fd
+# if {[regsub {module du_tc_bridge \(} $bn_original {module du_tc_bridge_reference (} bn_reference] != 1} {
+#     error "Expected original Bridge module declaration"
+# }
+# set fd [open du_tc_bridge_reference.sv w]
+# puts -nonewline $fd $bn_reference
+# close $fd
+# create_project bridge_sim [file join $bn_output project] -part xc7z020clg484-1
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project'
+# set_property target_simulator XSim [current_project]
+# add_files -fileset sim_1 [list \
+#     [file join $bn_source tensor_core_sv tensor_core_pkg.sv] \
+#     [file join $bn_source fifo_sv du_tc_bridge_pkg.sv] \
+#     [file join $bn_output du_tc_bridge_reference.sv] \
+#     [file join $bn_output bridge_flat_netlist.v] \
+#     [file join $bn_scripts tb_bridge_netlist.sv]]
+# set_property top tb_bridge_netlist [get_filesets sim_1]
+# set_property xsim.simulate.runtime all [get_filesets sim_1]
+# set_property -dict [list xsim.simulate.xsim.more_options \
+#     "-testplusarg VECTORS=[file join $bn_repo fifo_sv vectors bridge_vectors.txt]"] [get_filesets sim_1]
+# update_compile_order -fileset sim_1
+# launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_bridge_netlist'
+WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from 'C:/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_bridge_netlist' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -L uvm -prj tb_bridge_netlist_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/bridge_flat_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bridge_flat_netlist
+INFO: [VRFC 10-311] analyzing module du_tc_bridge
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/tensor_core_sv/tensor_core_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/du_tc_bridge_reference.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module du_tc_bridge_reference
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/tb_bridge_netlist.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_bridge_netlist
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'glbl' [C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim/glbl.v:6]
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim'
+"xelab --incr --debug typical --relax --mt auto -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_bridge_netlist_behav xil_defaultlib.tb_bridge_netlist xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt auto -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_bridge_netlist_behav xil_defaultlib.tb_bridge_netlist xil_defaultlib.glbl -log elaborate.log 
+Multi-threading is on. Using 14 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.du_tc_bridge_pkg
+Compiling package xil_defaultlib.tensor_core_pkg
+Compiling module xil_defaultlib.du_tc_bridge_reference
+Compiling module unisims_ver.LUT4
+Compiling module unisims_ver.LUT6
+Compiling module unisims_ver.RAM32M
+Compiling module unisims_ver.x_lut3_mux8
+Compiling module unisims_ver.LUT3
+Compiling module unisims_ver.RAM32X1D
+Compiling module unisims_ver.x_lut2_mux4
+Compiling module unisims_ver.LUT2
+Compiling module unisims_ver.FDCE_default
+Compiling module unisims_ver.LUT5
+Compiling module unisims_ver.x_lut1_mux2
+Compiling module unisims_ver.LUT1(INIT=2'b01)
+Compiling module unisims_ver.SRL16E_default
+Compiling module unisims_ver.FDRE_default
+Compiling module xil_defaultlib.du_tc_bridge
+Compiling module xil_defaultlib.bridge_flat_netlist
+Compiling module xil_defaultlib.tb_bridge_netlist
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_bridge_netlist_behav
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 1614.902 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/Jason/Desktop/TC/experiments/bridge_lutram_tc19_20261122/netlist_native/project/bridge_sim.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_bridge_netlist_behav -key {Behavioral:sim_1:Functional:tb_bridge_netlist} -tclbatch {tb_bridge_netlist.tcl} -log {simulate.log} -testplusarg VECTORS=C:/Users/Jason/Desktop/TC/fifo_sv/vectors/bridge_vectors.txt"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_bridge_netlist.tcl
+## current_wave_config
+BRIDGE NETLIST EQUIVALENCE PASS rows=19147 rejected=7156 resets=13 comparisons=38294
+$finish called at time : 191670 ns : File "C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/tb_bridge_netlist.sv" Line 85
+xsim: Time (s): cpu = 00:00:00 ; elapsed = 00:00:06 . Memory (MB): peak = 1614.902 ; gain = 0.000
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_bridge_netlist_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for all
+launch_simulation: Time (s): cpu = 00:00:00 ; elapsed = 00:00:13 . Memory (MB): peak = 1614.902 ; gain = 0.000
+# close_sim
+INFO: [Simtcl 6-16] Simulation closed
+# set transcript [file join $bn_output project bridge_sim.sim sim_1 behav xsim simulate.log]
+# set fd [open $transcript r]
+# set body [read $fd]
+# close $fd
+# if {[string first {BRIDGE NETLIST EQUIVALENCE PASS rows=19147} $body] < 0 ||
+#     [regexp -nocase {Fatal:|Error:|\$fatal} $body]} {error "Bridge netlist comparison failed"}
+# file copy $transcript [file join $bn_output result.log]
+# puts "BRIDGE_NETLIST_CHECK_COMPLETE"
+BRIDGE_NETLIST_CHECK_COMPLETE
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 22 16:41:14 2026...

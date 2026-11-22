@@ -2,21 +2,21 @@
 
 ## 1. Project Overview
 
-This hardware design project implements an **8 x 8 x 8 matrix multiplication tile engine** with signed **INT8 operands and INT32 accumulation**. All three input formats use a shared outer-product Tensor Core. SystemVerilog implements loading, decoding, flow control, signed accumulation and ordered result writeback.
+This hardware design project implements an **8 x 8 x 8 matrix multiplication tile engine** with signed **INT8 operands and exact INT32 results**, using 19-bit internal TC accumulation/storage for fixed K=8. All three input formats use a shared outer-product Tensor Core. SystemVerilog implements loading, decoding, flow control, signed accumulation and ordered result writeback.
 
-**Current datapath revision: operand routing before multiplication.** All three modes share one outer-product pipeline. The current RTL restores A/B coordinates before the 64 signed multipliers and uses the DU/TIA whole-union assignment repair. Against the original routing architecture with the same DU/TIA repair, the validated candidate uses **43.3% fewer post-route LUTs**, retains **64 DSPs**, and passes internal **100 MHz** timing. See the [promotion record](reports/verification/operand_route_main_20261122/README.md) and [complete measured comparison](experiments/pre_route_20261122/REPORT.md). The earlier transition from two multiplier banks to a shared core remains documented in Section 5.1.
+**Current datapath revision: 19-bit TC internals with INT32 interfaces.** All three modes share operand ROUTE → MUL → ACC and 64 signed multipliers, with the DU/TIA whole-union assignment repair. Against the previous 32-bit operand-routing implementation, the adopted version uses **20.89% fewer post-route LUTs** and **27.22% fewer FFs**, retaining **64 DSPs** and **18 RAMB36s**. Its retained internal **100 MHz** route passes with only **4 ps setup margin**. See the [promotion record](reports/verification/tc19_main_20261122/README.md) and [complete measured comparison](experiments/tc19_20261122/REPORT.md). Earlier architectural transitions remain documented below.
 
 The project demonstrates cycle-level architecture modeling, RTL implementation, pipeline control, resource sharing, and hardware verification. Its engineering focus is preserving numerical correctness, packet order, and precise transfer timing across independently tested modules under backpressure and reset.
 
 **Verified scope:** the five RTL units and their connected system pass the supplied simulation regressions. The memory boundary is a simplified 256-bit interface; a physical HBM controller, complete AXI protocol, board execution, and ASIC implementation are outside the verified scope. Each command computes an independent `C = A x B` tile with zero initial accumulation; there is no accumulation across K tiles or addition of a previous C matrix.
 
-**Current main working-tree RTL (2026-11-22).** TC and DU/TIA are copied byte-for-byte from the validated isolated candidate. The 184-bit indexed interface and rotating FIFO are unchanged. See the [new promotion record and SV diff](reports/verification/operand_route_main_20261122/README.md). Old sources and reports are preserved. Existing Vivado GUI runs remain historical checkpoints; the project already references the updated main source files, which take effect on the next build. The promotion does not overwrite those runs or claim a new GUI implementation.
+**Current main working-tree RTL (2026-11-22).** TC is copied byte-for-byte from the validated 19-bit candidate; DU/TIA retains the previously adopted repair. The 184-bit indexed interface, INT32 result interface, and rotating FIFO are unchanged. See the [promotion record and SV diff](reports/verification/tc19_main_20261122/README.md). Old sources and reports are preserved. Existing Vivado GUI runs remain historical checkpoints; the project already references the updated main source files, which take effect on the next build. The promotion does not overwrite those runs or claim a new GUI implementation.
 
 ## 2. Key Features and Specification Summary
 
 - Three input modes: dense x dense, unstructured x 2:4, and unstructured x unstructured.
 - Dense values bypass sparse decoding and receive fixed indices `0..7` and counts of eight before FIFO insertion.
-- One operand ROUTE stage feeds 64 signed multipliers and INT32 accumulation. Consecutive tiles can overlap across source format changes.
+- One operand ROUTE stage feeds 64 signed multipliers and 19-bit accumulation with exact INT32 output. Consecutive tiles can overlap across source format changes.
 - Four-stage DU/TIA decoding and index alignment, followed by an eight-entry packet FIFO with in-flight credit reservation.
 - Two Tensor Core result slots, a separate two-entry result-metadata FIFO, and two whole-result buffers in the MSU.
 - C reference models, immutable replay vectors, procedural SV scoreboards, and an independent system-level GEMM/writeback check.
@@ -27,7 +27,7 @@ The project demonstrates cycle-level architecture modeling, RTL implementation, 
 | Item | Specification |
 |---|---|
 | Operation | One independent `C = A x B` per command; M=N=K=8; accumulation starts at zero |
-| Arithmetic | Signed INT8 operands (−128…127), signed 16-bit products, signed INT32 accumulation/results |
+| Arithmetic | Signed INT8 operands (−128…127), signed 16-bit products, signed 19-bit TC accumulation/storage, exact signed INT32 output |
 | Input sequence | Eight accepted k packets per tile, ordered `k=0..7`; consistent tile metadata |
 | Supported modes | `IO_DENSE=0`: dense × dense; `IO_HYBRID=1`: unstructured A × 2:4 B; `IO_DUAL=2`: unstructured × unstructured; mode 3 is illegal |
 | Result | 8×8 INT32 = 64 elements = 256 bytes per tile |
@@ -46,7 +46,7 @@ The following table consolidates the five units and the integration boundary. De
 | **MLU — Memory Load Unit** | Two tile buffers, each with a 160-byte image capacity; one outstanding read burst | 256-bit memory input; 236-bit DU/TIA packet output plus tile metadata and k. Loads the complete image, then issues eight ordered packets. Holds output stable under backpressure; releases a tile buffer on accepted k=7. Sparse input is already packed. | [MLU specification](mlu_sv/README.md) |
 | **DU/TIA — Decompression and Index Alignment** | Four registered stages S0–S3; 236-bit input packet → 185-bit output packet | Dense data forwarding and sparse decoding/index alignment. S0 captures input; S1 forwards/decodes values and predecodes bitmap halves; S2 merges indices; S3 registers output. No downstream `out_ready`; capacity must be reserved before issue. | [DU/TIA specification](du_tia_sv/README.md) |
 | **Bridge / Packet FIFO** | Eight packet slots; four-stage metadata pipeline aligned with in-flight DU/TIA packets; separate two-entry result-metadata queue | Tracks `fifo_count + inflight_count <= 8`. Issue reserves capacity, DU arrival transfers occupancy into the FIFO, and TC acceptance releases it. Registered FIFO insertion with a combinational head; no arrival bypass or same-edge credit lookahead when full. | [Bridge specification](fifo_sv/README.md) |
-| **Tensor Core** | Operand Routing → 64 signed INT8 multipliers → 64 INT32 accumulators; two result slots | A pair of indexed vectors (184 bits). A tile reserves a result slot on its first accepted slice. | [Tensor Core specification](tensor_core_sv/README.md) |
+| **Tensor Core** | Operand Routing → 64 signed INT8 multipliers → 64 signed 19-bit accumulators; two result slots, INT32 output | A pair of indexed vectors (184 bits). A tile reserves a result slot on its first accepted slice. | [Tensor Core specification](tensor_core_sv/README.md) |
 | **MSU — Memory Store Unit** | Two complete-result buffers, each 256 bytes | Accepts the full matrix and metadata, then writes eight 256-bit rows. Row r uses `dst_addr + 32*r`; each INT32 is little-endian. Holds write payload under stall. `tile_done` occurs only after the final accepted row write. | [MSU specification](msu_sv/README.md) |
 | **Integration Top** | Connects the five existing units without another data pipeline stage | Exposes command, read-request/data, write, completion, and diagnostic interfaces. Maps package fields explicitly, gates TC valid with result-credit readiness, and pairs ordered results with Bridge metadata. | [Top-level interface](integration_sv/README.md) |
 
@@ -144,7 +144,7 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded 
 
 The previous implementation used an 8 x 8 systolic array for dense tiles and a separate outer-product path for sparse tiles. Selecting a path by mode still left two multiplier banks instantiated in hardware: the integrated design used 128 DSP48E1 blocks. Reducing this hardware resource cost motivated the move to a common compute pipeline.
 
-The current design expresses every k slice as an outer product. Dense operands receive identity indices and counts of eight; sparse operands retain their decoded indices and counts. Both then use the same operand ROUTE stage, 64 signed multipliers, INT32 accumulators and result slots. Dense matrix multiplication remains fully supported, and the production core no longer needs a dedicated systolic array or a compute-mode input.
+The current design expresses every k slice as an outer product. Dense operands receive identity indices and counts of eight; sparse operands retain their decoded indices and counts. Both then use the same operand ROUTE stage, 64 signed multipliers, 19-bit accumulators and result storage with exact INT32 output. Dense matrix multiplication remains fully supported, and the production core no longer needs a dedicated systolic array or a compute-mode input.
 
 This revision also changes dense timing and format switching. The retained [old/new benchmark log](reports/verification/outer_main_20261121/units.log) records an unstalled dense tile-start interval of 24 cycles for the predecessor and eight for the shared core. Dense, sparse and mixed streams now use the same pipeline timing, with tile overlap across format changes. The top-level memory interfaces and independent 8 x 8 x 8 operation remain unchanged.
 
@@ -154,7 +154,9 @@ The design tradeoff is that dense execution also traverses the index-routing net
 
 The DU/TIA forwards dense operands in lane order. At FIFO ingress the adapter assigns both dense vectors a count of eight and identity indices, including lanes containing zero. It forwards the decoded indices/counts for hybrid and dual inputs. The Bridge checks the original format tag at arrival. Only the two indexed vectors reach the compute core.
 
-Each k slice follows **Routing → MUL → ACC**. Routing first restores the eight A operands and eight B operands to their original row and column coordinates, zero-filling missing entries and registering separate presence masks. The 64 signed INT8 multipliers then register products at fixed coordinates. ACC sign-extends each 16-bit product and accumulates it into the corresponding INT32 result using the aligned presence masks. Products do not pass through the predecessor's row/column routing banks. First-slice clearing and last-slice publication use registered markers so tiles can overlap; tile II=8 and publication three advancing edges after k=7 are unchanged.
+Each k slice follows **Routing → MUL → ACC**. Routing first restores the eight A operands and eight B operands to their original row and column coordinates, zero-filling missing entries and registering separate presence masks. The 64 signed INT8 multipliers then register products at fixed coordinates. ACC sign-extends each 16-bit product to 19 bits and accumulates it using the aligned presence masks. Internal accumulator/result elements are 19 bits; the output sign-extends them to INT32. Products do not pass through the predecessor's row/column routing banks. First-slice clearing and last-slice publication use registered markers so tiles can overlap; tile II=8 and publication three advancing edges after k=7 are unchanged.
+
+For fixed K=8 with zero initial accumulation, every partial sum is in [-130048, 131072]. Signed 19 bits cover this range exactly; signed 18 bits cannot represent the positive endpoint. Increasing K or adding prior-C/cross-tile accumulation requires a new width proof and validation. Public packages and MSU remain full INT32.
 
 **Memory units.** MLU has two tile buffers and permits one outstanding read burst. MSU has two complete 256-byte result buffers. It writes eight 32-byte rows in little-endian order and asserts `tile_done` only after the final row transfer. There is no AXI write-response channel in this interface.
 
@@ -223,7 +225,7 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
 
 ## 8. Performance and Implementation Results
 
-The [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) links the fresh main-source unit/integration regressions and the retained, source-matched candidate implementation evidence. The unit suite and all 50 integration summaries pass, including 369 completed tiles and 77 resets. No synthesis, implementation, or power run was repeated during promotion or this README update.
+The [19-bit promotion record](reports/verification/tc19_main_20261122/README.md) links fresh main-source unit/integration regressions and retained, source-matched candidate implementation evidence. The original unit suite, additional equivalence/bounds units, and all 50 integration summaries pass, including 369 completed tiles and 77 resets. No synthesis, implementation, or power run was repeated during promotion.
 
 | TC benchmark, 24 tiles, always-ready sink | Prior production cycles | Unified core cycles |
 |---|---:|---:|
@@ -233,9 +235,22 @@ The [November 22 promotion record](reports/verification/operand_route_main_20261
 
 The benchmark records the [November 21 shared-core transition](reports/verification/outer_main_20261121/README.md); it counts from first input acceptance through final result consumption. The November 22 regression preserves these cycle results and checks GEMM and each written byte across all nine mode transitions, memory stalls, resets and full result buffers.
 
-The November 22 validated candidate is now copied into the main source tree. Both compared implementations below use the same DU/TIA repair, Vivado 2022.2, `xc7z020clg484-1`, and the same 10.000 ns OOC flow:
+The adopted 19-bit candidate and its freshly rebuilt 32-bit baseline use Vivado 2022.2, `xc7z020clg484-1`, the same DU/TIA repair, and the same 10.000 ns OOC flow:
 
-| Integrated post-route metric | Original product routing + repaired DU/TIA | Current operand routing + repaired DU/TIA |
+| Integrated post-route metric | Previous 32-bit TC | Adopted 19-bit TC |
+|---|---:|---:|
+| Slice LUTs | 12,769 | 10,101 (-20.89%) |
+| Slice registers | 15,519 | 11,295 (-27.22%) |
+| Occupied slices | 4,679 | 3,479 (-25.65%) |
+| DSP48E1 / RAMB36E1 | 64 / 18 | 64 / 18 |
+| Setup WNS at 10 ns | +0.296 ns | +0.004 ns |
+| Hold WHS at 10 ns | +0.082 ns | +0.098 ns |
+
+These are retained post-route measurements of the exact sources now in main, checked by source hashes; promotion did not rerun implementation. Both selected routed checkpoints pass independent setup/hold, routing and DRC audits. Baseline/candidate routed functional netlists pass all three modes, with additional bounds workloads for the candidate. The **4 ps setup margin** establishes a pass for this OOC route, not robust placement or board timing margin. The worst path is result-credit/control into TC register enables. No 19-bit power estimate was measured. See the [full 19-bit report](experiments/tc19_20261122/REPORT.md).
+
+The following **historical 32-bit** comparison records the earlier operand-routing change under the same device and clock constraints:
+
+| Integrated post-route metric | Original product routing + repaired DU/TIA | 32-bit operand routing + repaired DU/TIA |
 |---|---:|---:|
 | Slice LUTs | 22,523 | 12,769 (-43.3%) |
 | TC module LUTs | 15,652 | 5,254 (-66.4%) |
@@ -244,11 +259,11 @@ The November 22 validated candidate is now copied into the main source tree. Bot
 | Setup WNS at 10 ns | +0.199 ns | +0.296 ns |
 | Hold WHS at 10 ns | +0.096 ns | +0.082 ns |
 
-These are retained measurements of the validated isolated sources, whose hashes match main after promotion; synthesis/implementation is not rerun for this source copy. [Full report and power-estimate limitations](experiments/pre_route_20261122/REPORT.md). Both repaired routed functional netlists pass dense, hybrid, and dual workloads. The original unrepaired shared netlist failed sparse validation, so its older resource/timing figures below are historical evidence rather than a validated sparse implementation.
+These retained measurements describe the earlier 32-bit snapshots, not the current 19-bit TC. [Historical report and power-estimate limitations](experiments/pre_route_20261122/REPORT.md). Both repaired routed functional netlists pass dense, hybrid, and dual workloads. The original unrepaired shared netlist failed sparse validation, so its older resource/timing figures below are historical evidence rather than a validated sparse implementation.
 
-The fixed-route clock sweep passes at 9.81 ns (101.94 MHz) for product routing and 9.71 ns (102.99 MHz) for operand routing; the next 10 ps faster point fails in each case. This is about a 1% difference on the retained routes, not a substantial Fmax improvement or board timing sign-off.
+The historical 32-bit fixed-route clock sweep passes at 9.81 ns (101.94 MHz) for product routing and 9.71 ns (102.99 MHz) for operand routing; the next 10 ps faster point fails in each case. This is about a 1% difference on those retained routes, not a current 19-bit Fmax result or board timing sign-off.
 
-| 100 MHz total on-chip power estimate | Product routing + repaired DU/TIA | Operand routing + repaired DU/TIA | Reduction |
+| Historical 32-bit 100 MHz total on-chip power estimate | Product routing + repaired DU/TIA | Operand routing + repaired DU/TIA | Reduction |
 |---|---:|---:|---:|
 | Dense | 0.714 W | 0.573 W | 19.7% |
 | Hybrid | 0.574 W | 0.501 W | 12.7% |
@@ -290,7 +305,7 @@ Module-local paths are retained so includes, package order, and existing test sc
 `-- project_integration/       # Original top Vivado .xpr / source constraints
 ```
 
-Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) for current sources and validation. The [BRAM GUI guide](docs/bram-100mhz-gui.md) describes retained earlier runs; rebuilding the project reads the updated root RTL, while existing checkpoints keep their original sources and results. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; the [repaired experiment flow](experiments/pre_route_20261122/power/du_repair/README.md#reproduction-commands) records the source-matched candidate recipe. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
+Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [19-bit promotion record](reports/verification/tc19_main_20261122/README.md) for current sources and validation. The [BRAM GUI guide](docs/bram-100mhz-gui.md) describes retained earlier runs; rebuilding the project reads the updated root RTL, while existing checkpoints keep their original sources and results. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; the [19-bit experiment report](experiments/tc19_20261122/REPORT.md) records the source-matched candidate recipe. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
 
 The [historical publication validation](reports/verification/2026-11-13-native-publication/README.md)
 records the pre-BRAM source snapshot, regression rerun, and removed superseded reports.

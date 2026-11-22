@@ -1,0 +1,2 @@
+POWER WORKLOAD PASS mode=0 seed=51a7c0de tiles=288 cycles=2343 beats=2304 present_a=18432 present_b=18432 nonzero_a=18432 nonzero_b=18432 II=8
+TC19_WORKLOAD_PASS

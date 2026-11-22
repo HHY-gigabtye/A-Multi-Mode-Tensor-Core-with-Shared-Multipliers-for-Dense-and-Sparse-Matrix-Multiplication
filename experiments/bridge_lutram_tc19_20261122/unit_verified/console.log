@@ -1,0 +1,15 @@
+
+****** xsim v2022.2 (64-bit)
+  **** SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/bridge_sim/xsim_script.tcl
+# xsim {bridge_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Fatal: Missing original vectors
+Time: 0 ps  Iteration: 0  Process: /tb_bridge_netlist/Initial46_2088  Scope: tb_bridge_netlist.replay  File: C:/Users/Jason/Desktop/TC/experiments/mlu_bram_100mhz_20261118/tb_bridge_netlist.sv Line: 54
+$finish called at time : 0 fs
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 16:39:49 2026...

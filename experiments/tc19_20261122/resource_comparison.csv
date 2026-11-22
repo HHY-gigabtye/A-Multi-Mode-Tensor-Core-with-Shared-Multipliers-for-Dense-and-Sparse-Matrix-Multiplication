@@ -1,0 +1,5 @@
+"Variant","Stage","LUT","FF","DSP","BRAM36"
+"baseline","synth","12803","15519","64","18"
+"baseline","routed","12769","15519","64","18"
+"candidate","synth","10146","11295","64","18"
+"candidate","routed","10101","11295","64","18"

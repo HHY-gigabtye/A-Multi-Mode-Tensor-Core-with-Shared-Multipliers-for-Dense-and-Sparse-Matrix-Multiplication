@@ -1,0 +1,2 @@
+# PRE_ROUTE EQUIVALENCE PASS edges=89595 bitmap_pairs=65536 accepted=82299 completed=10080 publications=10145 malformed=3823 full_rejects=1766 resets=178 simultaneous=9892 stored_zero=54909 seed=7a913b65
+# TC19 BOUNDS PASS tiles=1024 operand_pairs=65536 max=131072 min=-130048 II=8 intervals=1023 last_k_to_publish=3 max_hits=1 min_hits=2

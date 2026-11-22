@@ -1,0 +1,9 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/routed/routed_functional.v" into library work
+INFO: [VRFC 10-311] analyzing module du_tc_bridge
+INFO: [VRFC 10-311] analyzing module du_tia
+INFO: [VRFC 10-311] analyzing module mlu
+INFO: [VRFC 10-311] analyzing module msu
+INFO: [VRFC 10-311] analyzing module outer_product_core
+INFO: [VRFC 10-311] analyzing module sparse_tensor_core_top
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Xilinx/Vivado/2022.2/data/verilog/src/glbl.v" into library work

@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 12:07:57 2026
+# Process ID: 39024
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/rtl_workload
+# Command line: xsim.exe -log C:\Users\Jason\Desktop\TC\experiments\tc19_20261122\candidate\rtl_workload\hybrid\simulation.log -mode tcl -source {xsim.dir/workload_sim/xsim_script.tcl}
+# Log file: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/rtl_workload/hybrid/simulation.log
+# Journal file: C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/rtl_workload\xsim.jou
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source xsim.dir/workload_sim/xsim_script.tcl
+# xsim {workload_sim} -testplusarg HYBRID -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/rtl_workload/hybrid/run.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/rtl_workload/hybrid/run.tcl
+## run all
+POWER WORKLOAD PASS mode=1 seed=51a7c0de tiles=288 cycles=2343 beats=2304 present_a=9204 present_b=9216 nonzero_a=9165 nonzero_b=9177 II=8
+$finish called at time : 23638 ns : File "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/tb_power.sv" Line 236
+## if {[get_value -radix unsigned /tb_power/passed] != 1} {error {Workload did not pass}}
+## puts {TC19_WORKLOAD_PASS}
+TC19_WORKLOAD_PASS
+## quit
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 12:08:00 2026...

@@ -1,0 +1,19 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/du_tia_sv/rtl/du_tia_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/mlu_sv/mlu_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/tensor_core_sv/tensor_core_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/fifo_sv/du_tc_bridge_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/msu_sv/rtl/msu_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/mlu_sv/mlu.sv" into library work
+INFO: [VRFC 10-311] analyzing module mlu
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/du_tia_sv/rtl/du_tia.sv" into library work
+INFO: [VRFC 10-311] analyzing module du_tia
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv" into library work
+INFO: [VRFC 10-311] analyzing module du_tc_bridge
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/tensor_core_sv/outer_product_core.sv" into library work
+INFO: [VRFC 10-311] analyzing module outer_product_core
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/msu_sv/rtl/msu.sv" into library work
+INFO: [VRFC 10-311] analyzing module msu
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/candidate/src/integration_sv/rtl/sparse_tensor_core_top.sv" into library work
+INFO: [VRFC 10-311] analyzing module sparse_tensor_core_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/tc19_20261122/tb_power.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_power

@@ -1,0 +1,107 @@
+diff --git a/fifo_sv/du_tc_bridge.sv b/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv
+index 7117c47..6d510fa 100644
+--- a/fifo_sv/du_tc_bridge.sv
++++ b/experiments/bridge_lutram_tc19_20261122/candidate/src/fifo_sv/du_tc_bridge.sv
+@@ -32,19 +32,28 @@ module du_tc_bridge (
+   import du_tc_bridge_pkg::*;
+ 
+   bridge_state_t q, d, state_q;
+-  bridge_entry_t [IO_PACKET_FIFO-1:0] fifo_storage_q, fifo_storage_d;
+-  fifo_ptr_t storage_tail;
++  (* ram_style = "distributed" *) bridge_entry_t fifo_mem [0:IO_PACKET_FIFO-1];
++  bridge_entry_t arriving_word, head_word;
++  fifo_ptr_t write_ptr_q;
++  logic fifo_write;
+   meta_ptr_t meta_tail;
+   logic [FIFO_COUNT_W:0] used_credits;
+-  // This is the FIFO storage itself, not an extra head/output register.
+-  // Rotate all eight physical words on pop, including stale words. Thus
+-  // physical slot zero is always the logical head and every C-model slot,
+-  // including its retained stale contents, can be reconstructed exactly.
+   (* max_fanout = 128 *) logic head_present_q;
++
++  // RAM contents survive reset. Count gates all functional reads. For the
++  // C-state observation, unwritten words read as zero in each reset epoch.
++  // synthesis translate_off
++  logic [IO_PACKET_FIFO-1:0] written_q;
++  always_ff @(posedge clk or negedge rst_n)
++    if (!rst_n) written_q <= '0;
++    else if (fifo_write) written_q[write_ptr_q] <= 1'b1;
++  // synthesis translate_on
+   always_comb begin : logical_state_view
+     q = state_q;
++    // synthesis translate_off
+     for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+-      q.fifo[fifo_ptr_t'(state_q.head + fifo_ptr_t'(slot))] = fifo_storage_q[slot];
++      q.fifo[slot] = written_q[slot] ? fifo_mem[slot] : '0;
++    // synthesis translate_on
+   end
+ 
+   // Widen BEFORE adding so a carry cannot disappear.
+@@ -57,28 +66,22 @@ module du_tc_bridge (
+ 
+   // Even when metadata blocks k=0, the stored head stays visible for mode
+   // selection. It may be consumed ONLY when head_valid is high.
+-  assign head_entry = head_present_q ? fifo_storage_q[0] : '0;
++  assign head_word = fifo_mem[state_q.head];
++  assign head_entry = head_present_q ? head_word : '0;
+   assign head_valid = head_present_q &&
+       !((head_entry.k == 0) && (q.meta_count == meta_count_t'(RESULT_SLOTS)));
+   assign result_meta_valid = (q.meta_count != 0);
+   assign result_meta = result_meta_valid ? q.result_meta[q.meta_head] : '0;
+ 
+-  // These fixed depths are powers of two: truncation implements C's modulo.
+-  // Rotation precedes the arriving write, matching pop-before-push in d.
+-  assign storage_tail = fifo_ptr_t'(q.count - fifo_count_t'(tc_accept));
++  // The tail advances only on a committed arrival. A simultaneous pop
++  // advances the independent head, so both ports use the old pointers.
+   assign meta_tail = meta_ptr_t'(q.meta_head + q.meta_count);
+-
+-  always_comb begin : physical_fifo_next
+-    fifo_storage_d = fifo_storage_q;
+-    if (tc_accept)
+-      for (int slot = 0; slot < IO_PACKET_FIFO; slot = slot + 1)
+-        fifo_storage_d[slot] = fifo_storage_q[(slot + 1) % IO_PACKET_FIFO];
+-    if (du_valid) begin
+-      fifo_storage_d[storage_tail].packet = du_packet;
+-      fifo_storage_d[storage_tail].meta = q.side[IO_DU_STAGES-1].meta;
+-      fifo_storage_d[storage_tail].k = q.side[IO_DU_STAGES-1].k;
+-    end
+-  end
++  assign arriving_word.packet = du_packet;
++  assign arriving_word.meta = q.side[IO_DU_STAGES-1].meta;
++  assign arriving_word.k = q.side[IO_DU_STAGES-1].k;
++  assign fifo_write = rst_n && du_valid && status == IO_OK;
++  always_ff @(posedge clk)
++    if (fifo_write) fifo_mem[write_ptr_q] <= arriving_word;
+ 
+   always_comb begin : check_contract
+     status = IO_OK;
+@@ -106,8 +109,8 @@ module du_tc_bridge (
+       d.meta_count = d.meta_count - 1'b1;
+     end
+     if (tc_accept) begin
+-      if (fifo_storage_q[0].k == 0) begin
+-        d.result_meta[meta_tail] = fifo_storage_q[0].meta;
++      if (head_word.k == 0) begin
++        d.result_meta[meta_tail] = head_word.meta;
+         d.meta_count = d.meta_count + 1'b1;
+       end
+       d.head = q.head + 1'b1;
+@@ -132,13 +135,13 @@ module du_tc_bridge (
+   always_ff @(posedge clk or negedge rst_n) begin
+     if (!rst_n) begin
+       state_q <= '0;
+-      fifo_storage_q <= '0;
++      write_ptr_q <= '0;
+       head_present_q <= 1'b0;
+     end else if (status == IO_OK) begin
+       state_q <= d;
+-      // No duplicate data storage: q.fifo is a view of fifo_storage_q.
++      // Packet storage is exclusively in fifo_mem.
+       state_q.fifo <= '0;
+-      fifo_storage_q <= fifo_storage_d;
++      if (du_valid) write_ptr_q <= write_ptr_q + 1'b1;
+       head_present_q <= (d.count != 0);
+     end
+   end

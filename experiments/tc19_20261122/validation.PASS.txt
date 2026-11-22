@@ -1,0 +1,1 @@
+PASS: both original regressions; standalone equivalence and all 65536 signed operand pairs; 18 system workload runs (9 RTL, 9 routed functional), 288 tiles each, identical relevant traces; both reopened 100 MHz audits; production and protected inputs unchanged.

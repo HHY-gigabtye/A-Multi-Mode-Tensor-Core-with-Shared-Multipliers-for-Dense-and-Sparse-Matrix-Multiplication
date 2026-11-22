@@ -1,0 +1,34 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 16:49:31 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file hierarchy_synth.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020clg484-1
+| Speed File   : -1
+| Design State : Synthesized
+------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|          Instance          |       Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| sparse_tensor_core_top     |              (top) |       8880 |       8779 |       0 |  101 | 10062 |     18 |      0 |         64 |
+|   (sparse_tensor_core_top) |              (top) |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|   u_bridge                 |       du_tc_bridge |       1572 |       1471 |       0 |  101 |  2674 |      0 |      0 |          0 |
+|   u_du_tia                 |             du_tia |       2153 |       2153 |       0 |    0 |   800 |      0 |      0 |          0 |
+|   u_mlu                    |                mlu |       2183 |       2183 |       0 |    0 |  1038 |     18 |      0 |          0 |
+|   u_msu                    |                msu |       1030 |       1030 |       0 |    0 |  2734 |      0 |      0 |          0 |
+|   u_tensor_core            | outer_product_core |       1942 |       1942 |       0 |    0 |  2816 |      0 |      0 |         64 |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+
+

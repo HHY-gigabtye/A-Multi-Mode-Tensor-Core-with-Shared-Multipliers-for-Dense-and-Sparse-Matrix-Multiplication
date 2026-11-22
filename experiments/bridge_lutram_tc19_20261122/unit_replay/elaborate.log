@@ -1,0 +1,33 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --mt 2 work.tb_bridge_netlist work.glbl -L unisims_ver -L secureip --snapshot bridge_sim 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.du_tc_bridge_pkg
+Compiling package work.tensor_core_pkg
+Compiling module work.du_tc_bridge_reference
+Compiling module unisims_ver.LUT4
+Compiling module unisims_ver.LUT6
+Compiling module unisims_ver.RAM32M
+Compiling module unisims_ver.x_lut3_mux8
+Compiling module unisims_ver.LUT3
+Compiling module unisims_ver.RAM32X1D
+Compiling module unisims_ver.x_lut2_mux4
+Compiling module unisims_ver.LUT2
+Compiling module unisims_ver.FDCE_default
+Compiling module unisims_ver.LUT5
+Compiling module unisims_ver.x_lut1_mux2
+Compiling module unisims_ver.LUT1(INIT=2'b01)
+Compiling module unisims_ver.SRL16E_default
+Compiling module unisims_ver.FDRE_default
+Compiling module work.du_tc_bridge
+Compiling module work.bridge_flat_netlist
+Compiling module work.tb_bridge_netlist
+Compiling module work.glbl
+ERROR: [XSIM 43-3409] Failed to compile generated C file xsim.dir/bridge_sim/obj/xsim_2.c.
+ERROR: [XSIM 43-3915] Encountered a fatal error. Cannot continue. Exiting... 
