@@ -1,0 +1,6 @@
+# Preserve archived evidence bytes for the accompanying SHA-256 manifest.
+*.csv -text
+*.json -text
+*.log -text
+*.ps1 -text
+*.txt -text

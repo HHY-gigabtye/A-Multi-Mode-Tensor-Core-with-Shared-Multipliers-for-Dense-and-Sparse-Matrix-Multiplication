@@ -1,0 +1,10 @@
+PASS: fresh GitHub clone README Section 10 validation.
+Commit: 24b84dfa3754128bbf37ae8847c4b718ebc2b6fa
+Clone: C:\Users\Jason\AppData\Local\Temp\tc19_github_check_20261122_171104156
+General regression: all five units, TC benchmark, and connected integration PASS.
+Integration: 369 completed tiles, 77 resets, all 50 accepted summaries identical.
+Supplemental equivalence: 89595 edges, all 65536 A/B bitmap pairs PASS.
+Signed bounds: 1024 tiles, 65536 operand pairs, -130048/+131072, II=8, k=7+3 PASS.
+Input provenance: GitHub-tracked sources and vectors; TC vectors restored from the public gzip with matching SHA256.
+No input was copied from the original working tree; compiled libraries were newly created in the clone.
+Fresh logs and source-path checks are retained alongside validation.json.

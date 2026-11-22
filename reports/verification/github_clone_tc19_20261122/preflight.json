@@ -1,0 +1,21 @@
+{
+  "cloneRoot": "C:\\Users\\Jason\\AppData\\Local\\Temp\\tc19_github_check_20261122_171104156",
+  "remote": "https://github.com/HHY-gigabtye/A-Multi-Mode-Tensor-Core-with-Shared-Multipliers-for-Dense-and-Sparse-Matrix-Multiplication.git",
+  "commit": "24b84dfa3754128bbf37ae8847c4b718ebc2b6fa",
+  "readmeBlob": "ffd58c6be498891b200ca9d866433996a21800df",
+  "initialStatus": [],
+  "gitAlternatesPresent": false,
+  "expandedVectorsInitiallyPresent": false,
+  "compiledLibrariesInitiallyPresent": false,
+  "publicCheckpointNetlistPaths": [
+    "experiments/msu_fmax/head_mux_20261115/product_shadow/fresh_10/refined/routed.dcp",
+    "experiments/msu_fmax/result_bank_20261115/distributed_flat/fresh_10/refined/routed.dcp"
+  ],
+  "powershell": "7.6.9",
+  "simulator": "C:\\intelFPGA\\20.1\\modelsim_ase\\win32aloem\\vsim.exe",
+  "clearedEnvironment": [
+    "STC_ROOT",
+    "TC19_MAIN_OUTPUT",
+    "MODELSIM"
+  ]
+}

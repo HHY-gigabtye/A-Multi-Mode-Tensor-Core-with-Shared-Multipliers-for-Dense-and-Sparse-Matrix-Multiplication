@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "commit": "24b84dfa3754128bbf37ae8847c4b718ebc2b6fa",
+  "cloneRoot": "C:\\Users\\Jason\\AppData\\Local\\Temp\\tc19_github_check_20261122_171104156",
+  "generalCommandExit": 0,
+  "supplementalCommandExit": 0,
+  "generalCompiledPathsWithinClone": 33,
+  "vectorPathsWithinClone": 4,
+  "supplementalCompiledPathsWithinClone": 4,
+  "generatedBaselineMatchesPublicSnapshot": true,
+  "integrationSummaryLinesMatched": 50,
+  "supplementalSummaryLinesMatched": 2,
+  "equivalenceEdges": 89595,
+  "boundsTiles": 1024,
+  "operandPairs": 65536,
+  "integrationCompletedTiles": 369,
+  "integrationResets": 77,
+  "originalWorkspaceUsedAsInput": false,
+  "notes": [
+    "PowerShell 7.6.9 and ModelSim Intel FPGA Edition 2020.1 were installed tools.",
+    "Exact README general and standalone supplemental command blocks were executed.",
+    "Original tracked files changed only in the clone: generated units.log and top.log.",
+    "Archived full-promotion launcher is documented as requiring local preserved artifacts and was not used.",
+    "Existing vlog-13314 port-kind warnings remain; no simulator Error/Fatal entries."
+  ]
+}

@@ -320,6 +320,8 @@ and explicitly labeled current references.
 
 ## 10. How to Run the Tests
 
+**Fresh GitHub clone verified (2026-11-22).** The general regression and standalone 19-bit equivalence/bounds commands below passed on a new clone of `24b84df`, using only published project inputs and installed tools. See the [formal verification record, logs and input-provenance checks](reports/verification/github_clone_tc19_20261122/README.md).
+
 ### ModelSim: units followed by integration
 
 Prerequisites: PowerShell 7 (7.6.5 tested) with permission to run local scripts and the tested ModelSim version (or a compatible simulator, independently verified). Run from the repository root. No C compiler is needed for SV vector replay.
