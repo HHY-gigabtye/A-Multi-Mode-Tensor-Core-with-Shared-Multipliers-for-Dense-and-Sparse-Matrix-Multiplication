@@ -138,6 +138,8 @@ The MLU reads fixed-size images rather than variable-length compressed streams:
 
 Sparse packing occurs upstream. The MLU loads and packetizes an already encoded image; it does not discover or compress nonzeros.
 
+For a numerical walkthrough from bitmaps to the final matrix, see [Section 5.3](#53-worked-example-one-dual-sparse-tile).
+
 ## 5. Hardware Microarchitecture
 
 ### 5.1 Design Decision: Replacing the Dedicated Systolic Array
@@ -159,6 +161,94 @@ Each k slice follows **Routing → MUL → ACC**. Routing first restores the eig
 For fixed K=8 with zero initial accumulation, every partial sum is in [-130048, 131072]. Signed 19 bits cover this range exactly; signed 18 bits cannot represent the positive endpoint. Increasing K or adding prior-C/cross-tile accumulation requires a new width proof and validation. Public packages and MSU remain full INT32.
 
 **Memory units.** MLU has two tile buffers and permits one outstanding read burst. MSU has two complete 256-byte result buffers. It writes eight 32-byte rows in little-endian order and asserts `tile_done` only after the final row transfer. There is no AXI write-response channel in this interface.
+
+### 5.3 Worked Example: One Dual-Sparse Tile
+
+This example follows one complete `IO_DUAL=2` operation, `C = A x B`, with the actual M=N=K=8 dimensions. Each packet supplies one **column of A**, `A[:,k]`, and one **row of B**, `B[k,:]`. Multiplying every entry of that column by every entry of that row produces an 8x8 *outer product*. Adding the eight outer products gives `C[i,j] = sum(k=0..7, A[i,k] * B[k,j])`.
+
+Only k=0 and k=1 contain stored entries here. All other A columns and B rows are zero. Vector lists below run from coordinate/lane 0 on the left to 7 on the right; binary bitmaps use the usual bit 7 on the left and bit 0 on the right. Values are signed decimal INT8 unless marked as hexadecimal.
+
+**1. Read the packed input.** A set bitmap bit identifies a stored coordinate. Packed values follow those set bits in increasing coordinate order. The table shows only the valid packed prefix; each physical operand still has eight value slots, and unused slots are zero-filled for this example.
+
+| k | A bitmap `[7:0]` | A packed values | B bitmap `[7:0]` | B packed values |
+|---|---|---|---|---|
+| 0 | `01010010` (`0x52`) | `[3, 0, -2]` | `10001001` (`0x89`) | `[-4, 5, 2]` |
+| 1 | `01000010` (`0x42`) | `[-1, 4]` | `10001001` (`0x89`) | `[2, -3, 1]` |
+| 2, 3, 4, 5, 6, 7 | `00000000` (`0x00`) | `[]` | `00000000` (`0x00`) | `[]` |
+
+The zero between 3 and -2 is deliberately **stored**: A bitmap bit 4 is set, so this zero occupies a valid packed slot. A set bit means presence; it does not guarantee a nonzero value.
+
+In the dual-sparse memory image, each k occupies 18 bytes: A bitmap, eight A values, B bitmap, eight B values. Thus k=0 occupies these bytes at offsets 0 through 17 from `src_addr`:
+
+```text
+A bitmap | A packed slots 0..7       | B bitmap | B packed slots 0..7
+52       | 03 00 FE 00 00 00 00 00  | 89       | FC 05 02 00 00 00 00 00
+```
+
+`FE` encodes -2 and `FC` encodes -4 in signed INT8. Eight such records occupy 144 bytes, transferred by MLU as five 32-byte beats including 16 padding bytes. MLU loads the complete image and issues k=0..7 in order; the metadata identifies one tile and its destination throughout.
+
+**2. DU/TIA converts bitmaps into count/value/index.** S0 captures the input. For dual-sparse data, S1 forwards the valid values, computes each count from the bitmap popcount, and decodes the low/high bitmap halves. S2 merges the indices in increasing order; S3 registers the resulting packet.
+
+For A at k=0, low-half `0010` gives index `[1]`; high-half `0101` gives indices `[4, 6]`. Their merge is `[1, 4, 6]`, aligned with values `[3, 0, -2]`. The complete decoded prefixes are:
+
+| k | A count | A value / index | B count | B value / index |
+|---|---:|---|---:|---|
+| 0 | 3 | `[3, 0, -2]` / `[1, 4, 6]` | 3 | `[-4, 5, 2]` / `[0, 3, 7]` |
+| 1 | 2 | `[-1, 4]` / `[1, 6]` | 3 | `[2, -3, 1]` / `[0, 3, 7]` |
+| 2, 3, 4, 5, 6, 7 | 0 | `[]` / `[]` | 0 | `[]` / `[]` |
+
+Only slots below `count` are valid. The top forwards these decoded fields into the Bridge, which pairs the payload with its aligned sideband and queues it. On TC acceptance, the core receives the 184-bit A/B count/value/index payload; the bitmap and original mode are no longer needed by the core. Accepting k=0 also reserves a TC result slot and enqueues the tile's result metadata.
+
+**3. ROUTE restores original coordinates before multiplication.** Each valid packed slot is scattered to its index; all missing coordinates receive zero. For example, A packed slot 2 contains -2 with index 6, so it becomes row-coordinate 6, not row-coordinate 2.
+
+```text
+coordinate       0   1   2   3   4   5   6   7
+k=0 routed A:  [ 0,  3,  0,  0,  0,  0, -2,  0 ]
+k=0 routed B:  [-4,  0,  0,  5,  0,  0,  0,  2 ]
+k=1 routed A:  [ 0, -1,  0,  0,  0,  0,  4,  0 ]
+k=1 routed B:  [ 2,  0,  0, -3,  0,  0,  0,  1 ]
+```
+
+ROUTE registers presence masks separately from these values. At k=0, A coordinates `{1,4,6}` and B coordinates `{0,3,7}` are present. A coordinate 4 remains present even though its value is zero. These masks travel with the pipeline and select the accumulator terms; testing `value != 0` would lose that distinction.
+
+**4. MUL and ACC form the result.** The shared bank has 64 signed INT8 multipliers at fixed output coordinates `(i,j)`. Every present A coordinate is paired with every present B coordinate. For example, `A[1,0] * B[0,3] = 3 * 5 = 15` contributes to `C[1,3]`; packed lane numbers do not determine the output location.
+
+Each product is signed 16-bit, then sign-extended to 19 bits. When k=0 reaches ACC, each accumulator is initialized to its eligible product or zero. Later slices add eligible products and retain other coordinates. The affected rows and columns are small enough to list in full:
+
+| Output coordinate | k=0 product | k=1 product | Contribution from k=2..7 | Final C |
+|---|---:|---:|---:|---:|
+| `(1,0)` | `3 * -4 = -12` | `-1 * 2 = -2` | 0 | -14 |
+| `(1,3)` | `3 * 5 = 15` | `-1 * -3 = 3` | 0 | 18 |
+| `(1,7)` | `3 * 2 = 6` | `-1 * 1 = -1` | 0 | 5 |
+| `(4,0)` | `0 * -4 = 0` | absent; no update | 0 | 0 |
+| `(4,3)` | `0 * 5 = 0` | absent; no update | 0 | 0 |
+| `(4,7)` | `0 * 2 = 0` | absent; no update | 0 | 0 |
+| `(6,0)` | `-2 * -4 = 8` | `4 * 2 = 8` | 0 | 16 |
+| `(6,3)` | `-2 * 5 = -10` | `4 * -3 = -12` | 0 | -22 |
+| `(6,7)` | `-2 * 2 = -4` | `4 * 1 = 4` | 0 | 0 |
+
+At k=0 there are 3 x 3 = 9 eligible coordinate pairs, including three products of the stored zero. The physical core still contains 64 multipliers. All eight packets, including the six count-zero packets, must be accepted to complete this tile: an empty slice is valid work with a k position, while an idle cycle has `in_valid=0` and does not advance k. Sparsity does not shorten this tile to two cycles.
+
+The complete 8x8 result, with rows and columns in order 0..7, is:
+
+```text
+C = [  0   0   0    0   0   0   0   0
+     -14   0   0   18   0   0   0   5
+       0   0   0    0   0   0   0   0
+       0   0   0    0   0   0   0   0
+       0   0   0    0   0   0   0   0
+       0   0   0    0   0   0   0   0
+      16   0   0  -22   0   0   0   0
+       0   0   0    0   0   0   0   0 ]
+```
+
+For `C[6,3]`, the second product -12 is `16'hFFF4`, which sign-extends to `19'h7FFF4` before addition to -10. The final -22 is stored as `19'h7FFEA` in `acc_q` and then in a result slot. The external result sign-extends it to `32'hFFFFFFEA`. The small example values are for readability; the 19-bit width covers the full eight-product range [-130048, 131072] established in Section 5.2.
+
+**5. Publish and write back.** Number the first TC acceptance as edge 0 and assume legal consecutive inputs and a ready sink. k=0 is routed at edge 0, multiplied at edge 1, and accumulated at edge 2. k=1 reaches ACC at edge 3. The empty k=7 packet is still accepted at edge 7, reaches ACC at edge 9, and causes result publication after edge 10. The earliest result transfer to MSU is edge 11. These are TC-local edges; MLU loading and DU/TIA/Bridge transit precede them as described in Section 2.4.
+
+MSU accepts the INT32 matrix with its matching tile metadata and writes all eight 32-byte rows, including zero rows. For instance, `C[6,3] = -22` occupies bytes `EA FF FF FF` at `dst_addr + 32*6 + 4*3`. The tile completes only after the final row-7 write is accepted. There is no accumulation into an earlier tile or prior C matrix.
+
+Implementation references: [MLU image-to-packet mapping](mlu_sv/mlu_pkg.sv), [DU/TIA stages](du_tia_sv/rtl/du_tia.sv), [bitmap index decoder](du_tia_sv/rtl/du_tia_pkg.sv), [Bridge/TC connections](integration_sv/rtl/sparse_tensor_core_top.sv), and [19-bit outer-product core](tensor_core_sv/outer_product_core.sv).
 
 <a id="6-pipeline-and-dataflow"></a>
 
