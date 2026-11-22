@@ -3,9 +3,13 @@
 ## Current shared-core verification
 
 Current `main` builds `outer_product_core.sv` for dense, hybrid and dual-sparse
-tiles. The retained [November 21 verification record](../reports/verification/outer_main_20261121/README.md)
-contains the current-source simulation and post-route evidence. The older
-observations below apply to their dated snapshots.
+tiles using **Routing → MUL → ACC**, together with the DU/TIA whole-union
+assignment repair. The [November 22 verification record](../reports/verification/operand_route_main_20261122/README.md)
+contains the fresh main-source unit/integration results and links to the retained
+candidate post-route and power evidence whose source hashes match main. Promotion
+did not rerun implementation. The [November 21 record](../reports/verification/outer_main_20261121/README.md)
+describes the preceding multiply-before-route shared core; the older observations
+below apply to their dated snapshots.
 
 From the repository root, restore the immutable vectors, then run the isolated
 units and old/new TC comparison before the connected test:
@@ -21,6 +25,16 @@ rules. Only compatible outer-product windows are replayed against the new TC.
 Dense and mixed-format checks use mathematical GEMM and the shared-core timing
 contract: publication three advancing edges after k=7 and unstalled tile II=8.
 The original C tests and full legacy replay remain predecessor evidence.
+
+For a repeat that preserves the accepted logs, choose a fresh run name:
+
+```powershell
+./reports/verification/operand_route_main_20261122/run_regression.ps1 -RunName regression_repeat
+```
+
+`tools/verify_bram_main.ps1` checks the November 21 source manifest and will
+reject the promoted TC/DU/TIA sources. It remains a historical reproduction
+entry point; use the November 22 launcher for the current source manifest.
 
 ## October 29, 2026 rerun
 

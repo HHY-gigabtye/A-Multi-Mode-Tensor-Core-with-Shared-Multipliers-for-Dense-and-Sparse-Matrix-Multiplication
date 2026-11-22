@@ -1,6 +1,6 @@
 # Source audit and architecture reconciliation
 
-> Historical audit of the October 29, 2026 implementation. The source map, systolic timing, mode-aware admission and verification boundaries below describe that snapshot. The later November 12 version also predates the current core. Current `main` uses one shared outer-product pipeline for dense, hybrid and dual-sparse tiles, with 64 DSPs in the integrated post-route build. See the [current architecture](architecture.md), [TC contract](../tensor_core_sv/README.md) and [November 21 promotion record](../reports/verification/outer_main_20261121/README.md). Historical local commit IDs may no longer exist in the rewritten public history.
+> Historical audit of the October 29, 2026 implementation. The source map, systolic timing, mode-aware admission and verification boundaries below describe that snapshot. The later November 12 version also predates the current core. Current `main` uses one shared Routing → MUL → ACC pipeline for dense, hybrid and dual-sparse tiles, with the DU/TIA whole-union assignment repair and 64 DSPs in the matching candidate's integrated post-route build. See the [current architecture](architecture.md), [TC contract](../tensor_core_sv/README.md) and [November 22 promotion record](../reports/verification/operand_route_main_20261122/README.md). Historical local commit IDs may no longer exist in the rewritten public history.
 
 Audit date: 2026-10-29. Baseline Git HEAD: `7dba760`, preceded by `e41a44e`.
 Statements below distinguish inspected implementation from measured behavior.

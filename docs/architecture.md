@@ -16,9 +16,12 @@ The current SystemVerilog core shares one outer-product pipeline across all
 three input formats. The retained C TC model describes the predecessor: its
 compatible sparse windows remain a cycle oracle, while dense and mixed-format
 behavior use the current RTL contract and independent GEMM tests. The
-[promotion record](../reports/verification/outer_main_20261121/README.md) documents
-the transition and FPGA post-route measurements; ASIC implementation remains
-outside the verified scope.
+[November 21 record](../reports/verification/outer_main_20261121/README.md)
+documents the transition to shared multipliers. The
+[November 22 promotion](../reports/verification/operand_route_main_20261122/README.md)
+records the current operand-routing core, DU/TIA repair, fresh main-source
+regression, and retained source-matched FPGA post-route evidence. ASIC
+implementation remains outside the verified scope.
 
 ```text
 Simplified memory/HBM model
@@ -140,6 +143,8 @@ once.** Do not update DU first and use its new S3 as the same-edge FIFO input.
 - Upstream guarantees k=0..7 ordering and consistent tile metadata; do not assume Bridge checks every sequence rule.
 
 ## 6. Tensor Core computation
+
+The current shared pipeline is **Routing → MUL → ACC** for dense, hybrid, and dual-sparse tiles.
 
 Each accepted slice first restores A and B independently from packed operand lanes to original row and column coordinates, zero-filling missing coordinates. The first stage registers two eight-element INT8 vectors and separate presence masks. The second stage registers fixed-coordinate products from one 8×8 bank of signed INT8 multipliers. The accumulator sign-extends each product into INT32 and initializes each output coordinate on the first slice of a tile. The fabric addition is explicitly marked `use_dsp="no"`, while multiplication uses `use_dsp="yes"`, preserving 64 DSPs. The historical `tick_info.mul` and `tick_info.route` fields still observe the first and second phases respectively; their names do not describe the new physical ordering.
 
