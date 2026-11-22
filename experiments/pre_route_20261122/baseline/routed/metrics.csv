@@ -1,0 +1,2 @@
+variant,period_ns,setup_slack_ns,hold_slack_ns
+baseline,10.000,0.162,0.096

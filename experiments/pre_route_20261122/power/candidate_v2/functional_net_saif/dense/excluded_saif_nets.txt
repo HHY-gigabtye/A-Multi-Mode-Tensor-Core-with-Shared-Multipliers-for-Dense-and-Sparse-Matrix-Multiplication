@@ -1,0 +1,8 @@
+               (s1_comb\.\(null\)\[0\]\.result (T0 12680000) (T1 7800000) (TX 0) (TZ 0) (TB 0) (TC 1018))
+               (s1_comb\.\(null\)\[0\]\.result0_out (T0 12850000) (T1 7630000) (TX 0) (TZ 0) (TB 0) (TC 1012))
+               (s1_comb\.\(null\)\[0\]\.result1_out (T0 12860000) (T1 7620000) (TX 0) (TZ 0) (TB 0) (TC 1026))
+               (s1_comb\.\(null\)\[0\]\.result2_out (T0 12830000) (T1 7650000) (TX 0) (TZ 0) (TB 0) (TC 1066))
+               (s1_comb\.\(null\)\[0\]\.result3_out (T0 12960000) (T1 7520000) (TX 0) (TZ 0) (TB 0) (TC 1004))
+               (s1_comb\.\(null\)\[0\]\.result4_out (T0 12690000) (T1 7790000) (TX 0) (TZ 0) (TB 0) (TC 1004))
+               (s1_comb\.\(null\)\[0\]\.result5_out (T0 12980000) (T1 7500000) (TX 0) (TZ 0) (TB 0) (TC 986))
+               (s1_comb\.\(null\)\[0\]\.result6_out (T0 13250000) (T1 7230000) (TX 0) (TZ 0) (TB 0) (TC 978))

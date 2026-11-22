@@ -1,6 +1,6 @@
 # 10 ns timing experiment
 
-> Historical architecture scope: this record describes the November 10-12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
+> Historical architecture scope: this record describes the November 10-12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
 
 Work is performed directly on `main`, as requested. Baseline commit:
 `c3c9661bf69db3a2cc06f0e26ea91bcdc164235d`. No branch or worktree was created.

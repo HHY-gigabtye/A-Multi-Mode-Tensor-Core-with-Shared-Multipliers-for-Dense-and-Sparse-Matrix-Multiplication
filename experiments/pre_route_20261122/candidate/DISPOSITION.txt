@@ -1,0 +1,1 @@
+Initial candidate: functional PASS; synthesis uses 128 DSP48E1. Retained, not selected. Refined mapping candidate is candidate_v2.

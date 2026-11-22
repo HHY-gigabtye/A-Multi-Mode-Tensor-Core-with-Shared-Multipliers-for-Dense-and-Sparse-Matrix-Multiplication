@@ -1,0 +1,7 @@
+Selected experiment: operand routing before multiplication, explicit fabric accumulation.
+Functional regression and additional 89,595-edge comparison: PASS.
+Post-route integrated resources: 12,857 LUTs; 15,519 FFs; 64 DSP48E1s; 18 RAMB36E1s.
+Independent 100 MHz audit: PASS; setup +0.185 ns, hold +0.084 ns.
+Fixed-route 9.820 ns: PASS; 9.810 ns: FAIL setup (boundary check).
+No production promotion, commit, merge, or push. Main remains unchanged.
+See ../REPORT.md for assumptions, limitations, provenance, and original logs.

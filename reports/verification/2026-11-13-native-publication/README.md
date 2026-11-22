@@ -1,5 +1,11 @@
 # Native implementation publication — November 13, 2026
 
+> Historical publication scope: references below to current implementation or
+> main describe November 13. The active main working tree now contains operand
+> routing before multiplication and the DU/TIA whole-union assignment repair;
+> see the [November 22 promotion and verification](../operand_route_main_20261122/README.md).
+> This publication's measurements, source history, and validation remain unchanged.
+
 This publication integrates local TC `dad7b14` and the user's pending root
 README changes into GitHub main, based on `e8986e71154eff23cfea7e00004cdcfceb69c529`.
 The source was copied into an isolated publication directory. The original

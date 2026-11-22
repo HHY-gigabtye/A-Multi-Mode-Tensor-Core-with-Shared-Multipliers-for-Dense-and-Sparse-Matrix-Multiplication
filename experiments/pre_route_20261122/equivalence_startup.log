@@ -1,0 +1,8 @@
+# do equivalence.do
+# C:/mtitcl/vsim
+# C:/mtitcl/vsim/equivalence_build
+# ** Error: can't create directory "C:/mtitcl/vsim/equivalence_build": no such file or directory
+# Error in macro ./equivalence.do line 3
+# can't create directory "C:/mtitcl/vsim/equivalence_build": no such file or directory
+#     while executing
+# "file mkdir $build"

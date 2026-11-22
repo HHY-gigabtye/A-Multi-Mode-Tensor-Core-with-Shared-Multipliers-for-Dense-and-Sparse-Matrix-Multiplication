@@ -1,0 +1,35 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 02:40:18 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file hierarchy.rpt
+| Design       : sparse_tensor_core_top
+| Device       : xc7z020clg484-1
+| Speed File   : -1
+| Design State : Routed
+------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|          Instance          |       Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| sparse_tensor_core_top     |              (top) |      22581 |      22480 |       0 |  101 | 16281 |     18 |      0 |         64 |
+|   (sparse_tensor_core_top) |              (top) |         64 |         64 |       0 |    0 |     0 |      0 |      0 |          0 |
+|   u_bridge                 |       du_tc_bridge |        984 |        883 |       0 |  101 |  2675 |      0 |      0 |          0 |
+|   u_du_tia                 |             du_tia |       2195 |       2195 |       0 |    0 |   792 |      0 |      0 |          0 |
+|   u_mlu                    |                mlu |       2097 |       2097 |       0 |    0 |  1037 |     18 |      0 |          0 |
+|   u_msu                    |                msu |       1591 |       1591 |       0 |    0 |  4412 |      0 |      0 |          0 |
+|   u_tensor_core            | outer_product_core |      15652 |      15652 |       0 |    0 |  7365 |      0 |      0 |         64 |
++----------------------------+--------------------+------------+------------+---------+------+-------+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

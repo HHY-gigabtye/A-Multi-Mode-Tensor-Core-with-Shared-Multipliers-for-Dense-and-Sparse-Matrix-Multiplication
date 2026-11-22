@@ -1,6 +1,8 @@
 `timescale 1ns/1ps
 
-// A packet describes one k slice; reserve a result slot on the first slice.
+// Experimental operand routing before multiplication. External timing and
+// strict error/credit handling match the production outer-product core.
+// One packet describes one k slice; reserve a result slot on its first slice.
 module outer_product_core (
   input logic clk, rst_n, in_valid, result_ready,
   input tensor_core_pkg::tc_sparse_payload_t in_packet,
@@ -16,14 +18,20 @@ module outer_product_core (
   tc_matrix_t tail, acc;
   typedef struct packed {
     logic valid, first, last;
-    logic [TC_COUNT_W-1:0] a_count, b_count;
-    tc_index_vec_t a_index, b_index;
-  } mul_meta_t;
-  mul_meta_t mul_q;
-  tc_route_reg_t route_q;
-  wire [7:0][7:0][15:0] product_q, route_column_data, route_delta;
-  wire [7:0][7:0] a_select, b_select, route_enable;
-  wire [7:0] route_a_present, route_b_present;
+    tc_lane_data_t a_value, b_value;
+    logic [7:0] a_present, b_present;
+  } operand_reg_t;
+  typedef struct packed {
+    logic valid, first, last;
+    logic [7:0] a_present, b_present;
+  } product_meta_t;
+  operand_reg_t operand_q;
+  product_meta_t product_meta_q;
+  wire [7:0][7:0][15:0] product_q;
+  wire [7:0][7:0][31:0] acc_sum;
+  wire [7:0][7:0] a_select, b_select, acc_enable;
+  wire [7:0] a_present, b_present;
+  tc_lane_data_t routed_a, routed_b;
 
   assign busy = outstanding != 0;
   assign result_valid = result_count != 0;
@@ -40,23 +48,32 @@ module outer_product_core (
   wire last = in_valid && next_k == 7;
   wire pop = result_valid && result_ready;
   wire empty_after_pop = result_count == {1'b0, pop};
-  wire capture = rst_n && in_valid && status == TC_OK;
+  // A rejected input freezes every stage, including a pending multiply.
+  wire capture_product = rst_n && operand_q.valid && status == TC_OK;
   for (genvar i=0; i<TC_DIM; i++) begin : g_row
     for (genvar j=0; j<TC_DIM; j++) begin : g_col
       (* use_dsp = "yes" *) wire signed [15:0] product =
-          mul_int8(in_packet.a.value[i], in_packet.b.value[j]);
+          mul_int8(operand_q.a_value[i], operand_q.b_value[j]);
       logic signed [15:0] p;
       always_ff @(posedge clk)
-        if (capture) p <= product;
+        if (capture_product) p <= product;
       assign product_q[i][j] = p;
+      assign acc_enable[i][j] = product_meta_q.a_present[i] &&
+                                product_meta_q.b_present[j];
+      // Keep the baseline's fabric INT32 adder. Otherwise synthesis can
+      // duplicate the multiplier into an additional DSP multiply-add cone.
+      (* use_dsp = "no" *) wire signed [31:0] fabric_sum =
+          $signed(acc[i][j]) + extend_product(product_q[i][j]);
+      assign acc_sum[i][j] = fabric_sum;
     end
   end
 
-  // Balanced reduction of eight one-hot-masked 16-bit data words.
-  function automatic logic [15:0] route_or8(
-      input logic [7:0][15:0] words);
-    logic [3:0][15:0] level1;
-    logic [1:0][15:0] level2;
+  // Each operand is independently scattered into original coordinates.
+  // Legal sorted indices make each destination select zero or one source.
+  function automatic logic [7:0] route_or8(
+      input logic [7:0][7:0] words);
+    logic [3:0][7:0] level1;
+    logic [1:0][7:0] level2;
     for (int n = 0; n < 4; n = n + 1)
       level1[n] = words[2*n] | words[2*n+1];
     for (int n = 0; n < 2; n = n + 1)
@@ -68,41 +85,21 @@ module outer_product_core (
     for (genvar coord = 0; coord < TC_DIM; coord = coord + 1) begin : g_route_decode
       for (genvar rank = 0; rank < TC_DIM; rank = rank + 1) begin : g_rank
         assign a_select[coord][rank] =
-            (rank < int'(mul_q.a_count)) &&
-            (mul_q.a_index[rank] == TC_INDEX_W'(coord));
+            (rank < int'(in_packet.a.count)) &&
+            (in_packet.a.index[rank] == TC_INDEX_W'(coord));
         assign b_select[coord][rank] =
-            (rank < int'(mul_q.b_count)) &&
-            (mul_q.b_index[rank] == TC_INDEX_W'(coord));
-
+            (rank < int'(in_packet.b.count)) &&
+            (in_packet.b.index[rank] == TC_INDEX_W'(coord));
       end
-      assign route_a_present[coord] = |a_select[coord];
-      assign route_b_present[coord] = |b_select[coord];
-    end
-
-    // B routing: for each packed A rank p, select original B column j.
-    for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_route_columns
-      for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
-        wire [7:0][15:0] terms;
-        for (genvar r = 0; r < TC_DIM; r = r + 1) begin : g_term
-          assign terms[r] = {16{b_select[j][r]}} &
-                            product_q[p][r];
-        end
-        assign route_column_data[p][j] = route_or8(terms);
+      wire [7:0][7:0] a_terms, b_terms;
+      for (genvar rank = 0; rank < TC_DIM; rank = rank + 1) begin : g_data
+        assign a_terms[rank] = {8{a_select[coord][rank]}} & in_packet.a.value[rank];
+        assign b_terms[rank] = {8{b_select[coord][rank]}} & in_packet.b.value[rank];
       end
-    end
-
-    // A routing: select original row i for each already mapped column j.
-    // Both banks are combinational inside the existing single ROUTE stage.
-    for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_route_rows
-      for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
-        wire [7:0][15:0] terms;
-        for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_term
-          assign terms[p] = {16{a_select[i][p]}} &
-                            route_column_data[p][j];
-        end
-        assign route_delta[i][j] = route_or8(terms);
-        assign route_enable[i][j] = route_a_present[i] && route_b_present[j];
-      end
+      assign a_present[coord] = |a_select[coord];
+      assign b_present[coord] = |b_select[coord];
+      assign routed_a[coord] = route_or8(a_terms);
+      assign routed_b[coord] = route_or8(b_terms);
     end
   endgenerate
 
@@ -111,8 +108,8 @@ module outer_product_core (
       next_k <= '0;
       outstanding <= '0;
       result_count <= '0;
-      mul_q <= '0;
-      route_q <= '0;
+      operand_q <= '0;
+      product_meta_q <= '0;
       publish_q <= 1'b0;
       result <= '0;
       tail <= '0;
@@ -129,36 +126,38 @@ module outer_product_core (
         else if (pop && result_count == 2) result <= tail;
         if (publish_q && !empty_after_pop) tail <= acc;
       end
-      mul_q.valid <= in_valid;
-      mul_q.first <= first;
-      mul_q.last <= last;
+      operand_q.valid <= in_valid;
+      operand_q.first <= first;
+      operand_q.last <= last;
       if (in_valid) begin
-        mul_q.a_count <= in_packet.a.count;
-        mul_q.b_count <= in_packet.b.count;
-        mul_q.a_index <= in_packet.a.index;
-        mul_q.b_index <= in_packet.b.index;
+        operand_q.a_value <= routed_a;
+        operand_q.b_value <= routed_b;
+        operand_q.a_present <= a_present;
+        operand_q.b_present <= b_present;
       end
-      route_q.valid <= mul_q.valid;
-      route_q.first <= mul_q.first;
-      route_q.last <= mul_q.last;
-      if (mul_q.valid) begin
-        route_q.delta <= route_delta;
-        route_q.enable <= route_enable;
+      product_meta_q.valid <= operand_q.valid;
+      product_meta_q.first <= operand_q.first;
+      product_meta_q.last <= operand_q.last;
+      if (operand_q.valid) begin
+        product_meta_q.a_present <= operand_q.a_present;
+        product_meta_q.b_present <= operand_q.b_present;
       end
-      publish_q <= route_q.valid && route_q.last;
-      if (route_q.valid) begin
+      publish_q <= product_meta_q.valid && product_meta_q.last;
+      if (product_meta_q.valid) begin
         for (int i=0; i<TC_DIM; i++)
           for (int j=0; j<TC_DIM; j++) begin
-            if (route_q.first)
-              acc[i][j] <= route_q.enable[i][j] ? extend_product(route_q.delta[i][j]) : '0;
-            else if (route_q.enable[i][j])
-              acc[i][j] <= $signed(acc[i][j]) + extend_product(route_q.delta[i][j]);
+            if (product_meta_q.first)
+              acc[i][j] <= acc_enable[i][j] ? extend_product(product_q[i][j]) : '0;
+            else if (acc_enable[i][j])
+              acc[i][j] <= acc_sum[i][j];
           end
       end
     end
   end
 
-  // The legacy sparse_step observation now denotes any outer-product step.
+  // Preserve the existing observation ABI exactly: mul denotes the first
+  // pipeline phase (now operand routing), route denotes the second phase
+  // (now multiplication). These legacy labels do not name physical work here.
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) tick_info <= '0;
     else begin
@@ -170,11 +169,11 @@ module outer_product_core (
         tick_info.input_last <= last;
         tick_info.input_k <= in_valid ? {1'b0,next_k} : '0;
         tick_info.mul <= in_valid;
-        tick_info.route <= mul_q.valid;
-        tick_info.acc <= route_q.valid;
-        tick_info.acc_first <= route_q.valid && route_q.first;
-        tick_info.acc_last <= route_q.valid && route_q.last;
-        tick_info.macs <= route_q.valid ? 7'($countones(route_q.enable)) : '0;
+        tick_info.route <= operand_q.valid;
+        tick_info.acc <= product_meta_q.valid;
+        tick_info.acc_first <= product_meta_q.valid && product_meta_q.first;
+        tick_info.acc_last <= product_meta_q.valid && product_meta_q.last;
+        tick_info.macs <= product_meta_q.valid ? 7'($countones(acc_enable)) : '0;
         tick_info.result_produced <= publish_q;
         tick_info.result_accepted <= pop;
       end

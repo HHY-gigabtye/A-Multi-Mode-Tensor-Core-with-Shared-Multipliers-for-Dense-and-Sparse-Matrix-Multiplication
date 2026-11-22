@@ -1,0 +1,240 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 03:48:17 2026
+# Process ID: 33440
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122
+# Command line: vivado.exe -mode batch -nojournal -log power/du_repair/audit.log -source audit.tcl -tclargs power/du_repair/baseline/routed/routed.dcp power/du_repair/candidate_v2/routed/routed.dcp power/du_repair/audit
+# Log file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at 'C'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
+source audit.tcl
+# if {$argc != 3} {error "Expected BASELINE_DCP CANDIDATE_DCP NEW_OUTPUT"}
+# set trial [file normalize [file dirname [info script]]]
+# set repo [file normalize [file join $trial ../..]]
+# set checkpoints [list [file normalize [lindex $argv 0]] [file normalize [lindex $argv 1]]]
+# set output [file normalize [lindex $argv 2]]
+# if {[file exists $output]} {error "Preserve previous audit: $output"}
+# file mkdir $output
+# source [file join $repo project_integration scripts check_bram_100mhz.tcl]
+## proc check_bram_100mhz {output} {
+##     if {[file exists $output]} {error "Preserve previous audit: $output"}
+##     file mkdir $output
+##     if {[get_property PART [current_design]] ne "xc7z020clg484-1"} {error "Unexpected device"}
+##     if {[llength [get_clocks]] != 1 || [get_property NAME [get_clocks]] ne "clk" ||
+##         abs([get_property PERIOD [get_clocks clk]] - 10.000) > 0.000001} {
+##         error "Expected the single 10.000 ns clock"
+##     }
+##     report_clocks -file [file join $output clocks.rpt]
+##     report_timing_summary -max_paths 20 -report_unconstrained -file [file join $output timing_summary.rpt]
+##     report_timing -delay_type max -max_paths 100 -input_pins -file [file join $output critical_paths.rpt]
+##     report_utilization -file [file join $output utilization.rpt]
+##     report_route_status -file [file join $output route_status.rpt]
+##     report_exceptions -file [file join $output exceptions.rpt]
+##     report_drc -file [file join $output drc.rpt]
+##     if {[llength [get_drc_violations -filter {SEVERITY == Error}]] != 0} {error "DRC errors"}
+##     set brams [get_cells -hier -filter {REF_NAME == RAMB36E1}]
+##     if {[llength $brams] != 18 || [llength [get_cells -hier -filter {REF_NAME == RAMB18E1}]] != 0} {
+##         error "Expected 18 RAMB36E1 and no RAMB18E1"
+##     }
+##     foreach ram $brams {
+##         foreach {property expected} {
+##             RAM_MODE SDP READ_WIDTH_A 72 READ_WIDTH_B 0 WRITE_WIDTH_A 0
+##             WRITE_WIDTH_B 72 DOA_REG 0 DOB_REG 0
+##             WRITE_MODE_A READ_FIRST WRITE_MODE_B READ_FIRST
+##         } {
+##             if {[get_property $property $ram] ne $expected} {error "BRAM configuration changed: $ram / $property"}
+##         }
+##     }
+##     set dsps [get_cells -hier -filter {REF_NAME == DSP48E1}]
+##     if {[llength $dsps] != 64} {error "Expected 64 outer-product DSP48E1s"}
+##     foreach dsp $dsps {
+##         foreach property {AREG BREG MREG} {
+##             if {[get_property $property $dsp] != 0} {error "DSP pipeline changed: $dsp / $property"}
+##         }
+##         if {[get_property PREG $dsp] != 1} {error "Missing registered product: $dsp"}
+##     }
+##     report_drc -checks [get_drc_checks REQP-1839] -file [file join $output bram_control_drc.rpt]
+##     set fd [open [file join $output bram_control_drc.rpt] r]
+##     set controls [read $fd]
+##     close $fd
+##     if {![regexp {Violations found:\s*0\s} $controls]} {error "BRAM control DRC failed"}
+##     set fd [open [file join $output route_status.rpt] r]
+##     set routes [read $fd]
+##     close $fd
+##     foreach {pattern variable} {
+##         {# of routable nets\.+\s*:\s*(\d+)} routable
+##         {# of fully routed nets\.+\s*:\s*(\d+)} routed
+##         {# of nets with routing errors\.+\s*:\s*(\d+)} errors
+##     } {
+##         if {![regexp $pattern $routes all $variable]} {error "Missing route status: $variable"}
+##     }
+##     if {$routed != $routable || $errors != 0} {error "Routing incomplete or erroneous"}
+##     set setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+##     set hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+##     if {$setup eq "" || $hold eq "" || $setup < 0 || $hold < 0} {
+##         error "100 MHz timing failed: setup=$setup hold=$hold"
+##     }
+##     set fd [open [file join $output PASS.txt] w]
+##     puts $fd "PASS internal FPGA OOC post-route STA, 10.000 ns"
+##     puts $fd "setup_slack_ns=$setup hold_slack_ns=$hold routed_nets=$routed"
+##     puts $fd "18 RAMB36E1; 64 DSP48E1 (PREG=1); DRC errors=0; REQP-1839 violations=0; routing errors=0"
+##     close $fd
+##     puts "NATIVE_BRAM_100MHZ_PASS setup=$setup hold=$hold routed=$routed"
+## }
+# set points [open [file join $output periods.csv] w]
+# puts $points "variant,period_ns,mhz,setup_slack_ns,hold_slack_ns"
+# set results [open [file join $output audit_summary.txt] w]
+# foreach name {baseline candidate_v2} checkpoint $checkpoints {
+#     open_checkpoint $checkpoint
+#     set folder [file join $output $name]
+#     if {[catch {check_bram_100mhz $folder} message]} {
+#         set failure [open [file join $folder FAIL.txt] w]
+#         puts $failure $message
+#         close $failure
+#         puts $results "${name}: 100 MHz audit FAIL: $message"
+#     } else {
+#         puts $results "${name}: 100 MHz audit PASS"
+#     }
+#     set tc_cells [get_cells -hier -filter {NAME =~ u_tensor_core/* && IS_SEQUENTIAL}]
+#     report_timing -from $tc_cells -to $tc_cells -max_paths 10 -input_pins -file [file join $folder tc_internal_paths.rpt]
+#     set wns [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+#     set boundary [expr {ceil((10.0 - $wns) * 100.0) / 100.0}]
+#     foreach label {longer shorter} offset {0.0 -0.01} {
+#         set period [format %.3f [expr {$boundary + $offset}]]
+#         create_clock -name clk -period $period -waveform [list 0 [expr {$period / 2.0}]] [get_ports clk]
+#         set setup [get_property SLACK [get_timing_paths -delay_type max -max_paths 1]]
+#         set hold [get_property SLACK [get_timing_paths -delay_type min -max_paths 1]]
+#         puts $points "$name,$period,[format %.4f [expr {1000.0/$period}]],$setup,$hold"
+#         flush $points
+#         report_timing_summary -max_paths 3 -file [file join $output ${name}_${label}.rpt]
+#     }
+#     close_design
+# }
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/routed/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.041 . Memory (MB): peak = 324.871 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.202 . Memory (MB): peak = 865.098 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1059 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1673.645 ; gain = 46.555
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1673.645 ; gain = 46.555
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1673.645 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 2748a497a
+----- Checksum: PlaceDB: ecb96675 ShapeSum: d62f3e62 RouteDB: b1a1a4a3 
+open_checkpoint: Time (s): cpu = 00:00:24 ; elapsed = 00:00:29 . Memory (MB): peak = 1673.645 ; gain = 1348.773
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:13 ; elapsed = 00:00:08 . Memory (MB): peak = 1738.660 ; gain = 65.016
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 100 -nworst 1 -delay_type max -sort_by slack.
+Command: report_drc -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/baseline/drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/baseline/drc.rpt.
+report_drc completed successfully
+WARNING: [Vivado_Tcl 4-49] No violations matched 'SEVERITY == Error'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hier -filter {REF_NAME == RAMB18E1}'.
+Command: report_drc -checks REQP-1839 -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/baseline/bram_control_drc.rpt
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/baseline/bram_control_drc.rpt.
+report_drc completed successfully
+NATIVE_BRAM_100MHZ_PASS setup=0.199 hold=0.096 routed=31766
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:12 ; elapsed = 00:00:07 . Memory (MB): peak = 1841.043 ; gain = 0.000
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:12 ; elapsed = 00:00:07 . Memory (MB): peak = 1841.043 ; gain = 0.000
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/candidate_v2/routed/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1841.043 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.192 . Memory (MB): peak = 1841.043 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1059 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1841.043 ; gain = 0.000
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1841.043 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1841.043 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 1f6b6871a
+----- Checksum: PlaceDB: f2956792 ShapeSum: 5ad8354f RouteDB: a948ea39 
+open_checkpoint: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1841.043 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_timing_summary: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 1841.043 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 100 -nworst 1 -delay_type max -sort_by slack.
+Command: report_drc -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/candidate_v2/drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/candidate_v2/drc.rpt.
+report_drc completed successfully
+WARNING: [Vivado_Tcl 4-49] No violations matched 'SEVERITY == Error'.
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hier -filter {REF_NAME == RAMB18E1}'.
+Command: report_drc -checks REQP-1839 -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/candidate_v2/bram_control_drc.rpt
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/candidate_v2/bram_control_drc.rpt.
+report_drc completed successfully
+NATIVE_BRAM_100MHZ_PASS setup=0.296 hold=0.082 routed=21827
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1841.043 ; gain = 0.000
+WARNING: [Constraints 18-619] A clock with name 'clk' already exists, overwriting the previous clock with the same name.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+get_timing_paths: Time (s): cpu = 00:00:09 ; elapsed = 00:00:05 . Memory (MB): peak = 1841.043 ; gain = 0.000
+# close $points
+# close $results
+# puts "PRE_ROUTE_INDEPENDENT_AUDIT_COMPLETE"
+PRE_ROUTE_INDEPENDENT_AUDIT_COMPLETE
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 22 03:50:02 2026...

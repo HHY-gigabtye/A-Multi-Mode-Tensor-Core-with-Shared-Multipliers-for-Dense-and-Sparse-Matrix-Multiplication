@@ -1,0 +1,190 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 03:50:49 2026
+# Process ID: 31888
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122
+# Command line: vivado.exe -mode batch -nojournal -log power/du_repair/analyze_baseline_dense.log -source power/du_repair/analyze.tcl -tclargs baseline functional dense
+# Log file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/analyze_baseline_dense.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at 'C'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
+source power/du_repair/analyze.tcl
+# if {$argc < 1 || $argc > 3} {error "Expected variant, optional capture directory and workload"}
+# set variant [lindex $argv 0]
+# if {$variant ni {baseline candidate_v2}} {error "Bad variant"}
+# set capture functional
+# if {$argc >= 2} {set capture [lindex $argv 1]}
+# if {$capture ni {functional}} {error "Bad capture directory"}
+# set root [file normalize [file dirname [info script]]]
+# set_param general.maxThreads 2
+# set modes {dense hybrid dual}
+# if {$argc == 3} {
+#   set modes [lindex $argv 2]
+#   if {$modes ni {dense hybrid dual}} {error "Bad workload"}
+# }
+# foreach mode $modes {
+#   set run [file join $root $variant $capture $mode]
+#   if {![file exists [file join $run PASS.txt]]} {error "Missing validated functional simulation: $run"}
+#   set out [file join $root $variant reports ${capture}_filtered $mode]
+#   if {[file exists $out]} {error "Preserve existing power reports: $out"}
+#   file mkdir $out
+#   open_checkpoint [file join $root $variant routed routed.dcp]
+#   if {[get_property PERIOD [get_clocks clk]] != 10.0} {error "Clock must be 100 MHz"}
+#   # Identical explicitly fixed conditions; these are comparison assumptions,
+#   # not measurements of the user's board or ambient environment.
+#   set_operating_conditions -process typical -junction_temp 50 -ambient_temp 25 \
+#     -voltage {Vccint 1.0 Vccaux 1.8 Vccbram 1.0}
+#   read_saif -strip_path tb_power/dut -out_file [file join $out saif_import.rpt] [file join $run activity_import.saif]
+#   report_operating_conditions -file [file join $out operating_conditions.rpt]
+#   report_clocks -file [file join $out clocks.rpt]
+#   report_power -hier all -hierarchical_depth 3 -advisory -l 20 -file [file join $out power.rpt]
+#   report_power -hier all -hierarchical_depth 3 -format xml -file [file join $out power.xml]
+#   report_switching_activity -signal_rate -static_probability -file [file join $out input_activity.rpt] [get_ports -filter {DIRECTION == IN}]
+#   puts "POWER_ANALYSIS_COMPLETE variant=$variant mode=$mode"
+#   close_design
+# }
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/routed/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 325.312 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.182 . Memory (MB): peak = 864.855 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1059 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1673.172 ; gain = 39.395
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1673.172 ; gain = 39.395
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1673.172 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 2748a497a
+----- Checksum: PlaceDB: ecb96675 ShapeSum: d62f3e62 RouteDB: b1a1a4a3 
+open_checkpoint: Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1673.172 ; gain = 1347.859
+INFO: [Power 33-167] Parsing SAIF file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/functional/dense/activity_import.saif
+WARNING: [Power 33-330] Read_saif is trying to annotate activities on clock net and this will be ignored. Users shall manually specify clock net frequency using sdc timing constraints(e.g. create_clock)
+INFO: [Power 33-177] SAIF annotation done from file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/functional/dense/activity_import.saif
+INFO: [Power 33-26] Design nets matched = 49063 of 49063
+Command: report_power -hier all -hierarchical_depth 3 -advisory -l 20 -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/reports/functional_filtered/dense/power.rpt
+14 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+Command: report_power -hier all -hierarchical_depth 3 -format xml -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/baseline/reports/functional_filtered/dense/power.xml
+14 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+INFO: [Common 17-14] Message 'Power 33-294' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+POWER_ANALYSIS_COMPLETE variant=baseline mode=dense
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 22 03:51:28 2026...

@@ -1,0 +1,6 @@
+# Reconstruct these byte-identical raw vectors from the retained gzip copies.
+**/tensor_core_sv/c_vectors.txt
+# Tool scratch is also ignored by the repository-wide rules.
+**/*.jou
+**/*.str
+equivalence_build/

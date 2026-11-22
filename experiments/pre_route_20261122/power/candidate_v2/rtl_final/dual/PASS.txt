@@ -1,0 +1,2 @@
+POWER WORKLOAD PASS mode=2 seed=51a7c0de tiles=288 cycles=2344 beats=2304 present_a=9204 present_b=9205 nonzero_a=9165 nonzero_b=9171 II=8
+POWER_SIMULATION_PASS captured_tiles=256

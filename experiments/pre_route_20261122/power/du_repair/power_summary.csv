@@ -1,0 +1,7 @@
+"Mode","Variant","TotalW","DynamicW","StaticW","ClocksW","LogicW","SignalsW","BramW","DspW","TcDynamicW","DuDynamicW","JunctionC","AmbientC","MatchedNets","DesignNets","CoveragePercent","ExcludedRecords","Report"
+"dense","baseline","0.714","0.562","0.151","0.056","0.146","0.225","0.064","0.071","0.338","0.033","50","41.8","49063","49063","100","0","baseline/reports/functional_filtered/dense/power.rpt"
+"dense","candidate_v2","0.573","0.422","0.151","0.051","0.102","0.134","0.064","0.071","0.205","0.035","50","43.4","38367","38374","99.98175848230572","7","candidate_v2/reports/functional_filtered/dense/power.rpt"
+"hybrid","baseline","0.574","0.422","0.151","0.05","0.106","0.179","0.064","0.024","0.215","0.03","50","43.4","49063","49063","100","0","baseline/reports/functional_filtered/hybrid/power.rpt"
+"hybrid","candidate_v2","0.501","0.35","0.151","0.046","0.086","0.124","0.064","0.031","0.142","0.032","50","44.2","38367","38374","99.98175848230572","7","candidate_v2/reports/functional_filtered/hybrid/power.rpt"
+"dual","baseline","0.567","0.416","0.151","0.05","0.103","0.175","0.064","0.024","0.21","0.028","50","43.5","49063","49063","100","0","baseline/reports/functional_filtered/dual/power.rpt"
+"dual","candidate_v2","0.494","0.343","0.151","0.046","0.082","0.121","0.064","0.03","0.138","0.029","50","44.3","38367","38374","99.98175848230572","7","candidate_v2/reports/functional_filtered/dual/power.rpt"

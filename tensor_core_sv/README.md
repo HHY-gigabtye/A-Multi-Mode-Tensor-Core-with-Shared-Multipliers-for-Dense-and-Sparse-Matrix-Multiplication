@@ -1,6 +1,6 @@
 # Shared outer-product Tensor Core
 
-The production module [`outer_product_core.sv`](outer_product_core.sv) accepts one indexed A/B operand pair per k slice. Dense, hybrid and dual-sparse tiles share 64 signed INT8 multipliers, one ROUTE stage, INT32 accumulation and two result slots. The dedicated dense systolic array belongs to the retained predecessor. The shared architecture reduces integrated post-route DSP usage from 128 to 64; see the [design decision](../README.md#51-design-decision-replacing-the-dedicated-systolic-array) and [measured comparison](../reports/verification/outer_main_20261121/README.md#resource-use-and-timing).
+The production module [`outer_product_core.sv`](outer_product_core.sv) accepts one indexed A/B operand pair per k slice. Dense, hybrid and dual-sparse tiles share operand routing, 64 signed INT8 multipliers, INT32 accumulation and two result slots. Routing restores the two eight-element INT8 vectors before multiplication, with zero-filled missing coordinates and separate presence masks. Products use fixed coordinates; the two 16-bit product-routing banks are removed. The fabric accumulator addition has `use_dsp="no"` to preserve the 64-DSP implementation. See the [November 22 promotion](../reports/verification/operand_route_main_20261122/README.md) and [measured comparison](../experiments/pre_route_20261122/REPORT.md). The dedicated dense systolic array and the earlier multiply-before-route shared core remain archived.
 
 ## Current packet and admission contract
 
@@ -45,10 +45,14 @@ For legal input accepted consecutively with k=0 at edge 0:
 | Earliest result handshake | 11 |
 
 Input gaps move publication with the last accepted slice: k=7 plus three
-advancing edges. First/last markers align MUL, ROUTE and ACC, allowing a new
+advancing edges. First/last markers align operand routing, MUL and ACC, allowing a new
 tile to begin while the previous tile finishes. Dense, sparse and mixed streams
 can all sustain a tile-start interval of eight cycles with available input and
 result credit. Memory transfers and downstream stalls affect system throughput.
+
+`tick_info.mul` retains its historical first-phase timing (now operand routing),
+and `tick_info.route` retains second-phase timing (now multiplication). No external
+latency or observation timing was changed by the promotion.
 
 ## Current files and verification
 
@@ -74,10 +78,22 @@ pwsh -NoProfile -File integration_sv/sim/run_regression.ps1
 The unchanged C trace encodes the predecessor's dense timing. The current unit
 replays each window from reset up to the first valid legacy dense offer; it does
 not claim full-trace cycle equivalence. Dense and mixed-format correctness and
-timing use the comparison and integration scoreboards. The retained November 21
-logs record 21,032 compatible C records and 369 completed integration tiles;
-these are archived results, not a new run performed by this documentation update.
-[Verification evidence and source diffs](../reports/verification/outer_main_20261121/README.md)
+timing use the comparison and integration scoreboards. The November 22 main-source
+regression passes 21,032 compatible C records, 1,366 publications, six malformed
+offers, one full-credit rejection, and the existing TC comparison. Integration
+completes 369 tiles with 77 resets and preserves all 50 baseline summary lines,
+including II=8 and k=7+3 timing. See the
+[current verification evidence and applied diff](../reports/verification/operand_route_main_20261122/README.md).
+These runs preceded this documentation update; no simulation is rerun for README edits.
+
+The isolated experiment additionally exhausts all 65,536 A/B bitmap pairs in a
+standalone TC comparison with independent GEMM, timing, error, backpressure, and
+reset checks. Its snapshots, added tests, and results remain under the
+[operand-routing experiment](../experiments/pre_route_20261122/README.md).
+The promoted source matches the validated 64-DSP candidate exactly; the first
+128-DSP attempt remains historical. Integrated post-route area, timing, and
+functional-SAIF power estimates are in the [measurement report](../experiments/pre_route_20261122/REPORT.md),
+not a fresh implementation of the main working tree.
 
 ## Legacy core and cycle reference
 

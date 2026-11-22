@@ -1,0 +1,1 @@
+PASS: 93 production and baseline files unchanged; candidate changes only outer_product_core.sv.

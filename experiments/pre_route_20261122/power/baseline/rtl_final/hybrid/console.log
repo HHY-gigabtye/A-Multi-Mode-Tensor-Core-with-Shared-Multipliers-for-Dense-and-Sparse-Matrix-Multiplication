@@ -1,0 +1,33 @@
+
+****** xsim v2022.2 (64-bit)
+  **** SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/power_sim/xsim_script.tcl
+# xsim {power_sim} -testplusarg HYBRID -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/simulate.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/simulate.tcl
+## set out [file normalize $::env(POWER_RUN_OUT)]
+## cd $out
+## run 2000 ns
+## set before [get_value -radix unsigned /tb_power/dones]
+## if {$::env(POWER_CAPTURE) eq "1"} {
+##   open_saif [file join $out activity.saif]
+##   log_saif [get_objects -r /tb_power/dut/*]
+## }
+## run 20480 ns
+## if {$::env(POWER_CAPTURE) eq "1"} {close_saif}
+## set after [get_value -radix unsigned /tb_power/dones]
+## if {$after-$before != 256} {error "Expected 256 completed tiles in power window: $before -> $after"}
+## set fd [open window.txt w]
+## puts $fd "start_ns=2000 end_ns=22480 duration_ns=20480 frequency_mhz=100 tiles=[expr {$after-$before}]"
+## close $fd
+## run all
+POWER WORKLOAD PASS mode=1 seed=51a7c0de tiles=288 cycles=2343 beats=2304 present_a=9204 present_b=9216 nonzero_a=9165 nonzero_b=9177 II=8
+$finish called at time : 23638 ns : File "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv" Line 236
+## if {[get_value -radix unsigned /tb_power/passed] != 1} {error "Power workload did not pass"}
+## puts "POWER_SIMULATION_PASS captured_tiles=[expr {$after-$before}]"
+POWER_SIMULATION_PASS captured_tiles=256
+## quit
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 03:03:38 2026...

@@ -1,0 +1,432 @@
+# do equivalence.do
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/equivalence_build
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work work 
+# Copying C:/intelFPGA/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# filee1a2db8
+# `timescale 1ns/1ps
+# 
+# // A packet describes one k slice; reserve a result slot on the first slice.
+# module outer_product_core (
+#   input logic clk, rst_n, in_valid, result_ready,
+#   input tensor_core_pkg::tc_sparse_payload_t in_packet,
+#   output logic in_ready, result_valid, busy,
+#   output tensor_core_pkg::tc_matrix_t result,
+#   output tensor_core_pkg::tc_status_t status,
+#   output tensor_core_pkg::tc_tick_info_t tick_info
+# );
+#   import tensor_core_pkg::*;
+#   logic [2:0] next_k;
+#   logic [1:0] outstanding, result_count;
+#   logic publish_q;
+#   tc_matrix_t tail, acc;
+#   typedef struct packed {
+#     logic valid, first, last;
+#     logic [TC_COUNT_W-1:0] a_count, b_count;
+#     tc_index_vec_t a_index, b_index;
+#   } mul_meta_t;
+#   mul_meta_t mul_q;
+#   tc_route_reg_t route_q;
+#   wire [7:0][7:0][15:0] product_q, route_column_data, route_delta;
+#   wire [7:0][7:0] a_select, b_select, route_enable;
+#   wire [7:0] route_a_present, route_b_present;
+# 
+#   assign busy = outstanding != 0;
+#   assign result_valid = result_count != 0;
+#   assign in_ready = (next_k != 0) || (outstanding < 2'd2);
+#   always_comb begin
+#     status = TC_OK;
+#     if (in_valid && !in_ready) status = TC_NOT_READY;
+#     else if (in_valid && (!valid_vector(in_packet.a.count, in_packet.a.index) ||
+#                           !valid_vector(in_packet.b.count, in_packet.b.index)))
+#       status = TC_BAD_SPARSE_VECTOR;
+#   end
+# 
+#   wire first = in_valid && next_k == 0;
+#   wire last = in_valid && next_k == 7;
+#   wire pop = result_valid && result_ready;
+#   wire empty_after_pop = result_count == {1'b0, pop};
+#   wire capture = rst_n && in_valid && status == TC_OK;
+#   for (genvar i=0; i<TC_DIM; i++) begin : g_row
+#     for (genvar j=0; j<TC_DIM; j++) begin : g_col
+#       (* use_dsp = "yes" *) wire signed [15:0] product =
+#           mul_int8(in_packet.a.value[i], in_packet.b.value[j]);
+#       logic signed [15:0] p;
+#       always_ff @(posedge clk)
+#         if (capture) p <= product;
+#       assign product_q[i][j] = p;
+#     end
+#   end
+# 
+#   // Balanced reduction of eight one-hot-masked 16-bit data words.
+#   function automatic logic [15:0] route_or8(
+#       input logic [7:0][15:0] words);
+#     logic [3:0][15:0] level1;
+#     logic [1:0][15:0] level2;
+#     for (int n = 0; n < 4; n = n + 1)
+#       level1[n] = words[2*n] | words[2*n+1];
+#     for (int n = 0; n < 2; n = n + 1)
+#       level2[n] = level1[2*n] | level1[2*n+1];
+#     return level2[0] | level2[1];
+#   endfunction
+# 
+#   generate
+#     for (genvar coord = 0; coord < TC_DIM; coord = coord + 1) begin : g_route_decode
+#       for (genvar rank = 0; rank < TC_DIM; rank = rank + 1) begin : g_rank
+#         assign a_select[coord][rank] =
+#             (rank < int'(mul_q.a_count)) &&
+#             (mul_q.a_index[rank] == TC_INDEX_W'(coord));
+#         assign b_select[coord][rank] =
+#             (rank < int'(mul_q.b_count)) &&
+#             (mul_q.b_index[rank] == TC_INDEX_W'(coord));
+# 
+#       end
+#       assign route_a_present[coord] = |a_select[coord];
+#       assign route_b_present[coord] = |b_select[coord];
+#     end
+# 
+#     // B routing: for each packed A rank p, select original B column j.
+#     for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_route_columns
+#       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
+#         wire [7:0][15:0] terms;
+#         for (genvar r = 0; r < TC_DIM; r = r + 1) begin : g_term
+#           assign terms[r] = {16{b_select[j][r]}} &
+#                             product_q[p][r];
+#         end
+#         assign route_column_data[p][j] = route_or8(terms);
+#       end
+#     end
+# 
+#     // A routing: select original row i for each already mapped column j.
+#     // Both banks are combinational inside the existing single ROUTE stage.
+#     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_route_rows
+#       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
+#         wire [7:0][15:0] terms;
+#         for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_term
+#           assign terms[p] = {16{a_select[i][p]}} &
+#                             route_column_data[p][j];
+#         end
+#         assign route_delta[i][j] = route_or8(terms);
+#         assign route_enable[i][j] = route_a_present[i] && route_b_present[j];
+#       end
+#     end
+#   endgenerate
+# 
+#   always_ff @(posedge clk or negedge rst_n) begin
+#     if (!rst_n) begin
+#       next_k <= '0;
+#       outstanding <= '0;
+#       result_count <= '0;
+#       mul_q <= '0;
+#       route_q <= '0;
+#       publish_q <= 1'b0;
+#       result <= '0;
+#       tail <= '0;
+#       acc <= '0;
+#     end else if (status == TC_OK) begin
+#       if (in_valid) next_k <= next_k + 3'd1;
+#       outstanding <= outstanding + {1'b0, first} - {1'b0, pop};
+#       result_count <= result_count + {1'b0, publish_q} - {1'b0, pop};
+#       if (!busy && first) begin
+#         result <= '0;
+#         tail <= '0;
+#       end else begin
+#         if (publish_q && empty_after_pop) result <= acc;
+#         else if (pop && result_count == 2) result <= tail;
+#         if (publish_q && !empty_after_pop) tail <= acc;
+#       end
+#       mul_q.valid <= in_valid;
+#       mul_q.first <= first;
+#       mul_q.last <= last;
+#       if (in_valid) begin
+#         mul_q.a_count <= in_packet.a.count;
+#         mul_q.b_count <= in_packet.b.count;
+#         mul_q.a_index <= in_packet.a.index;
+#         mul_q.b_index <= in_packet.b.index;
+#       end
+#       route_q.valid <= mul_q.valid;
+#       route_q.first <= mul_q.first;
+#       route_q.last <= mul_q.last;
+#       if (mul_q.valid) begin
+#         route_q.delta <= route_delta;
+#         route_q.enable <= route_enable;
+#       end
+#       publish_q <= route_q.valid && route_q.last;
+#       if (route_q.valid) begin
+#         for (int i=0; i<TC_DIM; i++)
+#           for (int j=0; j<TC_DIM; j++) begin
+#             if (route_q.first)
+#               acc[i][j] <= route_q.enable[i][j] ? extend_product(route_q.delta[i][j]) : '0;
+#             else if (route_q.enable[i][j])
+#               acc[i][j] <= $signed(acc[i][j]) + extend_product(route_q.delta[i][j]);
+#           end
+#       end
+#     end
+#   end
+# 
+#   // The legacy sparse_step observation now denotes any outer-product step.
+#   always_ff @(posedge clk or negedge rst_n) begin
+#     if (!rst_n) tick_info <= '0;
+#     else begin
+#       tick_info <= '0;
+#       if (status == TC_OK) begin
+#         tick_info.sparse_step <= busy || in_valid;
+#         tick_info.input_accepted <= in_valid;
+#         tick_info.input_first <= first;
+#         tick_info.input_last <= last;
+#         tick_info.input_k <= in_valid ? {1'b0,next_k} : '0;
+#         tick_info.mul <= in_valid;
+#         tick_info.route <= mul_q.valid;
+#         tick_info.acc <= route_q.valid;
+#         tick_info.acc_first <= route_q.valid && route_q.first;
+#         tick_info.acc_last <= route_q.valid && route_q.last;
+#         tick_info.macs <= route_q.valid ? 7'($countones(route_q.enable)) : '0;
+#         tick_info.result_produced <= publish_q;
+#         tick_info.result_accepted <= pop;
+#       end
+#     end
+#   end
+# endmodule
+# 
+# `timescale 1ns/1ps
+# 
+# // A packet describes one k slice; reserve a result slot on the first slice.
+# module outer_product_core_baseline (
+#   input logic clk, rst_n, in_valid, result_ready,
+#   input tensor_core_pkg::tc_sparse_payload_t in_packet,
+#   output logic in_ready, result_valid, busy,
+#   output tensor_core_pkg::tc_matrix_t result,
+#   output tensor_core_pkg::tc_status_t status,
+#   output tensor_core_pkg::tc_tick_info_t tick_info
+# );
+#   import tensor_core_pkg::*;
+#   logic [2:0] next_k;
+#   logic [1:0] outstanding, result_count;
+#   logic publish_q;
+#   tc_matrix_t tail, acc;
+#   typedef struct packed {
+#     logic valid, first, last;
+#     logic [TC_COUNT_W-1:0] a_count, b_count;
+#     tc_index_vec_t a_index, b_index;
+#   } mul_meta_t;
+#   mul_meta_t mul_q;
+#   tc_route_reg_t route_q;
+#   wire [7:0][7:0][15:0] product_q, route_column_data, route_delta;
+#   wire [7:0][7:0] a_select, b_select, route_enable;
+#   wire [7:0] route_a_present, route_b_present;
+# 
+#   assign busy = outstanding != 0;
+#   assign result_valid = result_count != 0;
+#   assign in_ready = (next_k != 0) || (outstanding < 2'd2);
+#   always_comb begin
+#     status = TC_OK;
+#     if (in_valid && !in_ready) status = TC_NOT_READY;
+#     else if (in_valid && (!valid_vector(in_packet.a.count, in_packet.a.index) ||
+#                           !valid_vector(in_packet.b.count, in_packet.b.index)))
+#       status = TC_BAD_SPARSE_VECTOR;
+#   end
+# 
+#   wire first = in_valid && next_k == 0;
+#   wire last = in_valid && next_k == 7;
+#   wire pop = result_valid && result_ready;
+#   wire empty_after_pop = result_count == {1'b0, pop};
+#   wire capture = rst_n && in_valid && status == TC_OK;
+#   for (genvar i=0; i<TC_DIM; i++) begin : g_row
+#     for (genvar j=0; j<TC_DIM; j++) begin : g_col
+#       (* use_dsp = "yes" *) wire signed [15:0] product =
+#           mul_int8(in_packet.a.value[i], in_packet.b.value[j]);
+#       logic signed [15:0] p;
+#       always_ff @(posedge clk)
+#         if (capture) p <= product;
+#       assign product_q[i][j] = p;
+#     end
+#   end
+# 
+#   // Balanced reduction of eight one-hot-masked 16-bit data words.
+#   function automatic logic [15:0] route_or8(
+#       input logic [7:0][15:0] words);
+#     logic [3:0][15:0] level1;
+#     logic [1:0][15:0] level2;
+#     for (int n = 0; n < 4; n = n + 1)
+#       level1[n] = words[2*n] | words[2*n+1];
+#     for (int n = 0; n < 2; n = n + 1)
+#       level2[n] = level1[2*n] | level1[2*n+1];
+#     return level2[0] | level2[1];
+#   endfunction
+# 
+#   generate
+#     for (genvar coord = 0; coord < TC_DIM; coord = coord + 1) begin : g_route_decode
+#       for (genvar rank = 0; rank < TC_DIM; rank = rank + 1) begin : g_rank
+#         assign a_select[coord][rank] =
+#             (rank < int'(mul_q.a_count)) &&
+#             (mul_q.a_index[rank] == TC_INDEX_W'(coord));
+#         assign b_select[coord][rank] =
+#             (rank < int'(mul_q.b_count)) &&
+#             (mul_q.b_index[rank] == TC_INDEX_W'(coord));
+# 
+#       end
+#       assign route_a_present[coord] = |a_select[coord];
+#       assign route_b_present[coord] = |b_select[coord];
+#     end
+# 
+#     // B routing: for each packed A rank p, select original B column j.
+#     for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_route_columns
+#       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
+#         wire [7:0][15:0] terms;
+#         for (genvar r = 0; r < TC_DIM; r = r + 1) begin : g_term
+#           assign terms[r] = {16{b_select[j][r]}} &
+#                             product_q[p][r];
+#         end
+#         assign route_column_data[p][j] = route_or8(terms);
+#       end
+#     end
+# 
+#     // A routing: select original row i for each already mapped column j.
+#     // Both banks are combinational inside the existing single ROUTE stage.
+#     for (genvar i = 0; i < TC_DIM; i = i + 1) begin : g_route_rows
+#       for (genvar j = 0; j < TC_DIM; j = j + 1) begin : g_column
+#         wire [7:0][15:0] terms;
+#         for (genvar p = 0; p < TC_DIM; p = p + 1) begin : g_term
+#           assign terms[p] = {16{a_select[i][p]}} &
+#                             route_column_data[p][j];
+#         end
+#         assign route_delta[i][j] = route_or8(terms);
+#         assign route_enable[i][j] = route_a_present[i] && route_b_present[j];
+#       end
+#     end
+#   endgenerate
+# 
+#   always_ff @(posedge clk or negedge rst_n) begin
+#     if (!rst_n) begin
+#       next_k <= '0;
+#       outstanding <= '0;
+#       result_count <= '0;
+#       mul_q <= '0;
+#       route_q <= '0;
+#       publish_q <= 1'b0;
+#       result <= '0;
+#       tail <= '0;
+#       acc <= '0;
+#     end else if (status == TC_OK) begin
+#       if (in_valid) next_k <= next_k + 3'd1;
+#       outstanding <= outstanding + {1'b0, first} - {1'b0, pop};
+#       result_count <= result_count + {1'b0, publish_q} - {1'b0, pop};
+#       if (!busy && first) begin
+#         result <= '0;
+#         tail <= '0;
+#       end else begin
+#         if (publish_q && empty_after_pop) result <= acc;
+#         else if (pop && result_count == 2) result <= tail;
+#         if (publish_q && !empty_after_pop) tail <= acc;
+#       end
+#       mul_q.valid <= in_valid;
+#       mul_q.first <= first;
+#       mul_q.last <= last;
+#       if (in_valid) begin
+#         mul_q.a_count <= in_packet.a.count;
+#         mul_q.b_count <= in_packet.b.count;
+#         mul_q.a_index <= in_packet.a.index;
+#         mul_q.b_index <= in_packet.b.index;
+#       end
+#       route_q.valid <= mul_q.valid;
+#       route_q.first <= mul_q.first;
+#       route_q.last <= mul_q.last;
+#       if (mul_q.valid) begin
+#         route_q.delta <= route_delta;
+#         route_q.enable <= route_enable;
+#       end
+#       publish_q <= route_q.valid && route_q.last;
+#       if (route_q.valid) begin
+#         for (int i=0; i<TC_DIM; i++)
+#           for (int j=0; j<TC_DIM; j++) begin
+#             if (route_q.first)
+#               acc[i][j] <= route_q.enable[i][j] ? extend_product(route_q.delta[i][j]) : '0;
+#             else if (route_q.enable[i][j])
+#               acc[i][j] <= $signed(acc[i][j]) + extend_product(route_q.delta[i][j]);
+#           end
+#       end
+#     end
+#   end
+# 
+#   // The legacy sparse_step observation now denotes any outer-product step.
+#   always_ff @(posedge clk or negedge rst_n) begin
+#     if (!rst_n) tick_info <= '0;
+#     else begin
+#       tick_info <= '0;
+#       if (status == TC_OK) begin
+#         tick_info.sparse_step <= busy || in_valid;
+#         tick_info.input_accepted <= in_valid;
+#         tick_info.input_first <= first;
+#         tick_info.input_last <= last;
+#         tick_info.input_k <= in_valid ? {1'b0,next_k} : '0;
+#         tick_info.mul <= in_valid;
+#         tick_info.route <= mul_q.valid;
+#         tick_info.acc <= route_q.valid;
+#         tick_info.acc_first <= route_q.valid && route_q.first;
+#         tick_info.acc_last <= route_q.valid && route_q.last;
+#         tick_info.macs <= route_q.valid ? 7'($countones(route_q.enable)) : '0;
+#         tick_info.result_produced <= publish_q;
+#         tick_info.result_accepted <= pop;
+#       end
+#     end
+#   end
+# endmodule
+# 
+# filee1a2938
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:35:26 on Nov 22,2026
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src/tensor_core_sv/tensor_core_pkg.sv 
+# -- Compiling package tensor_core_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:35:26 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:35:26 on Nov 22,2026
+# vlog -sv -work work outer_product_core_baseline.sv 
+# -- Compiling module outer_product_core_baseline
+# -- Importing package tensor_core_pkg
+# ** Warning: outer_product_core_baseline.sv(6): (vlog-13314) Defaulting port 'in_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	outer_product_core_baseline
+# End time: 02:35:27 on Nov 22,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:35:27 on Nov 22,2026
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv 
+# -- Compiling module outer_product_core
+# -- Importing package tensor_core_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv(8): (vlog-13314) Defaulting port 'in_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	outer_product_core
+# End time: 02:35:27 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:35:27 on Nov 22,2026
+# vlog -sv -work work C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/tb_pre_route_equiv.sv 
+# -- Compiling module tb_pre_route_equiv
+# -- Importing package tensor_core_pkg
+# 
+# Top level modules:
+# 	tb_pre_route_equiv
+# End time: 02:35:27 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop work.tb_pre_route_equiv 
+# Start time: 02:35:27 on Nov 22,2026
+# Loading sv_std.std
+# Loading work.tensor_core_pkg
+# Loading work.tb_pre_route_equiv
+# Loading work.outer_product_core_baseline
+# Loading work.outer_product_core
+# PRE_ROUTE EQUIVALENCE PASS edges=89595 bitmap_pairs=65536 accepted=82299 completed=10080 publications=10145 malformed=3823 full_rejects=1766 resets=178 simultaneous=9892 stored_zero=54909 seed=7a913b65
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/tb_pre_route_equiv.sv(200)
+#    Time: 334321 ns  Iteration: 0  Instance: /tb_pre_route_equiv
+# Break in Module tb_pre_route_equiv at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/tb_pre_route_equiv.sv line 200
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/tb_pre_route_equiv.sv line 200
+# End time: 02:36:35 on Nov 22,2026, Elapsed time: 0:01:08
+# Errors: 0, Warnings: 0

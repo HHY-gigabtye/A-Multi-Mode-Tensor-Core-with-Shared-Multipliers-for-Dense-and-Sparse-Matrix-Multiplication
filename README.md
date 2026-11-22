@@ -4,19 +4,19 @@
 
 This hardware design project implements an **8 x 8 x 8 matrix multiplication tile engine** with signed **INT8 operands and INT32 accumulation**. All three input formats use a shared outer-product Tensor Core. SystemVerilog implements loading, decoding, flow control, signed accumulation and ordered result writeback.
 
-**Major architecture revision: shared dense/sparse compute.** To reduce FPGA resource use, the current design replaces the dedicated dense systolic array and separate sparse compute path with one shared outer-product pipeline. All three modes remain supported. The integrated post-route implementation uses **64 DSPs instead of 128**, with approximately **20% fewer LUTs and 18% fewer registers** than the previous implementation. See the [design rationale](#51-design-decision-replacing-the-dedicated-systolic-array) and [measured comparison](#8-performance-and-implementation-results).
+**Current datapath revision: operand routing before multiplication.** All three modes share one outer-product pipeline. The current RTL restores A/B coordinates before the 64 signed multipliers and uses the DU/TIA whole-union assignment repair. Against the original routing architecture with the same DU/TIA repair, the validated candidate uses **43.3% fewer post-route LUTs**, retains **64 DSPs**, and passes internal **100 MHz** timing. See the [promotion record](reports/verification/operand_route_main_20261122/README.md) and [complete measured comparison](experiments/pre_route_20261122/REPORT.md). The earlier transition from two multiplier banks to a shared core remains documented in Section 5.1.
 
 The project demonstrates cycle-level architecture modeling, RTL implementation, pipeline control, resource sharing, and hardware verification. Its engineering focus is preserving numerical correctness, packet order, and precise transfer timing across independently tested modules under backpressure and reset.
 
 **Verified scope:** the five RTL units and their connected system pass the supplied simulation regressions. The memory boundary is a simplified 256-bit interface; a physical HBM controller, complete AXI protocol, board execution, and ASIC implementation are outside the verified scope. Each command computes an independent `C = A x B` tile with zero initial accumulation; there is no accumulation across K tiles or addition of a previous C matrix.
 
-**Current main RTL (2026-11-21).** The adapter writes one indexed operand format into the rotating register FIFO. The Tensor Core consumes the same 184 operand bits for every tile. See the [promotion record and SV diffs](reports/verification/outer_main_20261121/README.md) and [Vivado GUI guide](docs/bram-100mhz-gui.md).
+**Current main working-tree RTL (2026-11-22).** TC and DU/TIA are copied byte-for-byte from the validated isolated candidate. The 184-bit indexed interface and rotating FIFO are unchanged. See the [new promotion record and SV diff](reports/verification/operand_route_main_20261122/README.md). Old sources and reports are preserved. Existing Vivado GUI runs remain historical checkpoints; the project already references the updated main source files, which take effect on the next build. The promotion does not overwrite those runs or claim a new GUI implementation.
 
 ## 2. Key Features and Specification Summary
 
 - Three input modes: dense x dense, unstructured x 2:4, and unstructured x unstructured.
 - Dense values bypass sparse decoding and receive fixed indices `0..7` and counts of eight before FIFO insertion.
-- One bank of 64 signed multipliers feeds the shared ROUTE and INT32 ACC stages. Consecutive tiles can overlap across source format changes.
+- One operand ROUTE stage feeds 64 signed multipliers and INT32 accumulation. Consecutive tiles can overlap across source format changes.
 - Four-stage DU/TIA decoding and index alignment, followed by an eight-entry packet FIFO with in-flight credit reservation.
 - Two Tensor Core result slots, a separate two-entry result-metadata FIFO, and two whole-result buffers in the MSU.
 - C reference models, immutable replay vectors, procedural SV scoreboards, and an independent system-level GEMM/writeback check.
@@ -105,7 +105,7 @@ flowchart LR
     MEM["Simplified memory / intended HBM boundary"] --> MLU["MLU: two tile buffers"]
     MLU --> DU["DU/TIA: S0-S3"]
     DU --> FIFO["Bridge: 8 packet slots + in-flight credits"]
-    FIFO --> TC["Tensor Core: shared MUL → ROUTE → ACC"]
+    FIFO --> TC["Tensor Core: shared operand ROUTE → MUL → ACC"]
     TC --> MSU["MSU: two result buffers"]
     MSU --> OUT["Memory: eight row writes per tile"]
     MLU -. "packet metadata, mode, k" .-> TAG["Bridge: 4-stage metadata alignment with DU/TIA"]
@@ -144,7 +144,7 @@ Sparse packing occurs upstream. The MLU loads and packetizes an already encoded 
 
 The previous implementation used an 8 x 8 systolic array for dense tiles and a separate outer-product path for sparse tiles. Selecting a path by mode still left two multiplier banks instantiated in hardware: the integrated design used 128 DSP48E1 blocks. Reducing this hardware resource cost motivated the move to a common compute pipeline.
 
-The current design expresses every k slice as an outer product. Dense operands receive identity indices and counts of eight; sparse operands retain their decoded indices and counts. Both then use the same 64 signed multipliers, ROUTE stage, INT32 accumulators and result slots. Dense matrix multiplication remains fully supported, and the production core no longer needs a dedicated systolic array or a compute-mode input.
+The current design expresses every k slice as an outer product. Dense operands receive identity indices and counts of eight; sparse operands retain their decoded indices and counts. Both then use the same operand ROUTE stage, 64 signed multipliers, INT32 accumulators and result slots. Dense matrix multiplication remains fully supported, and the production core no longer needs a dedicated systolic array or a compute-mode input.
 
 This revision also changes dense timing and format switching. The retained [old/new benchmark log](reports/verification/outer_main_20261121/units.log) records an unstalled dense tile-start interval of 24 cycles for the predecessor and eight for the shared core. Dense, sparse and mixed streams now use the same pipeline timing, with tile overlap across format changes. The top-level memory interfaces and independent 8 x 8 x 8 operation remain unchanged.
 
@@ -192,7 +192,7 @@ These steps describe one tile's progress. Different stages can work on different
 
 **Result metadata:** accepting a k=0 packet into TC enqueues its tile ID and destination address. A full metadata FIFO blocks another k=0. Metadata is removed when TC transfers its result into MSU, independently of later memory write completion.
 
-**Tile overlap:** first/last markers travel through MUL and ROUTE to ACC. The accumulator clears when the next tile's first packet reaches ACC. Before that clear, the previous completed accumulator is published into a reserved result slot. Thus the next tile can begin MUL while the previous tile is still finishing ROUTE/ACC. New tile starts wait when both result credits are occupied; an already accepted tile can finish safely.
+**Tile overlap:** first/last markers travel through operand ROUTE and MUL to ACC. The accumulator clears when the next tile's first packet reaches ACC. Before that clear, the previous completed accumulator is published into a reserved result slot. Thus the next tile can begin operand routing while the previous tile is still finishing MUL/ACC. New tile starts wait when both result credits are occupied; an already accepted tile can finish safely.
 
 **Writeback backpressure:** when memory stalls, MSU retains the current row. If both MSU buffers fill, TC-to-MSU transfers wait; occupied TC result slots then block new tile starts. As packets accumulate in the Bridge, its credit limit eventually stops further MLU issues. Already-issued DU/TIA packets still have reserved FIFO space, so the fixed pipeline can finish safely.
 
@@ -223,7 +223,7 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
 
 ## 8. Performance and Implementation Results
 
-The [current verification record](reports/verification/outer_main_20261121/README.md) links the main-source simulation and native Vivado implementation evidence.
+The [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) links the fresh main-source unit/integration regressions and the retained, source-matched candidate implementation evidence. The unit suite and all 50 integration summaries pass, including 369 completed tiles and 77 resets. No synthesis, implementation, or power run was repeated during promotion or this README update.
 
 | TC benchmark, 24 tiles, always-ready sink | Prior production cycles | Unified core cycles |
 |---|---:|---:|
@@ -231,9 +231,32 @@ The [current verification record](reports/verification/outer_main_20261121/READM
 | Full-count indexed | 196 | 196 |
 | Alternating dense / full-count indexed | 432 | 196 |
 
-The benchmark counts from first input acceptance through final result consumption. The connected regression checks GEMM and each written byte across all nine mode transitions, memory stalls, resets and full result buffers.
+The benchmark records the [November 21 shared-core transition](reports/verification/outer_main_20261121/README.md); it counts from first input acceptance through final result consumption. The November 22 regression preserves these cycle results and checks GEMM and each written byte across all nine mode transitions, memory stalls, resets and full result buffers.
 
-The previous and current integrated `sparse_tensor_core_top` builds use Vivado 2022.2, `xc7z020clg484-1`, a 10.000 ns OOC clock, and default placement and routing. The following **post-route** measurements compare the previous BRAM implementation with separate compute paths against the shared core:
+The November 22 validated candidate is now copied into the main source tree. Both compared implementations below use the same DU/TIA repair, Vivado 2022.2, `xc7z020clg484-1`, and the same 10.000 ns OOC flow:
+
+| Integrated post-route metric | Original product routing + repaired DU/TIA | Current operand routing + repaired DU/TIA |
+|---|---:|---:|
+| Slice LUTs | 22,523 | 12,769 (-43.3%) |
+| TC module LUTs | 15,652 | 5,254 (-66.4%) |
+| Slice registers | 16,281 | 15,519 |
+| DSP48E1 / RAMB36E1 | 64 / 18 | 64 / 18 |
+| Setup WNS at 10 ns | +0.199 ns | +0.296 ns |
+| Hold WHS at 10 ns | +0.096 ns | +0.082 ns |
+
+These are retained measurements of the validated isolated sources, whose hashes match main after promotion; synthesis/implementation is not rerun for this source copy. [Full report and power-estimate limitations](experiments/pre_route_20261122/REPORT.md). Both repaired routed functional netlists pass dense, hybrid, and dual workloads. The original unrepaired shared netlist failed sparse validation, so its older resource/timing figures below are historical evidence rather than a validated sparse implementation.
+
+The fixed-route clock sweep passes at 9.81 ns (101.94 MHz) for product routing and 9.71 ns (102.99 MHz) for operand routing; the next 10 ps faster point fails in each case. This is about a 1% difference on the retained routes, not a substantial Fmax improvement or board timing sign-off.
+
+| 100 MHz total on-chip power estimate | Product routing + repaired DU/TIA | Operand routing + repaired DU/TIA | Reduction |
+|---|---:|---:|---:|
+| Dense | 0.714 W | 0.573 W | 19.7% |
+| Hybrid | 0.574 W | 0.501 W | 12.7% |
+| Dual | 0.567 W | 0.494 W | 12.9% |
+
+These Vivado estimates use identical synthetic workloads and seed, a 20.480 us activity window, typical process, fixed 50 C junction temperature, and the same supply voltages. Activity comes from validated routed functional netlists without SDF, so routed-delay glitches are omitted. Sparse DSP power rises slightly, while total dynamic power falls in all three workloads. These are OOC model estimates, not board measurements; see the [power methodology and validation](experiments/pre_route_20261122/power/README.md).
+
+The archived November 21 builds also use Vivado 2022.2, `xc7z020clg484-1`, a 10.000 ns OOC clock, and default placement and routing. The following **historical post-route** measurements compare the previous BRAM implementation with separate compute paths against the earlier shared core:
 
 | Integrated metric | Previous dense/sparse paths | Shared outer-product core | Change |
 |---|---:|---:|---:|
@@ -243,7 +266,7 @@ The previous and current integrated `sparse_tensor_core_top` builds use Vivado 2
 | RAMB36E1 blocks | 18 | 18 | Unchanged |
 | Setup WNS at 10 ns | +0.011 ns | +0.162 ns | Both meet the constraint |
 
-Sources: [previous routed utilization](experiments/mlu_bram_100mhz_20261118/rotating_fifo/flow/initial/utilization_routed.rpt), [current native utilization](reports/verification/outer_main_20261121/native/independent_checkpoint/utilization.rpt), and the [timing and implementation comparison](reports/verification/outer_main_20261121/README.md#resource-use-and-timing). These are integrated hardware resource counts. The [GUI and rebuild guide](docs/bram-100mhz-gui.md) identifies the active runs. Board I/O timing and power are outside these measurements.
+Historical sources: [previous routed utilization](experiments/mlu_bram_100mhz_20261118/rotating_fifo/flow/initial/utilization_routed.rpt), [November 21 native utilization](reports/verification/outer_main_20261121/native/independent_checkpoint/utilization.rpt), and the [timing and implementation comparison](reports/verification/outer_main_20261121/README.md#resource-use-and-timing). These are integrated hardware resource counts. The [GUI and rebuild guide](docs/bram-100mhz-gui.md) documents the retained pre-promotion runs. Board I/O timing and power are outside those historical measurements.
 
 ## 9. Repository Structure
 
@@ -267,7 +290,7 @@ Module-local paths are retained so includes, package order, and existing test sc
 `-- project_integration/       # Original top Vivado .xpr / source constraints
 ```
 
-Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [BRAM GUI guide](docs/bram-100mhz-gui.md) for current implementation entry points. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; use the BRAM scripts linked in Section 8 to rebuild the implementation. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
+Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) for current sources and validation. The [BRAM GUI guide](docs/bram-100mhz-gui.md) describes retained earlier runs; rebuilding the project reads the updated root RTL, while existing checkpoints keep their original sources and results. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; the [repaired experiment flow](experiments/pre_route_20261122/power/du_repair/README.md#reproduction-commands) records the source-matched candidate recipe. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
 
 The [historical publication validation](reports/verification/2026-11-13-native-publication/README.md)
 records the pre-BRAM source snapshot, regression rerun, and removed superseded reports.

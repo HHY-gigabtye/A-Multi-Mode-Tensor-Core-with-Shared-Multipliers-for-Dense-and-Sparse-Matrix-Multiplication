@@ -1,0 +1,646 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 22 03:49:09 2026
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing -from [get_cells -hier -filter {NAME =~ u_tensor_core/* && IS_SEQUENTIAL}] -to [get_cells -hier -filter {NAME =~ u_tensor_core/* && IS_SEQUENTIAL}] -max_paths 10 -input_pins -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/audit/baseline/tc_internal_paths.rpt
+| Design       : sparse_tensor_core_top
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.702ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][4][7][11]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.243ns  (logic 1.796ns (19.432%)  route 7.447ns (80.568%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.779     3.226    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][7]_i_14/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.351     3.577 r  u_tensor_core/route_q[enable][0][7]_i_14/O
+                         net (fo=129, routed)         2.743     6.320    u_tensor_core/b_select[7]_6
+    SLICE_X102Y50                                                     r  u_tensor_core/route_q[delta][7][7][11]_i_25/I3
+    SLICE_X102Y50        LUT4 (Prop_lut4_I3_O)        0.332     6.652 r  u_tensor_core/route_q[delta][7][7][11]_i_25/O
+                         net (fo=1, routed)           0.427     7.079    u_tensor_core/route_q[delta][7][7][11]_i_25_n_0
+    SLICE_X102Y51                                                     r  u_tensor_core/route_q[delta][7][7][11]_i_8/I3
+    SLICE_X102Y51        LUT4 (Prop_lut4_I3_O)        0.124     7.203 r  u_tensor_core/route_q[delta][7][7][11]_i_8/O
+                         net (fo=8, routed)           2.132     9.335    u_tensor_core/route_or86_return[11]
+    SLICE_X45Y59                                                      r  u_tensor_core/route_q[delta][4][7][11]_i_3/I0
+    SLICE_X45Y59         LUT4 (Prop_lut4_I0_O)        0.124     9.459 r  u_tensor_core/route_q[delta][4][7][11]_i_3/O
+                         net (fo=1, routed)           0.633    10.092    u_tensor_core/route_q[delta][4][7][11]_i_3_n_0
+    SLICE_X45Y60                                                      r  u_tensor_core/route_q[delta][4][7][11]_i_1/I1
+    SLICE_X45Y60         LUT4 (Prop_lut4_I1_O)        0.124    10.216 r  u_tensor_core/route_q[delta][4][7][11]_i_1/O
+                         net (fo=1, routed)           0.000    10.216    u_tensor_core/route_or8102_return[11]
+    SLICE_X45Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][4][7][11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X45Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][4][7][11]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X45Y60         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][4][7][11]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.216    
+  -------------------------------------------------------------------
+                         slack                                  0.702    
+
+Slack (MET) :             0.791ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][5][7][11]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.154ns  (logic 1.796ns (19.619%)  route 7.358ns (80.381%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.779     3.226    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][7]_i_14/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.351     3.577 r  u_tensor_core/route_q[enable][0][7]_i_14/O
+                         net (fo=129, routed)         2.743     6.320    u_tensor_core/b_select[7]_6
+    SLICE_X102Y50                                                     r  u_tensor_core/route_q[delta][7][7][11]_i_25/I3
+    SLICE_X102Y50        LUT4 (Prop_lut4_I3_O)        0.332     6.652 r  u_tensor_core/route_q[delta][7][7][11]_i_25/O
+                         net (fo=1, routed)           0.427     7.079    u_tensor_core/route_q[delta][7][7][11]_i_25_n_0
+    SLICE_X102Y51                                                     r  u_tensor_core/route_q[delta][7][7][11]_i_8/I3
+    SLICE_X102Y51        LUT4 (Prop_lut4_I3_O)        0.124     7.203 r  u_tensor_core/route_q[delta][7][7][11]_i_8/O
+                         net (fo=8, routed)           2.200     9.403    u_tensor_core/route_or86_return[11]
+    SLICE_X46Y59                                                      r  u_tensor_core/route_q[delta][5][7][11]_i_3/I0
+    SLICE_X46Y59         LUT4 (Prop_lut4_I0_O)        0.124     9.527 r  u_tensor_core/route_q[delta][5][7][11]_i_3/O
+                         net (fo=1, routed)           0.476    10.003    u_tensor_core/route_q[delta][5][7][11]_i_3_n_0
+    SLICE_X45Y59                                                      r  u_tensor_core/route_q[delta][5][7][11]_i_1/I1
+    SLICE_X45Y59         LUT4 (Prop_lut4_I1_O)        0.124    10.127 r  u_tensor_core/route_q[delta][5][7][11]_i_1/O
+                         net (fo=1, routed)           0.000    10.127    u_tensor_core/route_or8110_return[11]
+    SLICE_X45Y59         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][7][11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X45Y59         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][7][11]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X45Y59         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][5][7][11]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.127    
+  -------------------------------------------------------------------
+                         slack                                  0.791    
+
+Slack (MET) :             0.842ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][0][7][15]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.151ns  (logic 1.796ns (19.627%)  route 7.355ns (80.373%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.779     3.226    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][7]_i_14/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.351     3.577 r  u_tensor_core/route_q[enable][0][7]_i_14/O
+                         net (fo=129, routed)         2.477     6.055    u_tensor_core/b_select[7]_6
+    SLICE_X95Y44                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_29/I3
+    SLICE_X95Y44         LUT4 (Prop_lut4_I3_O)        0.332     6.387 r  u_tensor_core/route_q[delta][7][7][15]_i_29/O
+                         net (fo=1, routed)           0.636     7.023    u_tensor_core/route_q[delta][7][7][15]_i_29_n_0
+    SLICE_X95Y45                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_8/I3
+    SLICE_X95Y45         LUT4 (Prop_lut4_I3_O)        0.124     7.147 r  u_tensor_core/route_q[delta][7][7][15]_i_8/O
+                         net (fo=8, routed)           2.060     9.206    u_tensor_core/route_or86_return[15]
+    SLICE_X44Y60                                                      r  u_tensor_core/route_q[delta][0][7][15]_i_3/I0
+    SLICE_X44Y60         LUT4 (Prop_lut4_I0_O)        0.124     9.330 r  u_tensor_core/route_q[delta][0][7][15]_i_3/O
+                         net (fo=1, routed)           0.669    10.000    u_tensor_core/route_q[delta][0][7][15]_i_3_n_0
+    SLICE_X42Y60                                                      r  u_tensor_core/route_q[delta][0][7][15]_i_1/I1
+    SLICE_X42Y60         LUT4 (Prop_lut4_I1_O)        0.124    10.124 r  u_tensor_core/route_q[delta][0][7][15]_i_1/O
+                         net (fo=1, routed)           0.000    10.124    u_tensor_core/route_or870_return[15]
+    SLICE_X42Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][0][7][15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X42Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][0][7][15]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X42Y60         FDCE (Setup_fdce_C_D)        0.077    10.966    u_tensor_core/route_q_reg[delta][0][7][15]
+  -------------------------------------------------------------------
+                         required time                         10.966    
+                         arrival time                         -10.124    
+  -------------------------------------------------------------------
+                         slack                                  0.842    
+
+Slack (MET) :             0.842ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][3]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][3][6][13]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.103ns  (logic 1.574ns (17.292%)  route 7.529ns (82.708%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y26         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y26         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][3]/Q
+                         net (fo=36, routed)          0.782     2.174    u_tensor_core/p_186_in
+    SLICE_X47Y26                                                      r  u_tensor_core/route_q[enable][0][7]_i_10/I3
+    SLICE_X47Y26         LUT4 (Prop_lut4_I3_O)        0.299     2.473 r  u_tensor_core/route_q[enable][0][7]_i_10/O
+                         net (fo=8, routed)           0.883     3.356    u_tensor_core/p_179_in
+    SLICE_X44Y23                                                      r  u_tensor_core/route_q[enable][0][6]_i_4/I0
+    SLICE_X44Y23         LUT4 (Prop_lut4_I0_O)        0.152     3.508 r  u_tensor_core/route_q[enable][0][6]_i_4/O
+                         net (fo=136, routed)         2.944     6.452    u_tensor_core/b_select[6]_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_23/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.332     6.784 r  u_tensor_core/route_q[delta][7][6][13]_i_23/O
+                         net (fo=1, routed)           0.403     7.188    u_tensor_core/route_q[delta][7][6][13]_i_23_n_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_8/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.124     7.312 r  u_tensor_core/route_q[delta][7][6][13]_i_8/O
+                         net (fo=8, routed)           1.939     9.251    u_tensor_core/route_or85_return[13]
+    SLICE_X40Y50                                                      r  u_tensor_core/route_q[delta][3][6][13]_i_3/I0
+    SLICE_X40Y50         LUT4 (Prop_lut4_I0_O)        0.124     9.375 r  u_tensor_core/route_q[delta][3][6][13]_i_3/O
+                         net (fo=1, routed)           0.577     9.952    u_tensor_core/route_q[delta][3][6][13]_i_3_n_0
+    SLICE_X41Y50                                                      r  u_tensor_core/route_q[delta][3][6][13]_i_1/I1
+    SLICE_X41Y50         LUT4 (Prop_lut4_I1_O)        0.124    10.076 r  u_tensor_core/route_q[delta][3][6][13]_i_1/O
+                         net (fo=1, routed)           0.000    10.076    u_tensor_core/route_or893_return[13]
+    SLICE_X41Y50         FDCE                                         r  u_tensor_core/route_q_reg[delta][3][6][13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X41Y50         FDCE                                         r  u_tensor_core/route_q_reg[delta][3][6][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X41Y50         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][3][6][13]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.076    
+  -------------------------------------------------------------------
+                         slack                                  0.842    
+
+Slack (MET) :             0.876ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][6][7][15]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.069ns  (logic 1.796ns (19.803%)  route 7.273ns (80.197%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.779     3.226    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][7]_i_14/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.351     3.577 r  u_tensor_core/route_q[enable][0][7]_i_14/O
+                         net (fo=129, routed)         2.477     6.055    u_tensor_core/b_select[7]_6
+    SLICE_X95Y44                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_29/I3
+    SLICE_X95Y44         LUT4 (Prop_lut4_I3_O)        0.332     6.387 r  u_tensor_core/route_q[delta][7][7][15]_i_29/O
+                         net (fo=1, routed)           0.636     7.023    u_tensor_core/route_q[delta][7][7][15]_i_29_n_0
+    SLICE_X95Y45                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_8/I3
+    SLICE_X95Y45         LUT4 (Prop_lut4_I3_O)        0.124     7.147 r  u_tensor_core/route_q[delta][7][7][15]_i_8/O
+                         net (fo=8, routed)           2.034     9.181    u_tensor_core/route_or86_return[15]
+    SLICE_X43Y59                                                      r  u_tensor_core/route_q[delta][6][7][15]_i_3/I0
+    SLICE_X43Y59         LUT4 (Prop_lut4_I0_O)        0.124     9.305 r  u_tensor_core/route_q[delta][6][7][15]_i_3/O
+                         net (fo=1, routed)           0.614     9.918    u_tensor_core/route_q[delta][6][7][15]_i_3_n_0
+    SLICE_X43Y60                                                      r  u_tensor_core/route_q[delta][6][7][15]_i_1/I1
+    SLICE_X43Y60         LUT4 (Prop_lut4_I1_O)        0.124    10.042 r  u_tensor_core/route_q[delta][6][7][15]_i_1/O
+                         net (fo=1, routed)           0.000    10.042    u_tensor_core/route_or8118_return[15]
+    SLICE_X43Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][6][7][15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X43Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][6][7][15]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X43Y60         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][6][7][15]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.042    
+  -------------------------------------------------------------------
+                         slack                                  0.876    
+
+Slack (MET) :             0.876ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][5][7][15]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.117ns  (logic 1.796ns (19.699%)  route 7.321ns (80.301%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.779     3.226    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][7]_i_14/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.351     3.577 r  u_tensor_core/route_q[enable][0][7]_i_14/O
+                         net (fo=129, routed)         2.477     6.055    u_tensor_core/b_select[7]_6
+    SLICE_X95Y44                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_29/I3
+    SLICE_X95Y44         LUT4 (Prop_lut4_I3_O)        0.332     6.387 r  u_tensor_core/route_q[delta][7][7][15]_i_29/O
+                         net (fo=1, routed)           0.636     7.023    u_tensor_core/route_q[delta][7][7][15]_i_29_n_0
+    SLICE_X95Y45                                                      r  u_tensor_core/route_q[delta][7][7][15]_i_8/I3
+    SLICE_X95Y45         LUT4 (Prop_lut4_I3_O)        0.124     7.147 r  u_tensor_core/route_q[delta][7][7][15]_i_8/O
+                         net (fo=8, routed)           2.090     9.237    u_tensor_core/route_or86_return[15]
+    SLICE_X37Y60                                                      r  u_tensor_core/route_q[delta][5][7][15]_i_3/I0
+    SLICE_X37Y60         LUT4 (Prop_lut4_I0_O)        0.124     9.361 r  u_tensor_core/route_q[delta][5][7][15]_i_3/O
+                         net (fo=1, routed)           0.605     9.966    u_tensor_core/route_q[delta][5][7][15]_i_3_n_0
+    SLICE_X36Y60                                                      r  u_tensor_core/route_q[delta][5][7][15]_i_1/I1
+    SLICE_X36Y60         LUT4 (Prop_lut4_I1_O)        0.124    10.090 r  u_tensor_core/route_q[delta][5][7][15]_i_1/O
+                         net (fo=1, routed)           0.000    10.090    u_tensor_core/route_or8110_return[15]
+    SLICE_X36Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][7][15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X36Y60         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][7][15]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X36Y60         FDCE (Setup_fdce_C_D)        0.077    10.966    u_tensor_core/route_q_reg[delta][5][7][15]
+  -------------------------------------------------------------------
+                         required time                         10.966    
+                         arrival time                         -10.090    
+  -------------------------------------------------------------------
+                         slack                                  0.876    
+
+Slack (MET) :             0.890ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][3]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][2][6][13]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.055ns  (logic 1.574ns (17.383%)  route 7.481ns (82.617%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y26         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y26         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][3]/Q
+                         net (fo=36, routed)          0.782     2.174    u_tensor_core/p_186_in
+    SLICE_X47Y26                                                      r  u_tensor_core/route_q[enable][0][7]_i_10/I3
+    SLICE_X47Y26         LUT4 (Prop_lut4_I3_O)        0.299     2.473 r  u_tensor_core/route_q[enable][0][7]_i_10/O
+                         net (fo=8, routed)           0.883     3.356    u_tensor_core/p_179_in
+    SLICE_X44Y23                                                      r  u_tensor_core/route_q[enable][0][6]_i_4/I0
+    SLICE_X44Y23         LUT4 (Prop_lut4_I0_O)        0.152     3.508 r  u_tensor_core/route_q[enable][0][6]_i_4/O
+                         net (fo=136, routed)         2.944     6.452    u_tensor_core/b_select[6]_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_23/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.332     6.784 r  u_tensor_core/route_q[delta][7][6][13]_i_23/O
+                         net (fo=1, routed)           0.403     7.188    u_tensor_core/route_q[delta][7][6][13]_i_23_n_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_8/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.124     7.312 r  u_tensor_core/route_q[delta][7][6][13]_i_8/O
+                         net (fo=8, routed)           1.825     9.137    u_tensor_core/route_or85_return[13]
+    SLICE_X43Y49                                                      r  u_tensor_core/route_q[delta][2][6][13]_i_3/I0
+    SLICE_X43Y49         LUT4 (Prop_lut4_I0_O)        0.124     9.261 r  u_tensor_core/route_q[delta][2][6][13]_i_3/O
+                         net (fo=1, routed)           0.643     9.904    u_tensor_core/route_q[delta][2][6][13]_i_3_n_0
+    SLICE_X43Y49                                                      r  u_tensor_core/route_q[delta][2][6][13]_i_1/I1
+    SLICE_X43Y49         LUT4 (Prop_lut4_I1_O)        0.124    10.028 r  u_tensor_core/route_q[delta][2][6][13]_i_1/O
+                         net (fo=1, routed)           0.000    10.028    u_tensor_core/route_or885_return[13]
+    SLICE_X43Y49         FDCE                                         r  u_tensor_core/route_q_reg[delta][2][6][13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X43Y49         FDCE                                         r  u_tensor_core/route_q_reg[delta][2][6][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X43Y49         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][2][6][13]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.028    
+  -------------------------------------------------------------------
+                         slack                                  0.890    
+
+Slack (MET) :             0.900ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][3]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][5][6][13]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.045ns  (logic 1.574ns (17.402%)  route 7.471ns (82.598%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y26         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y26         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][3]/Q
+                         net (fo=36, routed)          0.782     2.174    u_tensor_core/p_186_in
+    SLICE_X47Y26                                                      r  u_tensor_core/route_q[enable][0][7]_i_10/I3
+    SLICE_X47Y26         LUT4 (Prop_lut4_I3_O)        0.299     2.473 r  u_tensor_core/route_q[enable][0][7]_i_10/O
+                         net (fo=8, routed)           0.883     3.356    u_tensor_core/p_179_in
+    SLICE_X44Y23                                                      r  u_tensor_core/route_q[enable][0][6]_i_4/I0
+    SLICE_X44Y23         LUT4 (Prop_lut4_I0_O)        0.152     3.508 r  u_tensor_core/route_q[enable][0][6]_i_4/O
+                         net (fo=136, routed)         2.944     6.452    u_tensor_core/b_select[6]_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_23/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.332     6.784 r  u_tensor_core/route_q[delta][7][6][13]_i_23/O
+                         net (fo=1, routed)           0.403     7.188    u_tensor_core/route_q[delta][7][6][13]_i_23_n_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_8/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.124     7.312 r  u_tensor_core/route_q[delta][7][6][13]_i_8/O
+                         net (fo=8, routed)           1.882     9.193    u_tensor_core/route_or85_return[13]
+    SLICE_X42Y51                                                      r  u_tensor_core/route_q[delta][5][6][13]_i_3/I0
+    SLICE_X42Y51         LUT4 (Prop_lut4_I0_O)        0.124     9.317 r  u_tensor_core/route_q[delta][5][6][13]_i_3/O
+                         net (fo=1, routed)           0.577     9.894    u_tensor_core/route_q[delta][5][6][13]_i_3_n_0
+    SLICE_X41Y51                                                      r  u_tensor_core/route_q[delta][5][6][13]_i_1/I1
+    SLICE_X41Y51         LUT4 (Prop_lut4_I1_O)        0.124    10.018 r  u_tensor_core/route_q[delta][5][6][13]_i_1/O
+                         net (fo=1, routed)           0.000    10.018    u_tensor_core/route_or8109_return[13]
+    SLICE_X41Y51         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][6][13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X41Y51         FDCE                                         r  u_tensor_core/route_q_reg[delta][5][6][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X41Y51         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][5][6][13]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.018    
+  -------------------------------------------------------------------
+                         slack                                  0.900    
+
+Slack (MET) :             0.903ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][3]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][7][6][13]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.042ns  (logic 1.574ns (17.407%)  route 7.468ns (82.593%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y26         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y26         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][3]/Q
+                         net (fo=36, routed)          0.782     2.174    u_tensor_core/p_186_in
+    SLICE_X47Y26                                                      r  u_tensor_core/route_q[enable][0][7]_i_10/I3
+    SLICE_X47Y26         LUT4 (Prop_lut4_I3_O)        0.299     2.473 r  u_tensor_core/route_q[enable][0][7]_i_10/O
+                         net (fo=8, routed)           0.883     3.356    u_tensor_core/p_179_in
+    SLICE_X44Y23                                                      r  u_tensor_core/route_q[enable][0][6]_i_4/I0
+    SLICE_X44Y23         LUT4 (Prop_lut4_I0_O)        0.152     3.508 r  u_tensor_core/route_q[enable][0][6]_i_4/O
+                         net (fo=136, routed)         2.944     6.452    u_tensor_core/b_select[6]_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_23/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.332     6.784 r  u_tensor_core/route_q[delta][7][6][13]_i_23/O
+                         net (fo=1, routed)           0.403     7.188    u_tensor_core/route_q[delta][7][6][13]_i_23_n_0
+    SLICE_X105Y55                                                     r  u_tensor_core/route_q[delta][7][6][13]_i_8/I1
+    SLICE_X105Y55        LUT4 (Prop_lut4_I1_O)        0.124     7.312 r  u_tensor_core/route_q[delta][7][6][13]_i_8/O
+                         net (fo=8, routed)           1.881     9.192    u_tensor_core/route_or85_return[13]
+    SLICE_X43Y50                                                      r  u_tensor_core/route_q[delta][7][6][13]_i_3/I0
+    SLICE_X43Y50         LUT4 (Prop_lut4_I0_O)        0.124     9.316 r  u_tensor_core/route_q[delta][7][6][13]_i_3/O
+                         net (fo=1, routed)           0.575     9.891    u_tensor_core/route_q[delta][7][6][13]_i_3_n_0
+    SLICE_X43Y50                                                      r  u_tensor_core/route_q[delta][7][6][13]_i_1/I1
+    SLICE_X43Y50         LUT4 (Prop_lut4_I1_O)        0.124    10.015 r  u_tensor_core/route_q[delta][7][6][13]_i_1/O
+                         net (fo=1, routed)           0.000    10.015    u_tensor_core/route_or8125_return[13]
+    SLICE_X43Y50         FDCE                                         r  u_tensor_core/route_q_reg[delta][7][6][13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X43Y50         FDCE                                         r  u_tensor_core/route_q_reg[delta][7][6][13]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X43Y50         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][7][6][13]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.015    
+  -------------------------------------------------------------------
+                         slack                                  0.903    
+
+Slack (MET) :             0.913ns  (required time - arrival time)
+  Source:                 u_tensor_core/mul_q_reg[b_count][2]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_tensor_core/route_q_reg[delta][2][6][12]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
+  Data Path Delay:        9.032ns  (logic 1.795ns (19.875%)  route 7.237ns (80.125%))
+  Logic Levels:           6  (LUT4=6)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+                                                      0.000     0.000 r  clk (IN)
+                         net (fo=16481, unset)        0.973     0.973    u_tensor_core/clk
+    SLICE_X47Y24         FDCE                                         r  u_tensor_core/mul_q_reg[b_count][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y24         FDCE (Prop_fdce_C_Q)         0.419     1.392 r  u_tensor_core/mul_q_reg[b_count][2]/Q
+                         net (fo=28, routed)          0.733     2.125    u_tensor_core/mul_q_reg[b_count][2]
+    SLICE_X47Y25                                                      r  u_tensor_core/route_q[enable][0][7]_i_21/I2
+    SLICE_X47Y25         LUT4 (Prop_lut4_I2_O)        0.322     2.447 r  u_tensor_core/route_q[enable][0][7]_i_21/O
+                         net (fo=8, routed)           0.995     3.443    u_tensor_core/p_185_in
+    SLICE_X47Y21                                                      r  u_tensor_core/route_q[enable][0][6]_i_10/I0
+    SLICE_X47Y21         LUT4 (Prop_lut4_I0_O)        0.355     3.798 r  u_tensor_core/route_q[enable][0][6]_i_10/O
+                         net (fo=129, routed)         2.447     6.245    u_tensor_core/b_select[6]_6
+    SLICE_X99Y54                                                      r  u_tensor_core/route_q[delta][7][6][12]_i_25/I3
+    SLICE_X99Y54         LUT4 (Prop_lut4_I3_O)        0.327     6.572 r  u_tensor_core/route_q[delta][7][6][12]_i_25/O
+                         net (fo=1, routed)           0.433     7.005    u_tensor_core/route_q[delta][7][6][12]_i_25_n_0
+    SLICE_X99Y54                                                      r  u_tensor_core/route_q[delta][7][6][12]_i_8/I3
+    SLICE_X99Y54         LUT4 (Prop_lut4_I3_O)        0.124     7.129 r  u_tensor_core/route_q[delta][7][6][12]_i_8/O
+                         net (fo=8, routed)           1.994     9.124    u_tensor_core/route_or85_return[12]
+    SLICE_X43Y56                                                      r  u_tensor_core/route_q[delta][2][6][12]_i_3/I0
+    SLICE_X43Y56         LUT4 (Prop_lut4_I0_O)        0.124     9.248 r  u_tensor_core/route_q[delta][2][6][12]_i_3/O
+                         net (fo=1, routed)           0.633     9.881    u_tensor_core/route_q[delta][2][6][12]_i_3_n_0
+    SLICE_X43Y57                                                      r  u_tensor_core/route_q[delta][2][6][12]_i_1/I1
+    SLICE_X43Y57         LUT4 (Prop_lut4_I1_O)        0.124    10.005 r  u_tensor_core/route_q[delta][2][6][12]_i_1/O
+                         net (fo=1, routed)           0.000    10.005    u_tensor_core/route_or885_return[12]
+    SLICE_X43Y57         FDCE                                         r  u_tensor_core/route_q_reg[delta][2][6][12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       10.000    10.000 r  
+                                                      0.000    10.000 r  clk (IN)
+                         net (fo=16481, unset)        0.924    10.924    u_tensor_core/clk
+    SLICE_X43Y57         FDCE                                         r  u_tensor_core/route_q_reg[delta][2][6][12]/C
+                         clock pessimism              0.000    10.924    
+                         clock uncertainty           -0.035    10.889    
+    SLICE_X43Y57         FDCE (Setup_fdce_C_D)        0.029    10.918    u_tensor_core/route_q_reg[delta][2][6][12]
+  -------------------------------------------------------------------
+                         required time                         10.918    
+                         arrival time                         -10.005    
+  -------------------------------------------------------------------
+                         slack                                  0.913    
+
+
+
+

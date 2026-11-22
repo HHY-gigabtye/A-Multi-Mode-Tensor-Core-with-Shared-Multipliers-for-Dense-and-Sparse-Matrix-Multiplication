@@ -1,0 +1,1 @@
+PASS: baseline 50 integration summaries match the accepted record.

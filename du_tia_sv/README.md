@@ -5,6 +5,35 @@ SystemVerilog Assertions support. The RTL, testbench, file list, and build flow
 contain no `assert property`, SVA checkers, coverage properties, or `--assert`
 options.
 
+The November 22 production update keeps the same four-stage decode algorithm,
+ports, packet layout, and timing. S1/S2 now build fields in ordinary packed
+structs and assign the selected packed union once. The prior partial writes
+passed RTL simulation but produced incorrect sparse indices/values in the
+Vivado 2022.2 netlist flow. The repaired standalone synthesized DU/TIA and both
+integrated routed functional netlists passed their sparse checks. See the
+[promotion record](../reports/verification/operand_route_main_20261122/README.md)
+and [retained diagnosis](../experiments/pre_route_20261122/power/du_repair/README.md).
+
+The original RTL already passed the packet tests; the repair addresses the
+separately reproduced RTL/netlist mismatch. It is a tested workaround for the
+observed Vivado 2022.2 flow, not a vendor-confirmed general compiler defect.
+
+## Verification of the promoted repair
+
+The November 22 main-source unit rerun passes all 3,292 packets, followed by the
+full integration regression: [unit log](../reports/verification/operand_route_main_20261122/regression/units.log)
+and [promotion PASS](../reports/verification/operand_route_main_20261122/regression/PASS.txt).
+The separate isolated repaired-netlist test covers all 65,536 A/B bitmap pairs,
+6,144 directed hybrid cases, and mixed/reset traffic: 74,734 accepted packets,
+74,701 checked outputs, and 33 packets intentionally discarded by 16 resets.
+See the [standalone synthesized-netlist PASS](../experiments/pre_route_20261122/power/du_repair/fixed_gate/PASS.txt).
+These are distinct suites; the unchanged local testbench below still checks 3,292 packets.
+
+Both TC variants in the final PPA comparison use this identical DU/TIA repair.
+All six routed functional workload runs pass, covering dense, hybrid, and dual.
+They omit SDF and are not delay-annotated timing simulation. Original sources,
+failed netlist logs, and passing repaired results are preserved in the experiment.
+
 ## Contents
 
 | File | Purpose |

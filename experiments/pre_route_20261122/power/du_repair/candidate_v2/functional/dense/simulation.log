@@ -1,0 +1,55 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 03:46:22 2026
+# Process ID: 17640
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/candidate_v2/functional
+# Command line: xsim.exe -log C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/candidate_v2/functional/dense/simulation.log -mode tcl -source {xsim.dir/power_sim/xsim_script.tcl}
+# Log file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/candidate_v2/functional/dense/simulation.log
+# Journal file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/candidate_v2/functional\xsim.jou
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source xsim.dir/power_sim/xsim_script.tcl
+# xsim {power_sim} -testplusarg DENSE -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/../simulate.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/../simulate.tcl
+## set out [file normalize $::env(POWER_RUN_OUT)]
+## cd $out
+## run 2000 ns
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 239.133 ; gain = 0.000
+## set before [get_value -radix unsigned /tb_power/dones]
+## if {$::env(POWER_CAPTURE) eq "1"} {
+##   open_saif [file join $out activity.saif]
+##   # The exported netlist has these six design scopes. Log their nets and
+##   # ports, excluding vendor primitive internals that cannot map to DCP nets.
+##   foreach scope {/tb_power/dut /tb_power/dut/u_mlu /tb_power/dut/u_du_tia /tb_power/dut/u_bridge /tb_power/dut/u_tensor_core /tb_power/dut/u_msu} {
+##     set objects [get_objects $scope/*]
+##     if {[llength $objects] == 0} {error "Empty design scope: $scope"}
+##     log_saif $objects
+##     puts "POWER_SAIF_SCOPE $scope objects=[llength $objects]"
+##   }
+## }
+POWER_SAIF_SCOPE /tb_power/dut objects=686
+POWER_SAIF_SCOPE /tb_power/dut/u_mlu objects=3021
+POWER_SAIF_SCOPE /tb_power/dut/u_du_tia objects=1000
+POWER_SAIF_SCOPE /tb_power/dut/u_bridge objects=1341
+POWER_SAIF_SCOPE /tb_power/dut/u_tensor_core objects=13792
+POWER_SAIF_SCOPE /tb_power/dut/u_msu objects=1791
+## run 20480 ns
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:40 . Memory (MB): peak = 239.133 ; gain = 0.000
+## if {$::env(POWER_CAPTURE) eq "1"} {close_saif}
+## set after [get_value -radix unsigned /tb_power/dones]
+## if {$after-$before != 256} {error "Expected 256 completed tiles in power window: $before -> $after"}
+## set fd [open window.txt w]
+## puts $fd "start_ns=2000 end_ns=22480 duration_ns=20480 frequency_mhz=100 tiles=[expr {$after-$before}]"
+## close $fd
+## run all
+POWER WORKLOAD PASS mode=0 seed=51a7c0de tiles=288 cycles=2343 beats=2304 present_a=18432 present_b=18432 nonzero_a=18364 nonzero_b=18361 II=8
+$finish called at time : 23638 ns : File "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv" Line 236
+## if {[get_value -radix unsigned /tb_power/passed] != 1} {error "Power workload did not pass"}
+## puts "POWER_SIMULATION_PASS captured_tiles=[expr {$after-$before}]"
+POWER_SIMULATION_PASS captured_tiles=256
+## quit
+INFO: xsimkernel Simulation Memory Usage: 162096 KB (Peak: 162096 KB), Simulation CPU Usage: 48265 ms
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 03:47:14 2026...

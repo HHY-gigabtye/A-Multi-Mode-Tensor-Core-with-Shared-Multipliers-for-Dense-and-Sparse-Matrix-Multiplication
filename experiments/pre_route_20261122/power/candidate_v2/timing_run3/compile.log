@@ -1,0 +1,7 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate_v2/src/du_tia_sv/rtl/du_tia_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate_v2/src/mlu_sv/mlu_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate_v2/src/tensor_core_sv/tensor_core_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate_v2/src/fifo_sv/du_tc_bridge_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate_v2/src/msu_sv/rtl/msu_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_power

@@ -1,0 +1,698 @@
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/README.md b/README.md
+index b28c077..39c035e 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/README.md
++++ b/README.md
+@@ -223,7 +223,7 @@ Coverage includes signed INT8 extremes, empty/full sparse prefixes, stored zeros
+ 
+ ## 8. Performance and Implementation Results
+ 
+-The [current verification record](reports/verification/outer_main_20261121/README.md) links the main-source simulation and native Vivado implementation evidence.
++The [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) links the fresh main-source unit/integration regressions and the retained, source-matched candidate implementation evidence. The unit suite and all 50 integration summaries pass, including 369 completed tiles and 77 resets. No synthesis, implementation, or power run was repeated during promotion or this README update.
+ 
+ | TC benchmark, 24 tiles, always-ready sink | Prior production cycles | Unified core cycles |
+ |---|---:|---:|
+@@ -231,13 +231,14 @@ The [current verification record](reports/verification/outer_main_20261121/READM
+ | Full-count indexed | 196 | 196 |
+ | Alternating dense / full-count indexed | 432 | 196 |
+ 
+-The benchmark counts from first input acceptance through final result consumption. The connected regression checks GEMM and each written byte across all nine mode transitions, memory stalls, resets and full result buffers.
++The benchmark records the [November 21 shared-core transition](reports/verification/outer_main_20261121/README.md); it counts from first input acceptance through final result consumption. The November 22 regression preserves these cycle results and checks GEMM and each written byte across all nine mode transitions, memory stalls, resets and full result buffers.
+ 
+ The November 22 validated candidate is now copied into the main source tree. Both compared implementations below use the same DU/TIA repair, Vivado 2022.2, `xc7z020clg484-1`, and the same 10.000 ns OOC flow:
+ 
+ | Integrated post-route metric | Original product routing + repaired DU/TIA | Current operand routing + repaired DU/TIA |
+ |---|---:|---:|
+ | Slice LUTs | 22,523 | 12,769 (-43.3%) |
++| TC module LUTs | 15,652 | 5,254 (-66.4%) |
+ | Slice registers | 16,281 | 15,519 |
+ | DSP48E1 / RAMB36E1 | 64 / 18 | 64 / 18 |
+ | Setup WNS at 10 ns | +0.199 ns | +0.296 ns |
+@@ -245,6 +246,16 @@ The November 22 validated candidate is now copied into the main source tree. Bot
+ 
+ These are retained measurements of the validated isolated sources, whose hashes match main after promotion; synthesis/implementation is not rerun for this source copy. [Full report and power-estimate limitations](experiments/pre_route_20261122/REPORT.md). Both repaired routed functional netlists pass dense, hybrid, and dual workloads. The original unrepaired shared netlist failed sparse validation, so its older resource/timing figures below are historical evidence rather than a validated sparse implementation.
+ 
++The fixed-route clock sweep passes at 9.81 ns (101.94 MHz) for product routing and 9.71 ns (102.99 MHz) for operand routing; the next 10 ps faster point fails in each case. This is about a 1% difference on the retained routes, not a substantial Fmax improvement or board timing sign-off.
++
++| 100 MHz total on-chip power estimate | Product routing + repaired DU/TIA | Operand routing + repaired DU/TIA | Reduction |
++|---|---:|---:|---:|
++| Dense | 0.714 W | 0.573 W | 19.7% |
++| Hybrid | 0.574 W | 0.501 W | 12.7% |
++| Dual | 0.567 W | 0.494 W | 12.9% |
++
++These Vivado estimates use identical synthetic workloads and seed, a 20.480 us activity window, typical process, fixed 50 C junction temperature, and the same supply voltages. Activity comes from validated routed functional netlists without SDF, so routed-delay glitches are omitted. Sparse DSP power rises slightly, while total dynamic power falls in all three workloads. These are OOC model estimates, not board measurements; see the [power methodology and validation](experiments/pre_route_20261122/power/README.md).
++
+ The archived November 21 builds also use Vivado 2022.2, `xc7z020clg484-1`, a 10.000 ns OOC clock, and default placement and routing. The following **historical post-route** measurements compare the previous BRAM implementation with separate compute paths against the earlier shared core:
+ 
+ | Integrated metric | Previous dense/sparse paths | Shared outer-product core | Change |
+@@ -279,7 +290,7 @@ Module-local paths are retained so includes, package order, and existing test sc
+ `-- project_integration/       # Original top Vivado .xpr / source constraints
+ ```
+ 
+-Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [BRAM GUI guide](docs/bram-100mhz-gui.md) for current implementation entry points. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; use the BRAM scripts linked in Section 8 to rebuild the implementation. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
++Legacy documents are retained for context, but may describe earlier package layouts or pre-integration status. Use this README and the [November 22 promotion record](reports/verification/operand_route_main_20261122/README.md) for current sources and validation. The [BRAM GUI guide](docs/bram-100mhz-gui.md) describes retained earlier runs; rebuilding the project reads the updated root RTL, while existing checkpoints keep their original sources and results. Generated EDA run trees and private literature/meeting materials are excluded from this public repository. Project files retain historical machine-specific settings; the [repaired experiment flow](experiments/pre_route_20261122/power/du_repair/README.md#reproduction-commands) records the source-matched candidate recipe. The obsolete standalone `project_1` project and older native retry runs had been removed before this promotion; dated text evidence is retained.
+ 
+ The [historical publication validation](reports/verification/2026-11-13-native-publication/README.md)
+ records the pre-BRAM source snapshot, regression rerun, and removed superseded reports.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/tensor_core_sv/README.md b/tensor_core_sv/README.md
+index 316ea71..1faba2c 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/tensor_core_sv/README.md
++++ b/tensor_core_sv/README.md
+@@ -78,10 +78,22 @@ pwsh -NoProfile -File integration_sv/sim/run_regression.ps1
+ The unchanged C trace encodes the predecessor's dense timing. The current unit
+ replays each window from reset up to the first valid legacy dense offer; it does
+ not claim full-trace cycle equivalence. Dense and mixed-format correctness and
+-timing use the comparison and integration scoreboards. The retained November 21
+-logs record 21,032 compatible C records and 369 completed integration tiles;
+-these are archived results, not a new run performed by this documentation update.
+-[Verification evidence and source diffs](../reports/verification/outer_main_20261121/README.md)
++timing use the comparison and integration scoreboards. The November 22 main-source
++regression passes 21,032 compatible C records, 1,366 publications, six malformed
++offers, one full-credit rejection, and the existing TC comparison. Integration
++completes 369 tiles with 77 resets and preserves all 50 baseline summary lines,
++including II=8 and k=7+3 timing. See the
++[current verification evidence and applied diff](../reports/verification/operand_route_main_20261122/README.md).
++These runs preceded this documentation update; no simulation is rerun for README edits.
++
++The isolated experiment additionally exhausts all 65,536 A/B bitmap pairs in a
++standalone TC comparison with independent GEMM, timing, error, backpressure, and
++reset checks. Its snapshots, added tests, and results remain under the
++[operand-routing experiment](../experiments/pre_route_20261122/README.md).
++The promoted source matches the validated 64-DSP candidate exactly; the first
++128-DSP attempt remains historical. Integrated post-route area, timing, and
++functional-SAIF power estimates are in the [measurement report](../experiments/pre_route_20261122/REPORT.md),
++not a fresh implementation of the main working tree.
+ 
+ ## Legacy core and cycle reference
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/tensor_core_sv/README_zh_TW.md b/tensor_core_sv/README_zh_TW.md
+index 401ad13..2256ade 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/tensor_core_sv/README_zh_TW.md
++++ b/tensor_core_sv/README_zh_TW.md
+@@ -5,7 +5,11 @@ specification is [README.md](README.md).
+ 
+ Current production uses `outer_product_core.sv`: one shared pipeline for dense,
+ hybrid and dual-sparse tiles, a 184-bit indexed operand pair, result-credit
+-admission and unstalled tile II=8 for every format. See the canonical README
++admission and unstalled tile II=8 for every format. Its pipeline restores INT8
++operand coordinates before multiplication, then accumulates in signed INT32;
++publication remains three advancing edges after k=7. The
++[November 22 promotion record](../reports/verification/operand_route_main_20261122/README.md)
++contains the current regression and retained PPA evidence. See the canonical README
+ for the interface, timing and verification commands. Its
+ [legacy section](README.md#legacy-core-and-cycle-reference) separately documents
+ the retained systolic predecessor and original C model.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/du_tia_sv/README.md b/du_tia_sv/README.md
+index 8a657f5..8c9219d 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/du_tia_sv/README.md
++++ b/du_tia_sv/README.md
+@@ -14,6 +14,26 @@ integrated routed functional netlists passed their sparse checks. See the
+ [promotion record](../reports/verification/operand_route_main_20261122/README.md)
+ and [retained diagnosis](../experiments/pre_route_20261122/power/du_repair/README.md).
+ 
++The original RTL already passed the packet tests; the repair addresses the
++separately reproduced RTL/netlist mismatch. It is a tested workaround for the
++observed Vivado 2022.2 flow, not a vendor-confirmed general compiler defect.
++
++## Verification of the promoted repair
++
++The November 22 main-source unit rerun passes all 3,292 packets, followed by the
++full integration regression: [unit log](../reports/verification/operand_route_main_20261122/regression/units.log)
++and [promotion PASS](../reports/verification/operand_route_main_20261122/regression/PASS.txt).
++The separate isolated repaired-netlist test covers all 65,536 A/B bitmap pairs,
++6,144 directed hybrid cases, and mixed/reset traffic: 74,734 accepted packets,
++74,701 checked outputs, and 33 packets intentionally discarded by 16 resets.
++See the [standalone synthesized-netlist PASS](../experiments/pre_route_20261122/power/du_repair/fixed_gate/PASS.txt).
++These are distinct suites; the unchanged local testbench below still checks 3,292 packets.
++
++Both TC variants in the final PPA comparison use this identical DU/TIA repair.
++All six routed functional workload runs pass, covering dense, hybrid, and dual.
++They omit SDF and are not delay-annotated timing simulation. Original sources,
++failed netlist logs, and passing repaired results are preserved in the experiment.
++
+ ## Contents
+ 
+ | File | Purpose |
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/integration_sv/README.md b/integration_sv/README.md
+index a58379f..7ce1a3a 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/integration_sv/README.md
++++ b/integration_sv/README.md
+@@ -2,6 +2,12 @@
+ 
+ The production top connects MLU, DU/TIA, the credit-controlled Bridge, the shared outer-product TC and MSU. The system testbench checks all three external memory formats against mathematical GEMM.
+ 
++Since the November 22 promotion, TC restores INT8 operand coordinates before
++its 64 signed multipliers, then accumulates in INT32. DU/TIA S1/S2 build plain
++packed structs and assign the selected union once to avoid the reproduced
++Vivado RTL/netlist mismatch. The top, packet layouts, four-stage DU/TIA timing,
++credit rules, II=8, and k=7+3 publication are unchanged.
++
+ ## Files and connections
+ 
+ | Added file | Purpose |
+@@ -12,7 +18,8 @@ The production top connects MLU, DU/TIA, the credit-controlled Bridge, the share
+ | `sim/wave_top.do` | Waveform groups |
+ | `sim/run_units.do` | Runs isolated component suites and the old/new TC comparison |
+ | `sim/run_regression.ps1` | Optional batch launcher checking exit codes, errors, and every PASS marker |
+-| `../reports/verification/outer_main_20261121/` | Current logs and implementation reports |
++| `../reports/verification/operand_route_main_20261122/` | Current main-source regression, applied two-file diff, source hashes, and links to retained candidate implementation evidence |
++| `../reports/verification/outer_main_20261121/` | Historical shared-core promotion and implementation reports |
+ | `results/VALIDATION.md` | Historical integration validation |
+ 
+ ```text
+@@ -134,6 +141,22 @@ the duplicate package definitions in the MLU and FIFO directories.
+ 
+ ## Verification coverage
+ 
++The [November 22 main-source regression](../reports/verification/operand_route_main_20261122/README.md)
++passes all original units before integration, then completes 369 tiles with
++3,542 issued packets, 2,987 accepted write beats, and 77 resets. All 50 integration
++summary lines match the original baseline. Dense and mixed streams retain II=8
++and k=7+3 publication. To repeat without overwriting accepted evidence, run from
++the repository root with a fresh output name:
++
++```powershell
++./reports/verification/operand_route_main_20261122/run_regression.ps1 -RunName regression_repeat
++```
++
++The [final isolated comparison](../experiments/pre_route_20261122/power/du_repair/README.md)
++also validates both repaired routed functional netlists under all three power
++workloads. Its post-route PPA evidence matches the promoted source hashes;
++promotion did not rerun implementation, and existing GUI runs remain historical.
++
+ The testbench computes GEMM from original mathematical A/B matrices, then
+ independently encodes the memory image. It does not use DUT packetize/decode
+ helpers to generate expected values. In addition to every INT32 result, it
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/integration_sv/README_zh_TW.md b/integration_sv/README_zh_TW.md
+index b486ce4..8ebd0fc 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/integration_sv/README_zh_TW.md
++++ b/integration_sv/README_zh_TW.md
+@@ -4,6 +4,9 @@ This historical filename is retained for existing links. The maintained English
+ specification is [README.md](README.md).
+ 
+ The production top uses the shared outer-product core and `tb_outer_top.sv`.
++The November 22 main sources include operand routing before multiplication and
++the DU/TIA whole-union assignment repair; see the
++[current promotion and verification record](../reports/verification/operand_route_main_20261122/README.md).
+ Dense, hybrid and dual-sparse tiles all publish three advancing edges after
+ k=7 and can start every eight cycles with available input and result credit.
+ The canonical README describes dense operand normalization, metadata admission,
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/fifo_sv/README.md b/fifo_sv/README.md
+index 3bde653..3298a26 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/fifo_sv/README.md
++++ b/fifo_sv/README.md
+@@ -107,7 +107,7 @@ The logical C-model slot order, including stale contents, is reconstructed for
+ the unchanged unit comparison. Metadata blocking, credit accounting and
+ non-bypass latency retain their contracts. See the
+ [BRAM/rotating-FIFO promotion record](../reports/verification/bram_main_20261119/README.md)
+-for that change and the [current integration record](../reports/verification/outer_main_20261121/README.md)
++for that change and the [current integration record](../reports/verification/operand_route_main_20261122/README.md)
+ for use with the shared TC.
+ 
+ When the head has `k=0` and result metadata is full, `head_valid=0`. Metadata is
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/c code/Tensor Core/Tensor Core/README.md b/c code/Tensor Core/Tensor Core/README.md
+index e11aa9f..22ad3c6 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/c code/Tensor Core/Tensor Core/README.md	
++++ b/c code/Tensor Core/Tensor Core/README.md	
+@@ -1,6 +1,6 @@
+ # Tensor Core: C Model with Sparse Tile Overlap
+ 
+-> Legacy C reference scope: this directory preserves the predecessor's dense systolic path, sparse outer-product path and mode-switch drain rules. Current production RTL uses one shared outer-product core for all formats. Its dense timing differs from this model; use the [current TC contract](../../../tensor_core_sv/README.md) and [verification record](../../../reports/verification/outer_main_20261121/README.md). The C model, tests and expected results remain unchanged.
++> Legacy C reference scope: this directory preserves the predecessor's dense systolic path, sparse outer-product path and mode-switch drain rules. Current production RTL uses operand ROUTE -> MUL -> ACC in one shared outer-product core for all formats, with the repaired DU/TIA upstream. Its dense timing differs from this model; use the [current TC contract](../../../tensor_core_sv/README.md) and [verification record](../../../reports/verification/operand_route_main_20261122/README.md). The C model, tests and expected results remain unchanged.
+ 
+ This package was based on the supplied `tensor_core_model(2).c`, `tensor_core_model(2).h`, and `tb_tensor_core(2).c`. Delivered files use the standard names required by the existing includes.
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/README.md b/experiments/pre_route_20261122/README.md
+index ac1c92d..be04d6b 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/README.md
++++ b/experiments/pre_route_20261122/README.md
+@@ -1,10 +1,15 @@
+ # Operand routing before multiplication
+ 
+-This isolated experiment starts from production commit
+-`2458bf6962ea6946d820276a0faba0e00e6fe5e5` on `main`. It does not update the
+-production RTL, Vivado project, reference models, existing tests, or seeds.
+-The initial production worktree was clean. The source snapshots are recorded
+-in `baseline_manifest.csv`, `extra_manifest.csv`, and `source_integrity.csv`.
++This experiment started from production commit
++`2458bf6962ea6946d820276a0faba0e00e6fe5e5` on `main`, with a clean production
++worktree. It initially changed only isolated copies. After validation, the user
++authorized promotion of the final TC and shared DU/TIA repair on November 22.
++Those two RTL files now match `power/du_repair/candidate_v2/src/` byte for byte in
++the main working tree; no commit, merge, or push was performed. See the
++[promotion and fresh main regression](../../reports/verification/operand_route_main_20261122/README.md).
++The original snapshots, reports, references, existing tests, and seeds are retained.
++The source snapshots are recorded in `baseline_manifest.csv`, `extra_manifest.csv`,
++and `source_integrity.csv`; those files describe the experiment's original sources.
+ 
+ The completed [measurement report](REPORT.md) records a **43.3%** integrated
+ post-route LUT reduction, unchanged 64-DSP usage, passing 100 MHz timing for
+@@ -14,11 +19,15 @@ repair, authorized after power validation exposed an RTL/netlist mismatch in
+ the original sparse implementation. All original evidence is retained; see
+ [the repair record](power/du_repair/README.md). Both repaired netlists pass all
+ three power workloads. Power uses functional SAIF without routed-delay glitches;
+-it is not a board measurement. Production is unchanged.
++it is not a board measurement. Promotion did not rerun synthesis, implementation,
++or power; its source hashes identify the matching retained candidate evidence.
+ 
+ ## Scope and compatibility
+ 
+-The sole functional RTL difference is `tensor_core_sv/outer_product_core.sv`.
++The original comparison changed only `tensor_core_sv/outer_product_core.sv`.
++The final comparison adds the same DU/TIA repair to both variants under
++`power/du_repair/`; only the TC differs between those two repaired versions.
++The [review package](sv_diff/README.md) contains the complete two-file promotion diff.
+ `candidate/` retains the first attempt, which passed functionally but caused
+ Vivado to infer 128 DSPs by duplicating multiply-add cones. `candidate_v2/`
+ adds an explicit `use_dsp = "no"` attribute on the fabric accumulation sum;
+@@ -85,6 +94,15 @@ repaired implementation results are kept separate in the measurement report.
+ 
+ ## Reproduction
+ 
++The block below records the original pre-repair experiment. It does not reproduce
++the final repaired comparison; use the [repair flow](power/du_repair/README.md#reproduction-commands)
++for that source set. `check_integrity.ps1` deliberately requires the old main
++hashes and will reject the promoted main tree. Run that historical check only
++in an isolated copy with the original baseline sources at its root. For current
++main, use the [promotion regression launcher](../../reports/verification/operand_route_main_20261122/README.md#fresh-production-regression)
++with a fresh RunName; do not revert main or overwrite accepted reports to run
++the old checks.
++
+ From this experiment directory in PowerShell, use a fresh RunName/output path
+ for each repeated regression or implementation. On this host the 32-bit
+ ModelSim executable requires execution outside the sandbox; sandbox startup
+@@ -120,5 +138,10 @@ Each snapshot retains the unchanged gzip vector file for reconstruction.
+ - Each candidate's `equivalence/`: additional comparison and GEMM evidence.
+ - Each variant's `routed/`, plus `audit/`: physical measurements and audits.
+ - `rtl.diff`, `REPORT.md`: reviewable RTL delta and final conclusions.
++- `power/du_repair/{baseline,candidate_v2}/`: final snapshots using the same DU/TIA repair, with accepted implementation and power evidence.
++- `sv_diff/final_rtl.diff`: the two-file patch now applied to the main working tree.
+ 
+-Only files below this experiment directory are created or modified.
++The isolated phases created files only below this directory. The later main
++promotion has its own record and pre-update backups. The original text of this
++README and the power READMEs is preserved by the
++[README maintenance record](../../reports/documentation/operand_route_readmes_20261122/README.md).
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/power/README.md b/experiments/pre_route_20261122/power/README.md
+index 0c3c57f..b66bd09 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/power/README.md
++++ b/experiments/pre_route_20261122/power/README.md
+@@ -5,8 +5,11 @@ the 64-DSP operand-route candidate. Dense passed, but both original hybrid
+ netlists rejected legal input. Baseline dual diagnosis also reproduced a sparse
+ failure. These failed captures are excluded from power analysis. The user then
+ authorized a [shared DU/TIA repair](du_repair/README.md) in new isolated snapshots
+-and a fresh comparison. Production, original snapshots, references, tests,
+-assertions, and seeds remain unchanged. Results are in the parent `REPORT.md`.
++and a fresh comparison. Production was unchanged during those isolated phases.
++The final TC and DU/TIA candidate was subsequently promoted to the main working
++tree on November 22; see the [promotion record](../../../reports/verification/operand_route_main_20261122/README.md).
++Original snapshots, references, tests, assertions, seeds, and raw reports remain
++unchanged. Results are in the parent [measurement report](../REPORT.md).
+ 
+ The repaired comparison is complete: all six routed functional workload runs
+ pass, and estimated total power falls 19.7% dense, 12.7% hybrid, and 12.9% dual.
+@@ -16,6 +19,21 @@ slightly, but total dynamic power falls in all three workloads. The original
+ commands below document the retained initial attempts; the final repaired-flow
+ commands are in [the repair record](du_repair/README.md#reproduction-commands).
+ 
++| Load at 100 MHz | Product routing + repaired DU/TIA | Operand routing + repaired DU/TIA | Total reduction |
++|---|---:|---:|---:|
++| Dense | 0.714 W | 0.573 W | 19.7% |
++| Hybrid | 0.574 W | 0.501 W | 12.7% |
++| Dual | 0.567 W | 0.494 W | 12.9% |
++
++These are total on-chip estimates. Dynamic power is respectively 0.562/0.422 W,
++0.422/0.350 W, and 0.416/0.343 W (baseline/candidate); reported static power is
++0.151 W in each case, with independent rounding. Both variants use the identical
++DU/TIA repair. Six RTL and six routed functional workload runs pass; each checks
++288 tiles before its activity is accepted. The complete
++[comparison CSV](du_repair/power_comparison.csv) and
++[validation record](du_repair/validation.PASS.txt) retain the measured inputs.
++The candidate's source matches main; no new power run was performed on promotion.
++
+ ## Workload and validation
+ 
+ `tb_power.sv` is an additional independent memory driver and signed GEMM
+@@ -63,10 +81,15 @@ actual routed delay glitches. They provide workload-driven functional switching
+ estimates, not a full timing/glitch-aware power result. The previous STA audit
+ still establishes the separate internal 100 MHz timing result.
+ 
+-`analyze.tcl` independently reopens the original 100 MHz checkpoints for every
++`analyze.tcl` independently reopens the selected 100 MHz checkpoints for every
+ workload, imports the corresponding SAIF with `-strip_path tb_power/dut`, and
+ reports annotation, operating conditions, power hierarchy, and input activity.
+-No power optimization or implementation rerun is performed.
++No power optimization or implementation rerun is performed by the analysis step.
++The final `du_repair/` flow uses its freshly implemented repaired checkpoints;
++the initial checkpoints remain separate historical evidence. Final annotation
++coverage is 49,063/49,063 nets for the baseline and 38,367/38,374 for the candidate.
++Seven generated DU/TIA `(null)` net names are excluded as a parser workaround;
++raw activity files are retained in the repair record.
+ 
+ Comparison assumptions are fixed at typical process, 50 C junction temperature,
+ VCCINT=1.0 V, VCCBRAM=1.0 V, and VCCAUX=1.8 V. Although the script supplies an
+@@ -86,7 +109,13 @@ AMD's [Vivado 2022.2 power methodology](https://docs.amd.com/r/2022.2-English/ug
+ recommends realistic workloads and post-implementation timing activity to capture
+ glitches; unmatched nodes can still use vectorless propagation.
+ 
+-## Commands
++## Historical initial-attempt commands
++
++This block targets the original unrepaired sources. Their sparse captures fail
++validation and cannot supply a valid three-load comparison. Use the
++[repaired-flow commands](du_repair/README.md#reproduction-commands) for the final
++results above. The historical `check_integrity.ps1` also expects pre-promotion
++main hashes; it is not a check for the updated main tree.
+ 
+ Run from the parent experiment directory. Choose new export/run/report folders
+ when repeating to preserve accepted evidence. The simulator's native C compiler
+@@ -101,7 +130,7 @@ requires approved execution outside this host's filesystem sandbox.
+ & 'C:/Xilinx/Vivado/2022.2/bin/vivado.bat' -mode batch -nojournal -log power/export_functional_candidate_v2.log -source power/export_functional.tcl -tclargs candidate_v2
+ ./power/run_sim.ps1 -Variant baseline -Kind functional -RunName functional
+ ./power/run_sim.ps1 -Variant candidate_v2 -Kind functional -RunName functional
+-# Retained accepted captures used these launchers to reuse the compiled snapshots:
++# Initial captures reused compiled snapshots; only validated dense results were accepted:
+ ./power/run_capture.ps1 -Variant baseline
+ ./power/run_capture.ps1 -Variant candidate_v2
+ foreach ($mode in 'dense','hybrid','dual') {
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/power/du_repair/README.md b/experiments/pre_route_20261122/power/du_repair/README.md
+index 287bb07..e3aee67 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/power/du_repair/README.md
++++ b/experiments/pre_route_20261122/power/du_repair/README.md
+@@ -1,9 +1,14 @@
+ # Shared DU/TIA repair and repeated comparison
+ 
+ The user authorized expanding the isolated experiment after both original
+-post-route netlists rejected legal sparse traffic. Production and the original
+-experimental snapshots remain unchanged. Both new snapshots use the same DU/TIA
+-repair, so the TC comparison does not mix repaired and unrepaired datapaths.
++post-route netlists rejected legal sparse traffic. Main remained unchanged during
++that experiment. After validation, the final TC and DU/TIA sources were promoted
++to the main working tree on November 22; see the
++[promotion and fresh main regression](../../../../reports/verification/operand_route_main_20261122/README.md).
++The original experimental snapshots and raw reports remain unchanged. Both
++repaired snapshots use the same DU/TIA, so the TC comparison does not mix
++repaired and unrepaired datapaths. Promotion did not rerun physical or power
++analysis; its source hashes match this validated candidate exactly.
+ 
+ ## Reproduction and correction
+ 
+@@ -82,6 +87,14 @@ Sparse DSP power rises 6-7 mW while total power falls. See
+ 
+ ## Reproduction commands
+ 
++These commands document the isolated experiment. Its final
++`check_integrity.ps1` command requires the pre-promotion main sources and will
++reject today's promoted tree; run that check only in an isolated reproduction
++copy with the original baseline at the root. Use the
++[main regression launcher](../../../../reports/verification/operand_route_main_20261122/README.md#fresh-production-regression)
++for the updated main source set. Keep accepted snapshots, captures, and report
++directories intact when selecting fresh output paths.
++
+ Run from `experiments/pre_route_20261122`. The commands below identify retained
+ runs; preserve them and choose fresh output paths when repeating. Simulation
+ uses the host's approved native compiler execution, as in the original experiment.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/sv_diff/README.md b/experiments/pre_route_20261122/sv_diff/README.md
+index 08b4b5d..0f5fc14 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/pre_route_20261122/sv_diff/README.md
++++ b/experiments/pre_route_20261122/sv_diff/README.md
+@@ -2,8 +2,12 @@
+ 
+ This package compares production `main` at
+ `2458bf6962ea6946d820276a0faba0e00e6fe5e5` with the final isolated candidate in
+-`../power/du_repair/candidate_v2/src/`. Production has not been changed. No patch
+-was applied, and no commit, merge, or push was performed.
++`../power/du_repair/candidate_v2/src/`. It was prepared before promotion. On
++November 22 the user authorized applying these two RTL changes to the main
++working tree; the source files now match the selected candidate byte for byte.
++See the [promotion record and old-source backups](../../../reports/verification/operand_route_main_20261122/README.md).
++No commit, merge, or push was performed. The diff and its original checks remain
++unchanged; this README now distinguishes package creation from later promotion.
+ 
+ ## Files to review
+ 
+@@ -71,7 +75,8 @@ Netlist indices  [0, 0, 0, 0, 7]
+ 
+ The user authorized expanding the isolated experiment to repair this problem.
+ Both compared versions now use the same corrected DU/TIA, keeping the TC power
+-comparison fair. Production and the original failed netlists remain unchanged.
++comparison fair. Both changes are now in main; the original failed netlists and
++pre-promotion sources remain preserved.
+ 
+ S1 and S2 originally built payloads by repeatedly writing fields through packed
+ union members. They now use local ordinary packed structs and one whole-union
+@@ -130,19 +135,24 @@ existing measured evidence is retained:
+ - Both independently reopened routed checkpoints pass internal 100 MHz STA:
+   [audit](../power/du_repair/audit/audit_summary.txt).
+ 
+-Patch checks run from the repository root, without applying any change:
++The following read-only checks apply to the promoted main working tree. A
++forward `git apply --check` against main is no longer appropriate because the
++patch is already present:
+ 
+ ```powershell
+-git apply --check experiments/pre_route_20261122/sv_diff/final_rtl.diff
++git apply --reverse --check experiments/pre_route_20261122/sv_diff/final_rtl.diff
+ git apply --reverse --check --directory=experiments/pre_route_20261122/power/du_repair/candidate_v2/src experiments/pre_route_20261122/sv_diff/final_rtl.diff
+ git apply --reverse --check experiments/pre_route_20261122/sv_diff/verification_additions.diff
+ ```
+ 
+-All three checks pass. The first validates the old side against production; the
+-second validates the new side against the selected isolated snapshot; the third
+-checks that verification additions match their existing source files. These
+-commands are consistency checks, not authorization to promote the experiment.
++The first checks the applied new side against main; the second checks the same
++side against the selected isolated snapshot; the third checks that verification
++additions match their existing source files. The retained `PASS.txt` records the
++original package-time checks, including a forward check against then-unmodified
++main. Fresh documentation-time check results are recorded in the
++[README maintenance record](../../../reports/documentation/operand_route_readmes_20261122/README.md).
+ Full regression commands, results, and PPA methodology are in the
+ [experiment report](../REPORT.md) and [repair record](../power/du_repair/README.md).
+ 
+-This packaging task creates only the files in this `sv_diff/` directory.
++The original packaging task created only the files in this `sv_diff/` directory.
++The later promotion and README maintenance have separate records and backups.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/operand_route_main_20261122/README.md b/reports/verification/operand_route_main_20261122/README.md
+index cbbd9d8..7e79578 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/operand_route_main_20261122/README.md
++++ b/reports/verification/operand_route_main_20261122/README.md
+@@ -112,6 +112,17 @@ candidate checkpoint is
+ 
+ ## Changed and created files
+ 
++The file list below records the promotion itself. A subsequent documentation-only
++update reconciles 26 affected READMEs, including current navigation in historical
++guides; see the [README maintenance record](../../documentation/operand_route_readmes_20261122/README.md).
++All pre-maintenance README bytes are archived there. Three experiment READMEs
++were also in `preserved_evidence.csv`; their entries now point to those archived
++originals with the **same original SHA-256 values**. The previous manifest is
++preserved as well. Numerical reports, source snapshots, logs, checkpoints, SAIF,
++and the promotion's own `before/` backups remain unchanged. The main regression
++wrapper can still verify all 81 historical evidence artifacts at their recorded
++locations. This documentation update does not rerun RTL or implementation tools.
++
+ Existing implementation files changed: only `tensor_core_sv/outer_product_core.sv`
+ and `du_tia_sv/rtl/du_tia.sv`, exactly as in the reviewed [RTL diff](rtl.diff).
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/outer_product_20261121/README.md b/experiments/outer_product_20261121/README.md
+index 7dd42ce..6a6a150 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/outer_product_20261121/README.md
++++ b/experiments/outer_product_20261121/README.md
+@@ -1,5 +1,14 @@
+ # Unified outer-product Tensor Core
+ 
++> Historical November 21 experiment: the pipeline below multiplies before
++> routing products. The [November 22 promotion](../../reports/verification/operand_route_main_20261122/README.md)
++> subsequently moved operand routing before multiplication and repaired the
++> shared DU/TIA. Current source paths and rebuilds therefore differ from this
++> dated experiment. Its original RTL, measurements, and test results are retained.
++> Later sparse-netlist validation exposed a DU/TIA mismatch in the original
++> implementation; use the [repaired comparison](../pre_route_20261122/power/du_repair/README.md)
++> for validated three-format netlist and power evidence.
++
+ This experiment targeted the previous BRAM/rotating FIFO production snapshot `7e40bf9`.
+ It replaces two compilation units in the integrated design. Compile
+ [`outer_product_core.sv`](outer_product_core.sv) and the local
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/outer_main_20261121/README.md b/reports/verification/outer_main_20261121/README.md
+index 58311c0..fd10f46 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/outer_main_20261121/README.md
++++ b/reports/verification/outer_main_20261121/README.md
+@@ -1,5 +1,16 @@
+ # Shared outer-product TC on main
+ 
++> Historical November 21 promotion: "production" and "now" below describe the
++> multiply-before-route shared core at that date. Main subsequently received
++> operand routing before multiplication and the DU/TIA whole-union assignment
++> repair; see the [November 22 promotion and current verification](../operand_route_main_20261122/README.md).
++> Original numerical results and patches remain unchanged. The later experiment
++> found that the original RTL passed while its sparse netlists failed DU/TIA
++> decoding. Those older area/timing reports are not validated sparse-netlist or
++> power evidence; the [repaired comparison](../../../experiments/pre_route_20261122/power/du_repair/README.md)
++> supplies that validation. Except for the archived TC link below, source links
++> resolve to main; the retained patches and manifests identify this dated version.
++
+ The baseline is local commit `7e40bf9`, which uses the BRAM MLU, the rotating Bridge FIFO and separate dense and sparse multiplier banks. The production Vivado source set now builds `outer_product_core` for all three input formats.
+ 
+ ## SystemVerilog changes
+@@ -7,7 +18,7 @@ The baseline is local commit `7e40bf9`, which uses the BRAM MLU, the rotating Br
+ | File | Change |
+ |---|---|
+ | [sparse_tensor_core_top.sv](../../../integration_sv/rtl/sparse_tensor_core_top.sv) | At FIFO ingress, copy all eight dense values per operand, set both counts to eight and assign lane indices 0 through 7. Feed the indexed payload at the FIFO head into the TC. |
+-| [outer_product_core.sv](../../../tensor_core_sv/outer_product_core.sv) | Accept a 184-bit operand pair with no mode input. Compute 64 signed products, route by row and column index and accumulate in INT32. Reserve one of two result slots per tile. |
++| [outer_product_core.sv](../../../experiments/pre_route_20261122/baseline/src/tensor_core_sv/outer_product_core.sv) | Accept a 184-bit operand pair with no mode input. Compute 64 signed products, route by row and column index and accumulate in INT32. Reserve one of two result slots per tile. |
+ | [tb_outer_core.sv](../../../tensor_core_sv/tb_outer_core.sv) | Check C-vector windows that share the new timing contract, including malformed vectors. Exercise a rejected start while both results are reserved and a pop is requested. |
+ | [tb_compare.sv](../../../tensor_core_sv/tb_compare.sv) | Run the legacy and unified cores on the same matrices. Check GEMM results and publication cycles, then measure the start interval and total cycles at an always-ready sink. |
+ | [tb_outer_top.sv](../../../integration_sv/tb/tb_outer_top.sv) | Check the normalized payload at FIFO entry and TC acceptance, result timing, all nine mode transitions, reset recovery, and every writeback byte. |
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/tc_cycles_github_fe14c132/README.md b/reports/verification/tc_cycles_github_fe14c132/README.md
+index 67540f7..e720a5a 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/tc_cycles_github_fe14c132/README.md
++++ b/reports/verification/tc_cycles_github_fe14c132/README.md
+@@ -1,6 +1,6 @@
+ # TC cycle comparison against the linked GitHub version
+ 
+-> Historical architecture scope: this record describes the November 12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ Verified on 2026-11-12 with ModelSim Intel FPGA Edition 2020.1.
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/bram_main_20261119/README.md b/reports/verification/bram_main_20261119/README.md
+index 805211e..2ae52c3 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/bram_main_20261119/README.md
++++ b/reports/verification/bram_main_20261119/README.md
+@@ -1,6 +1,6 @@
+ # BRAM main promotion and complete validation
+ 
+-> Historical architecture scope: this record describes the November 19, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 19, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ ## Source and backup
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/mlu_bram_100mhz_20261118/README.md b/experiments/mlu_bram_100mhz_20261118/README.md
+index e28a70c..4cf9c25 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/mlu_bram_100mhz_20261118/README.md
++++ b/experiments/mlu_bram_100mhz_20261118/README.md
+@@ -1,6 +1,6 @@
+ # BRAM 100 MHz timing continuation — 2026-11-18
+ 
+-> Historical architecture scope: this record describes the November 19, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../tensor_core_sv/README.md) and [promotion record](../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 19, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../tensor_core_sv/README.md) and [promotion record](../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ ## Current acceptance status
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/head_mux_20261115/README.md b/experiments/msu_fmax/head_mux_20261115/README.md
+index a7e2b16..61ce6da 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/head_mux_20261115/README.md
++++ b/experiments/msu_fmax/head_mux_20261115/README.md
+@@ -1,6 +1,6 @@
+ # FIFO head-to-DSP timing optimization, 2026-11-15
+ 
+-> Historical architecture scope: this record describes the November 15, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 15, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ ## Artifact cleanup, 2026-11-15
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/result_bank_20261115/README.md b/experiments/msu_fmax/result_bank_20261115/README.md
+index af63488..40bd5d1 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/result_bank_20261115/README.md
++++ b/experiments/msu_fmax/result_bank_20261115/README.md
+@@ -1,6 +1,6 @@
+ # Result storage timing experiment, 2026-11-15
+ 
+-> Historical architecture scope: this record describes the November 15, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 15, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ ## Artifact cleanup, 2026-11-15
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/target_10ns_20261110/README.md b/experiments/msu_fmax/target_10ns_20261110/README.md
+index 1b7766b..b65fcb6 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/target_10ns_20261110/README.md
++++ b/experiments/msu_fmax/target_10ns_20261110/README.md
+@@ -1,6 +1,6 @@
+ # 10 ns timing experiment
+ 
+-> Historical architecture scope: this record describes the November 10-12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 10-12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ Work is performed directly on `main`, as requested. Baseline commit:
+ `c3c9661bf69db3a2cc06f0e26ea91bcdc164235d`. No branch or worktree was created.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/target_10ns_20261112/README.md b/experiments/msu_fmax/target_10ns_20261112/README.md
+index 16483bc..4bda637 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/target_10ns_20261112/README.md
++++ b/experiments/msu_fmax/target_10ns_20261112/README.md
+@@ -1,6 +1,6 @@
+ # 10 ns continuation, 2026-11-12
+ 
+-> Historical architecture scope: this record describes the November 12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses a shared 64-multiplier outer-product core for every format; its dense timing and format-change rules differ. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/outer_main_20261121/README.md). Original measurements and validation results below are retained.
++> Historical architecture scope: this record describes the November 12, 2026 predecessor or its experimental variants. References below to current, selected or production RTL refer to that dated snapshot. Current `main` uses operand ROUTE -> MUL -> ACC in one shared 64-multiplier core for every format, together with the DU/TIA whole-union assignment repair; its dense timing and format-change rules differ from this predecessor. See the [current TC contract](../../../tensor_core_sv/README.md) and [promotion record](../../../reports/verification/operand_route_main_20261122/README.md). Original measurements and validation results below are retained.
+ 
+ The user requested a 10.000 ns target, a commit of the current version if it
+ was not already committed, and no new worktree. Work remains on `main`.
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/backups/pre_bram_20261119/README.md b/backups/pre_bram_20261119/README.md
+index 374d543..ec1abf7 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/backups/pre_bram_20261119/README.md
++++ b/backups/pre_bram_20261119/README.md
+@@ -4,10 +4,10 @@
+ > core. The original README describes a dense systolic path and a separate sparse
+ > outer-product path, with 128 DSPs and predecessor timing. Those statements apply
+ > to the archived design. Current `main` uses one shared 64-multiplier
+-> `MUL -> ROUTE -> ACC` pipeline for all three formats. Read the
++> `operand ROUTE -> MUL -> ACC` pipeline for all three formats. Read the
+ > [current project overview](../../README.md),
+ > [current TC contract](../../tensor_core_sv/README.md), and
+-> [shared-core promotion record](../../reports/verification/outer_main_20261121/README.md)
++> [current TC and DU/TIA promotion record](../../reports/verification/operand_route_main_20261122/README.md)
+ > for the active implementation.
+ 
+ ## Preserved original material
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/result_bank_20261115/cleanup_20261115/README.md b/experiments/msu_fmax/result_bank_20261115/cleanup_20261115/README.md
+index c2199d7..61324f3 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/result_bank_20261115/cleanup_20261115/README.md
++++ b/experiments/msu_fmax/result_bank_20261115/cleanup_20261115/README.md
+@@ -4,9 +4,9 @@
+ > separate dense systolic and sparse outer-product execution. Statements such as
+ > "production RTL" and "selected baseline" in the original files refer to that
+ > experiment date. Current `main` uses one shared 64-multiplier outer-product
+-> `MUL -> ROUTE -> ACC` pipeline. See the
++> `operand ROUTE -> MUL -> ACC` pipeline. See the
+ > [current TC contract](../../../../tensor_core_sv/README.md) and
+-> [shared-core promotion record](../../../../reports/verification/outer_main_20261121/README.md).
++> [current TC and DU/TIA promotion record](../../../../reports/verification/operand_route_main_20261122/README.md).
+ 
+ ## Original records
+ 
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/native_margin_10ns_20261113/README.md b/experiments/msu_fmax/native_margin_10ns_20261113/README.md
+index 16197cb..2fb5925 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/experiments/msu_fmax/native_margin_10ns_20261113/README.md
++++ b/experiments/msu_fmax/native_margin_10ns_20261113/README.md
+@@ -1,9 +1,13 @@
+ # Fresh native 10 ns rebuild, 2026-11-13
+ 
+ > Historical predecessor: this November 13 record uses the earlier dense/sparse
+-> compute paths. Current `main` selects the shared outer-product core; use the
++> compute paths. Current `main` routes operands before its shared multipliers
++> and includes the DU/TIA whole-union assignment repair; use the
+ > [current TC contract](../../../tensor_core_sv/README.md) and
+-> [current GUI guide](../../../docs/bram-100mhz-gui.md) for its sources and active runs.
++> [November 22 promotion record](../../../reports/verification/operand_route_main_20261122/README.md)
++> for its sources and validation. The [GUI guide](../../../docs/bram-100mhz-gui.md)
++> describes retained earlier runs; existing GUI checkpoints are historical and
++> have not been rebuilt with the newly promoted sources.
+ >
+ > This timestamped record describes the completed native rebuild. Subsequent
+ > publication cleanup removed the superseded `synth_10ns` / `impl_10ns` run
+diff --git a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/2026-11-13-native-publication/README.md b/reports/verification/2026-11-13-native-publication/README.md
+index 36a84bb..e8de85f 100644
+--- a/reports/documentation/operand_route_readmes_20261122/before/reports/verification/2026-11-13-native-publication/README.md
++++ b/reports/verification/2026-11-13-native-publication/README.md
+@@ -1,5 +1,11 @@
+ # Native implementation publication — November 13, 2026
+ 
++> Historical publication scope: references below to current implementation or
++> main describe November 13. The active main working tree now contains operand
++> routing before multiplication and the DU/TIA whole-union assignment repair;
++> see the [November 22 promotion and verification](../operand_route_main_20261122/README.md).
++> This publication's measurements, source history, and validation remain unchanged.
++
+ This publication integrates local TC `dad7b14` and the user's pending root
+ README changes into GitHub main, based on `e8986e71154eff23cfea7e00004cdcfceb69c529`.
+ The source was copied into an isolated publication directory. The original

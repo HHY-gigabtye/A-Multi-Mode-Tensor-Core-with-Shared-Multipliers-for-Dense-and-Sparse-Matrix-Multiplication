@@ -4,9 +4,9 @@
 > separate dense systolic and sparse outer-product execution. Statements such as
 > "production RTL" and "selected baseline" in the original files refer to that
 > experiment date. Current `main` uses one shared 64-multiplier outer-product
-> `MUL -> ROUTE -> ACC` pipeline. See the
+> `operand ROUTE -> MUL -> ACC` pipeline. See the
 > [current TC contract](../../../../tensor_core_sv/README.md) and
-> [shared-core promotion record](../../../../reports/verification/outer_main_20261121/README.md).
+> [current TC and DU/TIA promotion record](../../../../reports/verification/operand_route_main_20261122/README.md).
 
 ## Original records
 

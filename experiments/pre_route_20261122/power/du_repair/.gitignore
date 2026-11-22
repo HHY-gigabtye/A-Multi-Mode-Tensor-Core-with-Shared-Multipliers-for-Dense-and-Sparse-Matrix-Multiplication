@@ -1,0 +1,7 @@
+**/unit_netlist.v
+**/routed_functional.v
+**/xsim.dir/
+**/.Xil/
+**/*.wdb
+**/*.saif
+**/tensor_core_sv/c_vectors.txt

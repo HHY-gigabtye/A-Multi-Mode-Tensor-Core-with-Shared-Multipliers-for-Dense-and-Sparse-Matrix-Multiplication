@@ -1,0 +1,4 @@
+"Mode","BaselineTotalW","CandidateTotalW","TotalChangePercent","BaselineDynamicW","CandidateDynamicW","DynamicChangePercent","BaselineDynamicNjPerTile","CandidateDynamicNjPerTile"
+"dense","0.714","0.573","-19.747899159663874","0.562","0.422","-24.91103202846976","44.96000000000001","33.76"
+"hybrid","0.574","0.501","-12.717770034843202","0.422","0.35","-17.061611374407583","33.76","28"
+"dual","0.567","0.494","-12.874779541446202","0.416","0.343","-17.548076923076916","33.28","27.44"

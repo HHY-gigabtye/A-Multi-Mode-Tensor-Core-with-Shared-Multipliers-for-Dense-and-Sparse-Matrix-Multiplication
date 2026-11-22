@@ -1,0 +1,15 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --debug typical --mt 2 --snapshot du_sim work.tb_du_gate 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.du_tia_pkg
+Compiling module work.du_tia
+Compiling module work.du_gate
+Compiling module work.tb_du_gate
+Built simulation snapshot du_sim

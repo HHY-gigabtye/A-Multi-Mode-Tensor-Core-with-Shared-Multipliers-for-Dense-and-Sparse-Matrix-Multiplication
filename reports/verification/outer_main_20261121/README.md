@@ -1,5 +1,16 @@
 # Shared outer-product TC on main
 
+> Historical November 21 promotion: "production" and "now" below describe the
+> multiply-before-route shared core at that date. Main subsequently received
+> operand routing before multiplication and the DU/TIA whole-union assignment
+> repair; see the [November 22 promotion and current verification](../operand_route_main_20261122/README.md).
+> Original numerical results and patches remain unchanged. The later experiment
+> found that the original RTL passed while its sparse netlists failed DU/TIA
+> decoding. Those older area/timing reports are not validated sparse-netlist or
+> power evidence; the [repaired comparison](../../../experiments/pre_route_20261122/power/du_repair/README.md)
+> supplies that validation. Except for the archived TC link below, source links
+> resolve to main; the retained patches and manifests identify this dated version.
+
 The baseline is local commit `7e40bf9`, which uses the BRAM MLU, the rotating Bridge FIFO and separate dense and sparse multiplier banks. The production Vivado source set now builds `outer_product_core` for all three input formats.
 
 ## SystemVerilog changes
@@ -7,7 +18,7 @@ The baseline is local commit `7e40bf9`, which uses the BRAM MLU, the rotating Br
 | File | Change |
 |---|---|
 | [sparse_tensor_core_top.sv](../../../integration_sv/rtl/sparse_tensor_core_top.sv) | At FIFO ingress, copy all eight dense values per operand, set both counts to eight and assign lane indices 0 through 7. Feed the indexed payload at the FIFO head into the TC. |
-| [outer_product_core.sv](../../../tensor_core_sv/outer_product_core.sv) | Accept a 184-bit operand pair with no mode input. Compute 64 signed products, route by row and column index and accumulate in INT32. Reserve one of two result slots per tile. |
+| [outer_product_core.sv](../../../experiments/pre_route_20261122/baseline/src/tensor_core_sv/outer_product_core.sv) | Accept a 184-bit operand pair with no mode input. Compute 64 signed products, route by row and column index and accumulate in INT32. Reserve one of two result slots per tile. |
 | [tb_outer_core.sv](../../../tensor_core_sv/tb_outer_core.sv) | Check C-vector windows that share the new timing contract, including malformed vectors. Exercise a rejected start while both results are reserved and a pop is requested. |
 | [tb_compare.sv](../../../tensor_core_sv/tb_compare.sv) | Run the legacy and unified cores on the same matrices. Check GEMM results and publication cycles, then measure the start interval and total cycles at an always-ready sink. |
 | [tb_outer_top.sv](../../../integration_sv/tb/tb_outer_top.sv) | Check the normalized payload at FIFO entry and TC acceptance, result timing, all nine mode transitions, reset recovery, and every writeback byte. |

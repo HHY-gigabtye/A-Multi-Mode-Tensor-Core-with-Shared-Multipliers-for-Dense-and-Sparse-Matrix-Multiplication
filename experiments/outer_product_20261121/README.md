@@ -1,5 +1,14 @@
 # Unified outer-product Tensor Core
 
+> Historical November 21 experiment: the pipeline below multiplies before
+> routing products. The [November 22 promotion](../../reports/verification/operand_route_main_20261122/README.md)
+> subsequently moved operand routing before multiplication and repaired the
+> shared DU/TIA. Current source paths and rebuilds therefore differ from this
+> dated experiment. Its original RTL, measurements, and test results are retained.
+> Later sparse-netlist validation exposed a DU/TIA mismatch in the original
+> implementation; use the [repaired comparison](../pre_route_20261122/power/du_repair/README.md)
+> for validated three-format netlist and power evidence.
+
 This experiment targeted the previous BRAM/rotating FIFO production snapshot `7e40bf9`.
 It replaces two compilation units in the integrated design. Compile
 [`outer_product_core.sv`](outer_product_core.sv) and the local

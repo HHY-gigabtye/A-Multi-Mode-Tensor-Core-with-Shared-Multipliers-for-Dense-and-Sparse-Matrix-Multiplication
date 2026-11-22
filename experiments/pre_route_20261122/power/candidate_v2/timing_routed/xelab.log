@@ -1,0 +1,8 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --debug typical --mt 2 --snapshot power_sim work.tb_power work.glbl -L simprims_ver -L unisims_ver -L secureip --sdfmax /tb_power/dut=C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/candidate_v2/routed.sdf --transport_int_delays --pulse_r 0 --pulse_int_r 0 --pulse_e 0 --pulse_int_e 0 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+ERROR: [VRFC 10-2649] an enum variable may only be assigned the same enum typed variable or one of its values [C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv:65]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

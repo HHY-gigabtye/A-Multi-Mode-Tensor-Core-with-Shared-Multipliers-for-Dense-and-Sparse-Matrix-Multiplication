@@ -1,0 +1,18 @@
+
+****** xsim v2022.2 (64-bit)
+  **** SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/du_sim/xsim_script.tcl
+# xsim {du_sim} -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/unit_sim.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/unit_sim.tcl
+## run all
+DU GATE PASS sent=74734 checked=74701 resets=16 bitmap_pairs=65536 hybrid_cases=6144
+$finish called at time : 758410 ns : File "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/tb_du_gate.sv" Line 142
+## if {[get_value -radix unsigned /tb_du_gate/passed] != 1} {error "DU unit failed"}
+## puts "DU_UNIT_SIMULATION_PASS"
+DU_UNIT_SIMULATION_PASS
+## quit
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 03:35:08 2026...

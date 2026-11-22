@@ -1,0 +1,7 @@
+# Generated simulation libraries and routed export; source DCPs are retained locally.
+**/xsim.dir/
+**/routed.v
+**/routed_functional.v
+**/routed.sdf
+**/activity.saif
+**/*.wdb

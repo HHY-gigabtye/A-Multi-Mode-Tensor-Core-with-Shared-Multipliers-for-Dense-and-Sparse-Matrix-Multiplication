@@ -1,0 +1,1 @@
+PASS: shared DU/TIA repair; all source snapshots verified; 6 repaired RTL and 6 routed functional workload runs; identical driven inputs to original baseline; all 288 tiles checked per run; 100 MHz, 256 completed tiles per 20.480 us activity window; 6 power reports.

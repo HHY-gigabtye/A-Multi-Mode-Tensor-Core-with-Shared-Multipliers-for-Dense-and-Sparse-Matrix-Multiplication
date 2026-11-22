@@ -1,0 +1,1 @@
+PASS: workloads=dense; 2 RTL and 2 functional_net_saif runs; identical driven inputs across all four runs per mode; 100 MHz; 256 completed tiles in each 20.480 us SAIF window.

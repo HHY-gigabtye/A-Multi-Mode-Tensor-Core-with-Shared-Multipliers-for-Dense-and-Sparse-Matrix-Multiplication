@@ -1,0 +1,327 @@
+Reading pref.tcl
+
+# 2020.1
+
+# do integration_sv/sim/run_units.do
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/integration_sv/build/units
+# mlu tb_mlu {mlu_sv/du_tia_pkg.sv mlu_sv/mlu_pkg.sv mlu_sv/mlu.sv mlu_sv/tb_mlu.sv} mlu_sv/mlu_vectors.txt
+# du_tia tb_du_tia {du_tia_sv/rtl/du_tia_pkg.sv du_tia_sv/rtl/du_tia.sv du_tia_sv/tb/tb_du_tia.sv} {}
+# bridge tb_bridge {fifo_sv/tensor_core_pkg.sv fifo_sv/du_tc_bridge_pkg.sv fifo_sv/du_tc_bridge.sv fifo_sv/tb_bridge.sv} fifo_sv/vectors/bridge_vectors.txt
+# tc tb_outer_core {tensor_core_sv/tensor_core_pkg.sv tensor_core_sv/outer_product_core.sv tensor_core_sv/tb_outer_core.sv} tensor_core_sv/c_vectors.txt
+# compare tb_compare {tensor_core_sv/tensor_core_pkg.sv tensor_core_sv/outer_product_core.sv tensor_core_sv/tensor_core.sv tensor_core_sv/tb_compare.sv} {}
+# msu tb_msu {msu_sv/rtl/msu_pkg.sv msu_sv/rtl/msu.sv msu_sv/tb/tb_msu.sv} msu_sv/vectors/msu_vectors.txt
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:05 on Nov 22,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/du_tia_pkg.sv 
+# -- Compiling package du_tia_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:05 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:05 on Nov 22,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/mlu_pkg.sv 
+# -- Compiling package mlu_pkg
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:05 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:05 on Nov 22,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/mlu.sv 
+# -- Compiling module mlu
+# -- Importing package mlu_pkg
+# -- Importing package du_tia_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/mlu.sv(14): (vlog-13314) Defaulting port 'command' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/mlu.sv(24): (vlog-13314) Defaulting port 'read_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	mlu
+# End time: 02:30:05 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:05 on Nov 22,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/tb_mlu.sv 
+# -- Compiling module tb_mlu
+# -- Importing package mlu_pkg
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	tb_mlu
+# End time: 02:30:05 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_mlu.tb_mlu "+VECTORS=C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/mlu_vectors.txt" 
+# Start time: 02:30:05 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_mlu.du_tia_pkg
+# Loading unit_mlu.mlu_pkg
+# Loading unit_mlu.tb_mlu
+# Loading unit_mlu.mlu
+# ALL PASS MLU unit C/SV: 16708 records, 145 resets, 128 rejected edges
+#   commands=1397 packets=10236 retired=1279
+#   command+retire=1 read+output=4087 full_stalls=13908 both_ready=4396
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/tb_mlu.sv(146)
+#    Time: 167080 ns  Iteration: 0  Instance: /tb_mlu
+# Break in Module tb_mlu at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/tb_mlu.sv line 146
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/mlu_sv/tb_mlu.sv line 146
+# End time: 02:30:12 on Nov 22,2026, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:12 on Nov 22,2026
+# vlog -sv -work unit_du_tia C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/rtl/du_tia_pkg.sv 
+# -- Compiling package du_tia_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:12 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:12 on Nov 22,2026
+# vlog -sv -work unit_du_tia C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/rtl/du_tia.sv 
+# -- Compiling module du_tia
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	du_tia
+# End time: 02:30:12 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:12 on Nov 22,2026
+# vlog -sv -work unit_du_tia C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/tb/tb_du_tia.sv 
+# -- Compiling module tb_du_tia
+# -- Importing package du_tia_pkg
+# 
+# Top level modules:
+# 	tb_du_tia
+# End time: 02:30:12 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_du_tia.tb_du_tia 
+# Start time: 02:30:12 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_du_tia.du_tia_pkg
+# Loading unit_du_tia.tb_du_tia
+# Loading unit_du_tia.du_tia
+# [PASS] DU/TIA compact RTL: 3292 packets checked
+#        directed=12 hybrid-exhaustive=24 bitmap-exhaustive=256 random=3000
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/tb/tb_du_tia.sv(551)
+#    Time: 33370 ns  Iteration: 1  Instance: /tb_du_tia
+# Break in NamedBeginStat stimulus at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/tb/tb_du_tia.sv line 551
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/du_tia_sv/tb/tb_du_tia.sv line 551
+# End time: 02:30:13 on Nov 22,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:13 on Nov 22,2026
+# vlog -sv -work unit_bridge C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/tensor_core_pkg.sv 
+# -- Compiling package tensor_core_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:13 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:13 on Nov 22,2026
+# vlog -sv -work unit_bridge C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/du_tc_bridge_pkg.sv 
+# -- Compiling package du_tc_bridge_pkg
+# -- Importing package tensor_core_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:13 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:13 on Nov 22,2026
+# vlog -sv -work unit_bridge C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/du_tc_bridge.sv 
+# -- Compiling module du_tc_bridge
+# -- Importing package du_tc_bridge_pkg
+# -- Importing package tensor_core_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/du_tc_bridge.sv(13): (vlog-13314) Defaulting port 'issued_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/du_tc_bridge.sv(17): (vlog-13314) Defaulting port 'du_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	du_tc_bridge
+# End time: 02:30:13 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:13 on Nov 22,2026
+# vlog -sv -work unit_bridge C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/tb_bridge.sv 
+# -- Compiling module tb_bridge
+# -- Importing package tensor_core_pkg
+# -- Importing package du_tc_bridge_pkg
+# 
+# Top level modules:
+# 	tb_bridge
+# End time: 02:30:13 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_bridge.tb_bridge "+VECTORS=C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/vectors/bridge_vectors.txt" 
+# Start time: 02:30:13 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_bridge.tensor_core_pkg
+# Loading unit_bridge.du_tc_bridge_pkg
+# Loading unit_bridge.tb_bridge
+# Loading unit_bridge.du_tc_bridge
+# BRIDGE RTL PASS: C-equivalent rows=19147 rejected_edges=7156 resets=13
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/tb_bridge.sv(91)
+#    Time: 191476 ns  Iteration: 0  Instance: /tb_bridge
+# Break in NamedBeginStat run at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/tb_bridge.sv line 91
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/fifo_sv/tb_bridge.sv line 91
+# End time: 02:30:23 on Nov 22,2026, Elapsed time: 0:00:10
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:23 on Nov 22,2026
+# vlog -sv -work unit_tc C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tensor_core_pkg.sv 
+# -- Compiling package tensor_core_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:23 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:23 on Nov 22,2026
+# vlog -sv -work unit_tc C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv 
+# -- Compiling module outer_product_core
+# -- Importing package tensor_core_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv(8): (vlog-13314) Defaulting port 'in_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	outer_product_core
+# End time: 02:30:23 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:23 on Nov 22,2026
+# vlog -sv -work unit_tc C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_outer_core.sv 
+# -- Compiling module tb_outer_core
+# -- Importing package tensor_core_pkg
+# 
+# Top level modules:
+# 	tb_outer_core
+# End time: 02:30:23 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_tc.tb_outer_core "+VECTORS=C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/c_vectors.txt" 
+# Start time: 02:30:23 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_tc.tensor_core_pkg
+# Loading unit_tc.tb_outer_core
+# Loading unit_tc.outer_product_core
+# OUTER UNIT PASS C_records=21032 publications=1366 malformed=6 full_reject=1
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_outer_core.sv(66)
+#    Time: 63149 ns  Iteration: 0  Instance: /tb_outer_core
+# Break in Module tb_outer_core at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_outer_core.sv line 66
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_outer_core.sv line 66
+# End time: 02:30:54 on Nov 22,2026, Elapsed time: 0:00:31
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:55 on Nov 22,2026
+# vlog -sv -work unit_compare C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tensor_core_pkg.sv 
+# -- Compiling package tensor_core_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:55 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:55 on Nov 22,2026
+# vlog -sv -work unit_compare C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv 
+# -- Compiling module outer_product_core
+# -- Importing package tensor_core_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/outer_product_core.sv(8): (vlog-13314) Defaulting port 'in_packet' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	outer_product_core
+# End time: 02:30:55 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:55 on Nov 22,2026
+# vlog -sv -work unit_compare C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tensor_core.sv 
+# -- Compiling module tensor_core
+# -- Importing package tensor_core_pkg
+# 
+# Top level modules:
+# 	tensor_core
+# End time: 02:30:55 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:55 on Nov 22,2026
+# vlog -sv -work unit_compare C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_compare.sv 
+# -- Compiling module tb_compare
+# -- Importing package tensor_core_pkg
+# 
+# Top level modules:
+# 	tb_compare
+# End time: 02:30:55 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_compare.tb_compare 
+# Start time: 02:30:55 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_compare.tensor_core_pkg
+# Loading unit_compare.tb_compare
+# Loading unit_compare.tensor_core
+# Loading unit_compare.outer_product_core
+# TC BENCH pattern=0 core=0 tiles=24 cycles=576 min_II=24 max_II=24
+# TC BENCH pattern=0 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=1 core=0 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=1 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC BENCH pattern=2 core=0 tiles=24 cycles=432 min_II=12 max_II=24
+# TC BENCH pattern=2 core=1 tiles=24 cycles=196 min_II=8 max_II=8
+# TC COMPARISON PASS
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_compare.sv(98)
+#    Time: 4822 ns  Iteration: 0  Instance: /tb_compare
+# Break in Module tb_compare at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_compare.sv line 98
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/tensor_core_sv/tb_compare.sv line 98
+# End time: 02:30:56 on Nov 22,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:56 on Nov 22,2026
+# vlog -sv -work unit_msu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/rtl/msu_pkg.sv 
+# -- Compiling package msu_pkg
+# 
+# Top level modules:
+# 	--none--
+# End time: 02:30:56 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:56 on Nov 22,2026
+# vlog -sv -work unit_msu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/rtl/msu.sv 
+# -- Compiling module msu
+# -- Importing package msu_pkg
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/rtl/msu.sv(16): (vlog-13314) Defaulting port 'result_meta' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/rtl/msu.sv(17): (vlog-13314) Defaulting port 'result' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# 
+# Top level modules:
+# 	msu
+# End time: 02:30:56 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:30:56 on Nov 22,2026
+# vlog -sv -work unit_msu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/tb/tb_msu.sv 
+# -- Compiling module tb_msu
+# -- Importing package msu_pkg
+# 
+# Top level modules:
+# 	tb_msu
+# End time: 02:30:56 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -onfinish stop unit_msu.tb_msu "+VECTORS=C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/vectors/msu_vectors.txt" 
+# Start time: 02:30:56 on Nov 22,2026
+# Loading sv_std.std
+# Loading unit_msu.msu_pkg
+# Loading unit_msu.tb_msu
+# Loading unit_msu.msu
+# MSU phase 1 starts at cycle 0
+# MSU phase 2 starts at cycle 1341
+# MSU phase 3 starts at cycle 1370
+# MSU phase 4 starts at cycle 1638
+# MSU phase 5 starts at cycle 1719
+# MSU phase 6 starts at cycle 1788
+# MSU coverage: simultaneous=34 faults=42 resets=8
+# MSU SV PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full_last=632 wraps=335 max_count=2
+# ** Note: $finish    : C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/tb/tb_msu.sv(159)
+#    Time: 86836 ns  Iteration: 0  Instance: /tb_msu
+# Break in NamedBeginStat replay at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/tb/tb_msu.sv line 159
+# Stopped at C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/candidate/src/msu_sv/tb/tb_msu.sv line 159
+# End time: 02:30:59 on Nov 22,2026, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 0

@@ -1,0 +1,50 @@
+# TOP PHASE PASS epoch=1 tiles=64 cycles=547 stalls=0
+# TOP PHASE PASS epoch=2 tiles=96 cycles=1364 stalls=1
+# TOP PHASE PASS epoch=3 tiles=48 cycles=830 stalls=1
+# TOP PHASE PASS epoch=5 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=7 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=9 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=11 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=13 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=15 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=17 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=19 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=21 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=23 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=25 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=27 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=29 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=31 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=33 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=35 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=37 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=39 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=41 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=43 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=45 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=47 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=49 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=51 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=53 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=55 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=57 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=59 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=61 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=63 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=65 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=67 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=69 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=71 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=73 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=75 tiles=3 cycles=59 stalls=0
+# TOP PHASE PASS epoch=76 tiles=24 cycles=227 stalls=0
+# UNSTALLED DENSE PASS tiles=24 intervals=23 II=8 last_k_to_publish=3
+# TOP PHASE PASS epoch=77 tiles=27 cycles=251 stalls=0
+# UNSTALLED MIXED PASS tiles=27 intervals=26 II=8 last_k_to_publish=3
+# TOP COVERAGE full_credit=717 fifo_full=558 inflight4=2962 meta_full=2275 msu_full=2038 tc_full=607
+# TOP COVERAGE fifo_both=3099 meta_both=3 fifo_wrap=419 meta_wrap=175 tile_II8=246
+# TOP COVERAGE write_stall=1165 last_stall=50 mlu_stall=655 read_stall=48 command_stall=3759 mixed_II8=172
+# TOP COVERAGE modes=137/168/127 zero_count=414 full_count=412 stored_zero=1371
+# TOP MODE TRANSITIONS 0->0/1/2=73/50/13 1->0/1/2=12/14/100 2->0/1/2=13/80/14
+# TOP RESET COVERAGE fifo=1ff inflight=1f meta=7 msu=7 tc=7 mlu=7 rows=ff read=1 last=1
+# TOP INTEGRATION PASS: completed_tiles=369 issued_packets=3542 write_beats=2987 resets=77 seed=91e10da5

@@ -1,0 +1,5 @@
+Baseline commit: 2458bf6962ea6946d820276a0faba0e00e6fe5e5
+Baseline branch: main
+Initial tracked worktree: clean
+Accepted manifest: 91 files; added unit-local package dependencies: 2
+Scope: isolated experiment; production RTL and project untouched.

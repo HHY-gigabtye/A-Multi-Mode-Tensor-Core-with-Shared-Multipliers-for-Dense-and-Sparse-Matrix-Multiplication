@@ -1,9 +1,13 @@
 # Fresh native 10 ns rebuild, 2026-11-13
 
 > Historical predecessor: this November 13 record uses the earlier dense/sparse
-> compute paths. Current `main` selects the shared outer-product core; use the
+> compute paths. Current `main` routes operands before its shared multipliers
+> and includes the DU/TIA whole-union assignment repair; use the
 > [current TC contract](../../../tensor_core_sv/README.md) and
-> [current GUI guide](../../../docs/bram-100mhz-gui.md) for its sources and active runs.
+> [November 22 promotion record](../../../reports/verification/operand_route_main_20261122/README.md)
+> for its sources and validation. The [GUI guide](../../../docs/bram-100mhz-gui.md)
+> describes retained earlier runs; existing GUI checkpoints are historical and
+> have not been rebuilt with the newly promoted sources.
 >
 > This timestamped record describes the completed native rebuild. Subsequent
 > publication cleanup removed the superseded `synth_10ns` / `impl_10ns` run

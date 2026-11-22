@@ -1,0 +1,2 @@
+DU GATE PASS sent=74734 checked=74701 resets=16 bitmap_pairs=65536 hybrid_cases=6144
+DU_UNIT_SIMULATION_PASS

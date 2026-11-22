@@ -2,6 +2,12 @@
 
 The production top connects MLU, DU/TIA, the credit-controlled Bridge, the shared outer-product TC and MSU. The system testbench checks all three external memory formats against mathematical GEMM.
 
+Since the November 22 promotion, TC restores INT8 operand coordinates before
+its 64 signed multipliers, then accumulates in INT32. DU/TIA S1/S2 build plain
+packed structs and assign the selected union once to avoid the reproduced
+Vivado RTL/netlist mismatch. The top, packet layouts, four-stage DU/TIA timing,
+credit rules, II=8, and k=7+3 publication are unchanged.
+
 ## Files and connections
 
 | Added file | Purpose |
@@ -12,7 +18,8 @@ The production top connects MLU, DU/TIA, the credit-controlled Bridge, the share
 | `sim/wave_top.do` | Waveform groups |
 | `sim/run_units.do` | Runs isolated component suites and the old/new TC comparison |
 | `sim/run_regression.ps1` | Optional batch launcher checking exit codes, errors, and every PASS marker |
-| `../reports/verification/outer_main_20261121/` | Current logs and implementation reports |
+| `../reports/verification/operand_route_main_20261122/` | Current main-source regression, applied two-file diff, source hashes, and links to retained candidate implementation evidence |
+| `../reports/verification/outer_main_20261121/` | Historical shared-core promotion and implementation reports |
 | `results/VALIDATION.md` | Historical integration validation |
 
 ```text
@@ -133,6 +140,22 @@ follows the five modules. Integration compiles exactly one copy each of
 the duplicate package definitions in the MLU and FIFO directories.
 
 ## Verification coverage
+
+The [November 22 main-source regression](../reports/verification/operand_route_main_20261122/README.md)
+passes all original units before integration, then completes 369 tiles with
+3,542 issued packets, 2,987 accepted write beats, and 77 resets. All 50 integration
+summary lines match the original baseline. Dense and mixed streams retain II=8
+and k=7+3 publication. To repeat without overwriting accepted evidence, run from
+the repository root with a fresh output name:
+
+```powershell
+./reports/verification/operand_route_main_20261122/run_regression.ps1 -RunName regression_repeat
+```
+
+The [final isolated comparison](../experiments/pre_route_20261122/power/du_repair/README.md)
+also validates both repaired routed functional netlists under all three power
+workloads. Its post-route PPA evidence matches the promoted source hashes;
+promotion did not rerun implementation, and existing GUI runs remain historical.
 
 The testbench computes GEMM from original mathematical A/B matrices, then
 independently encodes the memory image. It does not use DUT packetize/decode

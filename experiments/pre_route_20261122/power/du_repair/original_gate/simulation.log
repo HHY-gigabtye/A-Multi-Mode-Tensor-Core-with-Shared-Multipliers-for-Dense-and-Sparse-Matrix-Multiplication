@@ -1,0 +1,28 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 03:35:30 2026
+# Process ID: 32112
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/original_gate
+# Command line: xsim.exe -log simulation.log -mode tcl -source {xsim.dir/du_sim/xsim_script.tcl}
+# Log file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/original_gate/simulation.log
+# Journal file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/original_gate\xsim.jou
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+source xsim.dir/du_sim/xsim_script.tcl
+# xsim {du_sim} -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/unit_sim.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/unit_sim.tcl
+## run all
+Fatal: DU PAYLOAD FAIL sent=1 checked=0 actual=150000000504030201007000300000000001312110001eb expected=150000000504030201007d61300000000001312110001eb
+Time: 257 ns  Iteration: 0  Process: /tb_du_gate/Always58_3468  Scope: tb_du_gate  File: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/tb_du_gate.sv Line: 70
+$finish called at time : 257 ns
+## if {[get_value -radix unsigned /tb_du_gate/passed] != 1} {error "DU unit failed"}
+DU unit failed
+    while executing
+"error "DU unit failed""
+    invoked from within
+"if {[get_value -radix unsigned /tb_du_gate/passed] != 1} {error "DU unit failed"}"
+    (file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/du_repair/unit_sim.tcl" line 2)
+xsim% INFO: [Common 17-206] Exiting xsim at Sun Nov 22 03:35:33 2026...

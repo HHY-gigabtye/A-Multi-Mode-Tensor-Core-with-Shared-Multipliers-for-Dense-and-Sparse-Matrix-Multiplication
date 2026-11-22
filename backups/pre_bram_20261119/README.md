@@ -4,10 +4,10 @@
 > core. The original README describes a dense systolic path and a separate sparse
 > outer-product path, with 128 DSPs and predecessor timing. Those statements apply
 > to the archived design. Current `main` uses one shared 64-multiplier
-> `MUL -> ROUTE -> ACC` pipeline for all three formats. Read the
+> `operand ROUTE -> MUL -> ACC` pipeline for all three formats. Read the
 > [current project overview](../../README.md),
 > [current TC contract](../../tensor_core_sv/README.md), and
-> [shared-core promotion record](../../reports/verification/outer_main_20261121/README.md)
+> [current TC and DU/TIA promotion record](../../reports/verification/operand_route_main_20261122/README.md)
 > for the active implementation.
 
 ## Preserved original material

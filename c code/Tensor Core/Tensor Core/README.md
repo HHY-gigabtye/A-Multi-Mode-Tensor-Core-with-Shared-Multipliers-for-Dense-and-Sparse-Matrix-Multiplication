@@ -1,6 +1,6 @@
 # Tensor Core: C Model with Sparse Tile Overlap
 
-> Legacy C reference scope: this directory preserves the predecessor's dense systolic path, sparse outer-product path and mode-switch drain rules. Current production RTL uses one shared outer-product core for all formats. Its dense timing differs from this model; use the [current TC contract](../../../tensor_core_sv/README.md) and [verification record](../../../reports/verification/outer_main_20261121/README.md). The C model, tests and expected results remain unchanged.
+> Legacy C reference scope: this directory preserves the predecessor's dense systolic path, sparse outer-product path and mode-switch drain rules. Current production RTL uses operand ROUTE -> MUL -> ACC in one shared outer-product core for all formats, with the repaired DU/TIA upstream. Its dense timing differs from this model; use the [current TC contract](../../../tensor_core_sv/README.md) and [verification record](../../../reports/verification/operand_route_main_20261122/README.md). The C model, tests and expected results remain unchanged.
 
 This package was based on the supplied `tensor_core_model(2).c`, `tensor_core_model(2).h`, and `tb_tensor_core(2).c`. Delivered files use the standard names required by the existing includes.
 

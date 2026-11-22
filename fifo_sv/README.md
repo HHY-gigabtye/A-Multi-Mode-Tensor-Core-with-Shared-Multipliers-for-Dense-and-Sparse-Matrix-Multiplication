@@ -107,7 +107,7 @@ The logical C-model slot order, including stale contents, is reconstructed for
 the unchanged unit comparison. Metadata blocking, credit accounting and
 non-bypass latency retain their contracts. See the
 [BRAM/rotating-FIFO promotion record](../reports/verification/bram_main_20261119/README.md)
-for that change and the [current integration record](../reports/verification/outer_main_20261121/README.md)
+for that change and the [current integration record](../reports/verification/operand_route_main_20261122/README.md)
 for use with the shared TC.
 
 When the head has `k=0` and result metadata is full, `head_valid=0`. Metadata is

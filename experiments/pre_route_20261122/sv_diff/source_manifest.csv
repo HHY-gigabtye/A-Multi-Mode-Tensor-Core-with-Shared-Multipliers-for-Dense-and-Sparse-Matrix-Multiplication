@@ -1,0 +1,7 @@
+"Kind","Path","SourcePath","MainSHA256","FinalSHA256"
+"Modified RTL","tensor_core_sv/outer_product_core.sv","experiments/pre_route_20261122/power/du_repair/candidate_v2/src/tensor_core_sv/outer_product_core.sv","30ED6BEF4DBAF81A28610B7EE8C6E7ABE48D0ACDC5FCD81EF41803EEEDCB0005","E0E011BBC89805F71A8CDC89646AE40D1A27A6FF4349092FF7704C46385BF3A1"
+"Modified RTL","du_tia_sv/rtl/du_tia.sv","experiments/pre_route_20261122/power/du_repair/candidate_v2/src/du_tia_sv/rtl/du_tia.sv","F7542387FABDB423E8DA46D16B2DC1DAE390AD61EAB0C80AD1EEB09B4497C2D3","E285AD436B5F4BFBB63BDFED8D90BCD238E27B54D021B14DEF6D9B9578F87700"
+"Added verification","experiments/pre_route_20261122/tb_pre_route_equiv.sv","experiments/pre_route_20261122/tb_pre_route_equiv.sv","","04A3F9A1E986EFCEF568C39637DEC33861153109ED9E5FF182BEA0E62C66818C"
+"Added verification","experiments/pre_route_20261122/power/tb_power.sv","experiments/pre_route_20261122/power/tb_power.sv","","29CA855B06AC2372AEEA82501E5BD7FD11D2483DE99F258F0A764BA19CA9CC0C"
+"Added verification","experiments/pre_route_20261122/power/du_repair/du_gate.sv","experiments/pre_route_20261122/power/du_repair/du_gate.sv","","96B7B8DB4B583AC284B6DB8DA7C67B140F6F4814F44D30E184A4DB468182281A"
+"Added verification","experiments/pre_route_20261122/power/du_repair/tb_du_gate.sv","experiments/pre_route_20261122/power/du_repair/tb_du_gate.sv","","A08A48BDDE4BAB880C9B232281AE2E942BC28102288CC43FC8D888806BF727A9"

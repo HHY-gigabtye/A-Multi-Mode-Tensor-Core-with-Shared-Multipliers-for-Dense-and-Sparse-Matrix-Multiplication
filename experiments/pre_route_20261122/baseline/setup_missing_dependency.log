@@ -1,0 +1,19 @@
+# do integration_sv/sim/run_units.do
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src
+# C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src/integration_sv/build/units
+# mlu tb_mlu {mlu_sv/du_tia_pkg.sv mlu_sv/mlu_pkg.sv mlu_sv/mlu.sv mlu_sv/tb_mlu.sv} mlu_sv/mlu_vectors.txt
+# du_tia tb_du_tia {du_tia_sv/rtl/du_tia_pkg.sv du_tia_sv/rtl/du_tia.sv du_tia_sv/tb/tb_du_tia.sv} {}
+# bridge tb_bridge {fifo_sv/tensor_core_pkg.sv fifo_sv/du_tc_bridge_pkg.sv fifo_sv/du_tc_bridge.sv fifo_sv/tb_bridge.sv} fifo_sv/vectors/bridge_vectors.txt
+# tc tb_outer_core {tensor_core_sv/tensor_core_pkg.sv tensor_core_sv/outer_product_core.sv tensor_core_sv/tb_outer_core.sv} tensor_core_sv/c_vectors.txt
+# compare tb_compare {tensor_core_sv/tensor_core_pkg.sv tensor_core_sv/outer_product_core.sv tensor_core_sv/tensor_core.sv tensor_core_sv/tb_compare.sv} {}
+# msu tb_msu {msu_sv/rtl/msu_pkg.sv msu_sv/rtl/msu.sv msu_sv/tb/tb_msu.sv} msu_sv/vectors/msu_vectors.txt
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 02:25:51 on Nov 22,2026
+# vlog -sv -work unit_mlu C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src/mlu_sv/du_tia_pkg.sv 
+# ** Error: (vlog-7) Failed to open design unit file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/baseline/src/mlu_sv/du_tia_pkg.sv" in read mode.
+# No such file or directory. (errno = ENOENT)
+# End time: 02:25:51 on Nov 22,2026, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vlog failed.
+# Executing ONERROR command at macro ./integration_sv/sim/run_units.do line 38

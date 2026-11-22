@@ -1,0 +1,12 @@
+PASS: 27 documentation/metadata backups preserve original bytes.
+PASS: 26 updated READMEs; 13 reviewed READMEs unchanged.
+PASS: exactly three evidence locations relocated; all original hashes retained.
+PASS: 93 production source/reference/test hashes unchanged.
+PASS: 7 original promotion backups unchanged.
+PASS: 81 original evidence artifacts preserved.
+PASS: 186 repaired snapshot source hashes unchanged.
+PASS: 54 repaired experiment artifact hashes unchanged.
+PASS: 186 original baseline/candidate snapshot hashes unchanged.
+PASS: 286 local Markdown link destinations exist.
+PASS: git diff --check and all three read-only patch consistency checks.
+NOT RUN: RTL simulation, synthesis, implementation, and power; this is a documentation-only update.

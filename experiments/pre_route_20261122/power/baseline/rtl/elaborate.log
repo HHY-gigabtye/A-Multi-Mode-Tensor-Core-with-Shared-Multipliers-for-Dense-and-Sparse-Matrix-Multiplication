@@ -1,0 +1,24 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --debug typical --mt 2 --snapshot power_sim work.tb_power 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.mlu_pkg
+Compiling package work.du_tia_pkg
+Compiling package work.msu_pkg
+Compiling package work.du_tc_bridge_pkg
+Compiling package work.tensor_core_pkg
+Compiling module work.mlu_default
+Compiling module work.du_tia
+Compiling module work.du_tc_bridge
+Compiling module work.outer_product_core_default
+Compiling module work.msu
+Compiling module work.sparse_tensor_core_top
+Compiling module work.tb_power
+ERROR: [XSIM 43-3409] Failed to compile generated C file xsim.dir/power_sim/obj/xsim_4.c.
+ERROR: [XSIM 43-3915] Encountered a fatal error. Cannot continue. Exiting... 

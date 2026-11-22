@@ -1,0 +1,3 @@
+original traffic: results=120 beats=960 cycles=1339 simultaneous=1
+random traffic: results=512 beats=4096 cycles=6892
+C VECTOR PASS: cycles=8683 accepted=676 beats=5394 done=673 simultaneous=34 faults=42 resets=8 stalls=3216 full=7591 full_last=632 full_bad=8 wraps=335 max_count=2

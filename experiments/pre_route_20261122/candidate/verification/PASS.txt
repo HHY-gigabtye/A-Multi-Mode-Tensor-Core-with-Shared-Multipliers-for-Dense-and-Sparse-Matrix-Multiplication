@@ -1,0 +1,1 @@
+PASS: candidate original unit suites, comparison, integration; 50 identical top summaries; protected snapshot hashes unchanged.

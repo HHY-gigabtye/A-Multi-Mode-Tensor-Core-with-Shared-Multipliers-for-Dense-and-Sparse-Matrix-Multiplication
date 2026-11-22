@@ -1,0 +1,48 @@
+
+****** xsim v2022.2 (64-bit)
+  **** SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/power_sim/xsim_script.tcl
+# xsim {power_sim} -testplusarg HYBRID -autoloadwcfg -tclbatch {C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/simulate.tcl}
+Time resolution is 1 ps
+source C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/simulate.tcl
+## set out [file normalize $::env(POWER_RUN_OUT)]
+## cd $out
+## run 2000 ns
+Fatal: POWER WORKLOAD FAIL mode=1 cycle=11: status
+Time: 325 ns  Iteration: 0  Process: /tb_power/check  Scope: tb_power.check  File: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv Line: 95
+$finish called at time : 325 ns
+## set before [get_value -radix unsigned /tb_power/dones]
+## if {$::env(POWER_CAPTURE) eq "1"} {
+##   open_saif [file join $out activity.saif]
+##   # The exported netlist has these six design scopes. Log their nets and
+##   # ports, excluding vendor primitive internals that cannot map to DCP nets.
+##   foreach scope {/tb_power/dut /tb_power/dut/u_mlu /tb_power/dut/u_du_tia /tb_power/dut/u_bridge /tb_power/dut/u_tensor_core /tb_power/dut/u_msu} {
+##     set objects [get_objects $scope/*]
+##     if {[llength $objects] == 0} {error "Empty design scope: $scope"}
+##     log_saif $objects
+##     puts "POWER_SAIF_SCOPE $scope objects=[llength $objects]"
+##   }
+## }
+POWER_SAIF_SCOPE /tb_power/dut objects=842
+POWER_SAIF_SCOPE /tb_power/dut/u_mlu objects=2853
+POWER_SAIF_SCOPE /tb_power/dut/u_du_tia objects=996
+POWER_SAIF_SCOPE /tb_power/dut/u_bridge objects=712
+POWER_SAIF_SCOPE /tb_power/dut/u_tensor_core objects=22185
+POWER_SAIF_SCOPE /tb_power/dut/u_msu objects=1804
+## run 20480 ns
+Fatal: POWER WORKLOAD FAIL mode=1 cycle=12: status
+Time: 335 ns  Iteration: 0  Process: /tb_power/check  Scope: tb_power.check  File: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/tb_power.sv Line: 95
+$finish called at time : 335 ns
+## if {$::env(POWER_CAPTURE) eq "1"} {close_saif}
+## set after [get_value -radix unsigned /tb_power/dones]
+## if {$after-$before != 256} {error "Expected 256 completed tiles in power window: $before -> $after"}
+Expected 256 completed tiles in power window: 0 -> 0
+    while executing
+"error "Expected 256 completed tiles in power window: $before -> $after""
+    invoked from within
+"if {$after-$before != 256} {error "Expected 256 completed tiles in power window: $before -> $after"}"
+    (file "C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/simulate.tcl" line 19)
+xsim% INFO: [Common 17-206] Exiting xsim at Sun Nov 22 03:20:29 2026...

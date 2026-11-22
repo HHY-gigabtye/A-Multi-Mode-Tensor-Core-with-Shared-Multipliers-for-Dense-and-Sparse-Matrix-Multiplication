@@ -1,0 +1,413 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date             : Sun Nov 22 03:27:29 2026
+| Host             : MSI running 64-bit major release  (build 9200)
+| Command          : report_power -hier all -hierarchical_depth 3 -advisory -l 20 -file C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/baseline/reports/functional_net_saif_filtered/dense/power.rpt
+| Design           : sparse_tensor_core_top
+| Device           : xc7z020clg484-1
+| Design State     : routed
+| Grade            : commercial
+| Process          : typical
+| Characterization : Production
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Power Report
+
+Table of Contents
+-----------------
+1. Summary
+1.1 On-Chip Components
+1.2 Power Supply Summary
+1.3 Confidence Level
+2. Settings
+2.1 Environment
+2.2 Clock Constraints
+3. Detailed Reports
+3.1 By Hierarchy
+3.2 By Clock Domain
+3.3 By Resource Type
+3.3.1 Signals
+3.3.2 Slice Logic
+3.3.3 Block RAM
+3.3.4 DSPs
+4. Advisory
+
+1. Summary
+----------
+
++--------------------------+------------------------------------------------------------------------------------------------------------------------+
+| Total On-Chip Power (W)  | 0.714                                                                                                                  |
+| Design Power Budget (W)  | Unspecified*                                                                                                           |
+| Power Budget Margin (W)  | NA                                                                                                                     |
+| Dynamic (W)              | 0.563                                                                                                                  |
+| Device Static (W)        | 0.151                                                                                                                  |
+| Effective TJA (C/W)      | 11.5                                                                                                                   |
+| Max Ambient (C)          | 76.8                                                                                                                   |
+| Junction Temperature (C) | 50.0                                                                                                                   |
+| Confidence Level         | High                                                                                                                   |
+| Setting File             | ---                                                                                                                    |
+| Simulation Activity File | C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/baseline/functional_net_saif/dense/activity_import.saif |
+| Design Nets Matched      | 100%   (49109/49109)                                                                                                   |
++--------------------------+------------------------------------------------------------------------------------------------------------------------+
+* Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
+
+
+1.1 On-Chip Components
+----------------------
+
++-------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
++-------------------------+-----------+----------+-----------+-----------------+
+| Clocks                  |     0.056 |        3 |       --- |             --- |
+| Slice Logic             |     0.145 |    44473 |       --- |             --- |
+|   LUT as Logic          |     0.134 |    22480 |     53200 |           42.26 |
+|   CARRY4                |     0.006 |      553 |     13300 |            4.16 |
+|   Register              |     0.005 |    16281 |    106400 |           15.30 |
+|   F7/F8 Muxes           |    <0.001 |      424 |     53200 |            0.80 |
+|   LUT as Shift Register |    <0.001 |      101 |     17400 |            0.58 |
+|   Others                |     0.000 |       13 |       --- |             --- |
+| Signals                 |     0.227 |    31808 |       --- |             --- |
+| Block RAM               |     0.064 |       18 |       140 |           12.86 |
+| DSPs                    |     0.071 |       64 |       220 |           29.09 |
+| Static Power            |     0.151 |          |           |                 |
+| Total                   |     0.714 |          |           |                 |
++-------------------------+-----------+----------+-----------+-----------------+
+
+
+1.2 Power Supply Summary
+------------------------
+
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Vccint    |       1.000 |     0.581 |       0.561 |      0.020 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.017 |       0.000 |      0.017 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.004 |       0.002 |      0.003 |       NA    | Unspecified | NA         |
+| MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccpint   |       1.000 |     0.037 |       0.000 |      0.037 |       NA    | Unspecified | NA         |
+| Vccpaux   |       1.800 |     0.010 |       0.000 |      0.010 |       NA    | Unspecified | NA         |
+| Vccpll    |       1.800 |     0.003 |       0.000 |      0.003 |       NA    | Unspecified | NA         |
+| Vcco_ddr  |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco_mio0 |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco_mio1 |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+
+
+1.3 Confidence Level
+--------------------
+
++-----------------------------+------------+------------------------------------------------+--------+
+| User Input Data             | Confidence | Details                                        | Action |
++-----------------------------+------------+------------------------------------------------+--------+
+| Design implementation state | High       | Design is routed                               |        |
+| Clock nodes activity        | High       | User specified more than 95% of clocks         |        |
+| I/O nodes activity          | High       | User specified more than 95% of inputs         |        |
+| Internal nodes activity     | High       | User specified more than 25% of internal nodes |        |
+| Device models               | High       | Device models are Production                   |        |
+|                             |            |                                                |        |
+| Overall confidence level    | High       |                                                |        |
++-----------------------------+------------+------------------------------------------------+--------+
+
+
+2. Settings
+-----------
+
+2.1 Environment
+---------------
+
++-----------------------+------------------------+
+| Ambient Temp (C)      | 41.8                   |
+| ThetaJA (C/W)         | 11.5                   |
+| Airflow (LFM)         | 250                    |
+| Heat Sink             | none                   |
+| ThetaSA (C/W)         | 0.0                    |
+| Board Selection       | medium (10"x10")       |
+| # of Board Layers     | 8to11 (8 to 11 Layers) |
+| Board Temperature (C) | 25.0                   |
++-----------------------+------------------------+
+
+
+2.2 Clock Constraints
+---------------------
+
++-------+--------+-----------------+
+| Clock | Domain | Constraint (ns) |
++-------+--------+-----------------+
+| clk   | clk    |            10.0 |
++-------+--------+-----------------+
+
+
+3. Detailed Reports
+-------------------
+
+3.1 By Hierarchy
+----------------
+
++------------------------+-----------+---------+-----------+----------+------------+---------+-----------+--------+----------+-------+---------+
+| Name                   | Power (W) | Clock # | Clock (W) | Signal # | Signal (W) | Logic # | Logic (W) | Bram # | Bram (W) | Dsp # | Dsp (W) |
++------------------------+-----------+---------+-----------+----------+------------+---------+-----------+--------+----------+-------+---------+
+| sparse_tensor_core_top |     0.563 |       3 |     0.056 |    31808 |      0.227 |   44473 |     0.145 |     18 |    0.064 |    64 |   0.071 |
+|   u_bridge             |     0.039 |       3 |     0.009 |     3269 |      0.026 |    4331 |     0.004 |      0 |    0.000 |     0 |   0.000 |
+|   u_du_tia             |     0.032 |       3 |     0.003 |     1263 |      0.014 |    3275 |     0.016 |      0 |    0.000 |     0 |   0.000 |
+|   u_mlu                |     0.105 |       3 |     0.004 |     3637 |      0.024 |    3703 |     0.013 |     18 |    0.064 |     0 |   0.000 |
+|   u_msu                |     0.048 |       3 |     0.015 |     5277 |      0.019 |    6410 |     0.014 |      0 |    0.000 |     0 |   0.000 |
+|   u_tensor_core        |     0.339 |       3 |     0.025 |    18344 |      0.145 |   26615 |     0.098 |      0 |    0.000 |    64 |   0.071 |
++------------------------+-----------+---------+-----------+----------+------------+---------+-----------+--------+----------+-------+---------+
+
+
+3.2 By Clock Domain
+-------------------
+
++-------+-----------+-----------------+--------+-------------------------+---------------+------------+----------+-------------+------+
+| Name  | Power (W) | Frequency (MHz) | Buffer | Clock Buffer Enable (%) | Enable Signal | Bel Fanout | Sites    | Fanout/Site | Type |
++-------+-----------+-----------------+--------+-------------------------+---------------+------------+----------+-------------+------+
+| clk   |     0.056 |          100.00 | N/A    |                     N/A | N/A           |      16464 |     5487 |        3.00 | N/A  |
+|   clk |     0.056 |          100.00 | N/A    |                     N/A | N/A           |      16464 |     5487 |        3.00 | N/A  |
++-------+-----------+-----------------+--------+-------------------------+---------------+------------+----------+-------------+------+
+
+
+3.3 By Resource Type
+--------------------
+
+3.3.1 Signals
+-------------
+
++----------------------------------------+-----------+---------------------+----------+----------+--------------+-------+------------+
+| Name                                   | Power (W) | Signal Rate (Mtr/s) | % High   | Fanout   | Slice Fanout | Clock | Logic Type |
++----------------------------------------+-----------+---------------------+----------+----------+--------------+-------+------------+
+| u_msu/row_q_reg_n_0_[1]                |     0.002 |               50.00 |    50.00 |      628 |          521 | clk   | N/A        |
+| u_tensor_core/result                   |     0.001 |               25.00 |    12.50 |     2048 |          567 | clk   | FF         |
+| u_msu/meta_q[1][95]_i_1_n_0            |     0.001 |               18.75 |     6.25 |     2144 |          538 | clk   | FF         |
+| u_mlu/ctrl_q_reg[next_k_n_0_][0]       |     0.001 |              100.00 |    50.00 |      182 |          113 | clk   | N/A        |
+| u_msu/meta_q[0][95]_i_1_n_0            |     0.001 |               18.75 |     6.25 |     2144 |          531 | clk   | FF         |
+| u_mlu/ctrl_q_reg[next_k_n_0_][1]       |    <0.001 |               50.00 |    50.00 |      369 |          229 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__6_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           94 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__2_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           90 | clk   | N/A        |
+| u_mlu/image_write                      |    <0.001 |              100.00 |    32.75 |      262 |           84 | clk   | FF LUT     |
+| u_msu/row_q_reg[0]_rep__4_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           73 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__7_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           94 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__5_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           60 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__3_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           96 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__1_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           59 | clk   | N/A        |
+| u_mlu/ctrl_q_reg[next_k][0]_rep__0_n_0 |    <0.001 |              100.00 |    50.00 |      106 |           97 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep__0_n_0          |    <0.001 |              100.00 |    50.00 |      118 |           61 | clk   | N/A        |
+| u_mlu/ctrl_q_reg[next_k][0]_rep_n_0    |    <0.001 |              100.00 |    50.00 |      104 |           76 | clk   | N/A        |
+| u_msu/row_q_reg[0]_rep_n_0             |    <0.001 |              100.00 |    50.00 |      118 |           71 | clk   | N/A        |
+| u_mlu/peek.f2[2]                       |    <0.001 |              100.00 |    50.00 |       86 |           58 | clk   | N/A        |
+| u_tensor_core/p_63_out                 |    <0.001 |               25.00 |    12.50 |      320 |          200 | clk   | N/A        |
++----------------------------------------+-----------+---------------------+----------+----------+--------------+-------+------------+
+
+
+3.3.2 Slice Logic
+-----------------
+
++---------------------------------------+-----------+------+-------------+------------+---------------------+----------+
+| Name                                  | Power (W) | Type | Clock (MHz) | Clock Name | Signal Rate (Mtr/s) | % High   |
++---------------------------------------+-----------+------+-------------+------------+---------------------+----------+
+| u_mlu/s0_q[packet][payload][103]_i_11 |    <0.001 | LUT  |         N/A | Async      |              100.00 |    37.50 |
+| u_mlu/s0_q[packet][payload][183]_i_21 |    <0.001 | LUT  |         N/A | Async      |              100.00 |    37.50 |
+| u_mlu/s0_q[packet][payload][103]_i_8  |    <0.001 | LUT  |         N/A | Async      |               75.00 |    75.00 |
+| u_mlu/s0_q[packet][payload][135]_i_15 |    <0.001 | LUT  |         N/A | Async      |               75.00 |    50.00 |
+| u_mlu/s0_q[packet][payload][215]_i_20 |    <0.001 | LUT  |         N/A | Async      |               75.00 |    50.00 |
+| u_mlu/s0_q[packet][payload][135]_i_11 |    <0.001 | LUT  |         N/A | Async      |               62.50 |    75.00 |
+| u_mlu/s0_q[packet][payload][215]_i_19 |    <0.001 | LUT  |         N/A | Async      |              100.00 |    37.50 |
+| u_mlu/s0_q[packet][payload][215]_i_12 |    <0.001 | LUT  |         N/A | Async      |               62.50 |    75.00 |
+| u_mlu/s0_q[packet][payload][103]_i_12 |    <0.001 | LUT  |         N/A | Async      |               50.00 |    50.00 |
+| u_mlu/s0_q[packet][payload][183]_i_20 |    <0.001 | LUT  |         N/A | Async      |               62.50 |    37.50 |
+| u_mlu/s0_q[packet][payload][183]_i_13 |    <0.001 | LUT  |         N/A | Async      |               62.50 |    75.00 |
+| u_du_tia/s1_q[payload][29]_i_6        |    <0.001 | LUT  |         N/A | Async      |               53.13 |    50.05 |
+| u_mlu/s0_q[packet][payload][135]_i_10 |    <0.001 | LUT  |         N/A | Async      |               62.50 |    75.00 |
+| u_bridge/fifo_storage_q[5][k][0]_i_1  |    <0.001 | LUT  |         N/A | Async      |              100.00 |    50.00 |
+| u_bridge/fifo_storage_q[7][k][0]_i_1  |    <0.001 | LUT  |         N/A | Async      |              100.00 |    50.00 |
+| u_du_tia/s1_q[payload][1]_i_2         |    <0.001 | LUT  |         N/A | Async      |               50.29 |    48.10 |
+| u_du_tia/s1_q[payload][127]_i_8       |    <0.001 | LUT  |         N/A | Async      |               49.95 |    49.49 |
+| u_mlu/s0_q[packet][payload][135]_i_8  |    <0.001 | LUT  |         N/A | Async      |               50.00 |    25.00 |
+| u_bridge/fifo_storage_q[1][k][0]_i_1  |    <0.001 | LUT  |         N/A | Async      |              100.00 |    50.00 |
+| u_mlu/s0_q[packet][payload][183]_i_11 |    <0.001 | LUT  |         N/A | Async      |               37.50 |    75.00 |
++---------------------------------------+-----------+------+-------------+------------+---------------------+----------+
+
+
+3.3.3 Block RAM
+---------------
+
++-------------------------------+-----------+-----------+-------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+
+| Name                          | Power (W) | Mode      | Signal Rate | Clock Name A | Clock A (MHz) | Enable Rate A (%) | Read Width A | Write Width A | Write Mode A | Write Rate A (%) | Clock Name B | Clock B (MHz) | Enable Rate B (%) | Read Width B | Write Width B | Write Mode B | Write Rate B (%) |
++-------------------------------+-----------+-----------+-------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+
+| u_mlu/g_image[0].memory_reg_0 |     0.004 | RAMB36SDP |       15.54 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[0].memory_reg_1 |     0.004 | RAMB36SDP |       15.59 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[0].memory_reg_2 |     0.004 | RAMB36SDP |       15.67 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[0].memory_reg_3 |     0.004 | RAMB36SDP |       11.95 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[1].memory_reg_0 |     0.004 | RAMB36SDP |       15.60 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[1].memory_reg_1 |     0.004 | RAMB36SDP |       15.54 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[1].memory_reg_2 |     0.004 | RAMB36SDP |       15.67 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[1].memory_reg_3 |     0.004 | RAMB36SDP |       11.97 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[2].memory_reg_0 |     0.004 | RAMB36SDP |       15.56 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[2].memory_reg_1 |     0.004 | RAMB36SDP |       15.59 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[2].memory_reg_2 |     0.004 | RAMB36SDP |       15.67 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[2].memory_reg_3 |     0.004 | RAMB36SDP |       11.97 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[3].memory_reg_0 |     0.004 | RAMB36SDP |       15.57 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[3].memory_reg_1 |     0.004 | RAMB36SDP |       15.54 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[3].memory_reg_2 |     0.004 | RAMB36SDP |       15.71 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[3].memory_reg_3 |     0.004 | RAMB36SDP |       12.00 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |             12.50 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[4].memory_reg_0 |     0.004 | RAMB36SDP |       12.45 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |              0.00 |            0 |            72 | READ_FIRST   |           100.00 |
+| u_mlu/g_image[4].memory_reg_1 |     0.004 | RAMB36SDP |       13.28 | clk          |        100.00 |            100.00 |           72 |             0 | READ_FIRST   |             0.00 | clk          |        100.00 |              0.00 |            0 |            72 | READ_FIRST   |           100.00 |
++-------------------------------+-----------+-----------+-------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+--------------+---------------+-------------------+--------------+---------------+--------------+------------------+
+
+
+3.3.4 DSPs
+----------
+
++---------------------------------------+-----------+---------------+------------+------------+------------+-----------------+-------------+
+| Name                                  | Power (W) | Clock A (MHz) | Clock Name | MULT Used? | MREG Used? | Pre-Adder Used? | Signal Rate |
++---------------------------------------+-----------+---------------+------------+------------+------------+-----------------+-------------+
+| u_tensor_core/g_row[6].g_col[0].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.95 |
+| u_tensor_core/g_row[4].g_col[5].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.73 |
+| u_tensor_core/g_row[0].g_col[7].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.65 |
+| u_tensor_core/g_row[6].g_col[2].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.55 |
+| u_tensor_core/g_row[7].g_col[1].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.50 |
+| u_tensor_core/g_row[2].g_col[4].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.42 |
+| u_tensor_core/g_row[1].g_col[4].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.41 |
+| u_tensor_core/g_row[2].g_col[6].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.37 |
+| u_tensor_core/g_row[4].g_col[7].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.34 |
+| u_tensor_core/g_row[5].g_col[1].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.33 |
+| u_tensor_core/g_row[6].g_col[7].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.29 |
+| u_tensor_core/g_row[1].g_col[0].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.23 |
+| u_tensor_core/g_row[2].g_col[2].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.21 |
+| u_tensor_core/g_row[7].g_col[0].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.21 |
+| u_tensor_core/g_row[4].g_col[1].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.18 |
+| u_tensor_core/g_row[2].g_col[3].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.15 |
+| u_tensor_core/g_row[6].g_col[5].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.15 |
+| u_tensor_core/g_row[6].g_col[6].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.12 |
+| u_tensor_core/g_row[3].g_col[6].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.12 |
+| u_tensor_core/g_row[4].g_col[2].p_reg |     0.001 |        100.00 | clk        | Yes        | No         | No              |       49.11 |
++---------------------------------------+-----------+---------------+------------+------------+------------+-----------------+-------------+
+
+
+4. Advisory
+-----------
+
++------------------+--------+--------+-------------+-------------+--------------------+-----------------+-------------------------------------------------------+
+| Confidence Level | Status | Fanout | Signal Type | Polarity    | Static Probability | Toggle Rate (%) | Net                                                   |
++------------------+--------+--------+-------------+-------------+--------------------+-----------------+-------------------------------------------------------+
+| Low              |        |   2048 |             | Active High |               0.00 |             0.0 | u_tensor_core/tail                                    |
+| Low              |        |     18 | BRAM Enable | Active High |               0.00 |             0.0 | u_mlu/g_image[4].write_enable                         |
+| Medium           |        |   2144 |             | Active High |               0.06 |            12.5 | u_msu/meta_q[0][95]_i_1_n_0                           |
+| Medium           |        |   2144 |             | Active High |               0.06 |            12.5 | u_msu/meta_q[1][95]_i_1_n_0                           |
+| Medium           |        |   2048 |             | Active High |               0.13 |            25.0 | u_tensor_core/result                                  |
+| Medium           |        |   1088 |             | Active High |               1.00 |             0.0 | u_tensor_core/route_q                                 |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q                               |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[0][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[1][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[2][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[3][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[4][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[5][k][2]_i_1_n_0              |
+| Medium           |        |    283 |             | Active High |               1.00 |             0.0 | u_bridge/fifo_storage_q[6][k][2]_i_1_n_0              |
+| Medium           |        |    260 |             | Active High |               0.33 |            65.5 | u_mlu/image_write                                     |
+| Medium           |        |    234 |             | Active High |               0.13 |            25.0 | u_mlu/last_packet_q[mode][1]_i_1_n_0                  |
+| Medium           |        |    218 |             | Active High |               1.00 |             0.0 | u_bridge/state_q                                      |
+| Medium           |        |    193 |             | Active High |               0.13 |            25.0 | u_mlu/g_image[2].write_enable                         |
+| Medium           |        |    162 |             | Active High |               0.06 |            12.5 | u_mlu/ctrl_q[buffer][0][command][mode][1]_i_1_n_0     |
+| Medium           |        |    162 |             | Active High |               0.06 |            12.5 | u_mlu/ctrl_q[buffer][1][command][mode][1]_i_1_n_0     |
+| Medium           |        |     96 |             | Active High |               0.06 |            12.5 | u_bridge/state_q[result_meta][0][tile_id][31]_i_1_n_0 |
+| Medium           |        |     96 |             | Active High |               0.06 |            12.5 | u_bridge/state_q[result_meta][1][tile_id][31]_i_1_n_0 |
+| Medium           |        |     74 |             | Active High |               1.00 |             0.0 | u_bridge/publish_q                                    |
+| Medium           |        |     59 |             | Active High |               1.00 |             0.0 | u_tensor_core/next_k                                  |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[0][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[1][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[2][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[3][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[4][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[5][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[6][7][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][0][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][1][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][2][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][3][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][4][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][5][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][6][0]_i_1_n_0                    |
+| Medium           |        |     32 |             | Active High |               1.00 |             0.0 | u_tensor_core/acc[7][7][0]_i_1_n_0                    |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[0].memory_reg_0_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[0].memory_reg_1_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[0].memory_reg_2_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[0].memory_reg_3_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[1].memory_reg_0_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[1].memory_reg_1_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[1].memory_reg_2_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[1].memory_reg_3_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[2].memory_reg_0_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[2].memory_reg_1_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[2].memory_reg_2_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[2].memory_reg_3_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[3].memory_reg_0_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[3].memory_reg_1_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[3].memory_reg_2_i_1_n_0                 |
+| Medium           |        |      9 | BRAM Enable | Active High |               0.13 |            25.0 | u_mlu/g_image[3].memory_reg_3_i_1_n_0                 |
+| High             |        |  15489 | Clear       | Active High |               0.00 |             0.0 | u_tensor_core/rst_n_0                                 |
++------------------+--------+--------+-------------+-------------+--------------------+-----------------+-------------------------------------------------------+
+* High:  No action required.  Calculated activity values are consistent with signal type and polarity.
+** Medium:  Switching activity should be reviewed and corrected if necessary.  Calculated activity values may be inconsistent with signal type and polarity which can result in inaccurate power analysis.
+*** Low: Switching activity must be reviewed and corrected to prevent incorrect power analysis. Calculated activity values are inappropriate for the signal type and polarity.
+
+

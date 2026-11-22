@@ -7,6 +7,8 @@
 
 > Updated on 2026-11-21 for the shared outer-product TC on `main`. The dense systolic path and mode-aware admission described in the October handoff apply to the predecessor. [Integration and verification record](../reports/verification/outer_main_20261121/README.md)
 
+> Updated on 2026-11-22: production now restores operand coordinates before multiplication and uses the shared DU/TIA whole-union assignment repair. The prior snapshots and reports are retained. [Promotion and verification record](../reports/verification/operand_route_main_20261122/README.md)
+
 ## 1. Goal and current scope
 
 The project implements an 8×8 Tensor Core supporting dense and sparse workloads.
@@ -101,6 +103,7 @@ memory image**, not a variable-length maximum-compression format.
 - Dense mode retains its existing path without sparse decoding. DU decoding and TIA alignment produce sparse TC payloads for hybrid/dual. **Actual RTL and C models define per-stage structures and control; do not rename or repartition stages without checking them.**
 - A parallel four-stage sideband outside DU/TIA stores `valid/is_sparse/meta/k`; it need not duplicate the full matrix payload.
 - DU/TIA cannot stall, so Bridge must reserve credit for future output rather than checking only current FIFO occupancy.
+- S1 and S2 assemble dense/sparse fields in plain packed structs and assign the selected packed union once. This preserves the algorithm and four registers while avoiding the RTL/netlist mismatch reproduced with the prior partial-union-write form under Vivado 2022.2.
 
 ## 5. Bridge / FIFO / metadata: Critical cycle-level contract
 
@@ -138,7 +141,7 @@ once.** Do not update DU first and use its new S3 as the same-edge FIFO input.
 
 ## 6. Tensor Core computation
 
-Each accepted slice enters one 8×8 bank of signed INT8 multipliers. The route stage maps products from packed operand lanes to original row and column indices. The accumulator sign-extends each product into INT32 and initializes each output coordinate on the first slice of a tile.
+Each accepted slice first restores A and B independently from packed operand lanes to original row and column coordinates, zero-filling missing coordinates. The first stage registers two eight-element INT8 vectors and separate presence masks. The second stage registers fixed-coordinate products from one 8×8 bank of signed INT8 multipliers. The accumulator sign-extends each product into INT32 and initializes each output coordinate on the first slice of a tile. The fabric addition is explicitly marked `use_dsp="no"`, while multiplication uses `use_dsp="yes"`, preserving 64 DSPs. The historical `tick_info.mul` and `tick_info.route` fields still observe the first and second phases respectively; their names do not describe the new physical ordering.
 
 All three formats use the same pipeline and two result slots. A tile reserves its slot when k=0 is accepted and releases it on the result handshake. With eight consecutive accepted slices, the result becomes available three advancing edges after acceptance of k=7. Unstalled dense, sparse and mixed streams can start a tile every eight cycles. Format changes have no drain requirement. End-to-end writeback also depends on MSU and memory readiness.
 

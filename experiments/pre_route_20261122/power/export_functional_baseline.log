@@ -1,0 +1,55 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov 22 03:14:11 2026
+# Process ID: 26880
+# Current directory: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122
+# Command line: vivado.exe -mode batch -nojournal -log power/export_functional_baseline.log -source power/export_functional.tcl -tclargs baseline
+# Log file: C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/export_functional_baseline.log
+# Journal file: 
+# Running On: MSI, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 8, Host memory: 16866 MB
+#-----------------------------------------------------------
+CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store at 'C'. XilinxTclStore is reverted to the installation area. If you want to use local Tcl Store, please change the access right and relaunch Vivado.
+source power/export_functional.tcl
+# if {$argc != 1} {error "Expected variant"}
+# set variant [lindex $argv 0]
+# if {$variant ni {baseline candidate_v2}} {error "Bad variant"}
+# set root [file normalize [file dirname [info script]]]
+# set out [file join $root $variant routed_functional.v]
+# if {[file exists $out]} {error "Preserve existing netlist"}
+# set_param general.maxThreads 2
+# open_checkpoint [file join $root .. $variant routed routed.dcp]
+Command: open_checkpoint C:/Users/Jason/Desktop/TC/experiments/pre_route_20261122/power/../baseline/routed/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 326.270 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.223 . Memory (MB): peak = 864.207 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1059 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1672.676 ; gain = 45.828
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1672.676 ; gain = 45.828
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1672.676 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2022.2 (64-bit) build 3671981
+OpenCheckpoint Checksum | Checksum: 1e9bff34c
+----- Checksum: PlaceDB: e4d4f247 ShapeSum: 6fd343bc RouteDB: 9517bd49 
+open_checkpoint: Time (s): cpu = 00:00:25 ; elapsed = 00:00:30 . Memory (MB): peak = 1672.676 ; gain = 1346.406
+# write_verilog -mode funcsim $out
+# puts "POWER_FUNCTIONAL_EXPORT_PASS $variant"
+POWER_FUNCTIONAL_EXPORT_PASS baseline
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 22 03:14:47 2026...

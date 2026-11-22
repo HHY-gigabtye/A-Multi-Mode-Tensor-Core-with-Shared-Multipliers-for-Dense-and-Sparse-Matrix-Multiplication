@@ -1,0 +1,5 @@
+variant,period_ns,mhz,setup_slack_ns,hold_slack_ns
+baseline,9.810,101.9368,0.009,0.096
+baseline,9.800,102.0408,-0.001,0.096
+candidate_v2,9.710,102.9866,0.006,0.082
+candidate_v2,9.700,103.0928,-0.004,0.082

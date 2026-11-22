@@ -1,0 +1,1 @@
+# PRE_ROUTE EQUIVALENCE PASS edges=89595 bitmap_pairs=65536 accepted=82299 completed=10080 publications=10145 malformed=3823 full_rejects=1766 resets=178 simultaneous=9892 stored_zero=54909 seed=7a913b65
