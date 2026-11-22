@@ -340,6 +340,51 @@ vsim -c -l integration_sv/results/top.log -do integration_sv/sim/run_top.do
 
 `run_units.do` compiles each unit separately. `run_top.do` lists the integration packages before modules and selects exactly one DU/TIA package and one TC package. Do not compile all duplicate package files together. The legacy `msu_sv/sim/run_msu.do` has a local absolute path; use the root regression entry point above for portable MSU replay.
 
+### 19-bit TC equivalence and signed-bound checks
+
+The general regression above does not include the supplemental 19-bit tests. The checked-in [extra.do](reports/verification/tc19_main_20261122/extra.do) compiles the current production TC and runs two standalone tests with modeled upstream/downstream signals:
+
+- `tb_pre_route_equiv`: compares the current TC against the preserved 32-bit baseline, including cycle events, results, accumulator state, rejected edges, stalls, resets and all 65,536 A/B bitmap pairs.
+- `tb_tc19_bounds`: checks all 65,536 signed INT8 operand pairs over 1,024 tiles, the exact INT32 endpoints -130048 and +131072, II=8 and publication three advancing edges after accepted k=7.
+
+From the repository root, use PowerShell 7 with ModelSim's `vsim` on `PATH`. This standalone command uses only checked-in sources; it requires neither restored C vectors nor Vivado checkpoints. Each run creates a new directory under the ignored `build/` tree and preserves the accepted logs:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$repoRoot = (Get-Location).Path
+$runDir = Join-Path $repoRoot ('build/tc19_extra_' + (Get-Date -Format 'yyyyMMdd_HHmmssfff'))
+$logPath = Join-Path $runDir 'extra.log'
+$previousRoot = $env:STC_ROOT
+$previousOutput = $env:TC19_MAIN_OUTPUT
+New-Item -ItemType Directory -Path $runDir | Out-Null
+try {
+    $env:STC_ROOT = $repoRoot
+    $env:TC19_MAIN_OUTPUT = $runDir
+    & vsim -c -l $logPath -do reports/verification/tc19_main_20261122/extra.do
+    if ($LASTEXITCODE -ne 0) { throw 'ModelSim supplemental tests failed' }
+    $logText = Get-Content -Raw -LiteralPath $logPath
+    if ($logText -match '\*\*\s+(Fatal|Error):') { throw 'Simulator error; inspect extra.log' }
+    foreach ($marker in 'PRE_ROUTE EQUIVALENCE PASS', 'TC19 BOUNDS PASS') {
+        if (!$logText.Contains($marker)) { throw "Missing PASS marker: $marker" }
+    }
+    Get-Content -LiteralPath $logPath | Select-String '^# (PRE_ROUTE EQUIVALENCE PASS|TC19 BOUNDS PASS)'
+} finally {
+    $env:STC_ROOT = $previousRoot
+    $env:TC19_MAIN_OUTPUT = $previousOutput
+}
+```
+
+The accepted run records 89,595 equivalence edges and 1,024 bounds-test tiles; see the [supplemental summaries](reports/verification/tc19_main_20261122/regression/extra_summary.txt). New logs are in `$runDir/extra.log`, and simulator libraries are in `$runDir/build/extra/`.
+
+For the complete original-units → supplemental-units → integration sequence in the preserved local verification workspace, run:
+
+```powershell
+pwsh -NoProfile -File tools/restore_vectors.ps1
+pwsh -NoProfile -File reports/verification/tc19_main_20261122/run_regression.ps1 -RunName regression_repeat
+```
+
+Choose a new `-RunName` each time; the launcher refuses an existing output directory. It writes logs and `PASS.txt` under `reports/verification/tc19_main_20261122/<RunName>/` and verifies source/evidence hashes. This archived launcher uses `C:/intelFPGA/20.1/modelsim_ase/win32aloem/vsim.exe` and requires all files in its preservation manifests, including ignored Vivado checkpoints/netlists and expanded snapshot vectors. A fresh GitHub clone does not contain those local artifacts; use the standalone command above for the supplemental tests there. The [19-bit promotion record](reports/verification/tc19_main_20261122/README.md) documents the complete accepted run. If a sandbox prevents ModelSim's DLLs from loading, use a native PowerShell session as in that record.
+
 ### C references
 
 From a Visual Studio Developer Command Prompt with C11 support:
